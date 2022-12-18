@@ -276,6 +276,9 @@
     <ClCompile Include="Engine\3D\TouchableObject.cpp">
       <Filter>ソース ファイル\Engine\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\audio\Audio.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="Game\Collision\CollisionSystem\QueryCallback.h">
       <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\audio\Audio.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

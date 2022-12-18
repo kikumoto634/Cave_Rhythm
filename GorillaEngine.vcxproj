@@ -159,6 +159,7 @@
     <ClCompile Include="Engine\3D\TouchableObject.cpp" />
     <ClCompile Include="Engine\3D\ViewProjection.cpp" />
     <ClCompile Include="Engine\3D\WorldTransform.cpp" />
+    <ClCompile Include="Engine\audio\Audio.cpp" />
     <ClCompile Include="Engine\base\Application.cpp" />
     <ClCompile Include="Engine\base\DirectXCommon.cpp" />
     <ClCompile Include="Engine\base\FbxModelManager.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Engine\3D\TouchableObject.h" />
     <ClInclude Include="Engine\3D\ViewProjection.h" />
     <ClInclude Include="Engine\3D\WorldTransform.h" />
+    <ClInclude Include="Engine\audio\Audio.h" />
     <ClInclude Include="Engine\base\Application.h" />
     <ClInclude Include="Engine\base\DirectXCommon.h" />
     <ClInclude Include="Engine\base\FbxModelManager.h" />

@@ -75,7 +75,7 @@ private:
 	std::unique_ptr<Player> player;
 
 	//Plane
-	static const int DIV_NUM = 4;
+	static const int DIV_NUM = 13;
 	static const int Plane_Size = 2;
 	std::unique_ptr<TouchableObject> plane[DIV_NUM][DIV_NUM];
 

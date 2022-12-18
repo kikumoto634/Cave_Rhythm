@@ -61,14 +61,14 @@ void SampleScene::Initialize()
 
 	player = make_unique<Player>();
 	player->Initialize("chr_sword");
-	player->SetPosition({1, 0, 0});
+	player->SetPosition({0, 0, 0});
 
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = make_unique<TouchableObject>();
 			plane[i][j]->Initialize("Block1x1x1");
-			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Plane_Size) + (i*Plane_Size)) ,-5 ,float(-((DIV_NUM/2)*Plane_Size) + (j*Plane_Size))});
+			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Plane_Size) + (i*Plane_Size)) ,-5 ,float(j*Plane_Size)});
 		}
 	}
 
