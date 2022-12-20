@@ -14,6 +14,8 @@
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
 
+#include "../Engine/audio/Audio.h"
+
 #ifdef _DEBUG
 #include "../Engine/base/imguiManager.h"
 #endif // _DEBUG
@@ -68,6 +70,9 @@ private:
 	//パーティクル
 	ParticleManager* particle = nullptr;
 	WorldTransform particleWorld = {};
+
+	//オーディオ
+	Audio* audio = nullptr;
 
 	//3Dオブジェクト
 

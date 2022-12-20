@@ -55,6 +55,11 @@ void SampleScene::Initialize()
 	particle = ParticleManager::GetInstance();
 	particleWorld.Initialize();
 
+	//オーディオ
+	audio = new Audio();
+	audio->Initialize();
+	audio->LoadWave(0, "Resources/rhythm.wav");
+
 #pragma endregion 汎用初期化
 
 #pragma region _3D初期化
@@ -109,6 +114,10 @@ void SampleScene::Update()
 	}
 	else if(input->Push(DIK_S)){
 		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
+	}
+
+	if(input->Trigger(DIK_RETURN)){
+		audio->PlayWave(0);
 	}
 
 #pragma endregion 入力処理
@@ -247,6 +256,9 @@ void SampleScene::Finalize()
 #pragma endregion _2D解放
 
 #pragma region 汎用解放
+
+	delete audio;
+	audio=nullptr;
 
 	delete lightGroup;
 	lightGroup = nullptr;
