@@ -116,9 +116,7 @@ void SampleScene::Update()
 		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 	}
 
-	if(input->Trigger(DIK_RETURN)){
-		audio->PlayWave(0);
-	}
+
 
 #pragma endregion “ü—Íˆ—
 
@@ -190,6 +188,17 @@ void SampleScene::Update()
 	imgui->End();
 #endif // _DEBUG
 
+
+
+	//ŒvŽZ{•`‰æ
+	double cal= (SecondFrame/BPM) * SecondFrame;
+	if(frame == cal){
+		frame = 0.;
+		second += 1.;
+		audio->PlayWave(0);
+	}
+	frame += 1.0;
+
 	BaseScene::EndUpdate();
 }
 
@@ -222,6 +231,9 @@ void SampleScene::Draw()
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
+
+	debugText->Printf(0.f, 584.f, 1.f, "BPM : %3lf", BPM);
+	debugText->Printf(0,600, 1.f, "%lfSecond %lf", second, frame);
 
 #endif // _DEBUG
 	BaseScene::EndDraw();

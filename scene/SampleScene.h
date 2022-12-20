@@ -92,4 +92,13 @@ private:
 
 	bool show_demo_window = false;
 #endif // _DEBUG
+
+	//ŒvŽZ—p
+	const double SecondFrame = 60;
+	const double BPM = 120;
+
+
+	//•`‰æ—p
+	double frame = 0;
+	double second = 0;
 };
