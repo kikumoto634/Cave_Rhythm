@@ -117,7 +117,7 @@ void SampleScene::Update()
 		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 	}
 
-	if(input->Trigger(DIK_RETURN)){
+	if(input->Trigger(DIK_Q) /*&& !IsRhythmInput*/){
 		
 		IsRhythmInput = true;
 		inputClock = clock();
@@ -198,31 +198,29 @@ void SampleScene::Update()
 	BaseScene::EndUpdate();
 
 	end = clock();
-	Init_time = static_cast<double>(end)/CLOCKS_PER_SEC;
+	if(!input->Push(DIK_E))Init_time = static_cast<double>(end)/CLOCKS_PER_SEC;
 
-	//入力成否
-	//入力時のInitTimeだと入力時の時間と入力タイミングを比較することになるので、入力後、リズム前だったら時間を測り成否の計測、リズム後ならカウントが上がった時に時間を測りそれまでに入力がなかったら×
-	if(IsRhythmInput){
-		if(inputTime >= GameTime-subRhyrhm && GameTime+subRhyrhm >= inputTime){
-			IsOutSafe = true;
-			IsRhythmInput = false;
-		}
-		else if(GameTime-subRhyrhm > inputTime || inputTime > GameTime+subRhyrhm){
-			IsOutSafe = false;
-			IsRhythmInput = false;
-		}
-	}
 
+	//リズムがあっているのにNOになる。その場合、次のリズムを入力せずに過ごすとYesになる。計算の胥吏がずれている?
 	//リズムカウント
 	if(Init_time >= count){
 
 		//正解時間の取得
-		GameTime = static_cast<double>(end)/CLOCKS_PER_SEC;
+		GameTime = Init_time;
+		//成否確認
+		if(GameTime+subRhyrhm > inputTime && inputTime > GameTime-subRhyrhm){
+			IsOutSafe = true;
+		}
+		else{
+			IsOutSafe = false;
+		}
+
 		//音声再生
-		audio->PlayWave(0);
-		if(!IsBGM) audio->PlayWave(1,0.1f), IsBGM = true;
+		if(!input->Push(DIK_E))audio->PlayWave(0);
+		if(!input->Push(DIK_E))if(!IsBGM) audio->PlayWave(1,0.1f), IsBGM = true;
 		//リズムカウント
-		count += 1 * (Debug/BPM);
+		if(!input->Push(DIK_E))count += 1 * (Debug/BPM);
+		//IsRhythmInput = false;
 	}
 }
 
@@ -256,10 +254,11 @@ void SampleScene::Draw()
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
-	if(!IsOutSafe) debugText->Print("NO", 0, 560);
-	if(IsOutSafe) debugText->Print("YES", 0, 560);
+	if(!IsOutSafe) debugText->Print("NO", 0, 540);
+	if(IsOutSafe) debugText->Print("YES", 0, 540);
 
 	debugText->Printf(0,560, 1.f, "Input : %lf[ms]", inputTime);
+	debugText->Printf(400, 560, 1.f, "InputTrigger : %d [1:ON, 0:OFF]", IsRhythmInput);
 	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", GameTime);
 	debugText->Printf(0,600, 1.f, "%lf[ms]", Init_time);
 
