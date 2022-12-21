@@ -96,11 +96,22 @@ private:
 #endif // _DEBUG
 
 
+	//リズムカウント
 	clock_t end;
 	double Init_time;
 	double count = 5;
 	bool IsBGM = false;
 
+	double subRhyrhm = 0.0075;
+
+	//入力リズム
+	bool IsRhythmInput = false;
+	bool IsOutSafe = false;
+	clock_t inputClock;
+	double inputTime;
+	double GameTime;
+
+	//BPM計算用
 	double BPM = 120;
 	double Debug = 60;
 };

@@ -118,7 +118,10 @@ void SampleScene::Update()
 	}
 
 	if(input->Trigger(DIK_RETURN)){
-		audio->PlayWave(1);
+		
+		IsRhythmInput = true;
+		inputClock = clock();
+		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
 	}
 
 #pragma endregion 入力処理
@@ -196,10 +199,29 @@ void SampleScene::Update()
 
 	end = clock();
 	Init_time = static_cast<double>(end)/CLOCKS_PER_SEC;
+
+	//入力成否
+	//入力時のInitTimeだと入力時の時間と入力タイミングを比較することになるので、入力後、リズム前だったら時間を測り成否の計測、リズム後ならカウントが上がった時に時間を測りそれまでに入力がなかったら×
+	if(IsRhythmInput){
+		if(inputTime >= GameTime-subRhyrhm && GameTime+subRhyrhm >= inputTime){
+			IsOutSafe = true;
+			IsRhythmInput = false;
+		}
+		else if(GameTime-subRhyrhm > inputTime || inputTime > GameTime+subRhyrhm){
+			IsOutSafe = false;
+			IsRhythmInput = false;
+		}
+	}
+
+	//リズムカウント
 	if(Init_time >= count){
 
+		//正解時間の取得
+		GameTime = static_cast<double>(end)/CLOCKS_PER_SEC;
+		//音声再生
 		audio->PlayWave(0);
-		if(!IsBGM) audio->PlayWave(1,0.1f);
+		if(!IsBGM) audio->PlayWave(1,0.1f), IsBGM = true;
+		//リズムカウント
 		count += 1 * (Debug/BPM);
 	}
 }
@@ -234,6 +256,11 @@ void SampleScene::Draw()
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
+	if(!IsOutSafe) debugText->Print("NO", 0, 560);
+	if(IsOutSafe) debugText->Print("YES", 0, 560);
+
+	debugText->Printf(0,560, 1.f, "Input : %lf[ms]", inputTime);
+	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", GameTime);
 	debugText->Printf(0,600, 1.f, "%lf[ms]", Init_time);
 
 #endif // _DEBUG
