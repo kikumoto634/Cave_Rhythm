@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 
+
 #ifdef _DEBUG
 #include <imgui.h>
 #endif // _DEBUG
@@ -59,6 +60,7 @@ void SampleScene::Initialize()
 	audio = new Audio();
 	audio->Initialize();
 	audio->LoadWave(0, "Resources/rhythm.wav");
+	audio->LoadWave(1, "Resources/MEDIUM-040_T120B07A03_e46HaR52rcg.wav");
 
 #pragma endregion ”Ä—p‰Šú‰»
 
@@ -90,7 +92,6 @@ void SampleScene::Initialize()
 	imgui = new imguiManager();
 	imgui->Initialize(window, dxCommon);
 #endif // _DEBUG
-
 }
 
 void SampleScene::Update()
@@ -116,7 +117,9 @@ void SampleScene::Update()
 		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 	}
 
-
+	if(input->Trigger(DIK_RETURN)){
+		audio->PlayWave(1);
+	}
 
 #pragma endregion “ü—Íˆ—
 
@@ -189,17 +192,16 @@ void SampleScene::Update()
 #endif // _DEBUG
 
 
-
-	//ŒvŽZ{•`‰æ
-	double cal= (SecondFrame/BPM) * SecondFrame;
-	if(frame == cal){
-		frame = 0.;
-		second += 1.;
-		audio->PlayWave(0);
-	}
-	frame += 1.0;
-
 	BaseScene::EndUpdate();
+
+	end = clock();
+	Init_time = static_cast<double>(end)/CLOCKS_PER_SEC;
+	if(Init_time >= count){
+
+		audio->PlayWave(0);
+		if(!IsBGM) audio->PlayWave(1,0.1f);
+		count += 1 * (Debug/BPM);
+	}
 }
 
 void SampleScene::Draw()
@@ -232,8 +234,7 @@ void SampleScene::Draw()
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
-	debugText->Printf(0.f, 584.f, 1.f, "BPM : %3lf", BPM);
-	debugText->Printf(0,600, 1.f, "%lfSecond %lf", second, frame);
+	debugText->Printf(0,600, 1.f, "%lf[ms]", Init_time);
 
 #endif // _DEBUG
 	BaseScene::EndDraw();

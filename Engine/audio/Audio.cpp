@@ -7,6 +7,8 @@
 
 Audio::~Audio()
 {
+	masterVoice->DestroyVoice();
+	//xAudio2->Release()
 	//読み込み済みサウンドの波形データを解放
 	for(auto& pair : soundDatas)
 	{
@@ -79,7 +81,6 @@ void Audio::LoadWave(int number, const char *filename)
 	{
 		assert(0);
 	}
-
 	//波形データのサイズ記録
 	soundData.dataSize = data.size;
 
@@ -99,7 +100,7 @@ void Audio::LoadWave(int number, const char *filename)
 	soundDatas.insert(std::make_pair(number, soundData));
 }
 
-void Audio::PlayWave(int number)
+void Audio::PlayWave(int number, float volume)
 {
 	SoundData& soundData = soundDatas[number];
 
@@ -120,4 +121,5 @@ void Audio::PlayWave(int number)
 	//波形データの再生
 	result = pSourceVoice->SubmitSourceBuffer(&buf);
 	result = pSourceVoice->Start();
+	result = pSourceVoice->SetVolume(volume);
 }

@@ -16,6 +16,8 @@
 
 #include "../Engine/audio/Audio.h"
 
+#include <time.h>
+
 #ifdef _DEBUG
 #include "../Engine/base/imguiManager.h"
 #endif // _DEBUG
@@ -93,12 +95,12 @@ private:
 	bool show_demo_window = false;
 #endif // _DEBUG
 
-	//ŒvŽZ—p
-	const double SecondFrame = 60;
-	const double BPM = 120;
 
+	clock_t end;
+	double Init_time;
+	double count = 5;
+	bool IsBGM = false;
 
-	//•`‰æ—p
-	double frame = 0;
-	double second = 0;
+	double BPM = 120;
+	double Debug = 60;
 };
