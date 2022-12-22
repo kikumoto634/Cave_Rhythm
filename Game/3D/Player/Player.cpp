@@ -33,20 +33,21 @@ void Player::Update(Camera *camera)
 
 	//“ü—Í
 	Input* input = Input::GetInstance();
+	//•às
 	if(input->Trigger(DIK_UP)){
-		world.translation.z += 2.f;
+		world.translation.z += 3.f;
 		world.rotation.y = 0;
 	}
 	else if(input->Trigger(DIK_DOWN)){
-		world.translation.z -= 2.f;
+		world.translation.z -= 3.f;
 		world.rotation.y = XMConvertToRadians(180);
 	}
 	else if(input->Trigger(DIK_RIGHT)){
-		world.translation.x += 2.f;
+		world.translation.x += 3.f;
 		world.rotation.y = XMConvertToRadians(90);
 	}
 	else if(input->Trigger(DIK_LEFT)){
-		world.translation.x -= 2.f;
+		world.translation.x -= 3.f;
 		world.rotation.y = XMConvertToRadians(-90);
 	}
 

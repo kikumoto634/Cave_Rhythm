@@ -51,17 +51,19 @@ public:
 	virtual void OnCollision(const CollisionInfo& info){};
 
 	//Getter
-	const Vector3& GetPosition()	{return world.translation;}
-	const Vector3& GetRotation()	{return world.rotation;}
-	const WorldTransform& GetmatWorld()	{return world;}
-	const ObjModelObject* GetObjObject()	{return object;}
+	inline const Vector3& GetPosition()	{return world.translation;}
+	inline const Vector3& GetRotation()	{return world.rotation;}
+	inline const Vector3& GetScale()		{return world.scale;}
+	inline const WorldTransform& GetmatWorld()	{return world;}
+	inline const ObjModelObject* GetObjObject()	{return object;}
 
 	//Setter
-	void SetPosition(const Vector3& position)	{world.translation = position;}
-	void SetRotation(const Vector3& rotation)	{world.rotation = rotation;}
+	inline void SetPosition(const Vector3& position)	{world.translation = position;}
+	inline void SetRotation(const Vector3& rotation)	{world.rotation = rotation;}
+	inline void SetScale(const Vector3& scale)			{world.scale = scale;}
 	void SetCollider(BaseCollider* collider);
-	void SetObject(ObjModelObject* object)	{this->object = object;}
-	void SetModel(ObjModelManager* model)	{this->model = model;}
+	inline void SetObject(ObjModelObject* object)	{this->object = object;}
+	inline void SetModel(ObjModelManager* model)	{this->model = model;}
 
 protected:
 	//クラス名(デバック用)

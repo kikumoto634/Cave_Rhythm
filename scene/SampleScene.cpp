@@ -99,7 +99,6 @@ void SampleScene::Update()
 	end = clock();
 	if(!input->Push(DIK_E))Init_time = static_cast<double>(end)/CLOCKS_PER_SEC;
 
-
 	//リズムがあっているのにNOになる。その場合、次のリズムを入力せずに過ごすとYesになる。計算の胥吏がずれている?
 	//リズムカウント
 	if(Init_time >= count){
@@ -110,15 +109,15 @@ void SampleScene::Update()
 		//正解時間の取得
 		GameTime = Init_time;
 		//成否確認
-		const double HighTime = GameTime+subRhyrhm;
-		const double LowTime = GameTime -subRhyrhm;
+		const double HighTime = GameTime+subRhyrhm*1.25;
+		const double LowTime = GameTime -subRhyrhm*0.3;
 		if(HighTime >= inputTime && inputTime >= LowTime){
 			IsOutSafe = true;
-			//inputTime = 0;
+			inputTime = 0;
 		}
 		else{
 			IsOutSafe = false;
-			//inputTime = 0;
+			inputTime = 0;
 		}
 
 		//音声再生
@@ -155,6 +154,12 @@ void SampleScene::Update()
 		IsRhythmInput = true;
 		inputClock = clock();
 		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
+	}
+
+	if(input->Trigger(DIK_RETURN)){
+		Vector3 scale = player->GetScale();
+
+		player->SetScale(scale);
 	}
 
 #pragma endregion 入力処理

@@ -83,7 +83,7 @@ private:
 
 	//Plane
 	static const int DIV_NUM = 13;
-	static const int Plane_Size = 2;
+	static const int Plane_Size = 3;
 	std::unique_ptr<TouchableObject> plane[DIV_NUM][DIV_NUM];
 
 	//skydome
@@ -114,4 +114,8 @@ private:
 	//BPM計算用
 	double BPM = 60;
 	double Debug = 60;
+
+	//リズムでのオブジェクトスケール
+	float max = 1;
+	float min = 0.5f;
 };
