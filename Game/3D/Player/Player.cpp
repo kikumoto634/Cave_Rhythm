@@ -33,29 +33,21 @@ void Player::Update(Camera *camera)
 
 	//入力
 	Input* input = Input::GetInstance();
-	//A,Dで旋回
-	if(input->Push(DIK_LEFT)){
-		world.rotation.y -= 0.1f;
+	if(input->Trigger(DIK_UP)){
+		world.translation.z += 2.f;
+		world.rotation.y = 0;
 	}
-	else if(input->Push(DIK_RIGHT)){
-		world.rotation.y += 0.1f;
+	else if(input->Trigger(DIK_DOWN)){
+		world.translation.z -= 2.f;
+		world.rotation.y = XMConvertToRadians(180);
 	}
-
-	// 移動ベクトルをY軸周りの角度で回転
-    XMVECTOR move = { 0,0,0.1f,0};
-    XMMATRIX matRot = XMMatrixRotationY(world.rotation.y);
-    move = XMVector3TransformNormal(move, matRot);
-
-	//向いている方向に移動
-	if(input->Push(DIK_DOWN)){
-		world.translation.x -= move.m128_f32[0];
-		world.translation.y -= move.m128_f32[1];
-		world.translation.z -= move.m128_f32[2];
+	else if(input->Trigger(DIK_RIGHT)){
+		world.translation.x += 2.f;
+		world.rotation.y = XMConvertToRadians(90);
 	}
-	else if(input->Push(DIK_UP)){
-		world.translation.x += move.m128_f32[0];
-		world.translation.y += move.m128_f32[1];
-		world.translation.z += move.m128_f32[2];
+	else if(input->Trigger(DIK_LEFT)){
+		world.translation.x -= 2.f;
+		world.rotation.y = XMConvertToRadians(-90);
 	}
 
 	//落下処理

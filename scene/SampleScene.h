@@ -102,7 +102,7 @@ private:
 	double count = 5;
 	bool IsBGM = false;
 
-	double subRhyrhm = 0.7;
+	double subRhyrhm = 0;
 
 	//“ü—ÍƒŠƒYƒ€
 	bool IsRhythmInput = false;
@@ -112,6 +112,6 @@ private:
 	double GameTime;
 
 	//BPMŒvŽZ—p
-	double BPM = 90;
+	double BPM = 60;
 	double Debug = 60;
 };
