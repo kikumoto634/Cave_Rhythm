@@ -16,7 +16,7 @@
 
 #include "../Engine/audio/Audio.h"
 
-#include <time.h>
+#include "../Game/System/RhythmManager.h"
 
 #ifdef _DEBUG
 #include "../Engine/base/imguiManager.h"
@@ -97,25 +97,21 @@ private:
 
 
 	//リズムカウント
-	clock_t end;
-	double Init_time;
-	double count = 5;
+	RhythmManager* rhythmManager = nullptr;
+	 
 	bool IsBGM = false;
 
-	double subRhyrhm = 0;
 
 	//入力リズム
-	bool IsRhythmInput = false;
 	bool IsOutSafe = false;
 	clock_t inputClock;
 	double inputTime;
-	double GameTime;
-
-	//BPM計算用
-	double BPM = 60;
-	double Debug = 60;
+	int combo = 0;
 
 	//リズムでのオブジェクトスケール
 	float max = 1;
-	float min = 0.5f;
+	float min = 0.7f;
+	float scaleTime = 0.f;
+	bool IsScaleChange = false;
+	Vector3 scale = {max, max, max};
 };

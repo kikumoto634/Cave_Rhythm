@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 
+#include <time.h>
 
 #ifdef _DEBUG
 #include <imgui.h>
@@ -62,6 +63,9 @@ void SampleScene::Initialize()
 	audio->LoadWave(0, "Resources/rhythm.wav");
 	audio->LoadWave(1, "Resources/MEDIUM-040_T120B07A03_e46HaR52rcg.wav");
 
+	//リズムマネージャー
+	rhythmManager = new RhythmManager();
+
 #pragma endregion 汎用初期化
 
 #pragma region _3D初期化
@@ -96,36 +100,31 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
-	end = clock();
-	if(!input->Push(DIK_E))Init_time = static_cast<double>(end)/CLOCKS_PER_SEC;
+	rhythmManager->StartMeasurement(clock());
+	rhythmManager->Update();
+	//拍切り替え時
+	if(rhythmManager->GetIsRhythm()){
 
-	//リズムがあっているのにNOになる。その場合、次のリズムを入力せずに過ごすとYesになる。計算の胥吏がずれている?
-	//リズムカウント
-	if(Init_time >= count){
-
-		const double BPMTime = (1*(Debug/BPM));
-		subRhyrhm = (BPMTime)/2.5;
-
-		//正解時間の取得
-		GameTime = Init_time;
-		//成否確認
-		const double HighTime = GameTime+subRhyrhm*1.25;
-		const double LowTime = GameTime -subRhyrhm*0.3;
-		if(HighTime >= inputTime && inputTime >= LowTime){
+		//成否処理
+		if(rhythmManager->GetHighTime() >= inputTime && inputTime >= rhythmManager->GetLowTime()){
 			IsOutSafe = true;
+			combo+=1;
 			inputTime = 0;
 		}
 		else{
 			IsOutSafe = false;
+			combo = 0;
 			inputTime = 0;
 		}
-
-		//音声再生
-		if(!input->Push(DIK_E))audio->PlayWave(0);
-		if(!input->Push(DIK_E))if(!IsBGM) audio->PlayWave(1,0.1f), IsBGM = true;
-		//リズムカウント
-		if(!input->Push(DIK_E))count += BPMTime;
-		//IsRhythmInput = false;
+		//効果音
+		audio->PlayWave(0);
+		//オブジェクトScale遷移
+		IsScaleChange = true;
+		//BGM再生
+		if(!IsBGM){
+			audio->PlayWave(1,0.1f); 
+			IsBGM = true;
+		}
 	}
 
 	BaseScene::Update();
@@ -151,15 +150,25 @@ void SampleScene::Update()
 
 	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT)){
 		
-		IsRhythmInput = true;
 		inputClock = clock();
 		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
 	}
 
-	if(input->Trigger(DIK_RETURN)){
-		Vector3 scale = player->GetScale();
 
+
+	if(IsScaleChange){
+		float ease = -(cosf(3.14159265f * scaleTime) - 1.f)/2.f;
+		scale = Easing_Linear_Point2(Vector3{min,min,min}, Vector3{max,max,max}, ease);
 		player->SetScale(scale);
+		
+		if(scaleTime < 1.0f){
+			scaleTime += 1.f/15;
+		}
+		else{
+			scale = {max, max, max};
+			IsScaleChange = false;
+			scaleTime = 0.f;
+		}
 	}
 
 #pragma endregion 入力処理
@@ -266,14 +275,15 @@ void SampleScene::Draw()
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
-	if(!IsOutSafe) debugText->Print("NO", 0, 540), debugText->Printf(100, 540, 1.f, "MissRhythm : %f[ms]", GameTime - inputTime);
+	if(!IsOutSafe) debugText->Print("NO", 0, 540), debugText->Printf(100, 540, 1.f, "MissRhythm : %f[ms]", rhythmManager->GetMessureTime() - inputTime);
 	if(IsOutSafe) debugText->Print("YES", 0, 540);
 
-	debugText->Printf(0,520, 1.f, "SubRhythm : %f[ms]", subRhyrhm);
+	debugText->Printf(0,520, 1.f, "SubRhythm : %f[ms]", rhythmManager->GetSubRhythm());
 	debugText->Printf(0,560, 1.f, "Input : %lf[ms]", inputTime);
-	debugText->Printf(400, 560, 1.f, "InputTrigger : %d [1:ON, 0:OFF]", IsRhythmInput);
-	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", GameTime);
-	debugText->Printf(0,600, 1.f, "%lf[ms]", Init_time);
+	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", rhythmManager->GetMessureTime());
+	debugText->Printf(0,600, 1.f, "%lf[ms]", rhythmManager->GetTimer());
+
+	debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
 
 #endif // _DEBUG
 	BaseScene::EndDraw();
@@ -308,6 +318,9 @@ void SampleScene::Finalize()
 #pragma endregion _2D解放
 
 #pragma region 汎用解放
+
+	delete rhythmManager;
+	rhythmManager = nullptr;
 
 	delete audio;
 	audio=nullptr;

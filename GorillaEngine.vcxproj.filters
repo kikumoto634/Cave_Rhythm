@@ -157,6 +157,18 @@
     <Filter Include="ヘッダー ファイル\Game\Collision\CollisionSystem">
       <UniqueIdentifier>{2fa0169a-8427-49bb-a175-5cfa3eac42f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\System">
+      <UniqueIdentifier>{c16de102-9bbd-441c-ad95-b30ddbd0935a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\System">
+      <UniqueIdentifier>{5bde72aa-08f4-464c-938d-5bc03ea2e712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\audio">
+      <UniqueIdentifier>{48b3f555-a23c-4465-ac9d-e42629d522e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\audio">
+      <UniqueIdentifier>{607e6687-321f-4920-9107-a3cd651dd52f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -277,7 +289,10 @@
       <Filter>ソース ファイル\Engine\3D</Filter>
     </ClCompile>
     <ClCompile Include="Engine\audio\Audio.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\System\RhythmManager.cpp">
+      <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -426,7 +441,10 @@
       <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
     </ClInclude>
     <ClInclude Include="Engine\audio\Audio.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\System\RhythmManager.h">
+      <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
