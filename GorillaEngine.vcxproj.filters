@@ -169,6 +169,12 @@
     <Filter Include="ヘッダー ファイル\Engine\audio">
       <UniqueIdentifier>{607e6687-321f-4920-9107-a3cd651dd52f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Plane">
+      <UniqueIdentifier>{d3cb8c0d-ffd6-4aa4-86b3-671ed717c686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Plane">
+      <UniqueIdentifier>{c8740d6b-0457-4874-b9ad-3a85efde1b7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -293,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="Game\System\RhythmManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Plane\Planes.cpp">
+      <Filter>ソース ファイル\Game\3D\Plane</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="Game\System\RhythmManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Plane\Planes.h">
+      <Filter>ヘッダー ファイル\Game\3D\Plane</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

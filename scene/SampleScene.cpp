@@ -77,7 +77,7 @@ void SampleScene::Initialize()
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j] = make_unique<TouchableObject>();
+			plane[i][j] = make_unique<Planes>();
 			plane[i][j]->Initialize("Block1x1x1");
 			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Plane_Size) + (i*Plane_Size)) ,-5 ,float(j*Plane_Size)});
 		}
@@ -120,6 +120,11 @@ void SampleScene::Update()
 		audio->PlayWave(0);
 		//オブジェクトScale遷移
 		IsScaleChange = true;
+		for(int i = 0; i < DIV_NUM; i++){
+			for(int j = 0; j < DIV_NUM; j++){
+				plane[i][j]->SetIsScaleChange(true);
+			}
+		}
 		//BGM再生
 		if(!IsBGM){
 			audio->PlayWave(1,0.1f); 
