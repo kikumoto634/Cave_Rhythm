@@ -26,19 +26,23 @@ void Planes::Update(Camera *camera)
 
 	if(IsScaleChange && IsPlayerContact){
 		float ease = -(cosf(3.14159265f * scaleTime) - 1.f)/2.f;
-		scale = Easing_Linear_Point2(Vector3{min,max,min}, Vector3{max,max,max}, ease);
+		scale = Easing_Linear_Point2(Vector3{ScaleMin,ScaleMax,ScaleMin}, Vector3{ScaleMax,ScaleMax,ScaleMax}, ease);
 		SetScale(scale);
 		
 		if(scaleTime < 1.0f){
 			scaleTime += 1.f/15;
 		}
 		else{
-			scale = {max, max, max};
+			scale = {ScaleMax, ScaleMax, ScaleMax};
 			IsScaleChange = false;
-			IsPlayerContact = false;
 			scaleTime = 0.f;
 		}
 	}
+	else if(!IsScaleChange && !IsPlayerContact){
+		scale = {ScaleMax,ScaleMax,ScaleMax};
+	}
+
+	IsPlayerContact = false;
 
 	BaseObjObject::Update(this->camera);
 }

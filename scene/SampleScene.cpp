@@ -157,6 +157,11 @@ void SampleScene::Update()
 		
 		inputClock = clock();
 		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
+		for(int i = 0; i < DIV_NUM; i++){
+			for(int j = 0; j < DIV_NUM; j++){
+				plane[i][j]->SetIsScaleChange(false);
+			}
+		}
 	}
 
 

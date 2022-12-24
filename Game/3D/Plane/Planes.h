@@ -36,15 +36,19 @@ public:
 	void OnCollision(const CollisionInfo& info) override;
 
 
+	//Getter
+	inline bool GetIsPlayerContact()	{return IsPlayerContact;}
+
 	//Setter
 	inline void SetIsScaleChange(bool IsFlag)	{IsScaleChange = IsFlag;}
+	inline void SetIsPlayerContact(bool IsFlag)	{IsPlayerContact = IsFlag;}
 
 private:
-	float max = 1;
-	float min = 0.7f;
+	float ScaleMax = 1;
+	float ScaleMin = 0.7f;
 	float scaleTime = 0.f;
 
-	Vector3 scale = {max, max, max};
+	Vector3 scale = {ScaleMax, ScaleMax, ScaleMax};
 
 	bool IsScaleChange = false;
 	bool IsPlayerContact = false;

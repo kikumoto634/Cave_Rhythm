@@ -35,7 +35,7 @@ private:
 	//clockをdoubleに
 	double timer = 0;
 	//タイマーの整数
-	double timer_Interger = 5;	
+	double timer_Interger = 10;	
 	//リズムフラグ
 	bool IsRhythm = false;
 
