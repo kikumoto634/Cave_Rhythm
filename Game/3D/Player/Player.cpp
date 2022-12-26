@@ -18,6 +18,9 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
+	//サイズ変更の最小値変更
+	ScaleMin = {0.7f, 0.7f, 0.7f};
+
 	//コライダーの追加
 	float radius = 0.6f;
 	//半径文だけ足元から浮いた座標を球の中心にする
@@ -50,6 +53,13 @@ void Player::Update(Camera *camera)
 		world.translation.x -= 2.5f;
 		world.rotation.y = XMConvertToRadians(-90);
 	}
+
+	//拍終了
+	if(IsScaleChange){
+		//サイズ変更
+		ScaleChange(ScaleMax, ScaleMin, scaleEndTime);
+	}
+
 
 	//落下処理
 	if(!IsGround){

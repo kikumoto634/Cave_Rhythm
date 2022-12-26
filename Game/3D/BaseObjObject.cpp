@@ -1,6 +1,7 @@
 #include "BaseObjObject.h"
 #include "../Collision/CollisionSystem/BaseCollider.h"
 #include "../Collision/CollisionSystem/CollisionManager.h"
+#include "../../../Engine/math/Easing/Easing.h"
 
 BaseObjObject::~BaseObjObject()
 {
@@ -58,4 +59,21 @@ void BaseObjObject::SetCollider(BaseCollider *collider)
 	world.UpdateMatrix();
 	//コライダーを更新しておく
 	collider->Update();
+}
+
+bool BaseObjObject::ScaleChange(Vector3 &sizeMax, Vector3 &sizeMin, float &EndTime)
+{
+	float ease = -(cosf(3.14159265f * scaleCurrentTime) - 1.f)/2.f;
+	scale = Easing_Linear_Point2(sizeMin, sizeMax, ease);
+	SetScale(scale);
+
+	if(scaleCurrentTime >= 1.0f){
+		scale = ScaleMax;
+		IsScaleChange = false;
+		scaleCurrentTime = 0.f;
+		return true;
+	}
+
+	scaleCurrentTime += 1.f/(60*EndTime);
+	return false;
 }

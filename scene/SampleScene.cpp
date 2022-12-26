@@ -126,7 +126,7 @@ void SampleScene::Update()
 		//効果音
 		audio->PlayWave(0);
 		//オブジェクトScale遷移
-		IsScaleChange = true;
+		player->SetIsScaleChange(true);
 		for(int i = 0; i < DIV_NUM; i++){
 			for(int j = 0; j < DIV_NUM; j++){
 				plane[i][j]->SetIsScaleChange(true);
@@ -164,23 +164,6 @@ void SampleScene::Update()
 		
 		inputClock = clock();
 		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
-	}
-
-
-
-	if(IsScaleChange){
-		float ease = -(cosf(3.14159265f * scaleTime) - 1.f)/2.f;
-		scale = Easing_Linear_Point2(Vector3{min,min,min}, Vector3{max,max,max}, ease);
-		player->SetScale(scale);
-		
-		if(scaleTime < 1.0f){
-			scaleTime += 1.f/15;
-		}
-		else{
-			scale = {max, max, max};
-			IsScaleChange = false;
-			scaleTime = 0.f;
-		}
 	}
 
 #pragma endregion 入力処理

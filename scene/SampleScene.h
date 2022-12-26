@@ -113,11 +113,4 @@ private:
 
 	//敵
 	std::unique_ptr<Enemy> enemy;
-
-	//リズムでのオブジェクトスケール
-	float max = 1;
-	float min = 0.7f;
-	float scaleTime = 0.f;
-	bool IsScaleChange = false;
-	Vector3 scale = {max, max, max};
 };

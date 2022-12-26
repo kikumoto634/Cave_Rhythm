@@ -64,6 +64,17 @@ public:
 	void SetCollider(BaseCollider* collider);
 	inline void SetObject(ObjModelObject* object)	{this->object = object;}
 	inline void SetModel(ObjModelManager* model)	{this->model = model;}
+	inline void SetIsScaleChange(bool IsFlag)	{IsScaleChange = IsFlag;}
+
+protected:
+	/// <summary>
+	/// リズムにあわせてサイズ変更 
+	/// </summary>
+	/// <param name="sizeMax">最大サイズ</param>
+	/// <param name="sizeMin">最小サイズ</param>
+	/// <param name="EndTime">終了時間 (x:秒)</param>
+	/// <returns></returns>
+	bool ScaleChange(Vector3& sizeMax, Vector3& sizeMin, float& EndTime);
 
 protected:
 	//クラス名(デバック用)
@@ -76,6 +87,22 @@ protected:
 	//コライダー
 	BaseCollider* collider = nullptr;
 
+	//カメラ
 	Camera* camera = nullptr;
+
+
+	//リズム更新用
+	//拍終了フラグ
+	bool IsScaleChange = false;
+
+	//サイズ変更用
+	//スケール
+	Vector3 scale = ScaleMax;
+	Vector3 ScaleMax = {1, 1, 1};
+	Vector3 ScaleMin = {0.7f, 1, 0.7f};
+	//現在時間
+	float scaleCurrentTime = 0.f;
+	//終了時間(x(s/秒))
+	float scaleEndTime = 0.25f;
 };
 

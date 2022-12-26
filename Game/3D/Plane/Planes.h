@@ -40,17 +40,9 @@ public:
 	inline bool GetIsPlayerContact()	{return IsPlayerContact;}
 
 	//Setter
-	inline void SetIsScaleChange(bool IsFlag)	{IsScaleChange = IsFlag;}
 	inline void SetIsPlayerContact(bool IsFlag)	{IsPlayerContact = IsFlag;}
 
 private:
-	float ScaleMax = 1;
-	float ScaleMin = 0.7f;
-	float scaleTime = 0.f;
-
-	Vector3 scale = {ScaleMax, ScaleMax, ScaleMax};
-
-	bool IsScaleChange = false;
 	bool IsPlayerContact = false;
 };
 

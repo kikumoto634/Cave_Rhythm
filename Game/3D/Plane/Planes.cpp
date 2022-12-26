@@ -1,5 +1,4 @@
 #include "Planes.h"
-#include "../../../Engine/math/Easing/Easing.h"
 
 Planes::~Planes()
 {
@@ -24,22 +23,13 @@ void Planes::Update(Camera *camera)
 {
 	this->camera = camera;
 
+	//拍終わり時 && プレイヤー接触時
 	if(IsScaleChange && IsPlayerContact){
-		if(IsPlayerContact){
-			float ease = -(cosf(3.14159265f * scaleTime) - 1.f)/2.f;
-			scale = Easing_Linear_Point2(Vector3{ScaleMin,ScaleMax,ScaleMin}, Vector3{ScaleMax,ScaleMax,ScaleMax}, ease);
-			SetScale(scale);
 		
-			if(scaleTime < 1.0f){
-				scaleTime += 1.f/15;
-			}
-			else{
-				scale = {ScaleMax, ScaleMax, ScaleMax};
-				IsScaleChange = false;
-				IsPlayerContact = false;
-				scaleTime = 0.f;
-			}
-		}	
+		//サイズ変更
+		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+			IsPlayerContact = false;
+		}
 	}
 
 	BaseObjObject::Update(this->camera);
