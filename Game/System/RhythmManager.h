@@ -47,8 +47,8 @@ private:
 	//“ü—ÍƒŠƒYƒ€‚ÌU‚ê•Œ³
 	double SubRhythm = (BPMTime)/2.5;
 	//“ü—ÍƒŠƒYƒ€‚ÌU‚ê•
-	double HighTime = SubRhythm*1.25;
-	double LowTime = SubRhythm*0.3;
+	double HighTime = SubRhythm;
+	double LowTime = SubRhythm;
 
 	//BPM
 	double bpm = 60;

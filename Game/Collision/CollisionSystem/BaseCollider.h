@@ -30,6 +30,7 @@ public:
 
 	//“–‚½‚è”»’è‘®«
 	inline void SetAttribute(unsigned short attribute)	{this->attribute = attribute;}
+	inline unsigned short GetAttribute()	{return attribute;}
 	inline void AddAttribute(unsigned short attribute)	{this->attribute |= attribute;}
 	inline void RemoveAttribute(unsigned short attribute)	{this->attribute &= !attribute;}
 

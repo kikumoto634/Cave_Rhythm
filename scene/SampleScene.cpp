@@ -19,6 +19,8 @@
 using namespace std;
 using namespace DirectX;
 
+const float SampleScene::Plane_Size = 2.5f;
+
 SampleScene::SampleScene(DirectXCommon *dxCommon, Window *window)
 		: BaseScene(
 		dxCommon,
@@ -66,6 +68,8 @@ void SampleScene::Initialize()
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
 
+	camera->SetEye(Vector3(0.f, 9.f, -18.f));
+
 #pragma endregion 汎用初期化
 
 #pragma region _3D初期化
@@ -74,6 +78,9 @@ void SampleScene::Initialize()
 	player->Initialize("chr_sword");
 	player->SetPosition({0, 0, 0});
 
+	enemy = make_unique<Enemy>();
+	enemy->Initialize("chr_sword");
+	enemy->SetPosition({10, 0, 10});
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -181,6 +188,8 @@ void SampleScene::Update()
 #pragma region _3D更新
 	player->Update(camera);
 
+	enemy->Update(camera);
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Update(camera);
@@ -260,6 +269,9 @@ void SampleScene::Draw()
 
 #pragma region _3D描画
 	player->Draw();
+
+	enemy->Draw();
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Draw();
@@ -289,6 +301,7 @@ void SampleScene::Draw()
 	debugText->Printf(0,600, 1.f, "%lf[ms]", rhythmManager->GetTimer());
 
 	debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
+	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
 
 #endif // _DEBUG
 	BaseScene::EndDraw();
@@ -309,6 +322,9 @@ void SampleScene::Finalize()
 
 #pragma region _3D解放
 	player->Finalize();
+
+	enemy->Finalize();
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Finalize();

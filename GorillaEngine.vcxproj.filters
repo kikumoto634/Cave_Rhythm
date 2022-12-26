@@ -175,6 +175,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Plane">
       <UniqueIdentifier>{c8740d6b-0457-4874-b9ad-3a85efde1b7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy">
+      <UniqueIdentifier>{eaf8d4d8-e4ef-431f-969a-9cbc92f6ce6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy">
+      <UniqueIdentifier>{08fa4670-8226-41f4-8dc8-d349c14dbec5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -302,6 +308,9 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Plane\Planes.cpp">
       <Filter>ソース ファイル\Game\3D\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Enemy.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -457,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Plane\Planes.h">
       <Filter>ヘッダー ファイル\Game\3D\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Enemy.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -181,6 +181,7 @@
     <ClCompile Include="Game\2D\SampleSprite\SampleSprite.cpp" />
     <ClCompile Include="Game\3D\BaseFbxObjects.cpp" />
     <ClCompile Include="Game\3D\BaseObjObject.cpp" />
+    <ClCompile Include="Game\3D\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\3D\Plane\Planes.cpp" />
     <ClCompile Include="Game\3D\Player\Player.cpp" />
     <ClCompile Include="Game\3D\SampleFbxObject\SampleFbxObject.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Game\2D\SampleSprite\SampleSprite.h" />
     <ClInclude Include="Game\3D\BaseFbxObjects.h" />
     <ClInclude Include="Game\3D\BaseObjObject.h" />
+    <ClInclude Include="Game\3D\Enemy\Enemy.h" />
     <ClInclude Include="Game\3D\Plane\Planes.h" />
     <ClInclude Include="Game\3D\Player\Player.h" />
     <ClInclude Include="Game\3D\SampleFbxObject\SampleFbxObject.h" />

@@ -19,7 +19,7 @@ void RhythmManager::Update()
 		//小節終了(リズムカウント時の時間)
 		messureTime = timer;
 		//入力振れ幅計算
-		HighTime = messureTime + SubRhythm*1.5;
+		HighTime = messureTime + SubRhythm*1.75;
 		LowTime = messureTime - SubRhythm*1.5;
 		//フラグ
 		IsRhythm = true;

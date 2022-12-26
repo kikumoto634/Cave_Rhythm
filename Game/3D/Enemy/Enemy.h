@@ -1,11 +1,11 @@
 #pragma once
 #include "../BaseObjObject.h"
 
-class Player : public BaseObjObject
+class Enemy : public BaseObjObject
 {
-//メンバ関数
+//メンバ変数
 public:
-	~Player();
+	~Enemy();
 
 	/// <summary>
 	/// 初期化
@@ -18,33 +18,28 @@ public:
 	void Update(Camera* camera);
 
 	/// <summary>
-	/// 3D描画
+	/// 描画
 	/// </summary>
-	void Draw3D();
+	void Draw();
 
 	/// <summary>
 	/// 後処理
 	/// </summary>
-	void Finalize() override;
+	void Finalize();
 
 	/// <summary>
-	/// 衝突時コールバック関数
+	/// 当たり判定
 	/// </summary>
-	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
-
-	//Getter
-	inline int GetHP()	{return HP;}
-
-	//Setter
-	inline void SetHP(int _HP)	{HP = _HP;}
 
 private:
 	//接地フラグ
 	bool IsGround = true;
 	//落下ベクトル
 	Vector3 fallV;
-	//HP
-	int HP = 5;
-};
+	//死亡
+	bool IsDead = false;
 
+	//死亡時、敵保存地点
+	Vector3 DeadPos = {50,50,50};
+};

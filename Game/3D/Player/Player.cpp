@@ -35,19 +35,19 @@ void Player::Update(Camera *camera)
 	Input* input = Input::GetInstance();
 	//•às
 	if(input->Trigger(DIK_UP)){
-		world.translation.z += 3.f;
+		world.translation.z += 2.5f;
 		world.rotation.y = 0;
 	}
 	else if(input->Trigger(DIK_DOWN)){
-		world.translation.z -= 3.f;
+		world.translation.z -= 2.5f;
 		world.rotation.y = XMConvertToRadians(180);
 	}
 	else if(input->Trigger(DIK_RIGHT)){
-		world.translation.x += 3.f;
+		world.translation.x += 2.5f;
 		world.rotation.y = XMConvertToRadians(90);
 	}
 	else if(input->Trigger(DIK_LEFT)){
-		world.translation.x -= 3.f;
+		world.translation.x -= 2.5f;
 		world.rotation.y = XMConvertToRadians(-90);
 	}
 
@@ -131,6 +131,9 @@ void Player::Finalize()
 
 void Player::OnCollision(const CollisionInfo &info)
 {
-
+	//“GÚG
+	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
+		HP -= 1;
+	}
 }
 

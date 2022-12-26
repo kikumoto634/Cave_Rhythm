@@ -8,6 +8,7 @@
 #include "../Engine/3D/TouchableObject.h"
 
 #include "../Game/3D/Player/Player.h"
+#include "../Game/3D/Enemy/Enemy.h"
 #include "../Game/3D/Plane/Planes.h"
 
 #include "../Game/2D/SampleSprite/SampleSprite.h"
@@ -84,7 +85,7 @@ private:
 
 	//Plane
 	static const int DIV_NUM = 13;
-	static const int Plane_Size = 3;
+	static const float Plane_Size;
 	//std::unique_ptr<TouchableObject> plane[DIV_NUM][DIV_NUM];
 	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
 
@@ -109,6 +110,9 @@ private:
 	clock_t inputClock;
 	double inputTime;
 	int combo = 0;
+
+	//敵
+	std::unique_ptr<Enemy> enemy;
 
 	//リズムでのオブジェクトスケール
 	float max = 1;
