@@ -39,6 +39,11 @@ private:
 	Vector3 fallV;
 	//死亡
 	bool IsDead = false;
+	//スケール
+	bool IsScale = false;
+
+	//移動方向
+	Vector3 direction = {-1,0,0};
 
 	//死亡時、敵保存地点
 	Vector3 DeadPos = {50,50,50};

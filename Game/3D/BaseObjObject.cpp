@@ -69,7 +69,6 @@ bool BaseObjObject::ScaleChange(Vector3 &sizeMax, Vector3 &sizeMin, float &EndTi
 
 	if(scaleCurrentTime >= 1.0f){
 		scale = ScaleMax;
-		IsScaleChange = false;
 		scaleCurrentTime = 0.f;
 		return true;
 	}

@@ -5,6 +5,11 @@
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
+#ifdef _DEBUG
+	#include "../../../Engine/input/Input.h"
+#endif // _DEBUG
+
+
 Enemy::~Enemy()
 {
 	Finalize();
@@ -13,6 +18,9 @@ Enemy::~Enemy()
 void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
+
+	//サイズ変更の最小値変更
+	ScaleMin = {0.7f, 0.7f, 0.7f};
 
 	//コライダー追加
 	float radius = 0.6f;
@@ -25,6 +33,33 @@ void Enemy::Update(Camera *camera)
 	this->camera = camera;
 
 	if(!IsDead){
+
+		//拍終了
+		if(IsBeatEnd){
+
+			//移動
+			world.translation += direction*2.5f;
+
+			//回転
+			if(direction.x == +1) world.rotation.y = XMConvertToRadians(90.f);
+			else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
+			else if(direction.z == +1) world.rotation.y = XMConvertToRadians(0.f);
+			else if(direction.z == -1) world.rotation.y = XMConvertToRadians(180.f);
+
+			//スケール
+			IsScale  = true;
+
+			IsBeatEnd = false;
+		}
+
+		//スケール遷移
+		if(IsScale){
+			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+				IsScale = false;
+			}
+		}
+
+
 		//落下処理
 		if(!IsGround){
 			//下向き加速度

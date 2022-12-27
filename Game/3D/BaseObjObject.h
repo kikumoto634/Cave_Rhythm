@@ -64,7 +64,7 @@ public:
 	void SetCollider(BaseCollider* collider);
 	inline void SetObject(ObjModelObject* object)	{this->object = object;}
 	inline void SetModel(ObjModelManager* model)	{this->model = model;}
-	inline void SetIsScaleChange(bool IsFlag)	{IsScaleChange = IsFlag;}
+	inline void SetIsBeatEnd(bool IsFlag)	{IsBeatEnd = IsFlag;}
 
 protected:
 	/// <summary>
@@ -93,7 +93,7 @@ protected:
 
 	//リズム更新用
 	//拍終了フラグ
-	bool IsScaleChange = false;
+	bool IsBeatEnd = false;
 
 	//サイズ変更用
 	//スケール

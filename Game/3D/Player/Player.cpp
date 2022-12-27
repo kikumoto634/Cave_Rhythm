@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "../../../Engine/input/Input.h"
-#include "../../Collision/SphereCollider.h"
 #include "../../../Engine/base/ParticleManager.h"
 
 #include "../../Collision/CollisionSystem/CollisionManager.h"
@@ -21,6 +19,9 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
+	//入力
+	input = Input::GetInstance();
+
 	//コライダーの追加
 	float radius = 0.6f;
 	//半径文だけ足元から浮いた座標を球の中心にする
@@ -28,14 +29,66 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 
 	//当たり判定属性
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+
+	//球コライダー取得
+	sphereCollider = dynamic_cast<SphereCollider*>(collider);
+	assert(sphereCollider);
 }
 
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
+	
+	//移動
+	Movement();
 
-	//入力
-	Input* input = Input::GetInstance();
+	//拍終了
+	if(IsBeatEnd){
+		//サイズ変更
+		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+			IsBeatEnd = false;
+		}
+	}
+
+	//ダメージ
+	DamageUpdate();
+
+	//重力
+	GravityFall();
+
+	//行列、カメラ更新
+	BaseObjObject::Update(this->camera);
+	//コライダー更新
+	collider->Update();
+
+	//地面接触判定
+	GroundCollider();
+
+	//ベース更新
+	BaseObjObject::Update(this->camera);
+}
+
+void Player::Draw3D()
+{
+	BaseObjObject::Draw();
+}
+
+
+void Player::Finalize()
+{
+	BaseObjObject::Finalize();
+}
+
+void Player::OnCollision(const CollisionInfo &info)
+{
+	//敵接触
+	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
+		Damage();
+	}
+}
+
+void Player::Movement()
+{
 	//歩行
 	if(input->Trigger(DIK_UP)){
 		world.translation.z += 2.5f;
@@ -53,14 +106,34 @@ void Player::Update(Camera *camera)
 		world.translation.x -= 2.5f;
 		world.rotation.y = XMConvertToRadians(-90);
 	}
+}
 
-	//拍終了
-	if(IsScaleChange){
-		//サイズ変更
-		ScaleChange(ScaleMax, ScaleMin, scaleEndTime);
-	}
+void Player::Damage()
+{
+	if(IsDamage) return;
+	IsDamage = true;
+	HP -= 1;
+}
 
+void Player::DamageUpdate()
+{
+	if(!IsDamage) return ;
 
+	damageCurrentFrame += 1;
+
+	//無敵時間内
+	Vector4 color = (damageCurrentFrame % 6 == 1) ? color = {0.0f, 0.0f, 0.0f, 0.0f} : color = {1.0f, 0.0f, 0.0f, 1.0f};
+	object->SetColor(color);
+
+	//無敵時間終了
+	if(damageCurrentFrame < DamageFrame) return;
+	damageCurrentFrame = 0;
+	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
+	IsDamage = false;
+}
+
+void Player::GravityFall()
+{
 	//落下処理
 	if(!IsGround){
 		//下向き加速度
@@ -73,23 +146,10 @@ void Player::Update(Camera *camera)
 		world.translation.y += fallV.y;
 		world.translation.z += fallV.z;
 	}
-	//ジャンプ操作
-	else if(input->Trigger(DIK_SPACE)){
-		IsGround = false;
-		const float jumpVYFist = 0.2f;	//ジャンプ時上向き初速
-		fallV = {0,jumpVYFist, 0};
-	}
+}
 
-	//行列、カメラ更新
-	BaseObjObject::Update(this->camera);
-	//コライダー更新
-	collider->Update();
-
-	//球コライダー取得
-	SphereCollider* sphereCollider = dynamic_cast<SphereCollider*>(collider);
-	assert(sphereCollider);
-
-
+void Player::GroundCollider()
+{
 	//球の上端から球の下端までの例キャスト用レイを準備
 	Ray ray;
 	ray.start = sphereCollider->center;
@@ -123,27 +183,6 @@ void Player::Update(Camera *camera)
 			//行列の更新など
 			BaseObjObject::Update(this->camera);
 		}
-	}
-
-	BaseObjObject::Update(this->camera);
-}
-
-void Player::Draw3D()
-{
-	BaseObjObject::Draw();
-}
-
-
-void Player::Finalize()
-{
-	BaseObjObject::Finalize();
-}
-
-void Player::OnCollision(const CollisionInfo &info)
-{
-	//敵接触
-	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
-		HP -= 1;
 	}
 }
 

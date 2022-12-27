@@ -1,5 +1,7 @@
 #pragma once
 #include "../BaseObjObject.h"
+#include "../../../Engine/input/Input.h"
+#include "../../Collision/SphereCollider.h"
 
 class Player : public BaseObjObject
 {
@@ -40,11 +42,40 @@ public:
 	inline void SetHP(int _HP)	{HP = _HP;}
 
 private:
+	//移動
+	void Movement();
+
+	//ダメージ
+	void Damage();
+	//ダメージ更新
+	void DamageUpdate();
+
+	//重力
+	void GravityFall();
+
+	//コライダー
+	//地面接触判定
+	void GroundCollider();
+
+private:
 	//接地フラグ
 	bool IsGround = true;
 	//落下ベクトル
 	Vector3 fallV;
+	
 	//HP
 	int HP = 5;
+
+	//ダメージ
+	bool IsDamage = false;
+	//無敵時間(フレーム)
+	const int DamageFrame = 120;
+	int damageCurrentFrame = 0;
+
+	//入力
+	Input* input = nullptr;
+
+	//コライダー
+	SphereCollider* sphereCollider = nullptr;
 };
 

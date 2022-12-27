@@ -24,11 +24,12 @@ void Planes::Update(Camera *camera)
 	this->camera = camera;
 
 	//拍終わり時 && プレイヤー接触時
-	if(IsScaleChange && IsPlayerContact){
+	if(IsBeatEnd && IsPlayerContact){
 		
 		//サイズ変更
 		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 			IsPlayerContact = false;
+			IsBeatEnd = false;
 		}
 	}
 
@@ -49,6 +50,6 @@ void Planes::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsPlayerContact = true;
-		object->SetColor({1.f, 1.f, 0.f});
+		object->SetColor({1.0f, 0.0f, 1.0f,1.0f});
 	}	
 }

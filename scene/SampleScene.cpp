@@ -80,7 +80,7 @@ void SampleScene::Initialize()
 
 	enemy = make_unique<Enemy>();
 	enemy->Initialize("chr_sword");
-	enemy->SetPosition({10, 0, 10});
+	enemy->SetPosition({15, 0, 10});
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -126,10 +126,11 @@ void SampleScene::Update()
 		//効果音
 		audio->PlayWave(0);
 		//オブジェクトScale遷移
-		player->SetIsScaleChange(true);
+		player->SetIsBeatEnd(true);
+		enemy->SetIsBeatEnd(true);
 		for(int i = 0; i < DIV_NUM; i++){
 			for(int j = 0; j < DIV_NUM; j++){
-				plane[i][j]->SetIsScaleChange(true);
+				plane[i][j]->SetIsBeatEnd(true);
 			}
 		}
 		//BGM再生
