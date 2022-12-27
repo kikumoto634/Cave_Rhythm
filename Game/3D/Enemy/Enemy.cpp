@@ -22,6 +22,12 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
+	//回転
+	if(direction.x == +1) world.rotation.y = XMConvertToRadians(90.f);
+	else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
+	else if(direction.z == +1) world.rotation.y = XMConvertToRadians(0.f);
+	else if(direction.z == -1) world.rotation.y = XMConvertToRadians(180.f);
+
 	//コライダー追加
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
@@ -39,12 +45,6 @@ void Enemy::Update(Camera *camera)
 
 			//移動
 			world.translation += direction*2.5f;
-
-			//回転
-			if(direction.x == +1) world.rotation.y = XMConvertToRadians(90.f);
-			else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
-			else if(direction.z == +1) world.rotation.y = XMConvertToRadians(0.f);
-			else if(direction.z == -1) world.rotation.y = XMConvertToRadians(180.f);
 
 			//スケール
 			IsScale  = true;

@@ -20,6 +20,8 @@
 
 #include "../Game/System/RhythmManager.h"
 
+#include <list>
+
 #ifdef _DEBUG
 #include "../Engine/base/imguiManager.h"
 #endif // _DEBUG
@@ -112,5 +114,7 @@ private:
 	int combo = 0;
 
 	//ìG
-	std::unique_ptr<Enemy> enemy;
+	std::list<std::unique_ptr<Enemy>> enemy;
+	//POPä÷êî
+	void EnemyPop(Vector3 pos, Vector3 dir);
 };

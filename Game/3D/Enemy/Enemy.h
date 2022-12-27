@@ -32,6 +32,11 @@ public:
 	/// </summary>
 	void OnCollision(const CollisionInfo& info) override;
 
+	//Getter
+
+	//Setter
+	void SetDirection(Vector3 _dir)	{direction = _dir;}
+
 private:
 	//Ú’nƒtƒ‰ƒO
 	bool IsGround = true;

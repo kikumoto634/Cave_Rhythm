@@ -76,11 +76,7 @@ void SampleScene::Initialize()
 
 	player = make_unique<Player>();
 	player->Initialize("chr_sword");
-	player->SetPosition({0, 0, 0});
-
-	enemy = make_unique<Enemy>();
-	enemy->Initialize("chr_sword");
-	enemy->SetPosition({15, 0, 10});
+	player->SetPosition({0, -4, 0});
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -107,6 +103,8 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
+	//入力
+
 	rhythmManager->StartMeasurement(clock());
 	rhythmManager->Update();
 	//拍切り替え時
@@ -127,7 +125,9 @@ void SampleScene::Update()
 		audio->PlayWave(0);
 		//オブジェクトScale遷移
 		player->SetIsBeatEnd(true);
-		enemy->SetIsBeatEnd(true);
+		for(auto it = enemy.begin(); it != enemy.end(); it++){
+			(*it)->SetIsBeatEnd(true);
+		}
 		for(int i = 0; i < DIV_NUM; i++){
 			for(int j = 0; j < DIV_NUM; j++){
 				plane[i][j]->SetIsBeatEnd(true);
@@ -161,10 +161,16 @@ void SampleScene::Update()
 		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 	}
 
+	//ビート入力
 	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT)){
 		
 		inputClock = clock();
 		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
+	}
+
+	//敵出現
+	if(input->Trigger(DIK_SPACE)){
+		EnemyPop({0,-4,12.5}, {0,0,0});
 	}
 
 #pragma endregion 入力処理
@@ -172,8 +178,9 @@ void SampleScene::Update()
 #pragma region _3D更新
 	player->Update(camera);
 
-	enemy->Update(camera);
-
+	for(auto it = enemy.begin(); it != enemy.end(); it++){
+		(*it)->Update(camera);
+	}
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Update(camera);
@@ -254,8 +261,9 @@ void SampleScene::Draw()
 #pragma region _3D描画
 	player->Draw();
 
-	enemy->Draw();
-
+	for(auto it = enemy.begin(); it != enemy.end(); it++){
+		(*it)->Draw();
+	}
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Draw();
@@ -307,8 +315,9 @@ void SampleScene::Finalize()
 #pragma region _3D解放
 	player->Finalize();
 
-	enemy->Finalize();
-
+	for(auto it = enemy.begin(); it != enemy.end(); it++){
+		(*it)->Finalize();
+	}
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Finalize();
@@ -338,4 +347,14 @@ void SampleScene::Finalize()
 #pragma endregion 汎用解放
 
 	BaseScene::Finalize();
+}
+
+void SampleScene::EnemyPop(Vector3 pos, Vector3 dir)
+{
+	unique_ptr<Enemy> newObj = make_unique<Enemy>();
+	newObj->Initialize("chr_sword");
+	newObj->SetPosition(pos);
+	newObj->SetDirection(dir);
+
+	enemy.push_back(move(newObj));
 }
