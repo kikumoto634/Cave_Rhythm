@@ -54,7 +54,7 @@ public:
 	inline const Vector3& GetPosition()	{return world.translation;}
 	inline const Vector3& GetRotation()	{return world.rotation;}
 	inline const Vector3& GetScale()		{return world.scale;}
-	inline const WorldTransform& GetmatWorld()	{return world;}
+	inline WorldTransform& GetmatWorld()	{return world;}
 	inline const ObjModelObject* GetObjObject()	{return object;}
 
 	//Setter

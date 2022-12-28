@@ -3,6 +3,8 @@
 #include "../../../Engine/input/Input.h"
 #include "../../Collision/SphereCollider.h"
 
+#include "PlayerWeapon.h"
+
 class Player : public BaseObjObject
 {
 //メンバ関数
@@ -22,7 +24,7 @@ public:
 	/// <summary>
 	/// 3D描画
 	/// </summary>
-	void Draw3D();
+	void Draw();
 
 	/// <summary>
 	/// 後処理
@@ -77,5 +79,8 @@ private:
 
 	//コライダー
 	SphereCollider* sphereCollider = nullptr;
+
+	//武器
+	PlayerWeapon* weapon = nullptr;
 };
 

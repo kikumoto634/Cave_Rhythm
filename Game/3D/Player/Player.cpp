@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "../../../Engine/base/ParticleManager.h"
-
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
@@ -33,6 +31,11 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	//球コライダー取得
 	sphereCollider = dynamic_cast<SphereCollider*>(collider);
 	assert(sphereCollider);
+
+	//武器
+	weapon = new PlayerWeapon();
+	weapon->Initialize("sphere", true);
+	weapon->GetmatWorld().parent = &world;
 }
 
 void Player::Update(Camera *camera)
@@ -41,6 +44,10 @@ void Player::Update(Camera *camera)
 	
 	//移動
 	Movement();
+
+	if(input->Trigger(DIK_RETURN)){
+		weapon->Attack();
+	}
 
 	//拍終了
 	if(IsBeatEnd){
@@ -64,18 +71,26 @@ void Player::Update(Camera *camera)
 	//地面接触判定
 	GroundCollider();
 
+	//武器
+	weapon->Update(this->camera);
+
 	//ベース更新
 	BaseObjObject::Update(this->camera);
 }
 
-void Player::Draw3D()
+void Player::Draw()
 {
+	weapon->Draw();
+
 	BaseObjObject::Draw();
 }
 
-
 void Player::Finalize()
 {
+	weapon->Finalize();
+	delete weapon;
+	weapon = nullptr;
+
 	BaseObjObject::Finalize();
 }
 
@@ -86,6 +101,7 @@ void Player::OnCollision(const CollisionInfo &info)
 		Damage();
 	}
 }
+
 
 void Player::Movement()
 {

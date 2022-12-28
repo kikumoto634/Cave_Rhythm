@@ -170,7 +170,8 @@ void SampleScene::Update()
 
 	//“GoŒ»
 	if(input->Trigger(DIK_SPACE)){
-		EnemyPop({0,-4,12.5}, {0,0,0});
+		EnemyPop({0,-4,12.5}, {-1,0,0});
+
 	}
 
 #pragma endregion “ü—Íˆ—
@@ -294,6 +295,8 @@ void SampleScene::Draw()
 
 	debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
 	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
+
+	debugText->Printf(1000,0,1.0f, "EnemyNum : %d", enemy.size());
 
 #endif // _DEBUG
 	BaseScene::EndDraw();

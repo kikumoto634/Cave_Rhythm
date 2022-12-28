@@ -312,6 +312,9 @@
     <ClCompile Include="Game\3D\Enemy\Enemy.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3D\Player\PlayerWeapon.cpp">
+      <Filter>ソース ファイル\Game\3D\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -469,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Enemy.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Player\PlayerWeapon.h">
+      <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
