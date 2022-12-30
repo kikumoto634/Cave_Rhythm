@@ -9,13 +9,6 @@
 #include <sstream>
 #include <iomanip>
 
-#include <time.h>
-
-#ifdef _DEBUG
-#include <imgui.h>
-#endif // _DEBUG
-
-
 using namespace std;
 using namespace DirectX;
 
@@ -95,16 +88,11 @@ void SampleScene::Initialize()
 
 #pragma endregion _2D初期化
 
-#ifdef _DEBUG
-	imgui = new imguiManager();
-	imgui->Initialize(window, dxCommon);
-#endif // _DEBUG
+	rhythmManager->InitializeMeasurement(clock());
 }
 
 void SampleScene::Update()
 {
-	//入力
-
 	rhythmManager->StartMeasurement(clock());
 	rhythmManager->Update();
 	//拍切り替え時
@@ -142,11 +130,9 @@ void SampleScene::Update()
 
 	BaseScene::Update();
 
-#ifdef _DEBUG
-	imgui->Begin();
-#endif // _DEBUG
-
 #pragma region 入力処理
+
+#ifdef _DEBUG
 	if(input->Push(DIK_A)){
 		camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
 	}
@@ -162,7 +148,7 @@ void SampleScene::Update()
 	}
 
 	//ビート入力
-	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT)){
+	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT) || input->Trigger(DIK_RETURN)){
 		
 		inputClock = clock();
 		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
@@ -171,8 +157,8 @@ void SampleScene::Update()
 	//敵出現
 	if(input->Trigger(DIK_SPACE)){
 		EnemyPop({0,-4,12.5}, {-1,0,0});
-
 	}
+#endif // _DEBUG
 
 #pragma endregion 入力処理
 
@@ -217,37 +203,6 @@ void SampleScene::Update()
 
 #pragma endregion 汎用更新
 
-#ifdef _DEBUG
-	if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
-	//ウィンドウサイズ
-	ImGui::SetNextWindowSize(ImVec2{500,55});
-	//ウィンドウ座標
-	ImGui::SetNextWindowPos(ImVec2{0,130});
-	//開始、タイトル名設定
-	ImGui::Begin("PlayerPos && SpotLightPos && CircleShadowPos");
-	ImGui::SetNextWindowPos(ImVec2{0,0});
-	ImGui::DragFloat3("circlePos", (float*)&player->GetPosition(), 0.1f);
-	//終了
-	ImGui::End();
-
-	//ウィンドウサイズ
-	ImGui::SetNextWindowSize(ImVec2{500,100});
-	//ウィンドウ座標
-	ImGui::SetNextWindowPos(ImVec2{0,0});
-	//開始、タイトル名設定
-	ImGui::Begin("CircleShadow");
-	ImGui::DragFloat3("circleShadowDir", circleShadowDir, 0.1f);
-	ImGui::DragFloat3("circleShadowAtten", circleShadowAtten, 0.1f);
-	ImGui::DragFloat2("circleShadowFactorAngle", circleShadowFactorAngle, 0.1f);
-	//終了
-	ImGui::End();
-
-	imgui->End();
-#endif // _DEBUG
-
-
 	BaseScene::EndUpdate();
 }
 
@@ -285,13 +240,14 @@ void SampleScene::Draw()
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
-	if(!IsOutSafe) debugText->Print("NO", 0, 540), debugText->Printf(100, 540, 1.f, "MissRhythm : %f[ms]", rhythmManager->GetMessureTime() - inputTime);
-	if(IsOutSafe) debugText->Print("YES", 0, 540);
+	/*if(!IsOutSafe) debugText->Print("NO", 0, 540), debugText->Printf(100, 540, 1.f, "MissRhythm : %f[ms]", rhythmManager->GetMessureTime() - inputTime);
+	if(IsOutSafe) debugText->Print("YES", 0, 540);*/
 
-	debugText->Printf(0,520, 1.f, "SubRhythm : %f[ms]", rhythmManager->GetSubRhythm());
+	/*debugText->Printf(0,520, 1.f, "SubRhythm : %f[ms]", rhythmManager->GetSubRhythm());
 	debugText->Printf(0,560, 1.f, "Input : %lf[ms]", inputTime);
-	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", rhythmManager->GetMessureTime());
+	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", rhythmManager->GetMessureTime());*/
 	debugText->Printf(0,600, 1.f, "%lf[ms]", rhythmManager->GetTimer());
+
 
 	debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
 	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
@@ -302,18 +258,10 @@ void SampleScene::Draw()
 	BaseScene::EndDraw();
 #pragma endregion _2D_UI描画
 
-#ifdef _DEBUG
-	imgui->Draw();
-#endif // _DEBUG
-
 }
 
 void SampleScene::Finalize()
 {
-#ifdef _DEBUG
-	imgui->Finalize();
-	delete imgui;
-#endif // _DEBUG
 
 #pragma region _3D解放
 	player->Finalize();

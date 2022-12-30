@@ -35,18 +35,16 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	//武器
 	weapon = new PlayerWeapon();
 	weapon->Initialize("sphere", true);
-	weapon->GetmatWorld().parent = &world;
+	//weapon->GetmatWorld().parent = &world;
 }
 
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
 	
-	//移動
-	Movement();
-
-	if(input->Trigger(DIK_RETURN)){
-		weapon->Attack();
+	//移動、攻撃
+	if(Movement() || Attack()){
+		IsInputBeat = true;
 	}
 
 	//拍終了
@@ -62,6 +60,9 @@ void Player::Update(Camera *camera)
 
 	//重力
 	GravityFall();
+
+	//武器位置
+	weapon->SetPosition(world.translation + offSetWeaponPos);
 
 	//行列、カメラ更新
 	BaseObjObject::Update(this->camera);
@@ -103,25 +104,43 @@ void Player::OnCollision(const CollisionInfo &info)
 }
 
 
-void Player::Movement()
+bool Player::Movement()
 {
 	//歩行
 	if(input->Trigger(DIK_UP)){
 		world.translation.z += 2.5f;
 		world.rotation.y = 0;
+		offSetWeaponPos = {0,1,2.5};
+		return true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
 		world.translation.z -= 2.5f;
 		world.rotation.y = XMConvertToRadians(180);
+		offSetWeaponPos = {0,1,-2.5};
+		return true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
 		world.translation.x += 2.5f;
 		world.rotation.y = XMConvertToRadians(90);
+		offSetWeaponPos = {2.5,1,0};
+		return true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
 		world.translation.x -= 2.5f;
 		world.rotation.y = XMConvertToRadians(-90);
+		offSetWeaponPos = {-2.5,1,0};
+		return true;
 	}
+	return false;
+}
+
+bool Player::Attack()
+{
+	if(input->Trigger(DIK_RETURN)){
+		weapon->Attack();
+		return true;
+	}
+	return false;
 }
 
 void Player::Damage()

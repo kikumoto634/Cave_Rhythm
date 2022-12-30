@@ -1,9 +1,14 @@
 #include "RhythmManager.h"
 
 
+void RhythmManager::InitializeMeasurement(clock_t clock)
+{
+	InitTimer = static_cast<double>(clock)/CLOCKS_PER_SEC;
+}
+
 void RhythmManager::StartMeasurement(clock_t clock)
 {
-	timer = static_cast<double>(clock)/CLOCKS_PER_SEC;
+	timer = static_cast<double>(clock)/CLOCKS_PER_SEC - InitTimer;
 }
 
 void RhythmManager::Update()

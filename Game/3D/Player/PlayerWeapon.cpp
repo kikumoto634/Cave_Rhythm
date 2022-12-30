@@ -37,7 +37,7 @@ void PlayerWeapon::Update(Camera *camera)
 	if(aliveCurrentFrame >= AliveFrame) {
 		aliveCurrentFrame = 0;
 
-		world.translation = Vector3(0,-4,0);
+		world.translation = Vector3(0,-10,0);
 		BaseObjObject::Update(this->camera);
 
 		IsAppear = false;
@@ -45,8 +45,6 @@ void PlayerWeapon::Update(Camera *camera)
 	}
 	aliveCurrentFrame++;
 
-	//行列、カメラ更新
-	BaseObjObject::Update(this->camera);
 	//コライダー更新
 	collider->Update();
 

@@ -21,10 +21,7 @@
 #include "../Game/System/RhythmManager.h"
 
 #include <list>
-
-#ifdef _DEBUG
-#include "../Engine/base/imguiManager.h"
-#endif // _DEBUG
+#include <time.h>
 
 
 class SampleScene : public BaseScene
@@ -60,7 +57,7 @@ public:
 	void Finalize() override;
 
 private:
-	float time = 0.f;
+	//float time = 0.f;
 
 	//ライト
 	LightGroup* lightGroup = nullptr;
@@ -88,24 +85,19 @@ private:
 	//Plane
 	static const int DIV_NUM = 13;
 	static const float Plane_Size;
-	//std::unique_ptr<TouchableObject> plane[DIV_NUM][DIV_NUM];
 	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
 
 	//skydome
 	std::unique_ptr<SampleObjObject> skydome;
 
-#ifdef _DEBUG
-	imguiManager* imgui;
-
-	bool show_demo_window = false;
-#endif // _DEBUG
-
-
 	//リズムカウント
 	RhythmManager* rhythmManager = nullptr;
 	 
-	bool IsBGM = false;
 
+	//クラス化未実装枠
+
+	//BGM
+	bool IsBGM = false;
 
 	//入力リズム
 	bool IsOutSafe = false;

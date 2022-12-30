@@ -45,7 +45,10 @@ public:
 
 private:
 	//移動
-	void Movement();
+	bool Movement();
+
+	//攻撃
+	bool Attack();
 
 	//ダメージ
 	void Damage();
@@ -74,6 +77,9 @@ private:
 	const int DamageFrame = 120;
 	int damageCurrentFrame = 0;
 
+	//入力ビート
+	bool IsInputBeat = false;
+
 	//入力
 	Input* input = nullptr;
 
@@ -82,5 +88,6 @@ private:
 
 	//武器
 	PlayerWeapon* weapon = nullptr;
+	Vector3 offSetWeaponPos = {0,1,2.5};
 };
 

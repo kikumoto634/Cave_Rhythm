@@ -6,6 +6,8 @@ class RhythmManager
 {
 	//メンバ関数
 public:
+	void InitializeMeasurement(clock_t clock);
+
 	//計測開始
 	void StartMeasurement(clock_t clock);
 
@@ -33,9 +35,10 @@ private:
 	bool IsMeasurement = false;
 
 	//clockをdoubleに
+	double InitTimer = 0;
 	double timer = 0;
 	//タイマーの整数
-	double timer_Interger = 10;	
+	double timer_Interger = 1;	
 	//リズムフラグ
 	bool IsRhythm = false;
 
