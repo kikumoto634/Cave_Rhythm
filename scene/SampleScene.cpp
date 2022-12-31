@@ -88,45 +88,15 @@ void SampleScene::Initialize()
 
 #pragma endregion _2D初期化
 
+	//リズム
 	rhythmManager->InitializeMeasurement(clock());
 }
 
 void SampleScene::Update()
 {
+	//リズム計測
 	rhythmManager->StartMeasurement(clock());
 	rhythmManager->Update();
-	//拍切り替え時
-	if(rhythmManager->GetIsRhythm()){
-
-		//成否処理
-		if(rhythmManager->GetHighTime() >= inputTime && inputTime >= rhythmManager->GetLowTime()){
-			IsOutSafe = true;
-			combo+=1;
-			inputTime = 0;
-		}
-		else{
-			IsOutSafe = false;
-			combo = 0;
-			inputTime = 0;
-		}
-		//効果音
-		audio->PlayWave(0);
-		//オブジェクトScale遷移
-		player->SetIsBeatEnd(true);
-		for(auto it = enemy.begin(); it != enemy.end(); it++){
-			(*it)->SetIsBeatEnd(true);
-		}
-		for(int i = 0; i < DIV_NUM; i++){
-			for(int j = 0; j < DIV_NUM; j++){
-				plane[i][j]->SetIsBeatEnd(true);
-			}
-		}
-		//BGM再生
-		if(!IsBGM){
-			audio->PlayWave(1,0.1f); 
-			IsBGM = true;
-		}
-	}
 
 	BaseScene::Update();
 
@@ -148,10 +118,10 @@ void SampleScene::Update()
 	}
 
 	//ビート入力
-	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT) || input->Trigger(DIK_RETURN)){
+	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT)){
 		
 		inputClock = clock();
-		inputTime = static_cast<double>(inputClock)/CLOCKS_PER_SEC;
+		inputTime = (static_cast<double>(inputClock)/CLOCKS_PER_SEC) - rhythmManager->GetInitializeTime();
 	}
 
 	//敵出現
@@ -203,6 +173,39 @@ void SampleScene::Update()
 
 #pragma endregion 汎用更新
 
+	//拍切り替え時
+	if(rhythmManager->GetIsRhythm()){
+
+		//動画撮影、描画されている時間では計算がおかしい、更新処理で取得した時間がおかしいのか、下の条件式がおかしい
+		IsJudge = false;
+		//成否処理
+		if(rhythmManager->GetHighTime() >= inputTime && inputTime >= rhythmManager->GetLowTime()){
+			combo+=1;
+			IsJudge = true;
+		}
+		else{
+			combo = 0;
+		}
+
+		//効果音
+		audio->PlayWave(0);
+		//オブジェクトScale遷移
+		player->SetIsBeatEnd(true);
+		for(auto it = enemy.begin(); it != enemy.end(); it++){
+			(*it)->SetIsBeatEnd(true);
+		}
+		for(int i = 0; i < DIV_NUM; i++){
+			for(int j = 0; j < DIV_NUM; j++){
+				plane[i][j]->SetIsBeatEnd(true);
+			}
+		}
+		//BGM再生
+		if(!IsBGM){
+			audio->PlayWave(1,0.1f,true); 
+			IsBGM = true;
+		}
+	}
+
 	BaseScene::EndUpdate();
 }
 
@@ -240,13 +243,11 @@ void SampleScene::Draw()
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
-	/*if(!IsOutSafe) debugText->Print("NO", 0, 540), debugText->Printf(100, 540, 1.f, "MissRhythm : %f[ms]", rhythmManager->GetMessureTime() - inputTime);
-	if(IsOutSafe) debugText->Print("YES", 0, 540);*/
 
-	/*debugText->Printf(0,520, 1.f, "SubRhythm : %f[ms]", rhythmManager->GetSubRhythm());
-	debugText->Printf(0,560, 1.f, "Input : %lf[ms]", inputTime);
-	debugText->Printf(0,580, 1.f, "GoodTime : %lf[ms]", rhythmManager->GetMessureTime());*/
-	debugText->Printf(0,600, 1.f, "%lf[ms]", rhythmManager->GetTimer());
+	debugText->Printf(0,580, 1.f, "Time : %lf[ms]", rhythmManager->GetTimer());
+	debugText->Printf(0,600, 1.f, "GooDTime : %lf[ms]", rhythmManager->GetBeatTime());
+	debugText->Printf(0,620, 1.f, "InputTime : %lf[ms]", inputTime);
+	debugText->Printf(300, 640, 1.f, "Judge : %d [1:Good, 0:Bad]", IsJudge);
 
 
 	debugText->Printf(0, 640, 1.f, "Combo : %d", combo);

@@ -43,7 +43,8 @@ void Player::Update(Camera *camera)
 	this->camera = camera;
 	
 	//ˆÚ“®AUŒ‚
-	if(Movement() || Attack()){
+	if(Movement()){
+		Attack();
 		IsInputBeat = true;
 	}
 
@@ -136,11 +137,8 @@ bool Player::Movement()
 
 bool Player::Attack()
 {
-	if(input->Trigger(DIK_RETURN)){
-		weapon->Attack();
-		return true;
-	}
-	return false;
+	weapon->Attack();
+	return true;
 }
 
 void Player::Damage()

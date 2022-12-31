@@ -100,7 +100,7 @@ void Audio::LoadWave(int number, const char *filename)
 	soundDatas.insert(std::make_pair(number, soundData));
 }
 
-void Audio::PlayWave(int number, float volume)
+void Audio::PlayWave(int number, float volume, bool IsLoop)
 {
 	SoundData& soundData = soundDatas[number];
 
@@ -118,8 +118,14 @@ void Audio::PlayWave(int number, float volume)
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 	buf.AudioBytes = soundData.dataSize;
 
+	//ループ
+	if(IsLoop){
+		buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+	}
+
 	//波形データの再生
 	result = pSourceVoice->SubmitSourceBuffer(&buf);
-	result = pSourceVoice->Start();
 	result = pSourceVoice->SetVolume(volume);
+	result = pSourceVoice->Start();
 }
+

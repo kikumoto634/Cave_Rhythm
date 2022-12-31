@@ -16,13 +16,18 @@ public:
 
 
 	//Getter
+	//計測時間
 	inline double GetTimer()	{return timer;}
-	inline double GetTimer_Interger()	{return timer_Interger;}
+	//初期化計測時間
+	inline double GetInitializeTime()	{return InitTimer;}
+	//ビート終了タイミング
 	inline bool GetIsRhythm()	{return IsRhythm;}
-	inline double GetMessureTime()	{return messureTime;}
-	inline double GetSubRhythm()	{return SubRhythm;}
+	//終了時の時間
+	inline double GetBeatTime() {return messureTime;}
+	//入力誤差
 	inline double GetHighTime()	{return HighTime;}
 	inline double GetLowTime()	{return LowTime;}
+	//BPM
 	inline double GetBPM()	{return bpm;}
 
 	//Setter

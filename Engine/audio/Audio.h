@@ -63,7 +63,7 @@ public://メンバ関数
 	void LoadWave(int number, const char* filename);
 
 	//サウンド再生
-	void PlayWave(int number, float volume = 1.0f);
+	void PlayWave(int number, float volume = 1.0f, bool IsLoop = false);
 
 private://メンバ変数
 	//XAudio2のインスタンス

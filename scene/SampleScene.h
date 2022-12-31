@@ -100,10 +100,10 @@ private:
 	bool IsBGM = false;
 
 	//“ü—ÍƒŠƒYƒ€
-	bool IsOutSafe = false;
 	clock_t inputClock;
 	double inputTime;
 	int combo = 0;
+	bool IsJudge = false;
 
 	//“G
 	std::list<std::unique_ptr<Enemy>> enemy;
