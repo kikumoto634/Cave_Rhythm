@@ -58,6 +58,7 @@ void SampleScene::Initialize()
 	audio->LoadWave(0, "Resources/sound/rhythm.wav");
 	audio->LoadWave(1, "Resources/sound/miss.wav");
 	audio->LoadWave(2, "Resources/sound/kari01.wav");
+	audio->LoadWave(3, "Resources/sound/damage.wav");
 
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
@@ -147,7 +148,7 @@ void SampleScene::Update()
 		else{
 			debugText->Print("NO", 0,560,1.2f);
 			combo = 0;
-			audio->PlayWave(1,0.5f);
+			audio->PlayWave(1,0.2f);
 		}
 	}
 
@@ -155,7 +156,7 @@ void SampleScene::Update()
 	if(rhythmManager->GetIsRhythmEnd()){
 		
 		//SE
-		audio->PlayWave(0,0.5f);
+		audio->PlayWave(0,0.25f);
 
 		//各オブジェクト処理
 		player->SetIsBeatEnd(true);
@@ -170,6 +171,7 @@ void SampleScene::Update()
 	}
 
 #pragma region _3D更新
+	if(player->GetIsDamageSound())	audio->PlayWave(3,0.2f);
 	player->Update(camera);
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		(*it)->Update(camera);

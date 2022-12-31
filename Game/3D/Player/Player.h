@@ -40,6 +40,7 @@ public:
 	//Getter
 	inline int GetHP()	{return HP;}
 	inline bool GetIsMovement()	{return IsMovement;}
+	inline bool GetIsDamageSound()	{return IsDamageSound;}
 
 	//Setter
 	inline void SetHP(int _HP)	{HP = _HP;}
@@ -74,6 +75,7 @@ private:
 
 	//ダメージ
 	bool IsDamage = false;
+	bool IsDamageSound = false;
 	//無敵時間(フレーム)
 	const int DamageFrame = 120;
 	int damageCurrentFrame = 0;

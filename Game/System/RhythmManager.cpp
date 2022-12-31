@@ -9,6 +9,7 @@ void RhythmManager::InitializeMeasurement(clock_t _clock)
 
 void RhythmManager::StartMeasurement(clock_t _clock)
 {
+	BPMTime = (1*secondFrame/bpm);
 	this->clock = _clock;
 	timer = (static_cast<double>(this->clock)/CLOCKS_PER_SEC) - InitTimer;
 }
@@ -28,13 +29,15 @@ void RhythmManager::BeatMoveUp()
 		judgeTimeBase = timer;
 
 		IsRhythmEnd = true;
-		moveUpNumber += 1;
+		moveUpNumber += BPMTime;
 	}
 }
 
 bool RhythmManager::JudgeRhythm()
 {
-	if(inputJudgeTime <= (judgeTimeBase + 0.25) && judgeTimeBase <= inputJudgeTime){
+	double BeatTime = BPMTime/4;
+
+	if(inputJudgeTime <= (judgeTimeBase + BeatTime) && judgeTimeBase <= inputJudgeTime){
 		return true;
 	}
 

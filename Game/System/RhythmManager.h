@@ -55,8 +55,8 @@ private:
 	//BPMŒvŽZŽ®
 	double BPMTime = (1*secondFrame/bpm);
 	//BPM
-	double bpm = 60;
+	const double bpm = 90;
 	//ˆê•b(frame)
-	double secondFrame = 60;
+	const double secondFrame = 60;
 };
 

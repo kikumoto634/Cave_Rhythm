@@ -43,6 +43,7 @@ void Player::Update(Camera *camera)
 	this->camera = camera;
 	
 	IsMovement = false;
+	IsDamageSound = false;
 	//ˆÚ“®AUŒ‚
 	if(Movement()){
 		Attack();
@@ -146,6 +147,7 @@ void Player::Damage()
 {
 	if(IsDamage) return;
 	IsDamage = true;
+	IsDamageSound = true;
 	HP -= 1;
 }
 
