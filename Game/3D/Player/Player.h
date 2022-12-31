@@ -39,6 +39,7 @@ public:
 
 	//Getter
 	inline int GetHP()	{return HP;}
+	inline bool GetIsMovement()	{return IsMovement;}
 
 	//Setter
 	inline void SetHP(int _HP)	{HP = _HP;}
@@ -77,8 +78,8 @@ private:
 	const int DamageFrame = 120;
 	int damageCurrentFrame = 0;
 
-	//入力ビート
-	bool IsInputBeat = false;
+	//入力フラグ
+	bool IsMovement = false;
 
 	//入力
 	Input* input = nullptr;

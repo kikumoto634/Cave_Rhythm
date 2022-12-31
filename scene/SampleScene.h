@@ -100,8 +100,6 @@ private:
 	bool IsBGM = false;
 
 	//“ü—ÍƒŠƒYƒ€
-	clock_t inputClock;
-	double inputTime;
 	int combo = 0;
 	bool IsJudge = false;
 

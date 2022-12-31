@@ -42,10 +42,11 @@ void Player::Update(Camera *camera)
 {
 	this->camera = camera;
 	
+	IsMovement = false;
 	//ˆÚ“®AUŒ‚
 	if(Movement()){
 		Attack();
-		IsInputBeat = true;
+		IsMovement = true;
 	}
 
 	//”I—¹

@@ -55,8 +55,9 @@ void SampleScene::Initialize()
 	//オーディオ
 	audio = new Audio();
 	audio->Initialize();
-	audio->LoadWave(0, "Resources/rhythm.wav");
-	audio->LoadWave(1, "Resources/MEDIUM-040_T120B07A03_e46HaR52rcg.wav");
+	audio->LoadWave(0, "Resources/sound/rhythm.wav");
+	audio->LoadWave(1, "Resources/sound/miss.wav");
+	audio->LoadWave(2, "Resources/sound/kari01.wav");
 
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
@@ -94,10 +95,6 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
-	//リズム計測
-	rhythmManager->StartMeasurement(clock());
-	rhythmManager->Update();
-
 	BaseScene::Update();
 
 #pragma region 入力処理
@@ -118,10 +115,9 @@ void SampleScene::Update()
 	}
 
 	//ビート入力
-	if(input->Trigger(DIK_UP) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_RIGHT) || input->Trigger(DIK_LEFT)){
+	if(player->GetIsMovement()){
 		
-		inputClock = clock();
-		inputTime = (static_cast<double>(inputClock)/CLOCKS_PER_SEC) - rhythmManager->GetInitializeTime();
+		rhythmManager->InputBeat();
 	}
 
 	//敵出現
@@ -173,19 +169,12 @@ void SampleScene::Update()
 
 #pragma endregion 汎用更新
 
+	//リズム計測
+	rhythmManager->StartMeasurement(clock());
+	rhythmManager->Update();
+
 	//拍切り替え時
 	if(rhythmManager->GetIsRhythm()){
-
-		//動画撮影、描画されている時間では計算がおかしい、更新処理で取得した時間がおかしいのか、下の条件式がおかしい
-		IsJudge = false;
-		//成否処理
-		if(rhythmManager->GetHighTime() >= inputTime && inputTime >= rhythmManager->GetLowTime()){
-			combo+=1;
-			IsJudge = true;
-		}
-		else{
-			combo = 0;
-		}
 
 		//効果音
 		audio->PlayWave(0);
@@ -201,8 +190,24 @@ void SampleScene::Update()
 		}
 		//BGM再生
 		if(!IsBGM){
-			audio->PlayWave(1,0.1f,true); 
+			audio->PlayWave(2,0.1f,true); 
 			IsBGM = true;
+		}
+
+		//動画撮影、描画されている時間では計算がおかしい、更新処理で取得した時間がおかしいのか、下の条件式がおかしい
+		IsJudge = false;
+		//成否処理
+		if(rhythmManager->JudgeRhythm()){
+			combo+=1;
+			IsJudge = true;
+		}
+		else{
+
+			//コンボ切れ
+			if(combo >= 1){
+				combo = 0;
+				audio->PlayWave(1, 0.25f);
+			}
 		}
 	}
 
@@ -245,8 +250,8 @@ void SampleScene::Draw()
 
 
 	debugText->Printf(0,580, 1.f, "Time : %lf[ms]", rhythmManager->GetTimer());
-	debugText->Printf(0,600, 1.f, "GooDTime : %lf[ms]", rhythmManager->GetBeatTime());
-	debugText->Printf(0,620, 1.f, "InputTime : %lf[ms]", inputTime);
+	debugText->Printf(0,600, 1.f, "GoodTime  : %lf[ms],  HighTime : %lf[ms], LowTime : %lf[ms]", rhythmManager->GetBeatTime(), rhythmManager->GetHighTime(), rhythmManager->GetLowTime());
+	debugText->Printf(0,620, 1.f, "InputTime : %lf[ms]", rhythmManager->GetInputTime());
 	debugText->Printf(300, 640, 1.f, "Judge : %d [1:Good, 0:Bad]", IsJudge);
 
 
