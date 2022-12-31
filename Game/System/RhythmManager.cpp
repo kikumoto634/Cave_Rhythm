@@ -13,51 +13,30 @@ void RhythmManager::StartMeasurement(clock_t _clock)
 	timer = (static_cast<double>(this->clock)/CLOCKS_PER_SEC) - InitTimer;
 }
 
-void RhythmManager::Update()
+void RhythmManager::InputRhythm()
 {
-	//リセット
-	IsRhythm = false;
-
-	Input* input = nullptr;
-	input = Input::GetInstance();
-	if(input->Trigger(DIK_Z)){
-		bool IsFlag = true;
-
-		if(messureTime == inputTime){
-			bool IsAA = true;
-		}
-
-	}
-
-	//BPM分立ったら
-	if(timer >= timer_Interger){
-		BPMTime = (1*secondFrame/bpm);
-
-		//小節終了(リズムカウント時の時間)
-		messureTime = timer;
-		//入力振れ幅計算(60BPM 一秒に一回 0.25)
-		HighTime = messureTime + (static_cast<double>((60/bpm)/4))*2;
-		LowTime = messureTime - (static_cast<double>((60/bpm)/4));
-		//フラグ
-		IsRhythm = true;
-		//秒数(整数)更新
-		timer_Interger += BPMTime;
-	}
+	inputJudgeTime = timer;
 }
 
-bool RhythmManager::InputBeat()
+void RhythmManager::BeatMoveUp()
 {
-	inputTime = (static_cast<double>(clock)/CLOCKS_PER_SEC) - InitTimer;
-	return true;
+	IsRhythmEnd = false;
+	//繰り上がり値より整数部分が大きくなったら繰り上がり
+	if(timer >= moveUpNumber){
+
+		//ベース時間
+		judgeTimeBase = timer;
+
+		IsRhythmEnd = true;
+		moveUpNumber += 1;
+	}
 }
 
 bool RhythmManager::JudgeRhythm()
 {
-	if(inputTime <= HighTime && LowTime <= inputTime){
+	if(inputJudgeTime <= (judgeTimeBase + 0.25) && judgeTimeBase <= inputJudgeTime){
 		return true;
 	}
-	if(messureTime == inputTime){
-		return true;
-	}
+
 	return false;
 }

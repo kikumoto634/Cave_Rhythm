@@ -6,74 +6,57 @@ class RhythmManager
 {
 	//メンバ関数
 public:
+	//初期化時の計算時間差分用
 	void InitializeMeasurement(clock_t _clock);
 
 	//計測開始
 	void StartMeasurement(clock_t _clock);
 
-	//更新
-	void Update();
+	//入力
+	void InputRhythm();
 
-	//タイミング入力
-	bool InputBeat();
+	//ビートくり返し
+	void BeatMoveUp();
 
-	//リズム判定
 	bool JudgeRhythm();
-
 
 	//Getter
 	//計測時間
 	inline double GetTimer()	{return timer;}
-	//初期化計測時間
-	inline double GetInitializeTime()	{return InitTimer;}
-	//ビート終了タイミング
-	inline bool GetIsRhythm()	{return IsRhythm;}
-	//終了時の時間
-	inline double GetBeatTime() {return messureTime;}
-	//入力誤差
-	inline double GetHighTime()	{return HighTime;}
-	inline double GetLowTime()	{return LowTime;}
-	//BPM
-	inline double GetBPM()	{return bpm;}
-	//入力時間
-	inline double GetInputTime()	{return inputTime;}
-
-
-	//Setter
-	inline void SetBPM(double _bpm)	{bpm = _bpm;}
+	//判別時間のベース
+	inline double GetJudgeTimeBase()	{return judgeTimeBase;}
+	//判別用入力時間
+	inline double GetInputJudgeTime()	{return inputJudgeTime;}
+	//ビートタイミング
+	inline bool GetIsRhythmEnd()	{return IsRhythmEnd;}
 
 
 	//メンバ変数
 private:
+	//include "clock.h"使用
 	clock_t clock;
 
-	//計測開始
-	bool IsMeasurement = false;
-
-	//clockをdoubleに
+	//初期化時の時間計算差分
 	double InitTimer = 0;
+	//更新時の時間(Main)
 	double timer = 0;
-	//タイマーの整数
-	double timer_Interger = 1;	
-	//リズムフラグ
-	bool IsRhythm = false;
 
-	//リズムカウント時の時間
-	double messureTime = 0;
+	//繰り上がり(リズムタイミング終了)
+	bool IsRhythmEnd = false;
+	//繰り上がり判別用整数
+	double moveUpNumber = 0;
+
+	//判別時間のベース
+	double judgeTimeBase = 0;
+
+	//判別用、入力時間
+	double inputJudgeTime = 0;
 
 	//BPM計算式
 	double BPMTime = (1*secondFrame/bpm);
-	//入力リズムの振れ幅
-	double HighTime = 0;
-	double LowTime = 0;
-
 	//BPM
 	double bpm = 60;
 	//一秒(frame)
 	double secondFrame = 60;
-
-
-	//入力
-	double inputTime;
 };
 

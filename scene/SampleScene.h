@@ -99,9 +99,8 @@ private:
 	//BGM
 	bool IsBGM = false;
 
-	//“ü—ÍƒŠƒYƒ€
 	int combo = 0;
-	bool IsJudge = false;
+	bool IsRhythmInput = false;
 
 	//“G
 	std::list<std::unique_ptr<Enemy>> enemy;
