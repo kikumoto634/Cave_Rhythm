@@ -4,7 +4,6 @@
 
 #include "../Game/3D/SampleFbxObject/SampleFbxObject.h"
 #include "../Game/3D/SampleObjObject/SampleObjObject.h"
-#include "../Engine/base/ParticleManager.h"
 #include "../Engine/3D/TouchableObject.h"
 
 #include "../Game/3D/Player/Player.h"
@@ -70,9 +69,6 @@ private:
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
 
-	//パーティクル
-	ParticleManager* particle = nullptr;
-	WorldTransform particleWorld = {};
 
 	//オーディオ
 	Audio* audio = nullptr;

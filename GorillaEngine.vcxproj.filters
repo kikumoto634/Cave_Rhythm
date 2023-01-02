@@ -315,6 +315,9 @@
     <ClCompile Include="Game\3D\Player\PlayerWeapon.cpp">
       <Filter>ソース ファイル\Game\3D\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3D\ParticleObject.cpp">
+      <Filter>ソース ファイル\Game\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -475,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Player\PlayerWeapon.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\ParticleObject.h">
+      <Filter>ヘッダー ファイル\Game\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

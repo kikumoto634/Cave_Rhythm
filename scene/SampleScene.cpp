@@ -48,10 +48,6 @@ void SampleScene::Initialize()
 	//衝突マネージャー
 	collisionManager = CollisionManager::GetInstance();
 
-	//パーティクル
-	particle = ParticleManager::GetInstance();
-	particleWorld.Initialize();
-
 	//オーディオ
 	audio = new Audio();
 	audio->Initialize();
@@ -129,6 +125,7 @@ void SampleScene::Update()
 	if(input->Trigger(DIK_SPACE)){
 		EnemyPop({0,-4,12.5}, {-1,0,0});
 	}
+
 #endif // _DEBUG
 
 	if(player->GetIsMovement()){
@@ -203,11 +200,6 @@ void SampleScene::Update()
 
 	//すべての衝突をチェック
 	collisionManager->CheckAllCollisions();
-
-	//パーティクル
-	particle->Update(particleWorld, camera);
-	particleWorld.UpdateMatrix();
-
 #pragma endregion 汎用更新
 
 	BaseScene::EndUpdate();
@@ -235,7 +227,9 @@ void SampleScene::Draw()
 	skydome->Draw();
 
 #pragma region パーティクル
-	particle->Draw();
+	for(auto it = enemy.begin(); it != enemy.end(); it++){
+		(*it)->ParticleDraw();
+	}
 #pragma endregion パーティクル
 
 #pragma endregion _3D描画
@@ -298,8 +292,6 @@ void SampleScene::Finalize()
 
 	delete lightGroup;
 	lightGroup = nullptr;
-
-	particleWorld = {};
 
 #pragma endregion 汎用解放
 

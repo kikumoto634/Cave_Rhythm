@@ -1,8 +1,14 @@
 #pragma once
 #include "../BaseObjObject.h"
+#include "../../3D/ParticleObject.h"
 
 class Enemy : public BaseObjObject
 {
+//定数
+private:
+	//ビートx回数終了時にPOP
+	const int POP_COUNT = 3;
+
 //メンバ変数
 public:
 	~Enemy();
@@ -23,6 +29,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// パーティクル描画
+	/// </summary>
+	void ParticleDraw();
+
+	/// <summary>
 	/// 後処理
 	/// </summary>
 	void Finalize();
@@ -31,6 +42,9 @@ public:
 	/// 当たり判定
 	/// </summary>
 	void OnCollision(const CollisionInfo& info) override;
+
+	//出現予定エフェクト
+	void PopParticleApp();
 
 	//Getter
 
@@ -52,4 +66,9 @@ private:
 
 	//死亡時、敵保存地点
 	Vector3 DeadPos = {50,50,50};
+
+	//ポップ
+	bool IsPop = false;
+	int popCount = 0;
+	ParticleObject* PopParticle = nullptr;
 };

@@ -8,6 +8,7 @@
 
 #include "../Engine/math/Vector/Vector2.h"
 #include "../Engine/math/Vector/Vector3.h"
+#include "../Engine/math/Vector/Vector4.h"
 #include "../Engine/base/DirectXCommon.h"
 #include "../Engine/base/TextureManager.h"
 #include "../../camera/Camera.h"
@@ -33,6 +34,7 @@ public:
 	struct ConstBufferData{
 		DirectX::XMMATRIX mat;	//3D変換行列
 		DirectX::XMMATRIX matBillboard;	//ビルボード行列
+		Vector4 color;
 	};
 
 	//パーティクル粒
@@ -97,6 +99,9 @@ public:
 	//パーティクル描画数
 	UINT GetParticle()	{return (UINT)std::distance(particle.begin(), particle.end());}
 
+	//Setter
+	void SetColor(Vector4 color)	{this->color = color;}
+
 private:
 	/// <summary>
 	/// グラフィックパイプライン初期化
@@ -142,6 +147,6 @@ private:
 	//テクスチャデータ
 	UINT texNumber = 0;
 
-	XMFLOAT4 color = {1,1,1,1};
+	Vector4 color = {0,1,0,0.5};
 };
 

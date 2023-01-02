@@ -22,6 +22,10 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
+	//パーティクル
+	PopParticle = new ParticleObject();
+	PopParticle->Initialize();
+
 	//回転
 	if(direction.x == +1) world.rotation.y = XMConvertToRadians(90.f);
 	else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
@@ -38,7 +42,23 @@ void Enemy::Update(Camera *camera)
 {
 	this->camera = camera;
 
-	if(!IsDead){
+	if(!IsPop){
+		//拍終了
+		if(IsBeatEnd){
+			popCount += 1;
+			IsBeatEnd = false;
+
+			if(popCount >= POP_COUNT){
+				IsPop = true;
+			}
+		}
+
+		PopParticleApp();
+
+		PopParticle->Update(this->camera);
+	}
+
+	if(!IsDead && IsPop){
 
 		//拍終了
 		if(IsBeatEnd){
@@ -124,13 +144,22 @@ void Enemy::Update(Camera *camera)
 
 void Enemy::Draw()
 {
+	if(!IsPop) return;
 	if(IsDead) return;
 
 	BaseObjObject::Draw();
 }
 
+void Enemy::ParticleDraw()
+{
+	if(IsPop) return;
+
+	PopParticle->Draw();
+}
+
 void Enemy::Finalize()
 {
+	PopParticle->Finalize();
 	BaseObjObject::Finalize();
 }
 
@@ -140,5 +169,25 @@ void Enemy::OnCollision(const CollisionInfo &info)
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		SetPosition(DeadPos);
 		IsDead = true;
+	}
+}
+
+void Enemy::PopParticleApp()
+{
+	
+	for (int i = 0; i < 10; i++) {
+
+		const float rnd_vel = 0.025f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.05f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		const float rnd_acc = 0.001f;
+		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+
+		PopParticle->ParticleSet(40, GetPosition(),vel,acc,0.1f,0.5f,1,{1,0,1,1});
+		PopParticle->ParticleAppearance();
 	}
 }

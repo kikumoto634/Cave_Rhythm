@@ -128,6 +128,7 @@ void ParticleManager::Update(WorldTransform worldTransform, Camera* camera)
 
 	constMap->mat = matWorld * matView * matProjection;
 	constMap->matBillboard = camera->GetBillboard();
+	constMap->color = color;
 }
 
 void ParticleManager::Draw()
@@ -326,14 +327,14 @@ void ParticleManager::InitializeGraphicsPipeline()
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;		//デストの値を  0% 使う	(デスティネーションカラー： 既にキャンバスに描かれている色)
 	
 	//半透明合成
-	/*blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
 	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
-	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;*/
+	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 
 	//加算合成
-	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//設定
-	blenddesc.SrcBlend = D3D12_BLEND_ONE;			//ソースの値を 何% 使う
-	blenddesc.DestBlend = D3D12_BLEND_ONE;	//デストの値を 何% 使う
+	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//設定
+	//blenddesc.SrcBlend = D3D12_BLEND_ONE;			//ソースの値を 何% 使う
+	//blenddesc.DestBlend = D3D12_BLEND_ONE;	//デストの値を 何% 使う
 	
 	//減算合成
 	/*blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
