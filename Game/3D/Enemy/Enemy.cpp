@@ -31,11 +31,6 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 	else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
 	else if(direction.z == +1) world.rotation.y = XMConvertToRadians(0.f);
 	else if(direction.z == -1) world.rotation.y = XMConvertToRadians(180.f);
-
-	//コライダー追加
-	float radius = 0.6f;
-	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
-	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 }
 
 void Enemy::Update(Camera *camera)
@@ -50,6 +45,11 @@ void Enemy::Update(Camera *camera)
 
 			if(popCount >= POP_COUNT){
 				IsPop = true;
+
+				//コライダー追加
+				float radius = 0.6f;
+				SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
+				collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 			}
 		}
 
@@ -82,15 +82,8 @@ void Enemy::Update(Camera *camera)
 
 		//落下処理
 		if(!IsGround){
-			//下向き加速度
-			const float fallAcc = -0.01f;
-			const float fallVYMin = -0.5f;
-			//加速
-			fallV.y = max(fallV.y + fallAcc, fallVYMin);
-			//移動
-			world.translation.x += fallV.x;
-			world.translation.y += fallV.y;
-			world.translation.z += fallV.z;
+			//地面がない場所では死亡
+			IsDead = true;
 		}
 
 		//行列、カメラ更新
@@ -127,16 +120,6 @@ void Enemy::Update(Camera *camera)
 				fallV = {};
 			}
 		}
-		//落下状態
-		else if(fallV.y <= 0.0f){
-			if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius()*2.0f)){
-				//着地
-				IsGround = true;
-				world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-				//行列の更新など
-				BaseObjObject::Update(this->camera);
-			}
-		}
 	}
 
 	BaseObjObject::Update(this->camera);
@@ -165,7 +148,7 @@ void Enemy::Finalize()
 
 void Enemy::OnCollision(const CollisionInfo &info)
 {
-	//CollisionManager::RemoveCollider(collider);
+	if(!IsPop) return;
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		SetPosition(DeadPos);
 		IsDead = true;
