@@ -79,7 +79,7 @@ private:
 	std::unique_ptr<Player> player;
 
 	//Plane
-	static const int DIV_NUM = 13;
+	static const int DIV_NUM = 11;
 	static const float Plane_Size;
 	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
 
