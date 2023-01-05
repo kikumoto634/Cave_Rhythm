@@ -138,14 +138,21 @@ void SampleScene::Update()
 	//リズム判別
 	if(IsRhythmInput){
 		IsRhythmInput = false;
-		if(rhythmManager->JudgeRhythm()){
-			debugText->Print("YES", 0,560,1.2f);
+
+		//High(入力が遅く、judgeTimeが更新された状態での更新)
+		if(rhythmManager->HighJudgeRhythm()){
 			combo += 1;
 		}
-		else{
-			debugText->Print("NO", 0,560,1.2f);
-			combo = 0;
-			audio->PlayWave(1,0.2f);
+		//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
+		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
+			if(rhythmManager->LowJudgeRhythm()){
+				combo += 1;
+			}
+			//ミス
+			else{
+				combo = 0;
+				audio->PlayWave(1,0.2f);
+			}
 		}
 	}
 

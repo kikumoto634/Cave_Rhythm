@@ -44,6 +44,7 @@ void Player::Update(Camera *camera)
 	
 	IsMovement = false;
 	IsDamageSound = false;
+
 	//ˆÚ“®AUŒ‚
 	if(Movement()){
 		Attack();

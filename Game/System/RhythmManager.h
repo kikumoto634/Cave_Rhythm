@@ -12,13 +12,16 @@ public:
 	//計測開始
 	void StartMeasurement(clock_t _clock);
 
+
+
 	//入力
 	void InputRhythm();
 
 	//ビートくり返し
 	void BeatMoveUp();
 
-	bool JudgeRhythm();
+	bool HighJudgeRhythm();
+	bool LowJudgeRhythm();
 
 	//Getter
 	//計測時間
@@ -27,9 +30,10 @@ public:
 	inline double GetJudgeTimeBase()	{return judgeTimeBase;}
 	//判別用入力時間
 	inline double GetInputJudgeTime()	{return inputJudgeTime;}
+	//繰り上がり用
+	inline double GetMoveUpNumber()	{return moveUpNumber;}
 	//ビートタイミング
 	inline bool GetIsRhythmEnd()	{return IsRhythmEnd;}
-
 
 	//メンバ変数
 private:
@@ -45,10 +49,10 @@ private:
 	bool IsRhythmEnd = false;
 	//繰り上がり判別用整数
 	double moveUpNumber = 0;
-
 	//判別時間のベース
 	double judgeTimeBase = 0;
-
+	//前回の判定時間
+	double oldJudgeTimeBase = 0;
 	//判別用、入力時間
 	double inputJudgeTime = 0;
 
