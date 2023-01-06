@@ -4,15 +4,22 @@
 
 class RhythmManager
 {
-	//メンバ関数
+//定数
+private:
+	//BPM
+	const double bpm = 60;
+	//一秒(frame)
+	const double secondFrame = 60;
+	//判定時間の差分絶対値 BPMタイムの何分割分
+	const double RhythmSubTime_Split = 8;
+
+//メンバ関数
 public:
 	//初期化時の計算時間差分用
 	void InitializeMeasurement(clock_t _clock);
 
 	//計測開始
 	void StartMeasurement(clock_t _clock);
-
-
 
 	//入力
 	void InputRhythm();
@@ -58,9 +65,5 @@ private:
 
 	//BPM計算式
 	double BPMTime = (1*secondFrame/bpm);
-	//BPM
-	const double bpm = 60;
-	//一秒(frame)
-	const double secondFrame = 60;
 };
 

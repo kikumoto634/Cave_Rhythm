@@ -35,7 +35,7 @@ void RhythmManager::BeatMoveUp()
 
 bool RhythmManager::HighJudgeRhythm()
 {
-	double BeatTime = BPMTime/4;
+	double BeatTime = BPMTime/RhythmSubTime_Split;
 
 	if(inputJudgeTime <= (judgeTimeBase + BeatTime) && judgeTimeBase <= inputJudgeTime){
 		return true;
@@ -45,9 +45,9 @@ bool RhythmManager::HighJudgeRhythm()
 
 bool RhythmManager::LowJudgeRhythm()
 {
-	double BeatTime = BPMTime;
+	double BeatTime = BPMTime/RhythmSubTime_Split;
 
-	if(inputJudgeTime <= (judgeTimeBase + BeatTime) && (judgeTimeBase + BeatTime - BeatTime/4) <= inputJudgeTime){
+	if(inputJudgeTime <= (judgeTimeBase + BPMTime) && (judgeTimeBase + BPMTime - BeatTime) <= inputJudgeTime){
 		return true;
 	}
 	return false;
