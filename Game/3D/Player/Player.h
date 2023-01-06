@@ -37,17 +37,18 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+
 	//Getter
 	inline int GetHP()	{return HP;}
-	inline bool GetIsMovement()	{return IsMovement;}
 	inline bool GetIsDamageSound()	{return IsDamageSound;}
+	inline bool GetIsMovement()	{return IsMovement;}
 
 	//Setter
 	inline void SetHP(int _HP)	{HP = _HP;}
 
 private:
 	//移動
-	bool Movement();
+	bool MovementInput();
 
 	//攻撃
 	bool Attack();
@@ -80,11 +81,13 @@ private:
 	const int DamageFrame = 120;
 	int damageCurrentFrame = 0;
 
-	//入力フラグ
-	bool IsMovement = false;
-
 	//入力
 	Input* input = nullptr;
+	bool IsMovement = false;
+
+	//移動
+	Vector3 MoveTransform = {0,0,0};
+	Vector3 MoveRotation = {0,0,0};
 
 	//コライダー
 	SphereCollider* sphereCollider = nullptr;

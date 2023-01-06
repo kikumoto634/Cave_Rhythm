@@ -46,7 +46,7 @@ void Player::Update(Camera *camera)
 	IsDamageSound = false;
 
 	//ˆÚ“®AUŒ‚
-	if(Movement()){
+	if(MovementInput() && !IsMovement){
 		Attack();
 		IsMovement = true;
 	}
@@ -115,7 +115,7 @@ void Player::OnCollision(const CollisionInfo &info)
 }
 
 
-bool Player::Movement()
+bool Player::MovementInput()
 {
 	//•às
 	if(input->Trigger(DIK_UP)){

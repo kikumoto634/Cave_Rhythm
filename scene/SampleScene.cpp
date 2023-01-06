@@ -175,11 +175,11 @@ void SampleScene::Update()
 	}
 
 #pragma region _3DXV
-	if(player->GetIsDamageSound())	audio->PlayWave(3,0.2f);
-	player->Update(camera);
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		(*it)->Update(camera);
 	}
+	if(player->GetIsDamageSound())	audio->PlayWave(3,0.2f);
+	player->Update(camera);
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Update(camera);

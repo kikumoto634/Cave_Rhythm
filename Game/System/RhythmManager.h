@@ -7,7 +7,7 @@ class RhythmManager
 //’è”
 private:
 	//BPM
-	const double bpm = 60;
+	const double bpm = 90;
 	//ˆê•b(frame)
 	const double secondFrame = 60;
 	//”»’èŠÔ‚Ì·•ªâ‘Î’l BPMƒ^ƒCƒ€‚Ì‰½•ªŠ„•ª
