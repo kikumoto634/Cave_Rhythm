@@ -53,8 +53,10 @@ void SampleScene::Initialize()
 	audio->Initialize();
 	audio->LoadWave(0, "Resources/sound/rhythm.wav");
 	audio->LoadWave(1, "Resources/sound/miss.wav");
-	audio->LoadWave(2, "Resources/sound/kari01.wav");
-	audio->LoadWave(3, "Resources/sound/damage.wav");
+	audio->LoadWave(2, "Resources/sound/damage.wav");
+	audio->LoadWave(3, "Resources/sound/ex)_BPM90.wav");
+	audio->LoadWave(4, "Resources/sound/ex)_BPM120.wav");
+	audio->LoadWave(5, "Resources/sound/ex)_BPM180.wav");
 
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
@@ -95,8 +97,9 @@ void SampleScene::Update()
 	//リズム計測
 	rhythmManager->StartMeasurement(clock());
 	//計測開始時
-	if(rhythmManager->GetTimer() == 0){
-		audio->PlayWave(2, 0.15f, true);
+	if(!IsBGM){
+		IsBGM = true;
+		audio->PlayWave(3, 0.5f, true);
 	}
 	//リズム繰り上がり
 	rhythmManager->BeatMoveUp();
@@ -178,7 +181,7 @@ void SampleScene::Update()
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		(*it)->Update(camera);
 	}
-	if(player->GetIsDamageSound())	audio->PlayWave(3,0.2f);
+	if(player->GetIsDamageSound())	audio->PlayWave(2,0.2f);
 	player->Update(camera);
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
