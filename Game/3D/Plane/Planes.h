@@ -44,5 +44,8 @@ public:
 
 private:
 	bool IsPlayerContact = false;
+
+	//ˆê“xÚG‰ºêŠ‚Í‰Šú‰»
+	bool IsInit = false;
 };
 

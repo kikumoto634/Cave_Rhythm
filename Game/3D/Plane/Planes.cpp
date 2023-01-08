@@ -23,13 +23,21 @@ void Planes::Update(Camera *camera)
 {
 	this->camera = camera;
 
-	//拍終わり時 && プレイヤー接触時
-	if(IsBeatEnd && IsPlayerContact){
+	//拍終わり時
+	if(IsBeatEnd){
 		
-		//サイズ変更
-		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
-			IsPlayerContact = false;
-			IsBeatEnd = false;
+		//プレイヤー接触時
+		if(IsPlayerContact){
+			//サイズ変更
+			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+				IsPlayerContact = false;
+				IsBeatEnd = false;
+				IsInit = true;
+			}
+		}
+		else if(IsInit && !IsPlayerContact){
+			object->SetColor({1.f,1.f,1.f,1.f});
+			IsInit = false;
 		}
 	}
 

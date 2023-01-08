@@ -181,6 +181,12 @@
     <Filter Include="ソース ファイル\Game\3D\Enemy">
       <UniqueIdentifier>{08fa4670-8226-41f4-8dc8-d349c14dbec5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\AreaOut">
+      <UniqueIdentifier>{f087101d-ae60-4d1c-b8f5-6e4b958a73da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\AreaOut">
+      <UniqueIdentifier>{150922d6-8d1a-4552-be94-198985816c9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -319,7 +325,7 @@
       <Filter>ソース ファイル\Game\3D</Filter>
     </ClCompile>
     <ClCompile Include="Game\3D\AreaOut\AreaOutRock.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game\3D\AreaOut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -486,7 +492,7 @@
       <Filter>ヘッダー ファイル\Game\3D</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\AreaOut\AreaOutRock.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Game\3D\AreaOut</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
