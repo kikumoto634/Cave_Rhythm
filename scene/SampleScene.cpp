@@ -39,7 +39,7 @@ void SampleScene::Initialize()
 	//ライト
 	lightGroup = LightGroup::Create();
 	//色設定
-	lightGroup->SetAmbientColor({0.25f, 0.25f, 0.25f});
+	lightGroup->SetAmbientColor({0.15f, 0.15f, 0.15f});
 	//3Dオブジェクト(.obj)にセット
 	ObjModelObject::SetLight(lightGroup);
 
@@ -88,6 +88,9 @@ void SampleScene::Initialize()
 
 	skydome = make_unique<SampleObjObject>();
 	skydome->Initialize("skydome", true);
+
+	rock = make_unique<AreaOutRock>();
+	rock->Initialize("AreaRock", true);
 
 #pragma endregion _3D初期化
 
@@ -203,6 +206,7 @@ void SampleScene::Update()
 		}
 	}
 	skydome->Update(camera);
+	rock->Update(camera);
 #pragma endregion _3D更新
 
 #pragma region _2D更新
@@ -246,18 +250,18 @@ void SampleScene::Update()
 
 		//敵の出現
 		ImGui::Text("EnemyPOP");
-		ImGui::InputInt3("EnemyPos X,Z : 0~11", popPosition);
-		ImGui::InputInt3("EnemyDir X,Z : 0or1or-1", popDirection);
+		ImGui::InputInt2("EnemyPos X,Z : 0~11", popPosition);
+		ImGui::InputInt2("EnemyDir X,Z : -1~1", popDirection);
 
 		if (ImGui::Button("POP")) {
 			//座標;
-			Vector3 pos = {(-12.5f + (float)popPosition[0]*2.5f), -4.f, (-12.5f + (float)popPosition[2]*2.5f)};
+			Vector3 pos = {(-12.5f + (float)popPosition[0]*2.5f), -4.f, (-12.5f + (float)popPosition[1]*2.5f)};
 			//方向
 			if(popDirection[0] >= 1)popDirection[0] = 1;
 			else if(popDirection[0] <= -1)popDirection[0] = -1;
-			if(popDirection[2] >= 1)popDirection[2] = 1;
-			else if(popDirection[2] <= -1)popDirection[2] = -1;
-			Vector3 dir = {(float)popDirection[0], 0.f, (float)popDirection[2]};
+			if(popDirection[1] >= 1)popDirection[1] = 1;
+			else if(popDirection[1] <= -1)popDirection[1] = -1;
+			Vector3 dir = {(float)popDirection[0], 0.f, (float)popDirection[1]};
 			//POP
 			EnemyPop(pos, dir);
 		}
@@ -295,10 +299,14 @@ void SampleScene::Draw()
 	}
 	skydome->Draw();
 
+	rock->Draw();
+
 #pragma region パーティクル
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		(*it)->ParticleDraw();
 	}
+
+	rock->ParticleDraw();
 #pragma endregion パーティクル
 
 #pragma endregion _3D描画
@@ -355,6 +363,8 @@ void SampleScene::Finalize()
 	}
 
 	skydome->Finalize();
+
+	rock->Finalize();
 #pragma endregion _3D解放
 
 #pragma region _2D解放

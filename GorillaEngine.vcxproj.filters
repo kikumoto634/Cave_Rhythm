@@ -318,6 +318,9 @@
     <ClCompile Include="Game\3D\ParticleObject.cpp">
       <Filter>ソース ファイル\Game\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3D\AreaOut\AreaOutRock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\ParticleObject.h">
       <Filter>ヘッダー ファイル\Game\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\AreaOut\AreaOutRock.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

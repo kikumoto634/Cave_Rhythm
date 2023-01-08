@@ -9,6 +9,7 @@
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Enemy/Enemy.h"
 #include "../Game/3D/Plane/Planes.h"
+#include "../Game/3D/AreaOut/AreaOutRock.h"
 
 #include "../Game/2D/SampleSprite/SampleSprite.h"
 
@@ -106,6 +107,9 @@ private:
 	//POPä÷êî
 	void EnemyPop(Vector3 pos, Vector3 dir);
 
+	//ä‚
+	std::unique_ptr<AreaOutRock> rock;
+
 #ifdef _DEBUG
 	imguiManager* imgui;
 	bool show_demo_window = false;
@@ -114,8 +118,8 @@ private:
 	bool IsCameraMovementChange = true;
 
 	//ìGPOPèÓïÒ
-	int popPosition[3] = {0, 0, 0};
-	int popDirection[3] = {-1,0,0};
+	int popPosition[2] = {0,0};
+	int popDirection[2] = {-1,0};
 #endif // _DEBUG
 
 
