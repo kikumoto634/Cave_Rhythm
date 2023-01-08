@@ -54,8 +54,8 @@ void Player::Update(Camera *camera)
 	//ˆÚ“®§ŒÀ
 	world.translation.x = max(world.translation.x , -12.5f);
 	world.translation.x = min(world.translation.x , 12.5f);
-	world.translation.z = max(world.translation.z , 0.0f);
-	world.translation.z = min(world.translation.z , 25.0f);
+	world.translation.z = max(world.translation.z , -12.5f);
+	world.translation.z = min(world.translation.z , 12.5f);
 
 
 	//”I—¹

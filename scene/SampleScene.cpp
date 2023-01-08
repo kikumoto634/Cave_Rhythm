@@ -9,6 +9,11 @@
 #include <sstream>
 #include <iomanip>
 
+#ifdef _DEBUG
+#include <imgui.h>
+#endif // _DEBUG
+
+
 using namespace std;
 using namespace DirectX;
 
@@ -34,13 +39,13 @@ void SampleScene::Initialize()
 	//ライト
 	lightGroup = LightGroup::Create();
 	//色設定
-	lightGroup->SetAmbientColor({1,1,1});
+	lightGroup->SetAmbientColor({0.25f, 0.25f, 0.25f});
 	//3Dオブジェクト(.obj)にセット
 	ObjModelObject::SetLight(lightGroup);
 
 	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
+	lightGroup->SetDirLightActive(1, false);
+	lightGroup->SetDirLightActive(2, false);
 
 	//丸影
 	lightGroup->SetCircleShadowActive(0, true);
@@ -61,7 +66,9 @@ void SampleScene::Initialize()
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
 
-	camera->SetEye(Vector3(0.f, 9.f, -18.f));
+	//カメラ
+	camera->SetTarget(Vector3(0.f, 0.f, -12.f));
+	camera->SetEye(Vector3(0.f, 9.f, -30.f));
 
 #pragma endregion 汎用初期化
 
@@ -69,18 +76,18 @@ void SampleScene::Initialize()
 
 	player = make_unique<Player>();
 	player->Initialize("chr_sword");
-	player->SetPosition({0, -4, 0});
+	player->SetPosition({0, -4, -12.5f});
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = make_unique<Planes>();
-			plane[i][j]->Initialize("Block1x1x1");
-			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Plane_Size) + (i*Plane_Size)) ,-5 ,float(j*Plane_Size)});
+			plane[i][j]->Initialize("GroundBlock");
+			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Plane_Size) + (i*Plane_Size)) ,-5 ,float(-((DIV_NUM/2)*Plane_Size) + (j*Plane_Size))});
 		}
 	}
 
 	skydome = make_unique<SampleObjObject>();
-	skydome->Initialize("skydome");
+	skydome->Initialize("skydome", true);
 
 #pragma endregion _3D初期化
 
@@ -90,6 +97,11 @@ void SampleScene::Initialize()
 
 	//リズム
 	rhythmManager->InitializeMeasurement(clock());
+
+#ifdef _DEBUG
+	imgui = new imguiManager();
+	imgui->Initialize(window, dxCommon);
+#endif // _DEBUG
 }
 
 void SampleScene::Update()
@@ -106,27 +118,29 @@ void SampleScene::Update()
 
 	BaseScene::Update();
 
+#ifdef _DEBUG
+	imgui->Begin();
+#endif // _DEBUG
+
 #pragma region 入力処理
 
 #ifdef _DEBUG
 	if(input->Push(DIK_A)){
-		camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
+		if(!IsCameraMovementChange)		camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
+		else if(IsCameraMovementChange)	camera->MoveVector({-1.f, 0.f, 0.f});
 	}
 	else if(input->Push(DIK_D)){
-		camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
+		if(!IsCameraMovementChange)		camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
+		else if(IsCameraMovementChange)	camera->MoveVector({1.f, 0.f, 0.f});
 	}
 
 	if(input->Push(DIK_W)){
-		camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
+		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
+		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, 1.f});
 	}
 	else if(input->Push(DIK_S)){
-		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
-	}
-
-
-	//敵出現
-	if(input->Trigger(DIK_SPACE)){
-		EnemyPop({0,-4,12.5}, {-1,0,0});
+		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
+		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
 	}
 
 #endif // _DEBUG
@@ -212,6 +226,51 @@ void SampleScene::Update()
 	collisionManager->CheckAllCollisions();
 #pragma endregion 汎用更新
 
+#ifdef _DEBUG
+	{
+		//サイズ
+		ImGui::SetNextWindowSize(ImVec2{500,300});
+		//座標
+		ImGui::SetNextWindowPos(ImVec2{0,100});
+		
+		ImGui::Begin("Debug");
+
+		//デモウィンドウ 
+		ImGui::Checkbox("demoWindow", &show_demo_window);
+		//フラグによる出現物
+		if(show_demo_window)	ImGui::ShowDemoWindow(&show_demo_window);
+
+		//カメラ 回転:false , 移動:true
+		ImGui::Text("Camera (true = transform / false = rotation)");
+		ImGui::Checkbox("Change", &IsCameraMovementChange);
+
+		//敵の出現
+		ImGui::Text("EnemyPOP");
+		ImGui::InputInt3("EnemyPos X,Z : 0~11", popPosition);
+		ImGui::InputInt3("EnemyDir X,Z : 0or1or-1", popDirection);
+
+		if (ImGui::Button("POP")) {
+			//座標;
+			Vector3 pos = {(-12.5f + (float)popPosition[0]*2.5f), -4.f, (-12.5f + (float)popPosition[2]*2.5f)};
+			//方向
+			if(popDirection[0] >= 1)popDirection[0] = 1;
+			else if(popDirection[0] <= -1)popDirection[0] = -1;
+			if(popDirection[2] >= 1)popDirection[2] = 1;
+			else if(popDirection[2] <= -1)popDirection[2] = -1;
+			Vector3 dir = {(float)popDirection[0], 0.f, (float)popDirection[2]};
+			//POP
+			EnemyPop(pos, dir);
+		}
+
+		ImGui::End();
+	}
+	
+	
+	//終了
+	imgui->End();
+#endif // _DEBUG
+
+
 	BaseScene::EndUpdate();
 }
 
@@ -269,10 +328,19 @@ void SampleScene::Draw()
 	BaseScene::EndDraw();
 #pragma endregion _2D_UI描画
 
+#ifdef _DEBUG
+	imgui->Draw();
+#endif // _DEBUG
+
+
 }
 
 void SampleScene::Finalize()
 {
+#ifdef _DEBUG
+	imgui->Finalize();
+	delete imgui;
+#endif // _DEBUG
 
 #pragma region _3D解放
 	player->Finalize();

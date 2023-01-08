@@ -25,12 +25,6 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 	//パーティクル
 	PopParticle = new ParticleObject();
 	PopParticle->Initialize();
-
-	//回転
-	if(direction.x == +1) world.rotation.y = XMConvertToRadians(90.f);
-	else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
-	else if(direction.z == +1) world.rotation.y = XMConvertToRadians(0.f);
-	else if(direction.z == -1) world.rotation.y = XMConvertToRadians(180.f);
 }
 
 void Enemy::Update(Camera *camera)
@@ -173,4 +167,15 @@ void Enemy::PopParticleApp()
 		PopParticle->ParticleSet(40, GetPosition(),vel,acc,0.1f,0.5f,1,{1,0,1,1});
 		PopParticle->ParticleAppearance();
 	}
+}
+
+void Enemy::SetDirection(Vector3 _dir)
+{
+	direction = _dir;
+
+	//回転
+	if(direction.x == +1) world.rotation.y = XMConvertToRadians(90.f);
+	else if(direction.x == -1) world.rotation.y = XMConvertToRadians(-90.f);
+	else if(direction.z == +1) world.rotation.y = XMConvertToRadians(0.f);
+	else if(direction.z == -1) world.rotation.y = XMConvertToRadians(180.f);
 }

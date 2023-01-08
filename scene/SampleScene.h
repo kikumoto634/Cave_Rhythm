@@ -22,6 +22,9 @@
 #include <list>
 #include <time.h>
 
+#ifdef _DEBUG
+#include "../Engine/base/imguiManager.h"
+#endif // _DEBUG
 
 class SampleScene : public BaseScene
 {
@@ -102,4 +105,18 @@ private:
 	std::list<std::unique_ptr<Enemy>> enemy;
 	//POP関数
 	void EnemyPop(Vector3 pos, Vector3 dir);
+
+#ifdef _DEBUG
+	imguiManager* imgui;
+	bool show_demo_window = false;
+
+	//カメラ移動、回転変更フラグ
+	bool IsCameraMovementChange = true;
+
+	//敵POP情報
+	int popPosition[3] = {0, 0, 0};
+	int popDirection[3] = {-1,0,0};
+#endif // _DEBUG
+
+
 };

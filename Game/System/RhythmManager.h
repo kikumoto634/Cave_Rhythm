@@ -11,7 +11,7 @@ private:
 	//一秒(frame)
 	const double secondFrame = 60;
 	//判定時間の差分絶対値 BPMタイムの何分割分
-	const double RhythmSubTime_Split = 8;
+	const double RhythmSubTime_Split = 6;
 
 //メンバ関数
 public:

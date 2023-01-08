@@ -49,7 +49,7 @@ public:
 	//Getter
 
 	//Setter
-	void SetDirection(Vector3 _dir)	{direction = _dir;}
+	void SetDirection(Vector3 _dir);
 
 private:
 	//Ú’nƒtƒ‰ƒO
