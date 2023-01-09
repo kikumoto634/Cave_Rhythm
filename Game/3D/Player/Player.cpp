@@ -23,7 +23,7 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	//コライダーの追加
 	float radius = 0.6f;
 	//半径文だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
+	SetCollider(new SphereCollider(XMVECTOR{0,-0.2f,0,0}, radius));
 
 	//当たり判定属性
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);

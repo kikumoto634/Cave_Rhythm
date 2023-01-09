@@ -74,9 +74,10 @@ void SampleScene::Initialize()
 
 #pragma region _3D初期化
 
+	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
-	player->Initialize("chr_sword");
-	player->SetPosition({0, -4, -12.5f});
+	player->Initialize("human2");
+	player->SetPosition({0, 0, -12.5f});
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
