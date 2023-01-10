@@ -118,8 +118,8 @@ private:
 	bool IsCameraMovementChange = true;
 
 	//ìGPOPèÓïÒ
-	int popPosition[2] = {0,0};
-	int popDirection[2] = {-1,0};
+	int popPosition[2] = {5,5};
+	int popDirection[2] = {1,0};
 #endif // _DEBUG
 
 

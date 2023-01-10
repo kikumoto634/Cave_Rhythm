@@ -76,7 +76,7 @@ void SampleScene::Initialize()
 
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
-	player->Initialize("human2");
+	player->Initialize("human1");
 	player->SetPosition({0, 0, -12.5f});
 
 	for(int i = 0; i < DIV_NUM; i++){
