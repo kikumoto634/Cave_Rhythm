@@ -7,7 +7,7 @@ class Enemy : public BaseObjObject
 //定数
 private:
 	//ビートx回数終了時にPOP
-	const int POP_COUNT = 3;
+	const int POP_COUNT = 4;
 
 //メンバ変数
 public:
@@ -60,6 +60,9 @@ private:
 	bool IsDead = false;
 	//スケール
 	bool IsScale = false;
+
+	//待機
+	bool IsWait = false;
 
 	//移動方向
 	Vector3 direction = {-1,0,0};

@@ -126,19 +126,21 @@ void AreaOutRock::ScaleRandom()
 
 void AreaOutRock::CreateParticle()
 {
-		// X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
+		// X,Y,Z全て[-35.0f,+35.0f]でランダムに分布
 		const float rnd_pos = 70.0f;
 		Vector3 pos{};
 		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 		pos.y = 15;
 		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 
-		const float rnd_vel = 0.025f;
+		//移動速度
+		const float rnd_vel = 0.015f;
 		Vector3 vel{};
 		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 		vel.y = -0.025f;
 		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
+		//加速度
 		Vector3 acc{};
 		const float rnd_acc = 0.001f;
 		acc.y = -(float)rand() / RAND_MAX * rnd_acc;

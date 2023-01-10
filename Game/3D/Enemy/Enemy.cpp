@@ -57,12 +57,16 @@ void Enemy::Update(Camera *camera)
 		//拍終了
 		if(IsBeatEnd){
 
+			//待機、移動、切り替え
+			if(!IsWait) IsWait = true;
+			else if(IsWait) IsWait = false;
+
 			//移動
-			world.translation += direction*2.5f;
+			if(IsWait)world.translation += direction*2.5f;
 
 			//スケール
 			IsScale  = true;
-
+			//拍終了
 			IsBeatEnd = false;
 		}
 
@@ -154,6 +158,15 @@ void Enemy::PopParticleApp()
 	
 	for (int i = 0; i < 10; i++) {
 
+		//自身の座標を軸に[-1, 1]ランダム
+		const Vector3 rnd_pos = GetPosition();
+		const float range = 1.5f;
+		Vector3 pos{};
+		pos.x = (float)rand() / RAND_MAX * range - range/2.0f;
+		pos.y = 0.0f;
+		pos.z = (float)rand() / RAND_MAX * range - range/2.0f;
+		pos += rnd_pos;
+
 		const float rnd_vel = 0.025f;
 		Vector3 vel{};
 		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
@@ -164,7 +177,7 @@ void Enemy::PopParticleApp()
 		const float rnd_acc = 0.001f;
 		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
-		PopParticle->ParticleSet(40, GetPosition(),vel,acc,0.1f,0.5f,1,{1,0,1,1});
+		PopParticle->ParticleSet(40,pos,vel,acc,0.4f,0.0f,1,{0.6f,0.3f,0.2f,0.4f});
 		PopParticle->ParticleAppearance();
 	}
 }

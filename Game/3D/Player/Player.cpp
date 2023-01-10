@@ -121,25 +121,25 @@ bool Player::MovementInput()
 	if(input->Trigger(DIK_UP)){
 		world.translation.z += 2.5f;
 		world.rotation.y = 0;
-		offSetWeaponPos = {0,1,2.5};
+		offSetWeaponPos = {0,0,2.5};
 		return true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
 		world.translation.z -= 2.5f;
 		world.rotation.y = XMConvertToRadians(180);
-		offSetWeaponPos = {0,1,-2.5};
+		offSetWeaponPos = {0,0,-2.5};
 		return true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
 		world.translation.x += 2.5f;
 		world.rotation.y = XMConvertToRadians(90);
-		offSetWeaponPos = {2.5,1,0};
+		offSetWeaponPos = {2.5,0,0};
 		return true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
 		world.translation.x -= 2.5f;
 		world.rotation.y = XMConvertToRadians(-90);
-		offSetWeaponPos = {-2.5,1,0};
+		offSetWeaponPos = {-2.5,0,0};
 		return true;
 	}
 	return false;
