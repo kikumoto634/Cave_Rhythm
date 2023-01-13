@@ -197,6 +197,7 @@ void SampleScene::Update()
 
 #pragma region _3DXV
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
+		if((*it)->GetIsDeadAudioOnce())	audio->PlayWave(2,0.2f);
 		(*it)->Update(camera);
 	}
 	if(player->GetIsDamageSound())	audio->PlayWave(2,0.2f);

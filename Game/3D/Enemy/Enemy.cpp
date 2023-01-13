@@ -61,7 +61,7 @@ void Enemy::Update(Camera *camera)
 
 	//Ž€–SŽž
 	if(IsDead){
-		
+		if(IsDeadAudioOnce) IsDeadAudioOnce = false;
 		DeadParticleApp();
 		DeadParticle->Update(this->camera);
 	}
@@ -173,6 +173,7 @@ void Enemy::OnCollision(const CollisionInfo &info)
 		DeadParticlePos = info.objObject->GetPosition();
 		SetPosition(DeadPos);
 		IsDead = true;
+		IsDeadAudioOnce = true;
 		IsDeadParticleOnce = true;
 	}
 }

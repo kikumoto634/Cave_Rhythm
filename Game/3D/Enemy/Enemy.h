@@ -51,6 +51,7 @@ public:
 	void DeadParticleApp();
 
 	//Getter
+	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
 
 	//Setter
 	void SetDirection(Vector3 _dir);
@@ -63,11 +64,13 @@ private:
 
 	//死亡
 	bool IsDead = false;
+	bool IsDeadAudioOnce = false;
 	//死亡地点(パーティクル用)
 	Vector3 DeadParticlePos = {};
 	bool IsDeadParticleOnce = false;
 	//死亡時、敵保存地点(軽量化用)
 	Vector3 DeadPos = {50,50,50};
+
 	//スケール
 	bool IsScale = false;
 
