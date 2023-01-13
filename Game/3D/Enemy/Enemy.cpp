@@ -19,8 +19,16 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
+	//座標
+	SetPosition(DeadPos);
+
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
+
+	//コライダー
+	float radius = 0.6f;
+	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
+	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 
 	//パーティクル
 	PopParticle = new ParticleObject();
@@ -41,12 +49,8 @@ void Enemy::Update(Camera *camera)
 			IsBeatEnd = false;
 
 			if(popCount >= POP_COUNT){
+				SetPosition(popPosition);
 				IsPop = true;
-
-				//コライダー追加
-				float radius = 0.6f;
-				SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
-				collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 			}
 		}
 
@@ -179,7 +183,7 @@ void Enemy::PopParticleApp()
 	for (int i = 0; i < 10; i++) {
 
 		//自身の座標を軸に[-1, 1]ランダム
-		const Vector3 rnd_pos = GetPosition();
+		const Vector3 rnd_pos = popPosition;
 		const float range = 1.5f;
 		Vector3 pos{};
 		pos.x = (float)rand() / RAND_MAX * range - range/2.0f;

@@ -43,6 +43,8 @@ public:
 	/// </summary>
 	void OnCollision(const CollisionInfo& info) override;
 
+	//出現予定地点セット
+	void SetPopPoasition(Vector3 pos)	{popPosition = pos;}
 	//出現予定エフェクト
 	void PopParticleApp();
 	//死亡エフェクト
@@ -58,6 +60,7 @@ private:
 	bool IsGround = true;
 	//落下ベクトル
 	Vector3 fallV;
+
 	//死亡
 	bool IsDead = false;
 	//死亡地点(パーティクル用)
@@ -68,6 +71,7 @@ private:
 	//スケール
 	bool IsScale = false;
 
+
 	//待機
 	bool IsWait = false;
 
@@ -77,6 +81,7 @@ private:
 	//ポップ
 	bool IsPop = false;
 	int popCount = 0;
+	Vector3 popPosition = {};
 	ParticleObject* PopParticle = nullptr;
 	ParticleObject* DeadParticle = nullptr;
 };

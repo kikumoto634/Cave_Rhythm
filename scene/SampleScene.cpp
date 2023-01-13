@@ -392,7 +392,7 @@ void SampleScene::EnemyPop(Vector3 pos, Vector3 dir)
 {
 	unique_ptr<Enemy> newObj = make_unique<Enemy>();
 	newObj->Initialize("chr_sword");
-	newObj->SetPosition(pos);
+	newObj->SetPopPoasition(pos);
 	newObj->SetDirection(dir);
 
 	enemy.push_back(move(newObj));
