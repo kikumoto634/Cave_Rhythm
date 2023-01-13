@@ -221,7 +221,7 @@ void Enemy::DeadParticleApp()
 		Vector3 acc{};
 		acc.y = -0.005f;
 
-		DeadParticle->ParticleSet(120,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
+		DeadParticle->ParticleSet(50,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
 		DeadParticle->ParticleAppearance();
 	}
 
