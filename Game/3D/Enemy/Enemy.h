@@ -45,6 +45,8 @@ public:
 
 	//出現予定エフェクト
 	void PopParticleApp();
+	//死亡エフェクト
+	void DeadParticleApp();
 
 	//Getter
 
@@ -58,6 +60,11 @@ private:
 	Vector3 fallV;
 	//死亡
 	bool IsDead = false;
+	//死亡地点(パーティクル用)
+	Vector3 DeadParticlePos = {};
+	bool IsDeadParticleOnce = false;
+	//死亡時、敵保存地点(軽量化用)
+	Vector3 DeadPos = {50,50,50};
 	//スケール
 	bool IsScale = false;
 
@@ -67,11 +74,9 @@ private:
 	//移動方向
 	Vector3 direction = {-1,0,0};
 
-	//死亡時、敵保存地点
-	Vector3 DeadPos = {50,50,50};
-
 	//ポップ
 	bool IsPop = false;
 	int popCount = 0;
 	ParticleObject* PopParticle = nullptr;
+	ParticleObject* DeadParticle = nullptr;
 };

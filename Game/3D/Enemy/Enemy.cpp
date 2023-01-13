@@ -24,13 +24,16 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 
 	//パーティクル
 	PopParticle = new ParticleObject();
+	DeadParticle = new ParticleObject();
 	PopParticle->Initialize();
+	DeadParticle->Initialize();
 }
 
 void Enemy::Update(Camera *camera)
 {
 	this->camera = camera;
 
+	//出現予定
 	if(!IsPop){
 		//拍終了
 		if(IsBeatEnd){
@@ -52,6 +55,14 @@ void Enemy::Update(Camera *camera)
 		PopParticle->Update(this->camera);
 	}
 
+	//死亡時
+	if(IsDead){
+		
+		DeadParticleApp();
+		DeadParticle->Update(this->camera);
+	}
+
+	//生存時
 	if(!IsDead && IsPop){
 
 		//拍終了
@@ -80,6 +91,8 @@ void Enemy::Update(Camera *camera)
 
 		//落下処理
 		if(!IsGround){
+			DeadParticlePos = this->GetPosition();
+			IsDeadParticleOnce = true;
 			//地面がない場所では死亡
 			IsDead = true;
 		}
@@ -133,14 +146,19 @@ void Enemy::Draw()
 
 void Enemy::ParticleDraw()
 {
-	if(IsPop) return;
+	if(!IsPop){
+		PopParticle->Draw();
+	}
 
-	PopParticle->Draw();
+	if(IsDead){
+		DeadParticle->Draw();
+	}
 }
 
 void Enemy::Finalize()
 {
 	PopParticle->Finalize();
+	DeadParticle->Finalize();
 	BaseObjObject::Finalize();
 }
 
@@ -148,8 +166,10 @@ void Enemy::OnCollision(const CollisionInfo &info)
 {
 	if(!IsPop) return;
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+		DeadParticlePos = info.objObject->GetPosition();
 		SetPosition(DeadPos);
 		IsDead = true;
+		IsDeadParticleOnce = true;
 	}
 }
 
@@ -180,6 +200,27 @@ void Enemy::PopParticleApp()
 		PopParticle->ParticleSet(40,pos,vel,acc,0.4f,0.0f,1,{0.6f,0.3f,0.2f,0.4f});
 		PopParticle->ParticleAppearance();
 	}
+}
+
+void Enemy::DeadParticleApp()
+{
+	if(!IsDeadParticleOnce) return;
+
+	for (int i = 0; i < 10; i++) {
+		const float rnd_vel = 0.05f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.06f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		acc.y = -0.005f;
+
+		DeadParticle->ParticleSet(120,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
+		DeadParticle->ParticleAppearance();
+	}
+
+	IsDeadParticleOnce = false;
 }
 
 void Enemy::SetDirection(Vector3 _dir)
