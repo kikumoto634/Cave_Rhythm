@@ -52,6 +52,8 @@ private:
 
 	//攻撃
 	bool Attack();
+	void AttackUpdate();
+	void AttackFinalize();
 
 	//ダメージ
 	void Damage();
@@ -95,5 +97,9 @@ private:
 	//武器
 	PlayerWeapon* weapon = nullptr;
 	Vector3 offSetWeaponPos = {0,1,2.5};
+
+	//攻撃モデル
+	ObjModelManager* attackModel = nullptr;
+	bool IsModelChange = false;
 };
 

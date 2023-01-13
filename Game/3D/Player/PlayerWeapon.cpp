@@ -54,9 +54,11 @@ void PlayerWeapon::Update(Camera *camera)
 
 void PlayerWeapon::Draw()
 {
+#ifdef _DEBUG
 	if(!IsAppear) return;
 
 	BaseObjObject::Draw();
+#endif // _DEBUG
 }
 
 void PlayerWeapon::Finalize()
@@ -66,6 +68,10 @@ void PlayerWeapon::Finalize()
 
 void PlayerWeapon::OnCollision(const CollisionInfo &info)
 {
+	//“GÚG
+	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
+		IsEnemyContact = true;
+	}
 }
 
 void PlayerWeapon::Attack()

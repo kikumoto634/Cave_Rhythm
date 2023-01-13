@@ -36,6 +36,10 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	weapon = new PlayerWeapon();
 	weapon->Initialize("sphere", true);
 	//weapon->GetmatWorld().parent = &world;
+
+	//攻撃モデル
+	attackModel = new ObjModelManager();
+	attackModel->CreateModel("human2");
 }
 
 void Player::Update(Camera *camera)
@@ -49,6 +53,8 @@ void Player::Update(Camera *camera)
 	if(MovementInput() && !IsMovement){
 		Attack();
 		IsMovement = true;
+		//攻撃後処理
+		AttackFinalize();
 	}
 
 	//移動制限
@@ -85,6 +91,8 @@ void Player::Update(Camera *camera)
 
 	//武器
 	weapon->Update(this->camera);
+	//攻撃更新
+	AttackUpdate();
 
 	//ベース更新
 	BaseObjObject::Update(this->camera);
@@ -103,6 +111,9 @@ void Player::Finalize()
 	delete weapon;
 	weapon = nullptr;
 
+	delete attackModel;
+	attackModel = nullptr;
+
 	BaseObjObject::Finalize();
 }
 
@@ -113,7 +124,6 @@ void Player::OnCollision(const CollisionInfo &info)
 		Damage();
 	}
 }
-
 
 bool Player::MovementInput()
 {
@@ -149,6 +159,23 @@ bool Player::Attack()
 {
 	weapon->Attack();
 	return true;
+}
+
+void Player::AttackUpdate()
+{
+	if(weapon->GetIsEnemyContact()){
+		this->object->SetModel(attackModel);
+		IsModelChange = true;
+	}
+}
+
+void Player::AttackFinalize()
+{
+	if(IsModelChange){
+		this->object->SetModel(model);
+		IsModelChange = false;
+		weapon->SetIsEnemyContact(false);
+	}
 }
 
 void Player::Damage()
