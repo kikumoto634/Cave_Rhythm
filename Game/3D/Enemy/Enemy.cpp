@@ -41,6 +41,8 @@ void Enemy::Update(Camera *camera)
 {
 	this->camera = camera;
 
+	if(IsNotApp) return;
+
 	//oŒ»—\’è
 	if(!IsPop){
 		//”I—¹
@@ -50,21 +52,31 @@ void Enemy::Update(Camera *camera)
 
 			if(popCount >= POP_COUNT){
 				SetPosition(popPosition);
+				popCount = 0;
 				IsPop = true;
+				return;
 			}
 		}
 
 		PopParticleApp();
-
-		PopParticle->Update(this->camera);
 	}
+	PopParticle->Update(this->camera);
 
 	//Ž€–SŽž
 	if(IsDead){
-		if(IsDeadAudioOnce) IsDeadAudioOnce = false;
+		if(IsDeadAudioOnce) {
+			IsDeadAudioOnce = false;
+			appearanceResetFrame = 0;
+		}
 		DeadParticleApp();
-		DeadParticle->Update(this->camera);
+
+		if(appearanceResetFrame >= AppearanceResetFrame){
+			Reset();
+			return;
+		}
+		appearanceResetFrame++;
 	}
+	DeadParticle->Update(this->camera);
 
 	//¶‘¶Žž
 	if(!IsDead && IsPop){
@@ -142,6 +154,7 @@ void Enemy::Update(Camera *camera)
 
 void Enemy::Draw()
 {
+	if(IsNotApp) return;
 	if(!IsPop) return;
 	if(IsDead) return;
 
@@ -150,6 +163,8 @@ void Enemy::Draw()
 
 void Enemy::ParticleDraw()
 {
+	if(IsNotApp) return;
+
 	if(!IsPop){
 		PopParticle->Draw();
 	}
@@ -168,6 +183,7 @@ void Enemy::Finalize()
 
 void Enemy::OnCollision(const CollisionInfo &info)
 {
+	if(IsNotApp) return;
 	if(!IsPop) return;
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		DeadParticlePos = info.objObject->GetPosition();
@@ -176,6 +192,41 @@ void Enemy::OnCollision(const CollisionInfo &info)
 		IsDeadAudioOnce = true;
 		IsDeadParticleOnce = true;
 	}
+}
+
+void Enemy::BeginAppearance()
+{
+	IsDead = false;
+	IsPop = false;
+	IsNotApp = false;
+}
+
+void Enemy::Reset()
+{
+	IsGround = true;
+	fallV = {};
+
+	IsNotApp = true;
+	appearanceResetFrame = 0;
+
+	IsDead = false;
+	IsDeadAudioOnce = false;
+
+	DeadParticlePos = {};
+	IsDeadParticleOnce = false;
+
+	IsScale = false;
+
+	IsWait = false;
+
+	direction = {};
+
+	IsPop = false;
+	popCount = 0;
+	popPosition = {};
+
+	world.scale = {1.0f, 1.0f, 1.0f};
+	world.translation = DeadPos;
 }
 
 void Enemy::PopParticleApp()
@@ -212,7 +263,7 @@ void Enemy::DeadParticleApp()
 	if(!IsDeadParticleOnce) return;
 
 	for (int i = 0; i < 10; i++) {
-		const float rnd_vel = 0.05f;
+		const float rnd_vel = 0.08f;
 		Vector3 vel{};
 		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 		vel.y = 0.06f;
@@ -221,7 +272,7 @@ void Enemy::DeadParticleApp()
 		Vector3 acc{};
 		acc.y = -0.005f;
 
-		DeadParticle->ParticleSet(50,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
+		DeadParticle->ParticleSet(AppearanceResetFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
 		DeadParticle->ParticleAppearance();
 	}
 

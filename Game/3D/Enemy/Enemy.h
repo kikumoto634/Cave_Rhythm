@@ -8,6 +8,8 @@ class Enemy : public BaseObjObject
 private:
 	//ビートx回数終了時にPOP
 	const int POP_COUNT = 4;
+	//死亡後のリセット時間
+	int AppearanceResetFrame = 50;
 
 //メンバ変数
 public:
@@ -43,24 +45,37 @@ public:
 	/// </summary>
 	void OnCollision(const CollisionInfo& info) override;
 
+	//出現
+	void BeginAppearance();
 	//出現予定地点セット
 	void SetPopPoasition(Vector3 pos)	{popPosition = pos;}
+
+	//Reset
+	void Reset();
+
+	//Getter
+	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
+	bool GetIsNotApp()	{return IsNotApp;}
+
+	//Setter
+	void SetDirection(Vector3 _dir);
+
+private:
 	//出現予定エフェクト
 	void PopParticleApp();
 	//死亡エフェクト
 	void DeadParticleApp();
-
-	//Getter
-	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
-
-	//Setter
-	void SetDirection(Vector3 _dir);
 
 private:
 	//接地フラグ
 	bool IsGround = true;
 	//落下ベクトル
 	Vector3 fallV;
+
+	//未出現
+	bool IsNotApp = true;
+	//死亡後のリセット時間
+	int appearanceResetFrame = 0;
 
 	//死亡
 	bool IsDead = false;
@@ -74,7 +89,6 @@ private:
 	//スケール
 	bool IsScale = false;
 
-
 	//待機
 	bool IsWait = false;
 
@@ -85,6 +99,8 @@ private:
 	bool IsPop = false;
 	int popCount = 0;
 	Vector3 popPosition = {};
+
+	//パーティクル
 	ParticleObject* PopParticle = nullptr;
 	ParticleObject* DeadParticle = nullptr;
 };

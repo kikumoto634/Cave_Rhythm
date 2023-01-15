@@ -104,7 +104,9 @@ private:
 
 	//“G
 	std::list<std::unique_ptr<Enemy>> enemy;
+	const int IniCreateEnemyNum = 10;
 	//POPŠÖ”
+	void EnemyInitPop();
 	void EnemyPop(Vector3 pos, Vector3 dir);
 
 	//Šâ

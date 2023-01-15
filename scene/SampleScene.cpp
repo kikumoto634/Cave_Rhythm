@@ -79,6 +79,10 @@ void SampleScene::Initialize()
 	player->Initialize("human1");
 	player->SetPosition({0, 0, -12.5f});
 
+	for(int i = 0; i < IniCreateEnemyNum; i++){
+		EnemyInitPop();
+	}
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = make_unique<Planes>();
@@ -389,12 +393,21 @@ void SampleScene::Finalize()
 	BaseScene::Finalize();
 }
 
-void SampleScene::EnemyPop(Vector3 pos, Vector3 dir)
+void SampleScene::EnemyInitPop()
 {
 	unique_ptr<Enemy> newObj = make_unique<Enemy>();
 	newObj->Initialize("slime");
-	newObj->SetPopPoasition(pos);
-	newObj->SetDirection(dir);
-
 	enemy.push_back(move(newObj));
+}
+
+void SampleScene::EnemyPop(Vector3 pos, Vector3 dir)
+{
+	for(auto it = enemy.begin(); it != enemy.end(); it++){
+		if((*it)->GetIsNotApp()){
+			(*it)->SetPopPoasition(pos);
+			(*it)->SetDirection(dir);
+			(*it)->BeginAppearance();
+			break;
+		}
+	}
 }
