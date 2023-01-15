@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseScene.h"
-#include "../Engine/light/LightGroup.h"
 
 #include "../Game/3D/SampleFbxObject/SampleFbxObject.h"
 #include "../Game/3D/SampleObjObject/SampleObjObject.h"
@@ -16,9 +15,8 @@
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
 
-#include "../Engine/audio/Audio.h"
-
 #include "../Game/System/RhythmManager.h"
+#include "../Game/System/GameManager.h"
 
 #include <list>
 #include <time.h>
@@ -60,22 +58,8 @@ public:
 	void Finalize() override;
 
 private:
-	//float time = 0.f;
-
-	//ライト
-	LightGroup* lightGroup = nullptr;
-
-	//丸影
-	float circleShadowDir[3] = { 0,-1,0 };
-	float circleShadowAtten[3] = { 0.5f,0.6f,0.0f };
-	float circleShadowFactorAngle[2] = { 0.0f, 0.5f };
-
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
-
-
-	//オーディオ
-	Audio* audio = nullptr;
 
 	//3Dオブジェクト
 
@@ -92,14 +76,14 @@ private:
 
 	//リズムカウント
 	RhythmManager* rhythmManager = nullptr;
+
+	//ゲームマネージャー
+	GameManager* gameManager = nullptr;
 	 
 
 	//クラス化未実装枠
 
-	//BGM
-	bool IsBGM = false;
 
-	int combo = 0;
 	bool IsRhythmInput = false;
 
 	//敵

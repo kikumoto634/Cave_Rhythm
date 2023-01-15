@@ -36,35 +36,23 @@ void SampleScene::Initialize()
 	BaseScene::Initialize();
 
 #pragma region 汎用初期化
-	//ライト
-	lightGroup = LightGroup::Create();
-	//色設定
-	lightGroup->SetAmbientColor({0.15f, 0.15f, 0.15f});
-	//3Dオブジェクト(.obj)にセット
-	ObjModelObject::SetLight(lightGroup);
-
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, false);
-	lightGroup->SetDirLightActive(2, false);
-
-	//丸影
-	lightGroup->SetCircleShadowActive(0, true);
-
 	//衝突マネージャー
 	collisionManager = CollisionManager::GetInstance();
 
-	//オーディオ
-	audio = new Audio();
-	audio->Initialize();
-	audio->LoadWave(0, "Resources/sound/rhythm.wav");
-	audio->LoadWave(1, "Resources/sound/miss.wav");
-	audio->LoadWave(2, "Resources/sound/damage.wav");
-	audio->LoadWave(3, "Resources/sound/ex)_BPM90.wav");
-	audio->LoadWave(4, "Resources/sound/ex)_BPM120.wav");
-	audio->LoadWave(5, "Resources/sound/ex)_BPM180.wav");
-
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
+
+	//ゲームマネージャー
+	gameManager = new GameManager();
+	gameManager->Initialize();
+
+	//オーディオ
+	gameManager->AudioAdd(0,"rhythm.wav");
+	gameManager->AudioAdd(1,"miss.wav");
+	gameManager->AudioAdd(2,"damage.wav");
+	gameManager->AudioAdd(3,"ex)_BPM90.wav");
+	gameManager->AudioAdd(4,"ex)_BPM120.wav");
+	gameManager->AudioAdd(5,"ex)_BPM180.wav");
 
 	//カメラ
 	camera->SetTarget(Vector3(0.f, 0.f, -12.f));
@@ -117,9 +105,8 @@ void SampleScene::Update()
 	//リズム計測
 	rhythmManager->StartMeasurement(clock());
 	//計測開始時
-	if(!IsBGM){
-		IsBGM = true;
-		audio->PlayWave(3, 0.5f, true);
+	if(rhythmManager->GetMoveUpNumber() == 0){
+		gameManager->AudioPlay(3, 0.5f, true);
 	}
 	//リズム繰り上がり
 	rhythmManager->BeatMoveUp();
@@ -166,17 +153,16 @@ void SampleScene::Update()
 
 		//High(入力が遅く、judgeTimeが更新された状態での更新)
 		if(rhythmManager->HighJudgeRhythm()){
-			combo += 1;
+			gameManager->ComboIncrement();
 		}
 		//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
 		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
 			if(rhythmManager->LowJudgeRhythm()){
-				combo += 1;
+				gameManager->ComboIncrement();
 			}
 			//ミス
 			else{
-				combo = 0;
-				audio->PlayWave(1,0.2f);
+				gameManager->ComboReset();
 			}
 		}
 	}
@@ -185,7 +171,7 @@ void SampleScene::Update()
 	if(rhythmManager->GetIsRhythmEnd()){
 		
 		//SE
-		audio->PlayWave(0,0.25f);
+		gameManager->AudioPlay(0,0.25f);
 
 		//各オブジェクト処理
 		player->SetIsBeatEnd(true);
@@ -201,11 +187,14 @@ void SampleScene::Update()
 
 #pragma region _3D更新
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
-		if((*it)->GetIsDeadAudioOnce())	audio->PlayWave(2,0.2f);
-		(*it)->Update(camera);
+		if(!(*it)->GetIsNotApp()){
+			if((*it)->GetIsDeadAudioOnce())	gameManager->AudioPlay(2,0.2f);
+			(*it)->Update(camera);
+		}
 	}
-	if(player->GetIsDamageSound())	audio->PlayWave(2,0.2f);
+	if(player->GetIsDamageSound())	gameManager->AudioPlay(2,0.2f);
 	player->Update(camera);
+	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Update(camera);
@@ -219,18 +208,8 @@ void SampleScene::Update()
 
 #pragma endregion _2D更新
 
-#pragma region 汎用更新
-	{
-		//丸影
-		lightGroup->SetCircleShadowDir(0, DirectX::XMVECTOR({circleShadowDir[0], circleShadowDir[1], circleShadowDir[2], 0}));
-		lightGroup->SetCircleShadowAtten(0, Vector3(circleShadowAtten[0], circleShadowAtten[1], circleShadowAtten[2]));
-		lightGroup->SetCircleShadowFactorAngle(0, Vector2(circleShadowFactorAngle[0], circleShadowFactorAngle[1]));
-
-		//プレイヤー、丸影座標
-		lightGroup->SetCircleShadowCasterPos(0, player->GetPosition());
-	}
-	lightGroup->Update();
-
+#pragma region 汎用更新	
+	gameManager->LightUpdate();
 
 	//すべての衝突をチェック
 	collisionManager->CheckAllCollisions();
@@ -330,7 +309,7 @@ void SampleScene::Draw()
 	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager->GetJudgeTimeBase());
 	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager->GetInputJudgeTime());
 	
-	debugText->Printf(200, 660, 1.f, "COMBO	: %d", combo);
+	debugText->Printf(200, 660, 1.f, "COMBO	: %d", gameManager->GetComboNum());
 
 
 	//debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
@@ -379,15 +358,12 @@ void SampleScene::Finalize()
 
 #pragma region 汎用解放
 
+	gameManager->Finalize();
+	delete gameManager;
+	gameManager = nullptr;
+
 	delete rhythmManager;
 	rhythmManager = nullptr;
-
-	delete audio;
-	audio=nullptr;
-
-	delete lightGroup;
-	lightGroup = nullptr;
-
 #pragma endregion 汎用解放
 
 	BaseScene::Finalize();

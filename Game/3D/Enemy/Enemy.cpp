@@ -27,7 +27,7 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 
 	//コライダー
 	float radius = 0.6f;
-	SetCollider(new SphereCollider(XMVECTOR{0,-0.2f,0,0}, radius));
+	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0,0}, radius));
 	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 
 	//パーティクル
