@@ -46,15 +46,22 @@ void Player::Update(Camera *camera)
 {
 	this->camera = camera;
 	
-	IsMovement = false;
+	IsInput = false;
 	IsDamageSound = false;
 
 	//ˆÚ“®AUŒ‚
-	if(MovementInput() && !IsMovement){
-		Attack();
-		IsMovement = true;
-		//UŒ‚Œãˆ—
-		AttackFinalize();
+	if(!IsInput){
+		if(MovementInput()){
+			IsInput = true;
+			//UŒ‚Œãˆ—
+			AttackFinalize();
+		}
+		else if(input->Trigger(DIK_SPACE)){
+			Attack();
+			IsInput = true;
+			//UŒ‚XV
+			AttackUpdate();
+		}
 	}
 
 	//ˆÚ“®§ŒÀ
@@ -91,8 +98,6 @@ void Player::Update(Camera *camera)
 
 	//•Ší
 	weapon->Update(this->camera);
-	//UŒ‚XV
-	AttackUpdate();
 
 	//ƒx[ƒXXV
 	BaseObjObject::Update(this->camera);
@@ -163,10 +168,8 @@ bool Player::Attack()
 
 void Player::AttackUpdate()
 {
-	if(weapon->GetIsEnemyContact()){
-		this->object->SetModel(attackModel);
-		IsModelChange = true;
-	}
+	this->object->SetModel(attackModel);
+	IsModelChange = true;
 }
 
 void Player::AttackFinalize()

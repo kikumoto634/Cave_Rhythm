@@ -9,7 +9,7 @@ private:
 	//ビートx回数終了時にPOP
 	const int POP_COUNT = 4;
 	//死亡後のリセット時間
-	int AppearanceResetFrame = 50;
+	const int AppearanceResetFrame = 50;
 
 //メンバ変数
 public:
@@ -50,9 +50,6 @@ public:
 	//出現予定地点セット
 	void SetPopPoasition(Vector3 pos)	{popPosition = pos;}
 
-	//Reset
-	void Reset();
-
 	//Getter
 	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
 	bool GetIsNotApp()	{return IsNotApp;}
@@ -61,6 +58,9 @@ public:
 	void SetDirection(Vector3 _dir);
 
 private:
+	//Reset
+	void Reset();
+
 	//出現予定エフェクト
 	void PopParticleApp();
 	//死亡エフェクト

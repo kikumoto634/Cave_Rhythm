@@ -22,6 +22,7 @@
 #include <time.h>
 
 #ifdef _DEBUG
+#include "../Game/3D/Enemy/TrainingDummy.h"
 #include "../Engine/base/imguiManager.h"
 #endif // _DEBUG
 
@@ -79,10 +80,6 @@ private:
 
 	//ゲームマネージャー
 	GameManager* gameManager = nullptr;
-	 
-
-	//クラス化未実装枠
-
 
 	bool IsRhythmInput = false;
 
@@ -106,6 +103,9 @@ private:
 	//敵POP情報
 	int popPosition[2] = {5,5};
 	int popDirection[2] = {1,0};
+
+	std::unique_ptr<TrainingDummy> dummy;
+
 #endif // _DEBUG
 
 

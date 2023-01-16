@@ -330,6 +330,9 @@
     <ClCompile Include="Game\System\GameManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\TrainingDummy.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -499,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="Game\System\GameManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\TrainingDummy.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

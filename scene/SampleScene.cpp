@@ -65,7 +65,7 @@ void SampleScene::Initialize()
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
 	player->Initialize("human1");
-	player->SetPosition({0, 0, -12.5f});
+	player->SetPosition({0, -4.f, -12.5f});
 
 	for(int i = 0; i < IniCreateEnemyNum; i++){
 		EnemyInitPop();
@@ -97,6 +97,9 @@ void SampleScene::Initialize()
 #ifdef _DEBUG
 	imgui = new imguiManager();
 	imgui->Initialize(window, dxCommon);
+
+	dummy = make_unique<TrainingDummy>();
+	dummy->Initialize("slime");
 #endif // _DEBUG
 }
 
@@ -140,7 +143,10 @@ void SampleScene::Update()
 
 #endif // _DEBUG
 
-	if(player->GetIsMovement()){
+	//ToDo: 
+	// 同時押しでのコンボ+2の修正(一度正解になったら次の入力可能時間まで入力不可。)
+	// ミス入力の時、プレイヤーの移動を不可に。
+	if(player->GetIsInput()){
 		rhythmManager->InputRhythm();
 		IsRhythmInput = true;
 	}
@@ -183,6 +189,11 @@ void SampleScene::Update()
 				plane[i][j]->SetIsBeatEnd(true);
 			}
 		}
+
+		#ifdef _DEBUG
+		dummy->SetIsBeatEnd(true);
+		#endif // _DEBUG
+
 	}
 
 #pragma region _3D更新
@@ -202,6 +213,12 @@ void SampleScene::Update()
 	}
 	skydome->Update(camera);
 	rock->Update(camera);
+
+#ifdef _DEBUG
+	if(dummy->GetIsDeadAudioOnce())	gameManager->AudioPlay(2,0.2f);
+	dummy->Update(camera);
+#endif // _DEBUG
+
 #pragma endregion _3D更新
 
 #pragma region _2D更新
@@ -296,6 +313,10 @@ void SampleScene::Draw()
 
 #pragma endregion _3D描画
 
+#ifdef _DEBUG
+	dummy->Draw();
+#endif // _DEBUG
+
 #pragma region _2D_UI描画
 	Sprite::SetPipelineState();
 
@@ -324,13 +345,13 @@ void SampleScene::Draw()
 #ifdef _DEBUG
 	imgui->Draw();
 #endif // _DEBUG
-
-
 }
 
 void SampleScene::Finalize()
 {
 #ifdef _DEBUG
+	//dummy->Finalize();
+
 	imgui->Finalize();
 	delete imgui;
 #endif // _DEBUG

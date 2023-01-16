@@ -41,7 +41,7 @@ public:
 	//Getter
 	inline int GetHP()	{return HP;}
 	inline bool GetIsDamageSound()	{return IsDamageSound;}
-	inline bool GetIsMovement()	{return IsMovement;}
+	inline bool GetIsInput()	{return IsInput;}
 
 	//Setter
 	inline void SetHP(int _HP)	{HP = _HP;}
@@ -85,7 +85,7 @@ private:
 
 	//“ü—Í
 	Input* input = nullptr;
-	bool IsMovement = false;
+	bool IsInput = false;
 
 	//ˆÚ“®
 	Vector3 MoveTransform = {0,0,0};
