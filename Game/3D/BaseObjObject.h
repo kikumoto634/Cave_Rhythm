@@ -50,6 +50,8 @@ public:
 	/// <param name="info">Õ“Ëî•ñ</param>
 	virtual void OnCollision(const CollisionInfo& info){};
 
+	inline void IsBeatEndOn()	{IsBeatEnd = true;}
+
 	//Getter
 	inline const Vector3& GetPosition()	{return world.translation;}
 	inline const Vector3& GetRotation()	{return world.rotation;}
@@ -64,7 +66,6 @@ public:
 	void SetCollider(BaseCollider* collider);
 	inline void SetObject(ObjModelObject* object)	{this->object = object;}
 	inline void SetModel(ObjModelManager* model)	{this->model = model;}
-	inline void SetIsBeatEnd(bool IsFlag)	{IsBeatEnd = IsFlag;}
 
 protected:
 	/// <summary>

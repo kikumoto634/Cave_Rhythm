@@ -49,5 +49,9 @@ private:
 	bool IsDeadAudioOnce = false;
 	//死亡後のリセット時間
 	int appearanceResetFrame = 0;
+	//死亡時の待機位置
+	Vector3 DeadPos = {50,50,50};
+	//リスポーン地点
+	Vector3 RespawnPos = {};
 };
 

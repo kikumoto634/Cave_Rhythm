@@ -65,7 +65,7 @@ void SampleScene::Initialize()
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
 	player->Initialize("human1");
-	player->SetPosition({0, -4.f, -12.5f});
+	player->SetPosition({0, -3.f, -12.5f});
 
 	for(int i = 0; i < IniCreateEnemyNum; i++){
 		EnemyInitPop();
@@ -146,7 +146,7 @@ void SampleScene::Update()
 	//ToDo: 
 	// 同時押しでのコンボ+2の修正(一度正解になったら次の入力可能時間まで入力不可。)
 	// ミス入力の時、プレイヤーの移動を不可に。
-	if(player->GetIsInput()){
+	if(player->GetIsInputOnce()){
 		rhythmManager->InputRhythm();
 		IsRhythmInput = true;
 	}
@@ -180,38 +180,43 @@ void SampleScene::Update()
 		gameManager->AudioPlay(0,0.25f);
 
 		//各オブジェクト処理
-		player->SetIsBeatEnd(true);
+		player->IsBeatEndOn();
 		for(auto it = enemy.begin(); it != enemy.end(); it++){
-			(*it)->SetIsBeatEnd(true);
+			(*it)->IsBeatEndOn();
 		}
 		for(int i = 0; i < DIV_NUM; i++){
 			for(int j = 0; j < DIV_NUM; j++){
-				plane[i][j]->SetIsBeatEnd(true);
+				plane[i][j]->IsBeatEndOn();
 			}
 		}
 
 		#ifdef _DEBUG
-		dummy->SetIsBeatEnd(true);
+		dummy->IsBeatEndOn();
 		#endif // _DEBUG
 
 	}
 
 #pragma region _3D更新
+	//エネミー
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		if(!(*it)->GetIsNotApp()){
 			if((*it)->GetIsDeadAudioOnce())	gameManager->AudioPlay(2,0.2f);
 			(*it)->Update(camera);
 		}
 	}
-	if(player->GetIsDamageSound())	gameManager->AudioPlay(2,0.2f);
+	//プレイヤー
+	if(player->DamageSound())	gameManager->AudioPlay(2,0.2f);
 	player->Update(camera);
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
+	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Update(camera);
 		}
 	}
+	//天球
 	skydome->Update(camera);
+	//岩
 	rock->Update(camera);
 
 #ifdef _DEBUG
@@ -333,6 +338,7 @@ void SampleScene::Draw()
 	debugText->Printf(200, 660, 1.f, "COMBO	: %d", gameManager->GetComboNum());
 
 
+	debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
 	//debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
 	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
 
@@ -350,7 +356,7 @@ void SampleScene::Draw()
 void SampleScene::Finalize()
 {
 #ifdef _DEBUG
-	//dummy->Finalize();
+	dummy->Finalize();
 
 	imgui->Finalize();
 	delete imgui;

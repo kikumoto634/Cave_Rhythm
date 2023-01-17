@@ -14,54 +14,45 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
-	//サイズ変更の最小値変更
-	ScaleMin = {0.7f, 0.7f, 0.7f};
-
 	//入力
 	input = Input::GetInstance();
-
-	//コライダーの追加
-	float radius = 0.6f;
-	//半径文だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(XMVECTOR{0,-0.2f,0,0}, radius));
-
-	//当たり判定属性
-	collider->SetAttribute(COLLISION_ATTR_ALLIES);
-
-	//球コライダー取得
-	sphereCollider = dynamic_cast<SphereCollider*>(collider);
-	assert(sphereCollider);
-
 	//武器
 	weapon = new PlayerWeapon();
 	weapon->Initialize("sphere", true);
-	//weapon->GetmatWorld().parent = &world;
-
 	//攻撃モデル
 	attackModel = new ObjModelManager();
 	attackModel->CreateModel("human2");
+
+	//サイズ変更の最小値変更
+	ScaleMin = {0.7f, 0.7f, 0.7f};
+
+	//コライダーの追加
+	float radius = 0.6f;
+	SetCollider(new SphereCollider(XMVECTOR{0,-0.2f,0,0}, radius));
+	//当たり判定属性
+	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+	//球コライダー取得
+	sphereCollider = dynamic_cast<SphereCollider*>(collider);
+	assert(sphereCollider);
 }
+
 
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
 	
-	IsInput = false;
-	IsDamageSound = false;
+	//Once用毎ループ初期化
+	IsInputOnce = false;
+	IsDamageSoundOnce = false;
 
-	//移動、攻撃
-	if(!IsInput){
-		if(MovementInput()){
-			IsInput = true;
-			//攻撃後処理
-			AttackFinalize();
-		}
-		else if(input->Trigger(DIK_SPACE)){
-			Attack();
-			IsInput = true;
-			//攻撃更新
-			AttackUpdate();
-		}
+	//入力処理
+	if(MovementInput()){
+		//入力確認
+		IsInputOnce = true;
+	}
+	else if(AttackInput()){
+		//入力確認
+		IsInputOnce = true;
 	}
 
 	//移動制限
@@ -70,35 +61,28 @@ void Player::Update(Camera *camera)
 	world.translation.z = max(world.translation.z , -12.5f);
 	world.translation.z = min(world.translation.z , 12.5f);
 
-
-	//拍終了
+	//拍終了(ゲーム全体の時間を測っているクラス(GameScene)からIsBeatEndOn()を呼び出しでtrueを取得)
 	if(IsBeatEnd){
-		//サイズ変更
+		//スケールイージング
 		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 			IsBeatEnd = false;
 		}
+
+		if(!IsInputOnce && IsModelJudge){
+			SetModel(model);
+		}
 	}
-
-	//ダメージ
-	DamageUpdate();
-
-	//重力
-	GravityFall();
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
 
-	//行列、カメラ更新
-	BaseObjObject::Update(this->camera);
+	//更新関数
+	//ダメージ
+	DamageUpdate();
 	//コライダー更新
 	collider->Update();
-
-	//地面接触判定
-	GroundCollider();
-
 	//武器
 	weapon->Update(this->camera);
-
 	//ベース更新
 	BaseObjObject::Update(this->camera);
 }
@@ -130,62 +114,97 @@ void Player::OnCollision(const CollisionInfo &info)
 	}
 }
 
+//void Player::JudgeUpdate(bool IsFlag)
+//{
+//	//正
+//	if(IsFlag){
+//		return;
+//	}
+//	//否
+//	SetPosition(oldPosition);
+//	//ベース更新
+//	BaseObjObject::Update(this->camera);
+//}
+
+bool Player::DamageSound()
+{
+	if(IsDamage && IsDamageSoundOnce) return true;
+	return false;
+}
+
 bool Player::MovementInput()
 {
+	//戻り値
+	bool IsReturn = false;
+
+	//過去の位置取得
+	oldPosition = GetPosition();
 	//歩行
 	if(input->Trigger(DIK_UP)){
 		world.translation.z += 2.5f;
 		world.rotation.y = 0;
 		offSetWeaponPos = {0,0,2.5};
-		return true;
+		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
 		world.translation.z -= 2.5f;
 		world.rotation.y = XMConvertToRadians(180);
 		offSetWeaponPos = {0,0,-2.5};
-		return true;
+		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
 		world.translation.x += 2.5f;
 		world.rotation.y = XMConvertToRadians(90);
 		offSetWeaponPos = {2.5,0,0};
-		return true;
+		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
 		world.translation.x -= 2.5f;
 		world.rotation.y = XMConvertToRadians(-90);
 		offSetWeaponPos = {-2.5,0,0};
-		return true;
+		IsReturn = true;
 	}
-	return false;
+	if(IsReturn) {
+		MoveModelSet();
+		//モデル識別
+		IsModelJudge = false;
+	}
+	return IsReturn;
 }
 
-bool Player::Attack()
+void Player::MoveModelSet()
 {
-	weapon->Attack();
-	return true;
+	this->object->SetModel(model);
 }
 
-void Player::AttackUpdate()
+bool Player::AttackInput()
+{
+	//戻り値
+	bool IsReturn = false;
+
+	if(input->Trigger(DIK_Z)){
+		weapon->Attack();
+		IsReturn = true;
+	}
+
+	if(IsReturn) {
+		AttackModelSet();
+		//モデル識別
+		IsModelJudge = true;
+	}
+	return IsReturn;
+}
+
+void Player::AttackModelSet()
 {
 	this->object->SetModel(attackModel);
-	IsModelChange = true;
-}
-
-void Player::AttackFinalize()
-{
-	if(IsModelChange){
-		this->object->SetModel(model);
-		IsModelChange = false;
-		weapon->SetIsEnemyContact(false);
-	}
 }
 
 void Player::Damage()
 {
 	if(IsDamage) return;
 	IsDamage = true;
-	IsDamageSound = true;
+	IsDamageSoundOnce = true;
 	HP -= 1;
 }
 
@@ -206,57 +225,57 @@ void Player::DamageUpdate()
 	IsDamage = false;
 }
 
-void Player::GravityFall()
-{
-	//落下処理
-	if(!IsGround){
-		//下向き加速度
-		const float fallAcc = -0.01f;
-		const float fallVYMin = -0.5f;
-		//加速
-		fallV.y = max(fallV.y + fallAcc, fallVYMin);
-		//移動
-		world.translation.x += fallV.x;
-		world.translation.y += fallV.y;
-		world.translation.z += fallV.z;
-	}
-}
+//void Player::GravityFall()
+//{
+//	//落下処理
+//	if(!IsGround){
+//		//下向き加速度
+//		const float fallAcc = -0.01f;
+//		const float fallVYMin = -0.5f;
+//		//加速
+//		fallV.y = max(fallV.y + fallAcc, fallVYMin);
+//		//移動
+//		world.translation.x += fallV.x;
+//		world.translation.y += fallV.y;
+//		world.translation.z += fallV.z;
+//	}
+//}
 
-void Player::GroundCollider()
-{
-	//球の上端から球の下端までの例キャスト用レイを準備
-	Ray ray;
-	ray.start = sphereCollider->center;
-	ray.start.m128_f32[1] += sphereCollider->GetRadius();
-	ray.dir = {0,-1,0,0};
-	RaycastHit raycastHit;
-
-	//接地状態
-	if(IsGround){
-		//スムーズに坂を下る為の吸着距離
-		const float adsDistance = 0.2f;
-		//接地を維持
-		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
-			IsGround = true;
-			world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-			//行列の更新など
-			BaseObjObject::Update(this->camera);
-		}
-		//地面がないので落下
-		else{
-			IsGround = false;
-			fallV = {};
-		}
-	}
-	//落下状態
-	else if(fallV.y <= 0.0f){
-		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius()*2.0f)){
-			//着地
-			IsGround = true;
-			world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-			//行列の更新など
-			BaseObjObject::Update(this->camera);
-		}
-	}
-}
+//void Player::GroundCollider()
+//{
+//	//球の上端から球の下端までの例キャスト用レイを準備
+//	Ray ray;
+//	ray.start = sphereCollider->center;
+//	ray.start.m128_f32[1] += sphereCollider->GetRadius();
+//	ray.dir = {0,-1,0,0};
+//	RaycastHit raycastHit;
+//
+//	//接地状態
+//	if(IsGround){
+//		//スムーズに坂を下る為の吸着距離
+//		const float adsDistance = 0.2f;
+//		//接地を維持
+//		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
+//			IsGround = true;
+//			world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
+//			//行列の更新など
+//			BaseObjObject::Update(this->camera);
+//		}
+//		//地面がないので落下
+//		else{
+//			IsGround = false;
+//			fallV = {};
+//		}
+//	}
+//	//落下状態
+//	else if(fallV.y <= 0.0f){
+//		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius()*2.0f)){
+//			//着地
+//			IsGround = true;
+//			world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
+//			//行列の更新など
+//			BaseObjObject::Update(this->camera);
+//		}
+//	}
+//}
 

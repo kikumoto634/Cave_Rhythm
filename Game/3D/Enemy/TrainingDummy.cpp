@@ -38,6 +38,7 @@ void TrainingDummy::Update(Camera *camera)
 
 		if(appearanceResetFrame >= AppearanceResetFrame){
 			IsDead = false;
+			SetPosition(RespawnPos);
 			return;
 		}
 		appearanceResetFrame++;
@@ -119,5 +120,7 @@ void TrainingDummy::OnCollision(const CollisionInfo &info)
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsDead = true;
 		IsDeadAudioOnce = true;
+		RespawnPos = GetPosition();
+		SetPosition(DeadPos);
 	}
 }

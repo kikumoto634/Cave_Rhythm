@@ -68,10 +68,6 @@ void PlayerWeapon::Finalize()
 
 void PlayerWeapon::OnCollision(const CollisionInfo &info)
 {
-	//“GÚG
-	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
-		IsEnemyContact = true;
-	}
 }
 
 void PlayerWeapon::Attack()

@@ -38,18 +38,10 @@ public:
 	/// </summary>
 	void Attack();
 
-	//Getter
-	bool GetIsEnemyContact()	{return IsEnemyContact;}
-
-	//Setter
-	void SetIsEnemyContact(bool IsFlag)	{IsEnemyContact = IsFlag;}
 
 private:
 	//•ŠíoŒ»
 	bool IsAppear = false;
-
-	//“G”j‰ó
-	bool IsEnemyContact = false;
 
 	//¶‘¶ŠÔ(ƒtƒŒ[ƒ€)
 	int aliveCurrentFrame = 0;

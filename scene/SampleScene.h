@@ -81,6 +81,7 @@ private:
 	//ゲームマネージャー
 	GameManager* gameManager = nullptr;
 
+
 	bool IsRhythmInput = false;
 
 	//敵
