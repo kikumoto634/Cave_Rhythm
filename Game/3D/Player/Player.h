@@ -89,8 +89,10 @@ public:
 	/// 入力成否時の処理
 	/// </summary>
 	/// <param name="IsFlag">成否</param>
-	//void JudgeUpdate(bool IsFlag);
+	void JudgeUpdate(bool IsFlag);
 
+
+	//Sound
 	/// <summary>
 	/// ダメージサウンド発生
 	/// </summary>
@@ -131,6 +133,7 @@ private:
 	Vector3 movePosition = {0,0,0};
 	Vector3 moveRotation = {0,0,0};
 	Vector3 oldPosition = {};
+	bool IsMove = false;
 
 	//HP
 	int HP = 5;
@@ -141,12 +144,16 @@ private:
 	////無敵時間(フレーム)
 	int damageCurrentFrame = 0;
 
+	//攻撃
+	bool IsAttack = false;
+
 	//使用モデル判別(false:Move, true:Attack)
 	bool IsModelJudge = false;
 
 	//入力
 	Input* input = nullptr;
 	bool IsInputOnce = false;
+	bool IsInputJudge = false;
 
 	//コライダー
 	SphereCollider* sphereCollider = nullptr;

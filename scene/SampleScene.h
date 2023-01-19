@@ -89,7 +89,7 @@ private:
 	const int IniCreateEnemyNum = 10;
 	//POPä÷êî
 	void EnemyInitPop();
-	void EnemyPop(Vector3 pos, Vector3 dir);
+	void EnemyPop(Vector2 pos, Vector2 dir);
 
 	//ä‚
 	std::unique_ptr<AreaOutRock> rock;

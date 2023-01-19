@@ -36,7 +36,6 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	assert(sphereCollider);
 }
 
-
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
@@ -55,12 +54,6 @@ void Player::Update(Camera *camera)
 		IsInputOnce = true;
 	}
 
-	//移動制限
-	world.translation.x = max(world.translation.x , -12.5f);
-	world.translation.x = min(world.translation.x , 12.5f);
-	world.translation.z = max(world.translation.z , -12.5f);
-	world.translation.z = min(world.translation.z , 12.5f);
-
 	//拍終了(ゲーム全体の時間を測っているクラス(GameScene)からIsBeatEndOn()を呼び出しでtrueを取得)
 	if(IsBeatEnd){
 		//スケールイージング
@@ -68,10 +61,30 @@ void Player::Update(Camera *camera)
 			IsBeatEnd = false;
 		}
 
-		if(!IsInputOnce && IsModelJudge){
-			SetModel(model);
+		if(IsInputJudge){
+			IsInputJudge = false;
+			//移動
+			if(IsMove){
+				world.translation += movePosition;
+				world.rotation = moveRotation;
+				MoveModelSet();
+				movePosition = {};
+				IsMove = false;
+			}
+			//攻撃
+			else if(IsAttack){
+				weapon->Attack();
+				AttackModelSet();
+				IsAttack = false;
+			}
 		}
 	}
+
+	//移動制限
+	world.translation.x = max(world.translation.x , -12.5f);
+	world.translation.x = min(world.translation.x , 12.5f);
+	world.translation.z = max(world.translation.z , -12.5f);
+	world.translation.z = min(world.translation.z , 12.5f);
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
@@ -114,17 +127,18 @@ void Player::OnCollision(const CollisionInfo &info)
 	}
 }
 
-//void Player::JudgeUpdate(bool IsFlag)
-//{
-//	//正
-//	if(IsFlag){
-//		return;
-//	}
-//	//否
-//	SetPosition(oldPosition);
-//	//ベース更新
-//	BaseObjObject::Update(this->camera);
-//}
+
+void Player::JudgeUpdate(bool IsFlag)
+{
+	//正
+	if(IsFlag){
+		IsInputJudge = true;
+		return;
+	}
+	//否
+	IsInputJudge = false;
+	return;
+}
 
 bool Player::DamageSound()
 {
@@ -132,42 +146,47 @@ bool Player::DamageSound()
 	return false;
 }
 
+
+
 bool Player::MovementInput()
 {
 	//戻り値
 	bool IsReturn = false;
 
+	if(IsAttack) return false;
+
 	//過去の位置取得
 	oldPosition = GetPosition();
 	//歩行
 	if(input->Trigger(DIK_UP)){
-		world.translation.z += 2.5f;
-		world.rotation.y = 0;
+		movePosition.z = 2.5f;
+		moveRotation.y = 0;
 		offSetWeaponPos = {0,0,2.5};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
-		world.translation.z -= 2.5f;
-		world.rotation.y = XMConvertToRadians(180);
+		movePosition.z = -2.5f;
+		moveRotation.y = XMConvertToRadians(180);
 		offSetWeaponPos = {0,0,-2.5};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
-		world.translation.x += 2.5f;
-		world.rotation.y = XMConvertToRadians(90);
+		movePosition.x = 2.5f;
+		moveRotation.y = XMConvertToRadians(90);
 		offSetWeaponPos = {2.5,0,0};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
-		world.translation.x -= 2.5f;
-		world.rotation.y = XMConvertToRadians(-90);
+		movePosition.x = -2.5f;
+		moveRotation.y = XMConvertToRadians(-90);
 		offSetWeaponPos = {-2.5,0,0};
 		IsReturn = true;
 	}
 	if(IsReturn) {
-		MoveModelSet();
 		//モデル識別
 		IsModelJudge = false;
+		//行動
+		IsMove = true;
 	}
 	return IsReturn;
 }
@@ -182,15 +201,17 @@ bool Player::AttackInput()
 	//戻り値
 	bool IsReturn = false;
 
+	if(IsMove) return false;
+
 	if(input->Trigger(DIK_Z)){
-		weapon->Attack();
 		IsReturn = true;
 	}
 
 	if(IsReturn) {
-		AttackModelSet();
 		//モデル識別
 		IsModelJudge = true;
+		//行動
+		IsAttack = true;
 	}
 	return IsReturn;
 }

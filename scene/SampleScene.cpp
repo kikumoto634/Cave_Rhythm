@@ -50,6 +50,7 @@ void SampleScene::Initialize()
 	gameManager->AudioAdd(0,"rhythm.wav");
 	gameManager->AudioAdd(1,"miss.wav");
 	gameManager->AudioAdd(2,"damage.wav");
+
 	gameManager->AudioAdd(3,"ex)_BPM90.wav");
 	gameManager->AudioAdd(4,"ex)_BPM120.wav");
 	gameManager->AudioAdd(5,"ex)_BPM180.wav");
@@ -160,15 +161,18 @@ void SampleScene::Update()
 		//High(入力が遅く、judgeTimeが更新された状態での更新)
 		if(rhythmManager->HighJudgeRhythm()){
 			gameManager->ComboIncrement();
+			player->JudgeUpdate(true);
 		}
 		//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
 		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
 			if(rhythmManager->LowJudgeRhythm()){
 				gameManager->ComboIncrement();
+				player->JudgeUpdate(true);
 			}
 			//ミス
 			else{
 				gameManager->ComboReset();
+				player->JudgeUpdate(false);
 			}
 		}
 	}
@@ -188,6 +192,16 @@ void SampleScene::Update()
 			for(int j = 0; j < DIV_NUM; j++){
 				plane[i][j]->IsBeatEndOn();
 			}
+		}
+
+		//敵生成
+		for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
+			//座標;
+			Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);
+			//方向
+			Vector2 ldir = gameManager->EnemyRandomDir(lpos);
+			//POP
+			EnemyPop(lpos, ldir);
 		}
 
 		#ifdef _DEBUG
@@ -262,13 +276,13 @@ void SampleScene::Update()
 
 		if (ImGui::Button("POP")) {
 			//座標;
-			Vector3 pos = {(-12.5f + (float)popPosition[0]*2.5f), -4.f, (-12.5f + (float)popPosition[1]*2.5f)};
+			Vector2 pos = {(-12.5f + (float)popPosition[0]*2.5f), (-12.5f + (float)popPosition[1]*2.5f)};
 			//方向
 			if(popDirection[0] >= 1)popDirection[0] = 1;
 			else if(popDirection[0] <= -1)popDirection[0] = -1;
 			if(popDirection[1] >= 1)popDirection[1] = 1;
 			else if(popDirection[1] <= -1)popDirection[1] = -1;
-			Vector3 dir = {(float)popDirection[0], 0.f, (float)popDirection[1]};
+			Vector2 dir = {(float)popDirection[0], (float)popDirection[1]};
 			//POP
 			EnemyPop(pos, dir);
 		}
@@ -403,12 +417,15 @@ void SampleScene::EnemyInitPop()
 	enemy.push_back(move(newObj));
 }
 
-void SampleScene::EnemyPop(Vector3 pos, Vector3 dir)
+void SampleScene::EnemyPop(Vector2 pos, Vector2 dir)
 {
+	Vector3 lpos = {pos.x, -4.f, pos.y};
+	Vector3 ldir = {dir.x, 0, dir.y};
+
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		if((*it)->GetIsNotApp()){
-			(*it)->SetPopPoasition(pos);
-			(*it)->SetDirection(dir);
+			(*it)->SetPopPoasition(lpos);
+			(*it)->SetDirection(ldir);
 			(*it)->BeginAppearance();
 			break;
 		}

@@ -29,6 +29,11 @@ public:
 	//プレイヤー丸影の設置
 	void PlayerCircleShadowSet(Vector3 pos);
 
+	//敵生成
+	int EnemyPopTurnCount();
+	Vector2 EnemyRandomPos(const int groundWidth, const float Plane_Size);
+	Vector2 EnemyRandomDir(Vector2 pos);
+
 private:
 	//オーディオ初期化
 	void AudioInitialize();
@@ -50,5 +55,12 @@ private:
 	Vector3 circleShadowDir = { 0,-1,0 };
 	Vector3 circleShadowAtten = { 0.5f,0.6f,0.0f };
 	Vector2 circleShadowFactorAngle = { 0.0f, 0.5f };
+
+	//敵のランダム生成
+	//XビートでPOPターン
+	const int EnemyPopBeatTurn = 6;
+	int currentEnemyPopBeatTurn = 0;
+	//1ビートでの敵POP数
+	const int EnemyPopCreateNum = 1;
 };
 
