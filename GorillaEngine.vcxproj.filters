@@ -198,7 +198,7 @@
     <ClCompile Include="scene\BaseScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="scene\SampleScene.cpp">
+    <ClCompile Include="scene\GaneScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="Game\3D\BaseFbxObjects.cpp">
@@ -333,6 +333,9 @@
     <ClCompile Include="Game\3D\Enemy\TrainingDummy.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="scene\TitleScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -341,7 +344,7 @@
     <ClInclude Include="scene\BaseScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="scene\SampleScene.h">
+    <ClInclude Include="scene\GaneScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2D\Sprite.h">
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\TrainingDummy.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\TitleScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

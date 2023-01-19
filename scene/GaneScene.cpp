@@ -1,4 +1,4 @@
-#include "SampleScene.h"
+#include "GaneScene.h"
 
 #include "../Engine/math//Easing/Easing.h"
 
@@ -17,21 +17,21 @@
 using namespace std;
 using namespace DirectX;
 
-const float SampleScene::Plane_Size = 2.5f;
+const float GaneScene::Plane_Size = 2.5f;
 
-SampleScene::SampleScene(DirectXCommon *dxCommon, Window *window)
+GaneScene::GaneScene(DirectXCommon *dxCommon, Window *window)
 		: BaseScene(
 		dxCommon,
 		window)
 {
 }
 
-void SampleScene::Application()
+void GaneScene::Application()
 {
 	BaseScene::Application();
 }
 
-void SampleScene::Initialize()
+void GaneScene::Initialize()
 {
 	BaseScene::Initialize();
 
@@ -104,7 +104,7 @@ void SampleScene::Initialize()
 #endif // _DEBUG
 }
 
-void SampleScene::Update()
+void GaneScene::Update()
 {
 	//ƒŠƒYƒ€Œv‘ª
 	rhythmManager->StartMeasurement(clock());
@@ -299,7 +299,7 @@ void SampleScene::Update()
 	BaseScene::EndUpdate();
 }
 
-void SampleScene::Draw()
+void GaneScene::Draw()
 {
 	BaseScene::Draw();
 
@@ -367,7 +367,7 @@ void SampleScene::Draw()
 #endif // _DEBUG
 }
 
-void SampleScene::Finalize()
+void GaneScene::Finalize()
 {
 #ifdef _DEBUG
 	dummy->Finalize();
@@ -410,16 +410,16 @@ void SampleScene::Finalize()
 	BaseScene::Finalize();
 }
 
-void SampleScene::EnemyInitPop()
+void GaneScene::EnemyInitPop()
 {
 	unique_ptr<Enemy> newObj = make_unique<Enemy>();
 	newObj->Initialize("slime");
 	enemy.push_back(move(newObj));
 }
 
-void SampleScene::EnemyPop(Vector2 pos, Vector2 dir)
+void GaneScene::EnemyPop(Vector2 pos, Vector2 dir)
 {
-	Vector3 lpos = {pos.x, -4.f, pos.y};
+	Vector3 lpos = {pos.x, -3.5f, pos.y};
 	Vector3 ldir = {dir.x, 0, dir.y};
 
 	for(auto it = enemy.begin(); it != enemy.end(); it++){

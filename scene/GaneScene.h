@@ -26,12 +26,12 @@
 #include "../Engine/base/imguiManager.h"
 #endif // _DEBUG
 
-class SampleScene : public BaseScene
+class GaneScene : public BaseScene
 {
 public:
 	
 	//コンストラクタ
-	SampleScene(DirectXCommon* dxCommon, Window* window);
+	GaneScene(DirectXCommon* dxCommon, Window* window);
 
 	/// <summary>
 	/// 起動時

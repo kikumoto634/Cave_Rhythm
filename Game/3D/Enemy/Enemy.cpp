@@ -137,9 +137,6 @@ void Enemy::Update(Camera *camera)
 			//接地を維持
 			if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 				IsGround = true;
-				world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-				//行列の更新など
-				BaseObjObject::Update(this->camera);
 			}
 			//地面がないので落下
 			else{
@@ -239,7 +236,7 @@ void Enemy::PopParticleApp()
 		const float range = 1.5f;
 		Vector3 pos{};
 		pos.x = (float)rand() / RAND_MAX * range - range/2.0f;
-		pos.y = 0.0f;
+		pos.y = -0.5f;
 		pos.z = (float)rand() / RAND_MAX * range - range/2.0f;
 		pos += rnd_pos;
 

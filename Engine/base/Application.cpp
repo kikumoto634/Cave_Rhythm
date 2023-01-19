@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "../../scene/SampleScene.h"
+#include "../../scene/GaneScene.h"
 
 Application* Application::app = nullptr;
 
@@ -27,7 +27,7 @@ Application::Application()
 	window = Window::GetInstance();
 	dxCommon = DirectXCommon::GetInstance();
 
-	scene = make_unique<SampleScene>(dxCommon, window);
+	scene = make_unique<GaneScene>(dxCommon, window);
 	scene->Application();
 	sceneName = "Title";
 }
