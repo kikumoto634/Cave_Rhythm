@@ -1,4 +1,4 @@
-#include "GaneScene.h"
+#include "GameScene.h"
 
 #include "../Engine/math//Easing/Easing.h"
 
@@ -9,29 +9,27 @@
 #include <sstream>
 #include <iomanip>
 
-#ifdef _DEBUG
-#include <imgui.h>
-#endif // _DEBUG
-
+#include "SceneManager.h"
+#include "TitleScene.h"
 
 using namespace std;
 using namespace DirectX;
 
-const float GaneScene::Plane_Size = 2.5f;
+const float GameScene::Plane_Size = 2.5f;
 
-GaneScene::GaneScene(DirectXCommon *dxCommon, Window *window)
+GameScene::GameScene(DirectXCommon *dxCommon, Window *window)
 		: BaseScene(
 		dxCommon,
 		window)
 {
 }
 
-void GaneScene::Application()
+void GameScene::Application()
 {
 	BaseScene::Application();
 }
 
-void GaneScene::Initialize()
+void GameScene::Initialize()
 {
 	BaseScene::Initialize();
 
@@ -96,15 +94,12 @@ void GaneScene::Initialize()
 	rhythmManager->InitializeMeasurement(clock());
 
 #ifdef _DEBUG
-	imgui = new imguiManager();
-	imgui->Initialize(window, dxCommon);
-
 	dummy = make_unique<TrainingDummy>();
 	dummy->Initialize("slime");
 #endif // _DEBUG
 }
 
-void GaneScene::Update()
+void GameScene::Update()
 {
 	//リズム計測
 	rhythmManager->StartMeasurement(clock());
@@ -116,10 +111,6 @@ void GaneScene::Update()
 	rhythmManager->BeatMoveUp();
 
 	BaseScene::Update();
-
-#ifdef _DEBUG
-	imgui->Begin();
-#endif // _DEBUG
 
 #pragma region 入力処理
 
@@ -140,6 +131,10 @@ void GaneScene::Update()
 	else if(input->Push(DIK_S)){
 		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
+	}
+
+	if(input->Trigger(DIK_RETURN)){
+		sceneManager->SetNextScene(new TitleScene(dxCommon,window));
 	}
 
 #endif // _DEBUG
@@ -253,27 +248,19 @@ void GaneScene::Update()
 
 #ifdef _DEBUG
 	{
-		//サイズ
-		ImGui::SetNextWindowSize(ImVec2{500,300});
 		//座標
 		ImGui::SetNextWindowPos(ImVec2{0,100});
-		
+		//サイズ
+		ImGui::SetNextWindowSize(ImVec2{300,300});
 		ImGui::Begin("Debug");
-
-		//デモウィンドウ 
-		ImGui::Checkbox("demoWindow", &show_demo_window);
-		//フラグによる出現物
-		if(show_demo_window)	ImGui::ShowDemoWindow(&show_demo_window);
-
 		//カメラ 回転:false , 移動:true
 		ImGui::Text("Camera (true = transform / false = rotation)");
 		ImGui::Checkbox("Change", &IsCameraMovementChange);
-
 		//敵の出現
 		ImGui::Text("EnemyPOP");
 		ImGui::InputInt2("EnemyPos X,Z : 0~11", popPosition);
 		ImGui::InputInt2("EnemyDir X,Z : -1~1", popDirection);
-
+		//生成
 		if (ImGui::Button("POP")) {
 			//座標;
 			Vector2 pos = {(-12.5f + (float)popPosition[0]*2.5f), (-12.5f + (float)popPosition[1]*2.5f)};
@@ -286,20 +273,15 @@ void GaneScene::Update()
 			//POP
 			EnemyPop(pos, dir);
 		}
-
 		ImGui::End();
 	}
-	
-	
-	//終了
-	imgui->End();
 #endif // _DEBUG
 
 
 	BaseScene::EndUpdate();
 }
 
-void GaneScene::Draw()
+void GameScene::Draw()
 {
 	BaseScene::Draw();
 
@@ -361,19 +343,12 @@ void GaneScene::Draw()
 #endif // _DEBUG
 	BaseScene::EndDraw();
 #pragma endregion _2D_UI描画
-
-#ifdef _DEBUG
-	imgui->Draw();
-#endif // _DEBUG
 }
 
-void GaneScene::Finalize()
+void GameScene::Finalize()
 {
 #ifdef _DEBUG
 	dummy->Finalize();
-
-	imgui->Finalize();
-	delete imgui;
 #endif // _DEBUG
 
 #pragma region _3D解放
@@ -410,14 +385,14 @@ void GaneScene::Finalize()
 	BaseScene::Finalize();
 }
 
-void GaneScene::EnemyInitPop()
+void GameScene::EnemyInitPop()
 {
 	unique_ptr<Enemy> newObj = make_unique<Enemy>();
 	newObj->Initialize("slime");
 	enemy.push_back(move(newObj));
 }
 
-void GaneScene::EnemyPop(Vector2 pos, Vector2 dir)
+void GameScene::EnemyPop(Vector2 pos, Vector2 dir)
 {
 	Vector3 lpos = {pos.x, -3.5f, pos.y};
 	Vector3 ldir = {dir.x, 0, dir.y};

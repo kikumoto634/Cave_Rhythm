@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize();
+	void Initialize(Window* window);
 
 	/// <summary>
 	/// XV

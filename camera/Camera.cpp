@@ -8,9 +8,9 @@ Camera *Camera::GetInstance()
 	return &instance;
 }
 
-void Camera::Initialize()
+void Camera::Initialize(Window* window)
 {
-	window = Window::GetInstance();
+	this->window = window;
 
 	//ƒJƒƒ‰
 	view.eye = {0, 0, -distance};

@@ -20,28 +20,34 @@ void BaseScene::Initialize()
 	input->Initialize(window->GetHwnd());
 
 	//カメラ
-	camera->Initialize();
-
-#ifdef _DEBUG
-	debugText = std::make_unique<DebugText>();
-	debugText->Initialize(0);
-#endif // _DEBUG
+	camera->Initialize(window);
 }
 
 void BaseScene::Update()
 {
 	//入力情報更新
 	input->Update();
+
+#ifdef _DEBUG
+	{
+		//座標
+		ImGui::SetNextWindowPos(ImVec2{0,40});
+		//サイズ
+		ImGui::SetNextWindowSize(ImVec2{300,55});
+		ImGui::Begin("Demo");
+		//デモウィンドウ 
+		ImGui::Checkbox("demoWindow", &show_demo_window);
+		//フラグによる出現物
+		if(show_demo_window)	ImGui::ShowDemoWindow(&show_demo_window);
+		ImGui::End();
+	}
+#endif // _DEBUG
 }
 
 void BaseScene::EndUpdate()
 {
 #ifdef _DEBUG
 
-	//シーン遷移
-	if(input->Trigger(DIK_SPACE)){
-		IsSceneChange = true;
-	}
 #endif // _DEBUG
 
 #pragma region 汎用機能更新
@@ -56,12 +62,8 @@ void BaseScene::Draw()
 
 void BaseScene::EndDraw()
 {
-#ifdef _DEBUG
-	debugText->DrawAll();
-#endif // _DEBUG
 }
 
 void BaseScene::Finalize()
 {
-	window->Finalize();
 }

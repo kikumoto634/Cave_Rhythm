@@ -18,7 +18,7 @@ void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
-	SetPosition({0.f,-4.f, 0.f});
+	SetPosition({0.f,-3.5f, 0.f});
 
 	//コライダー
 	float radius = 0.6f;
@@ -88,9 +88,6 @@ void TrainingDummy::Update(Camera *camera)
 			//接地を維持
 			if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 				IsGround = true;
-				world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-				//行列の更新など
-				BaseObjObject::Update(this->camera);
 			}
 			//地面がないので落下
 			else{

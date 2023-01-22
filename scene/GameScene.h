@@ -23,15 +23,14 @@
 
 #ifdef _DEBUG
 #include "../Game/3D/Enemy/TrainingDummy.h"
-#include "../Engine/base/imguiManager.h"
 #endif // _DEBUG
 
-class GaneScene : public BaseScene
+class GameScene : public BaseScene
 {
 public:
 	
 	//コンストラクタ
-	GaneScene(DirectXCommon* dxCommon, Window* window);
+	GameScene(DirectXCommon* dxCommon, Window* window);
 
 	/// <summary>
 	/// 起動時
@@ -95,9 +94,6 @@ private:
 	std::unique_ptr<AreaOutRock> rock;
 
 #ifdef _DEBUG
-	imguiManager* imgui;
-	bool show_demo_window = false;
-
 	//カメラ移動、回転変更フラグ
 	bool IsCameraMovementChange = true;
 
@@ -106,7 +102,6 @@ private:
 	int popDirection[2] = {1,0};
 
 	std::unique_ptr<TrainingDummy> dummy;
-
 #endif // _DEBUG
 
 

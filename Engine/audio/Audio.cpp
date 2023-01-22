@@ -8,7 +8,7 @@
 Audio::~Audio()
 {
 	masterVoice->DestroyVoice();
-	//xAudio2->Release()
+	//xAudio2->Release();
 	//読み込み済みサウンドの波形データを解放
 	for(auto& pair : soundDatas)
 	{

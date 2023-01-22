@@ -1,6 +1,11 @@
 #pragma once
 #include "BaseScene.h"
 
+#include "../Engine/light/LightGroup.h"
+
+#include "../Game/3D/BaseObjObject.h"
+#include "../Game/System/GameManager.h"
+
 class TitleScene : public BaseScene
 {
 public:
@@ -32,5 +37,15 @@ public:
 	/// 後処理
 	/// </summary>
 	void Finalize() override;
+
+private:
+	//プレイヤーObj
+	std::unique_ptr<BaseObjObject> playerobj;
+
+	//エネミー
+	std::unique_ptr<BaseObjObject> enemyobj;
+
+	//ライト
+	LightGroup* lightGroup = nullptr;
 };
 

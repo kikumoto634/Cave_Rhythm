@@ -4,7 +4,6 @@
 
 #include "TextureManager.h"
 
-
 #include "ParticleManager.h"
 
 #include "../Engine/loader/FbxLoader.h"
@@ -18,10 +17,14 @@
 
 
 #include "../../scene/BaseScene.h"
+#include "../../scene/SceneManager.h"
 #include "../Engine/2D/Sprite.h"
 
+#ifdef _DEBUG
 
-
+#include "../Engine/base/imguiManager.h"
+#include <imgui.h>
+#endif // _DEBUG
 
 class Application
 {
@@ -50,7 +53,13 @@ private:
 	Window* window;
 	DirectXCommon* dxCommon;
 #pragma endregion
+	SceneManager* sceneManager = nullptr;
 
-	std::unique_ptr<BaseScene> scene;
-	std::string sceneName = "";
+#ifdef _DEBUG
+	DebugText* debugText;
+
+	imguiManager* imgui;
+	bool IsSceneChange_ImGui = false;
+#endif // _DEBUG
+
 };

@@ -58,6 +58,6 @@ void Planes::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsPlayerContact = true;
-		object->SetColor({0.8f, 0.0f, 0.8f,1.0f});
+		//object->SetColor({0.8f, 0.0f, 0.8f,1.0f});
 	}	
 }

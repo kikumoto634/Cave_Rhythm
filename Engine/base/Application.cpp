@@ -1,5 +1,6 @@
 #include "Application.h"
-#include "../../scene/GaneScene.h"
+#include "../../scene/GameScene.h"
+#include "../../scene/TitleScene.h"
 
 Application* Application::app = nullptr;
 
@@ -26,10 +27,6 @@ Application::Application()
 {
 	window = Window::GetInstance();
 	dxCommon = DirectXCommon::GetInstance();
-
-	scene = make_unique<GaneScene>(dxCommon, window);
-	scene->Application();
-	sceneName = "Title";
 }
 
 Application::~Application()
@@ -87,13 +84,33 @@ void Application::Initialize()
 	// パーティクルマネージャ初期化
 	ParticleManager::GetInstance()->Initialize(dxCommon);
 
-	scene->Initialize();
+#ifdef _DEBUG
+	debugText = new DebugText();
+	debugText->Initialize(0);
+
+	imgui = new imguiManager();
+	imgui->Initialize(window, dxCommon);
+#endif // _DEBUG
+
+	sceneManager = SceneManager::GetInstance();
+	BaseScene* scene = new GameScene(dxCommon, window);
+	scene->SetDebugText(debugText);
+	scene->SetImGui(imgui);
+	sceneManager->SetNextScene(scene);
 }
 
 void Application::Update()
 {
-	scene->Update();
-	scene->EndUpdate();
+#ifdef _DEBUG
+	imgui->Begin();
+
+#endif // _DEBUG
+
+	sceneManager->Update();
+
+#ifdef _DEBUG
+	imgui->End();
+#endif // _DEBUG
 }
 
 void Application::Draw()
@@ -102,7 +119,12 @@ void Application::Draw()
 	dxCommon->BeginDraw();
 
 	Sprite::SetPipelineState();
-	scene->Draw();
+	//scene->Draw();
+	sceneManager->Draw();
+#ifdef _DEBUG
+	debugText->DrawAll();
+	imgui->Draw();
+#endif // _DEBUG
 
 	//描画後処理
 	dxCommon->EndDraw();
@@ -110,13 +132,20 @@ void Application::Draw()
 
 void Application::Finalize()
 {
+#ifdef _DEBUG
+	imgui->Finalize();
+	delete imgui;
+
+	delete debugText;
+	debugText = nullptr;
+#endif // _DEBUG
+
 	ObjModelObject::StaticFinalize();
 	FbxModelObject::StaticFinalize();
 	FbxLoader::GetInstance()->Finalize();
 	Sprite::StaticFinalize();
 
-	scene->Finalize();
-	delete scene.get();
-
+	SceneManager::Delete();
+	
 	window->Finalize();
 }
