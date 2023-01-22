@@ -93,7 +93,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new GameScene(dxCommon, window);
+	BaseScene* scene = new TitleScene(dxCommon, window);
 	scene->SetDebugText(debugText);
 	scene->SetImGui(imgui);
 	sceneManager->SetNextScene(scene);

@@ -2,7 +2,7 @@
 
 Planes::~Planes()
 {
-	Finalize();
+	//Finalize();
 }
 
 void Planes::Initialize(std::string filePath, bool IsSmmothing)

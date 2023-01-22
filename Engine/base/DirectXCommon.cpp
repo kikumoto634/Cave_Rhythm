@@ -15,15 +15,6 @@ void DirectXCommon::Initialize(Window *window)
 {
 	this->window = window;
 
-	///デバックレイヤー
-#ifdef _DEBUG
-	//デバックレイヤーをオンに
-	ID3D12Debug* debugController= nullptr;
-	if(SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))){
-		debugController->EnableDebugLayer();
-	}
-#endif // _DEBUG
-
 	InitializeFixFPS();
 
 	if(FAILED(CreateDevice())) assert(0);
@@ -104,6 +95,15 @@ void DirectXCommon::EndDraw()
 HRESULT DirectXCommon::CreateDevice()
 {
 	HRESULT result;
+
+	///デバックレイヤー
+#ifdef _DEBUG
+	//デバックレイヤーをオンに
+	ID3D12Debug* debugController= nullptr;
+	if(SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))){
+		debugController->EnableDebugLayer();
+	}
+#endif // _DEBUG
 
 	///デバイスの生成(1ゲームに一つ)
 	//対応レベルの配列

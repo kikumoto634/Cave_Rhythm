@@ -203,6 +203,7 @@
     <ClCompile Include="Game\System\RhythmManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\BaseScene.cpp" />
+    <ClCompile Include="scene\EventScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
     <ClInclude Include="scene\BaseScene.h" />
+    <ClInclude Include="scene\EventScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="scene\TitleScene.h" />

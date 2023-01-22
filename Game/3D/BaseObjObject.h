@@ -88,7 +88,7 @@ protected:
 	//コライダー
 	BaseCollider* collider = nullptr;
 
-	//カメラ
+	//カメラ(借り物)
 	Camera* camera = nullptr;
 
 

@@ -2,6 +2,7 @@
 
 #include "SceneManager.h"
 #include "GameScene.h"
+#include "EventScene.h"
 
 using namespace std;
 using namespace DirectX;

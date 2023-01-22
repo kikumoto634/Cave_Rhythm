@@ -8,7 +8,7 @@ using namespace DirectX;
 
 TrainingDummy::~TrainingDummy()
 {
-	Finalize();
+	//Finalize();
 }
 
 void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)

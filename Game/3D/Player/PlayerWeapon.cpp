@@ -6,7 +6,7 @@ using namespace DirectX;
 
 PlayerWeapon::~PlayerWeapon()
 {
-	Finalize();
+	//Finalize();
 }
 
 void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)

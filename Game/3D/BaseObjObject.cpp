@@ -5,11 +5,11 @@
 
 BaseObjObject::~BaseObjObject()
 {
-	if(collider){
-		//コリジョンマネージャーから登録を解除する
-		CollisionManager::GetInstance()->RemoveCollider(collider);
-		delete collider;
-	}
+	//if(collider){
+	//	//コリジョンマネージャーから登録を解除する
+	//	CollisionManager::GetInstance()->RemoveCollider(collider);
+	//	delete collider;
+	//}
 }
 
 void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
@@ -42,10 +42,18 @@ void BaseObjObject::Draw()
 
 void BaseObjObject::Finalize()
 {
+	if(collider){
+		//コリジョンマネージャーから登録を解除する
+		CollisionManager::GetInstance()->RemoveCollider(collider);
+		delete collider;
+	}
+
 	delete model;
 	model = nullptr;
+
 	delete object;
 	object = nullptr;
+
 	world = {};
 }
 

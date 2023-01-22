@@ -2,7 +2,7 @@
 
 AreaOutRock::~AreaOutRock()
 {
-	Finalize();
+	//Finalize();
 }
 
 void AreaOutRock::Initialize(std::string filePath, bool IsSmmothing)

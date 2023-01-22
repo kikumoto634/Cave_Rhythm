@@ -12,7 +12,7 @@
 
 Enemy::~Enemy()
 {
-	Finalize();
+	//Finalize();
 }
 
 void Enemy::Initialize(std::string filePath, bool IsSmoothing)

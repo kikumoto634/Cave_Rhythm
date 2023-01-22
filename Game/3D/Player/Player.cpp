@@ -7,7 +7,7 @@ using namespace DirectX;
 
 Player::~Player()
 {
-	Finalize();
+	//Finalize();
 }
 
 void Player::Initialize(std::string filePath, bool IsSmoothing)
