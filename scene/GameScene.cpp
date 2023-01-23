@@ -254,8 +254,13 @@ void GameScene::Update()
 		ImGui::SetNextWindowSize(ImVec2{300,300});
 		ImGui::Begin("Debug");
 		//ƒJƒƒ‰ ‰ñ“]:false , ˆÚ“®:true
-		ImGui::Text("Camera (true = transform / false = rotation)");
+		ImGui::Text("Camera");
+		ImGui::Text("true = transform / false = rotation");
 		ImGui::Checkbox("Change", &IsCameraMovementChange);
+		if(ImGui::Button("Shake")){
+			camera->ShakeStart();
+		}
+
 		//“G‚ÌoŒ»
 		ImGui::Text("EnemyPOP");
 		ImGui::InputInt2("EnemyPos X,Z : 0~11", popPosition);

@@ -25,6 +25,7 @@ void Camera::Initialize(Window* window)
 void Camera::Update()
 {
 	view.matViewProjection = view.matView * view.matProjection;
+	Shake();
 
 	view.UpdateViewMatrix();
 	view.UpdateProjectionMatrix(window->GetWindowWidth(),window->GetWindowHeight());
@@ -73,6 +74,34 @@ void Camera::RotVector(Vector3 rot)
 		{target.x + vTargetEye.m128_f32[0], target.y + vTargetEye.m128_f32[1],
 		target.z + vTargetEye.m128_f32[2]});
 	SetUp({vUp.m128_f32[0], vUp.m128_f32[1], vUp.m128_f32[2]});
+}
+
+void Camera::ShakeStart(int MaxFrame)
+{
+	ShakeFrame = MaxFrame;
+
+	IsShake = true;
+	saveTarget = view.target;
+	saveEye = view.eye;
+}
+
+void Camera::Shake()
+{
+	if(!IsShake) return;
+
+	if(frame >= ShakeFrame){
+		view.target = saveTarget;
+		view.eye = saveEye;
+		frame = 0;
+		IsShake = false;
+	}
+
+	Vector3 temp = {static_cast<float>(rand()%2-1),static_cast<float>(rand()%2-1),static_cast<float>(rand()%2-1)};
+	MoveVector(temp);
+	view.target = saveTarget;
+	view.eye = saveEye;
+
+	frame++;
 }
 
 

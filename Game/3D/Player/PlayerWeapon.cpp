@@ -68,6 +68,9 @@ void PlayerWeapon::Finalize()
 
 void PlayerWeapon::OnCollision(const CollisionInfo &info)
 {
+	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
+		camera->ShakeStart();
+	}
 }
 
 void PlayerWeapon::Attack()
