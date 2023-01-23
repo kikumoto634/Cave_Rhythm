@@ -24,8 +24,8 @@ void Camera::Initialize(Window* window)
 
 void Camera::Update()
 {
-	view.matViewProjection = view.matView * view.matProjection;
 	Shake();
+	view.matViewProjection = view.matView * view.matProjection;
 
 	view.UpdateViewMatrix();
 	view.UpdateProjectionMatrix(window->GetWindowWidth(),window->GetWindowHeight());
@@ -94,12 +94,14 @@ void Camera::Shake()
 		view.eye = saveEye;
 		frame = 0;
 		IsShake = false;
+		return;
 	}
+
+	view.target = saveTarget;
+	view.eye = saveEye;
 
 	Vector3 temp = {static_cast<float>(rand()%2-1),static_cast<float>(rand()%2-1),static_cast<float>(rand()%2-1)};
 	MoveVector(temp);
-	view.target = saveTarget;
-	view.eye = saveEye;
 
 	frame++;
 }
