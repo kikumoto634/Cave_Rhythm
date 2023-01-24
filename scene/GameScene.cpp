@@ -88,9 +88,6 @@ void GameScene::Initialize()
 
 #pragma endregion _3D初期化
 
-	//リズム
-	rhythmManager->InitializeMeasurement(clock());
-
 #ifdef _DEBUG
 	dummy = make_unique<TrainingDummy>();
 	dummy->Initialize("slime");
@@ -106,14 +103,16 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
-	//リズム計測
-	rhythmManager->StartMeasurement(clock());
-	//計測開始時
-	if(rhythmManager->GetMoveUpNumber() == 0){
-		gameManager->AudioPlay(3, 0.5f, true);
+	if(!IsPrevSceneChange){
+		//リズム計測
+		rhythmManager->StartMeasurement(clock());
+		//計測開始時
+		if(rhythmManager->GetMoveUpNumber() == 0){
+			gameManager->AudioPlay(3, 0.5f, true);
+		}
+		//リズム繰り上がり
+		rhythmManager->BeatMoveUp();
 	}
-	//リズム繰り上がり
-	rhythmManager->BeatMoveUp();
 
 	BaseScene::Update();
 
@@ -414,6 +413,8 @@ void GameScene::SceneChange()
 		if(fadeColor.w <= 0){
 			IsPrevSceneChange = false;
 			fadeCurrentFrame = 0;
+			//リズム
+			rhythmManager->InitializeMeasurement(clock());
 			return;
 		}
 
