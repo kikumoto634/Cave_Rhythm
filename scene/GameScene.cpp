@@ -12,6 +12,8 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 
+#include "../Engine/math/Easing/Easing.h"
+
 using namespace std;
 using namespace DirectX;
 
@@ -86,10 +88,6 @@ void GameScene::Initialize()
 
 #pragma endregion _3D初期化
 
-#pragma region _2D初期化
-
-#pragma endregion _2D初期化
-
 	//リズム
 	rhythmManager->InitializeMeasurement(clock());
 
@@ -97,6 +95,13 @@ void GameScene::Initialize()
 	dummy = make_unique<TrainingDummy>();
 	dummy->Initialize("slime");
 #endif // _DEBUG
+
+	//シーン遷移(FadeOut)
+	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
+	fade = make_unique<BaseSprites>();
+	fade->Initialize(1);
+	fade->SetColor(fadeColor);
+	fade->SetSize({fadeInSize});
 }
 
 void GameScene::Update()
@@ -133,76 +138,85 @@ void GameScene::Update()
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
 	}
 
-	if(input->Trigger(DIK_RETURN)){
-		sceneManager->SetNextScene(new TitleScene(dxCommon,window));
+	//ENTER
+	if(!IsPrevSceneChange&&input->Trigger(DIK_Z)){
+		IsNextSceneChange = true;
 	}
 
 #endif // _DEBUG
 
-	//ToDo: 
-	// 同時押しでのコンボ+2の修正(一度正解になったら次の入力可能時間まで入力不可。)
-	// ミス入力の時、プレイヤーの移動を不可に。
-	if(player->GetIsInputOnce()){
-		rhythmManager->InputRhythm();
-		IsRhythmInput = true;
-	}
+	//シーン更新
+	SceneChange();
+	fade->Update();
+
+
+	if(!IsPrevSceneChange){
+
+		//ToDo: 
+		// 同時押しでのコンボ+2の修正(一度正解になったら次の入力可能時間まで入力不可。)
+		// ミス入力の時、プレイヤーの移動を不可に。
+		if(player->GetIsInputOnce()){
+			rhythmManager->InputRhythm();
+			IsRhythmInput = true;
+		}
 
 #pragma endregion 入力処理
 
-	//リズム判別
-	if(IsRhythmInput){
-		IsRhythmInput = false;
+		//リズム判別
+		if(IsRhythmInput){
+			IsRhythmInput = false;
 
-		//High(入力が遅く、judgeTimeが更新された状態での更新)
-		if(rhythmManager->HighJudgeRhythm()){
-			gameManager->ComboIncrement();
-			player->JudgeUpdate(true);
-		}
-		//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
-		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
-			if(rhythmManager->LowJudgeRhythm()){
+			//High(入力が遅く、judgeTimeが更新された状態での更新)
+			if(rhythmManager->HighJudgeRhythm()){
 				gameManager->ComboIncrement();
 				player->JudgeUpdate(true);
 			}
-			//ミス
-			else{
-				gameManager->ComboReset();
-				player->JudgeUpdate(false);
+			//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
+			else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
+				if(rhythmManager->LowJudgeRhythm()){
+					gameManager->ComboIncrement();
+					player->JudgeUpdate(true);
+				}
+				//ミス
+				else{
+					gameManager->ComboReset();
+					player->JudgeUpdate(false);
+				}
 			}
 		}
-	}
 
-	//リズム終了時処理
-	if(rhythmManager->GetIsRhythmEnd()){
+		//リズム終了時処理
+		if(rhythmManager->GetIsRhythmEnd()){
 		
-		//SE
-		gameManager->AudioPlay(0,0.25f);
+			//SE
+			gameManager->AudioPlay(0,0.25f);
 
-		//各オブジェクト処理
-		player->IsBeatEndOn();
-		for(auto it = enemy.begin(); it != enemy.end(); it++){
-			(*it)->IsBeatEndOn();
-		}
-		for(int i = 0; i < DIV_NUM; i++){
-			for(int j = 0; j < DIV_NUM; j++){
-				plane[i][j]->IsBeatEndOn();
+			//各オブジェクト処理
+			player->IsBeatEndOn();
+			for(auto it = enemy.begin(); it != enemy.end(); it++){
+				(*it)->IsBeatEndOn();
 			}
+			for(int i = 0; i < DIV_NUM; i++){
+				for(int j = 0; j < DIV_NUM; j++){
+					plane[i][j]->IsBeatEndOn();
+				}
+			}
+
+			//敵生成
+			for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
+				//座標;
+				Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);
+				//方向
+				Vector2 ldir = gameManager->EnemyRandomDir(lpos);
+				//POP
+				EnemyPop(lpos, ldir);
+			}
+
+			#ifdef _DEBUG
+			dummy->IsBeatEndOn();
+			#endif // _DEBUG
+
 		}
-
-		//敵生成
-		for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
-			//座標;
-			Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);
-			//方向
-			Vector2 ldir = gameManager->EnemyRandomDir(lpos);
-			//POP
-			EnemyPop(lpos, ldir);
-		}
-
-		#ifdef _DEBUG
-		dummy->IsBeatEndOn();
-		#endif // _DEBUG
-
 	}
 
 #pragma region _3D更新
@@ -235,9 +249,6 @@ void GameScene::Update()
 
 #pragma endregion _3D更新
 
-#pragma region _2D更新
-
-#pragma endregion _2D更新
 
 #pragma region 汎用更新	
 	gameManager->LightUpdate();
@@ -282,7 +293,6 @@ void GameScene::Update()
 	}
 #endif // _DEBUG
 
-
 	BaseScene::EndUpdate();
 }
 
@@ -325,6 +335,8 @@ void GameScene::Draw()
 
 #pragma region _2D_UI描画
 	Sprite::SetPipelineState();
+
+	fade->Draw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
@@ -374,7 +386,7 @@ void GameScene::Finalize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-
+	fade->Finalize();
 #pragma endregion _2D解放
 
 #pragma region 汎用解放
@@ -388,6 +400,38 @@ void GameScene::Finalize()
 #pragma endregion 汎用解放
 
 	BaseScene::Finalize();
+}
+
+void GameScene::NextSceneChange()
+{
+	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
+}
+
+void GameScene::SceneChange()
+{
+	//PrevSceneからの移動後処理
+	if(IsPrevSceneChange){
+		if(fadeColor.w <= 0){
+			IsPrevSceneChange = false;
+			fadeCurrentFrame = 0;
+			return;
+		}
+
+		fadeColor.w = 
+			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
+		fade->SetColor(fadeColor);
+	}
+	//NextSceneへの移動
+	else if(IsNextSceneChange){
+
+		if(fadeColor.w >= 1){
+			NextSceneChange();
+		}
+
+		fadeColor.w = 
+			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame, FadeSecond));
+		fade->SetColor(fadeColor);
+	}
 }
 
 void GameScene::EnemyInitPop()

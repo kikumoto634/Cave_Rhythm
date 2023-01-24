@@ -3,11 +3,17 @@
 
 #include "../Engine/light/LightGroup.h"
 
+#include "../Game/2D/BaseSprites.h"
 #include "../Game/3D/BaseObjObject.h"
+
 #include "../Game/System/GameManager.h"
 
 class TitleScene : public BaseScene
 {
+private:
+	//シーン遷移
+	const float FadeSecond = 1.f;
+
 public:
 	
 	//コンストラクタ
@@ -39,6 +45,11 @@ public:
 	void Finalize() override;
 
 private:
+	//シーン遷移
+	void NextSceneChange();
+	void SceneChange();
+
+private:
 	//プレイヤーObj
 	std::unique_ptr<BaseObjObject> playerobj;
 
@@ -47,5 +58,15 @@ private:
 
 	//ライト
 	LightGroup* lightGroup = nullptr;
+
+	//シーン遷移
+	std::unique_ptr<BaseSprites> fade;
+	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
+	Vector2 fadeInSize = {};
+	float fadeCurrentFrame = 0;
+	//Prev
+	bool IsPrevSceneChange = true;
+	//Next
+	bool IsNextSceneChange = false;
 };
 

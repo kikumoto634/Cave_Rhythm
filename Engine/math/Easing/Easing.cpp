@@ -1,12 +1,12 @@
 #include "Easing.h"
 #include <cmath>
 
-float& Time_OneWay(float& frame, const float& second)
+float& Time_OneWay(float& frame, const float second)
 {
 	return (frame < 1.f) ? frame += 1.f/(second*60.f) : frame = 1.f;
 }
 
-float &Time_Loop(float &frame, const float &second)
+float &Time_Loop(float &frame, const float second)
 {
 	return (frame < 1.f) ? frame += 1.f/(second*60.f) : frame = 0.f;
 }
@@ -18,6 +18,15 @@ const Vector3 Easing_Linear_Point2(const Vector3 &start, const Vector3 &end, con
 	pos.x = (1.f-frame) * start.x + frame * end.x;
 	pos.y = (1.f-frame) * start.y + frame * end.y;
 	pos.z = (1.f-frame) * start.z + frame * end.z;
+
+	return pos;
+}
+
+const float Easing_Linear_Point2(const float &start, const float &end, const float &frame)
+{
+	float pos;
+
+	pos = (1.f-frame) * start + frame * end;
 
 	return pos;
 }

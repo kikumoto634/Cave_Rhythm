@@ -27,7 +27,6 @@ void SceneManager::Delete()
 
 void SceneManager::Update()
 {
-
 	if(nextScene){
 		
 		DebugText* text = nextScene->GetDebugText();

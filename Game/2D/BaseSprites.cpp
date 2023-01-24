@@ -9,6 +9,7 @@ void BaseSprites::Update()
 {
 	sprite->SetPosition(position);
 	sprite->SetSize(size);
+	sprite->SetColor(color);
 }
 
 void BaseSprites::Draw()

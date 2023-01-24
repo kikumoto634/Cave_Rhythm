@@ -32,9 +32,11 @@ public:
 	//Setter
 	void SetPosition(const Vector2& position)	{this->position = position;}
 	void SetSize(const Vector2& size)	{this->size = size;}
+	void SetColor(DirectX::XMFLOAT4 color)	{this->color = color;}
 
 protected:
 	Sprite* sprite;
 	Vector2 position = {0,0};
 	Vector2 size = {100,100};
+	DirectX::XMFLOAT4 color = {1,1,1,1};
 };

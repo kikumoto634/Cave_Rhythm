@@ -4,6 +4,8 @@
 #include "GameScene.h"
 #include "EventScene.h"
 
+#include "../Engine/math/Easing/Easing.h"
+
 using namespace std;
 using namespace DirectX;
 
@@ -48,6 +50,13 @@ void TitleScene::Initialize()
 	lightGroup->SetDirLightActive(0, true);
 	lightGroup->SetDirLightActive(1, true);
 	lightGroup->SetDirLightActive(2, true);
+
+	//シーン遷移(FadeOut)
+	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
+	fade = make_unique<BaseSprites>();
+	fade->Initialize(1);
+	fade->SetColor(fadeColor);
+	fade->SetSize({fadeInSize});
 }
 
 void TitleScene::Update()
@@ -55,16 +64,23 @@ void TitleScene::Update()
 	BaseScene::Update();
 
 #pragma region Input Update
-	//ENTER
-	if(input->Trigger(DIK_RETURN)){
-		sceneManager->SetNextScene(new GameScene(dxCommon,window));
+#ifdef _DEBUG
+	//シーン
+	if(!IsPrevSceneChange&&input->Trigger(DIK_Z)){
+		IsNextSceneChange = true;
 	}
+#endif // _DEBUG
 
 #pragma endregion
 
 #pragma region _3DObj Update
 	playerobj->Update(camera);
 	enemyobj->Update(camera);
+#pragma endregion
+
+#pragma region _2DObj Update
+	SceneChange();
+	fade->Update();
 #pragma endregion
 
 #pragma region Common Update
@@ -156,8 +172,9 @@ void TitleScene::Draw()
 	enemyobj->Draw();
 #pragma endregion
 
-#pragma region Common Draw
-
+#pragma region _2D_UIDraw
+	Sprite::SetPipelineState();
+	fade->Draw();
 #pragma endregion
 
 	BaseScene::EndDraw();
@@ -165,6 +182,8 @@ void TitleScene::Draw()
 
 void TitleScene::Finalize()
 {
+	fade->Finalize();
+
 	delete lightGroup;
 	lightGroup = nullptr;
 
@@ -172,4 +191,36 @@ void TitleScene::Finalize()
 	playerobj->Finalize();
 
 	BaseScene::Finalize();
+}
+
+void TitleScene::NextSceneChange()
+{
+	sceneManager->SetNextScene(new GameScene(dxCommon,window));
+}
+
+void TitleScene::SceneChange()
+{
+	//PrevSceneからの移動後処理
+	if(IsPrevSceneChange){
+		if(fadeColor.w <= 0){
+			IsPrevSceneChange = false;
+			fadeCurrentFrame = 0;
+			return;
+		}
+
+		fadeColor.w = 
+			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond));
+		fade->SetColor(fadeColor);
+	}
+	//NextSceneへの移動
+	else if(IsNextSceneChange){
+
+		if(fadeColor.w >= 1){
+			NextSceneChange();
+		}
+
+		fadeColor.w = 
+			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame, FadeSecond));
+		fade->SetColor(fadeColor);
+	}
 }

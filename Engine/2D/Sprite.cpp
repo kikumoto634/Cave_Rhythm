@@ -160,7 +160,7 @@ bool Sprite::Initialize(UINT texNumber)
 	//定数バッファのデータ転送
 	result = this->constBuffData->Map(0, nullptr, (void**)&constMap);
 	if(SUCCEEDED(result)){
-		constMap->color = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
+		constMap->color = this->color;
 		constMap->mat = common->matProjection;
 		this->constBuffData->Unmap(0, nullptr);
 	}

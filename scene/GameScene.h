@@ -10,7 +10,7 @@
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
 
-#include "../Game/2D/SampleSprite/SampleSprite.h"
+#include "../Game/2D/BaseSprites.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
@@ -27,6 +27,10 @@
 
 class GameScene : public BaseScene
 {
+private:
+	//シーン遷移
+	const float FadeSecond = 1.f;
+
 public:
 	
 	//コンストラクタ
@@ -58,6 +62,15 @@ public:
 	void Finalize() override;
 
 private:
+	//シーン遷移
+	void NextSceneChange();
+	void SceneChange();
+
+	//POP関数
+	void EnemyInitPop();
+	void EnemyPop(Vector2 pos, Vector2 dir);
+
+private:
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
 
@@ -86,9 +99,6 @@ private:
 	//敵
 	std::list<std::unique_ptr<Enemy>> enemy;
 	const int IniCreateEnemyNum = 10;
-	//POP関数
-	void EnemyInitPop();
-	void EnemyPop(Vector2 pos, Vector2 dir);
 
 	//岩
 	std::unique_ptr<AreaOutRock> rock;
@@ -104,5 +114,13 @@ private:
 	std::unique_ptr<TrainingDummy> dummy;
 #endif // _DEBUG
 
-
+	//シーン遷移
+	std::unique_ptr<BaseSprites> fade;
+	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
+	Vector2 fadeInSize = {};
+	float fadeCurrentFrame = 0;
+	//Prev
+	bool IsPrevSceneChange = true;
+	//Next
+	bool IsNextSceneChange = false;
 };
