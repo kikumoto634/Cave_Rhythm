@@ -27,6 +27,13 @@ public:
 	//コイン数取得
 	int GetCoinNum()	{return coinNum;}
 
+	//体力初期設定
+	void InitializeSetHp(int _hp)	{hp = _hp;}
+	//体力スプライトリズムフラグ
+	void IsBeatEndOn()	{IsHpScaleChange = true;}
+	//体力減少
+	void HpDecrement();
+
 	//オーディオ再生
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);
 
@@ -63,6 +70,9 @@ private:
 	//コイン
 	int coinNum = 0;
 
+	//体力
+	int hp = 0;
+
 	//オーディオ
 	Audio* audio = nullptr;
 
@@ -94,5 +104,11 @@ private:
 	//獲得コイン
 	std::unique_ptr<BaseSprites> coinSp;
 	std::unique_ptr<BaseSprites> numberSp_coin[3];
+
+	//体力
+	const int HpSpSize = 4;
+	int DamageHpSpriteIndex = 3;
+	std::unique_ptr<BaseSprites> hpSp[4];
+	bool IsHpScaleChange = false;
 };
 

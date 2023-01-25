@@ -76,6 +76,8 @@ void Application::Initialize()
 	TextureManager::Load(11, "2DText/number8.png");
 	TextureManager::Load(12, "2DText/number9.png");
 	TextureManager::Load(13, "2DText/Coin.png");
+	TextureManager::Load(14, "2DText/Heart.png");
+	TextureManager::Load(15, "2DText/HeartEmpty.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();

@@ -18,7 +18,7 @@ void DebugText::Initialize(UINT texnumber)
 		sprites[i] = new Sprite();
 		//スプライトを初期化する
 		sprites[i]->Initialize(texnumber);
-		sprites[i]->SetColor({1,0,0,1});
+		sprites[i]->SetColor({0,1,0,1});
 	}
 }
 

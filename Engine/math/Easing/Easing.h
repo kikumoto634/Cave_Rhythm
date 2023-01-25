@@ -1,4 +1,5 @@
 #pragma once
+#include "../Vector/Vector2.h"
 #include "../Vector/Vector3.h"
 
 /// <summary>
@@ -25,6 +26,15 @@ float& Time_Loop(float& frame, const float second);
 /// <param name="frame">フレーム</param>
 /// <returns></returns>
 const Vector3 Easing_Linear_Point2(const Vector3& start, const Vector3& end, const float& frame);
+
+/// <summary>
+/// 等速直線 2点
+/// </summary>
+/// <param name="start">開始座標</param>
+/// <param name="end">終了座標</param>
+/// <param name="frame">フレーム</param>
+/// <returns></returns>
+const Vector2 Easing_Linear_Point2(const Vector2& start, const Vector2& end, const float& frame);
 
 /// <summary>
 /// 等速直線 2点

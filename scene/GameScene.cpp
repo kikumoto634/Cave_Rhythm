@@ -46,13 +46,6 @@ void GameScene::Initialize()
 	gameManager = new GameManager();
 	gameManager->Initialize();
 
-	/*gameManager->AudioAdd(0,"rhythm.wav");
-	gameManager->AudioAdd(1,"miss.wav");
-	gameManager->AudioAdd(2,"damage.wav");
-	gameManager->AudioAdd(3,"ex)_BPM90.wav");
-	gameManager->AudioAdd(4,"ex)_BPM120.wav");
-	gameManager->AudioAdd(5,"ex)_BPM180.wav");*/
-
 	//カメラ
 	camera->SetTarget(Vector3(0.f, 0.f, -12.f));
 	camera->SetEye(Vector3(0.f, 9.f, -30.f));
@@ -65,6 +58,7 @@ void GameScene::Initialize()
 	player = make_unique<Player>();
 	player->Initialize("human1");
 	player->SetPosition({0, -3.f, -12.5f});
+	gameManager->InitializeSetHp(player->GetHP());
 
 	for(int i = 0; i < IniCreateEnemyNum; i++){
 		EnemyInitPop();
@@ -206,6 +200,8 @@ void GameScene::Update()
 				if((*it)->GetIsAlive())(*it)->IsBeatEndOn();
 			}
 
+			gameManager->IsBeatEndOn();
+
 			//敵生成
 			for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
 				//座標;
@@ -240,7 +236,10 @@ void GameScene::Update()
 		}
 	}
 	//プレイヤー
-	if(player->DamageSound())	gameManager->AudioPlay(2,0.2f);
+	if(player->DamageSound())	{
+		gameManager->AudioPlay(2,0.2f);
+		gameManager->HpDecrement();
+	}
 	player->Update(camera);
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//地面

@@ -34,10 +34,32 @@ public:
 	void SetSize(const Vector2& size)	{this->size = size;}
 	void SetColor(DirectX::XMFLOAT4 color)	{this->color = color;}
 	void SetTexNumber(UINT texNumber)	{sprite->SetTexNumber(texNumber);}
+	void SetAnchorPoint(Vector2 anchorPoint)	{sprite->SetAnchorpoint(anchorPoint);}
+
+public:
+	/// <summary>
+	/// リズムにあわせてサイズ変更 
+	/// </summary>
+	/// <param name="sizeMax">最大サイズ</param>
+	/// <param name="sizeMin">最小サイズ</param>
+	/// <param name="EndTime">終了時間 (x:秒)</param>
+	/// <returns></returns>
+	bool ScaleChange(Vector2 sizeMax = {1.f,1.f}, Vector2 sizeMin = {0.7f,0.7f}, float EndTime = 0.25f);
 
 protected:
 	Sprite* sprite;
 	Vector2 position = {0,0};
 	Vector2 size = {100,100};
 	DirectX::XMFLOAT4 color = {1,1,1,1};
+
+	//リズム更新用
+	//拍終了フラグ
+	bool IsBeatEnd = false;
+
+	//サイズ変更用
+	//サイズ
+	Vector2 baseSize = {1,1};
+	Vector2 scale = {1,1};
+	//現在時間
+	float scaleCurrentTime = 0.f;
 };

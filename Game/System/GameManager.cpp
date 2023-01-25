@@ -12,6 +12,10 @@ void GameManager::Initialize()
 
 void GameManager::Finalize()
 {
+	for(int i = 0; i < HpSpSize; i++){
+		hpSp[i]->Finalize();
+	}
+
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_combo[i]->Finalize();
@@ -65,6 +69,15 @@ void GameManager::CoinIncrement()
 	numberSp_coin[0]->SetTexNumber(hundred + TexNumberBegin);
 	numberSp_coin[1]->SetTexNumber(ten + TexNumberBegin);
 	numberSp_coin[2]->SetTexNumber(one + TexNumberBegin);
+}
+
+void GameManager::HpDecrement()
+{
+	if(DamageHpSpriteIndex < 0)	return;
+
+	hpSp[DamageHpSpriteIndex]->SetTexNumber(15);
+	hpSp[DamageHpSpriteIndex]->SetSize({50,50});
+	DamageHpSpriteIndex--;
 }
 
 void GameManager::AudioPlay(int number, float volume, bool loop)
@@ -195,6 +208,17 @@ void GameManager::SpriteUpdate()
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i]->Update();
 	}
+
+	if(IsHpScaleChange){
+		for(int i = 0; i <= DamageHpSpriteIndex; i++){
+			if(hpSp[i]->ScaleChange({75,75}, {50,50})){
+				IsHpScaleChange = false;
+			}
+		}
+	}
+	for(int i = 0; i < HpSpSize; i++){
+		hpSp[i]->Update();
+	}
 }
 
 void GameManager::SpriteDraw()
@@ -209,6 +233,10 @@ void GameManager::SpriteDraw()
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i]->Draw();
+	}
+
+	for(int i = 0; i < HpSpSize; i++){
+		hpSp[i]->Draw();
 	}
 }
 
@@ -250,17 +278,26 @@ void GameManager::SpriteInitialize()
 		numberSp_combo[i]->SetSize({50,75});
 	}
 
-	//コンボテキスト
+	//コインテキスト
 	coinSp = make_unique<BaseSprites>();
 	coinSp->Initialize(13);
-	coinSp->SetPosition({50,100});
-	coinSp->SetSize({150,75});
+	coinSp->SetPosition({50,175});
+	coinSp->SetSize({75,75});
 
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i] = make_unique<BaseSprites>();
 		numberSp_coin[i]->Initialize(TexNumberBegin + 0);
-		numberSp_coin[i]->SetPosition({float(50+(i*50)),175});
+		numberSp_coin[i]->SetPosition({float(125+(i*50)),175});
 		numberSp_coin[i]->SetSize({50,75});
+	}
+
+	//体力
+	for(int i = 0; i < HpSpSize; i++){
+		hpSp[i] = make_unique<BaseSprites>();
+		hpSp[i]->Initialize(14);
+		hpSp[i]->SetPosition({float(980 + (i*80)), 55});
+		hpSp[i]->SetSize({75,75});
+		hpSp[i]->SetAnchorPoint({0.5f,0.5f});
 	}
 }
