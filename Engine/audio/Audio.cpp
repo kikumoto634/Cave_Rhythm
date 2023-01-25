@@ -5,15 +5,26 @@
 
 #pragma comment(lib, "xaudio2.lib")
 
+void Audio::Load(UINT number, std::string filename)
+{
+	std::string fullPath = "Resources/sound/" + filename;
+	Audio::GetInstance()->LoadWave(number, fullPath.c_str());
+}
+
+Audio *Audio::GetInstance()
+{
+	static Audio instance;
+	return &instance;
+}
+
 Audio::~Audio()
 {
-	masterVoice->DestroyVoice();
-	//xAudio2->Release();
 	//読み込み済みサウンドの波形データを解放
 	for(auto& pair : soundDatas)
 	{
 		delete pair.second.pBuffer;
 	}
+	//soundDatas = {};
 }
 
 void Audio::Initialize()
@@ -26,6 +37,24 @@ void Audio::Initialize()
 	//マスターボイスを生成
 	result = xAudio2->CreateMasteringVoice(&masterVoice);
 	assert(SUCCEEDED(result));
+}
+
+void Audio::Finalize()
+{
+	masterVoice->DestroyVoice();
+	//delete masterVoice;
+	//masterVoice = nullptr;
+
+	xAudio2->Release();
+	//delete xAudio2;
+	//xAudio2 = nullptr;
+
+	//読み込み済みサウンドの波形データを解放
+	/*for(auto& pair : soundDatas)
+	{
+		delete pair.second.pBuffer;
+	}*/
+	//soundDatas = {};
 }
 
 void Audio::LoadWave(int number, const char *filename)

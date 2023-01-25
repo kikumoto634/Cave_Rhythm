@@ -63,6 +63,8 @@ void TitleScene::Update()
 {
 	BaseScene::Update();
 
+	if(input->Trigger(DIK_Z))IsNextSceneChange = true;
+
 #pragma region _3DObj Update
 	playerobj->Update(camera);
 	enemyobj->Update(camera);

@@ -2,6 +2,7 @@
 #include <xaudio2.h>
 #include <wrl.h>
 #include <map>
+#include <string>
 
 /// <summary>
 /// サウンド再生管理
@@ -45,15 +46,21 @@ public://インナークラス
 
 public://メンバ関数
 
-	/// <summary>
-	///デストラクタ
-	/// </summary>
+	static void Load(UINT number, std::string filename);
+
+	static Audio* GetInstance();
+
 	~Audio();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize();
+
+	/// <summary>
+	/// 後処理
+	/// </summary>
+	void Finalize();
 
 	/// <summary>
 	/// サウンドファイルの読み込み
@@ -67,7 +74,7 @@ public://メンバ関数
 
 private://メンバ変数
 	//XAudio2のインスタンス
-	ComPtr<IXAudio2> xAudio2;
+	IXAudio2* xAudio2;
 	//マスターボイス
 	IXAudio2MasteringVoice* masterVoice;
 	//波形データの連想配列

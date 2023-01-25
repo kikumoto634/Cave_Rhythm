@@ -77,6 +77,15 @@ void Application::Initialize()
 	TextureManager::Load(12, "2DText/number9.png");
 	TextureManager::Load(13, "2DText/Coin.png");
 
+	//音声
+	Audio::GetInstance()->Initialize();
+	Audio::Load(0,"rhythm.wav");
+	Audio::Load(1,"miss.wav");
+	Audio::Load(2,"damage.wav");
+	Audio::Load(3,"ex)_BPM90.wav");
+	Audio::Load(4,"ex)_BPM120.wav");
+	Audio::Load(5,"ex)_BPM180.wav");
+
 #pragma endregion
 
 	//スプライト静的初期化
@@ -153,7 +162,6 @@ void Application::Finalize()
 	delete debugText;
 	debugText = nullptr;
 #endif // _DEBUG
-
 	ObjModelObject::StaticFinalize();
 	FbxModelObject::StaticFinalize();
 	FbxLoader::GetInstance()->Finalize();

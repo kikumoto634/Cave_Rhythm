@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "../Engine/audio/Audio.h"
 
 SceneManager* SceneManager::instance = nullptr;
 
@@ -55,6 +56,7 @@ void SceneManager::Update()
 		//‰Šú‰»
 		scene->Application();
 		scene->Initialize();
+		Audio::GetInstance()->Initialize();
 	}
 
 	scene->Update();

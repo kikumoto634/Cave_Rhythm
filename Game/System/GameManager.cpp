@@ -27,8 +27,7 @@ void GameManager::Finalize()
 	delete lightGroup;
 	lightGroup = nullptr;
 
-	delete audio;
-	audio = nullptr;
+	audio->Finalize();
 }
 
 void GameManager::ComboIncrement()
@@ -66,13 +65,6 @@ void GameManager::CoinIncrement()
 	numberSp_coin[0]->SetTexNumber(hundred + TexNumberBegin);
 	numberSp_coin[1]->SetTexNumber(ten + TexNumberBegin);
 	numberSp_coin[2]->SetTexNumber(one + TexNumberBegin);
-}
-
-void GameManager::AudioAdd(int number, std::string path)
-{
-	string fullPath = "Resources/sound/" + path;
-
-	audio->LoadWave(number, fullPath.c_str());
 }
 
 void GameManager::AudioPlay(int number, float volume, bool loop)
@@ -222,8 +214,7 @@ void GameManager::SpriteDraw()
 
 void GameManager::AudioInitialize()
 {
-	audio = new Audio();
-	audio->Initialize();
+	audio = Audio::GetInstance();
 }
 
 void GameManager::LightInitialize()

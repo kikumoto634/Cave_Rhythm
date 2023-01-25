@@ -46,14 +46,12 @@ void GameScene::Initialize()
 	gameManager = new GameManager();
 	gameManager->Initialize();
 
-	//オーディオ
-	gameManager->AudioAdd(0,"rhythm.wav");
+	/*gameManager->AudioAdd(0,"rhythm.wav");
 	gameManager->AudioAdd(1,"miss.wav");
 	gameManager->AudioAdd(2,"damage.wav");
-
 	gameManager->AudioAdd(3,"ex)_BPM90.wav");
 	gameManager->AudioAdd(4,"ex)_BPM120.wav");
-	gameManager->AudioAdd(5,"ex)_BPM180.wav");
+	gameManager->AudioAdd(5,"ex)_BPM180.wav");*/
 
 	//カメラ
 	camera->SetTarget(Vector3(0.f, 0.f, -12.f));

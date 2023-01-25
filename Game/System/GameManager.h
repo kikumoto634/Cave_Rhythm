@@ -27,8 +27,6 @@ public:
 	//コイン数取得
 	int GetCoinNum()	{return coinNum;}
 
-	//オーディオ追加
-	void AudioAdd(int number, std::string path);
 	//オーディオ再生
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);
 
