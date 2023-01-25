@@ -75,6 +75,7 @@ void Application::Initialize()
 	TextureManager::Load(10, "2DText/number7.png");
 	TextureManager::Load(11, "2DText/number8.png");
 	TextureManager::Load(12, "2DText/number9.png");
+	TextureManager::Load(13, "2DText/Coin.png");
 
 #pragma endregion
 
@@ -105,8 +106,10 @@ void Application::Initialize()
 
 	sceneManager = SceneManager::GetInstance();
 	BaseScene* scene = new TitleScene(dxCommon, window);
+#ifdef _DEBUG
 	scene->SetDebugText(debugText);
 	scene->SetImGui(imgui);
+#endif // _DEBUG
 	sceneManager->SetNextScene(scene);
 }
 

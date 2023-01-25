@@ -80,9 +80,12 @@ void Camera::ShakeStart(int MaxFrame)
 {
 	ShakeFrame = MaxFrame;
 
+	if(!IsShake){
+		saveTarget = view.target;
+		saveEye = view.eye;
+	}
+
 	IsShake = true;
-	saveTarget = view.target;
-	saveEye = view.eye;
 }
 
 void Camera::Shake()

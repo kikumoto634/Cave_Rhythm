@@ -22,6 +22,11 @@ public:
 	//コンボ数取得
 	int GetComboNum()	{return comboNum;}
 
+	//コイン加算
+	void CoinIncrement();
+	//コイン数取得
+	int GetCoinNum()	{return coinNum;}
+
 	//オーディオ追加
 	void AudioAdd(int number, std::string path);
 	//オーディオ再生
@@ -57,6 +62,9 @@ private:
 	//コンボ
 	int comboNum = 0;
 
+	//コイン
+	int coinNum = 0;
+
 	//オーディオ
 	Audio* audio = nullptr;
 
@@ -77,11 +85,16 @@ private:
 
 
 	//2Dテキスト
+	const int NumberSpSize = 3;
+	const int TexNumberBegin = 3;
+	
 	//コンボテキスト
 	std::unique_ptr<BaseSprites> comboSp;
 	//数字(TexNumber 3~12)
-	const int NumberSpSize = 3;
-	const int TexNumberBegin = 3;
-	std::unique_ptr<BaseSprites> numberSp[3];
+	std::unique_ptr<BaseSprites> numberSp_combo[3];
+
+	//獲得コイン
+	std::unique_ptr<BaseSprites> coinSp;
+	std::unique_ptr<BaseSprites> numberSp_coin[3];
 };
 

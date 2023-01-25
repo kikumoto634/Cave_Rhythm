@@ -86,6 +86,10 @@ void GameScene::Initialize()
 	rock = make_unique<AreaOutRock>();
 	rock->Initialize("AreaRock", true);
 
+	for(int i = 0; i < IniCreateCoinNum; i++){
+		CoinInitPop();
+	}
+
 #pragma endregion _3D初期化
 
 #ifdef _DEBUG
@@ -200,6 +204,9 @@ void GameScene::Update()
 					plane[i][j]->IsBeatEndOn();
 				}
 			}
+			for(auto it = coin.begin(); it != coin.end(); it++){
+				if((*it)->GetIsAlive())(*it)->IsBeatEndOn();
+			}
 
 			//敵生成
 			for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
@@ -222,7 +229,15 @@ void GameScene::Update()
 	//エネミー
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		if(!(*it)->GetIsNotApp()){
-			if((*it)->GetIsDeadAudioOnce())	gameManager->AudioPlay(2,0.2f);
+			if((*it)->GetIsDeadAudioOnce())	{
+				gameManager->AudioPlay(2,0.2f);
+				for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
+					if((*it2)->PopPossible()){
+						(*it2)->Pop({(*it)->GetDeadParticlePos().x, -5, (*it)->GetDeadParticlePos().z});
+						break;
+					}
+				}
+			}
 			(*it)->Update(camera);
 		}
 	}
@@ -240,6 +255,13 @@ void GameScene::Update()
 	skydome->Update(camera);
 	//岩
 	rock->Update(camera);
+	//コイン
+	for(auto it = coin.begin(); it != coin.end(); it++){
+		if((*it)->GetCoin()){
+			gameManager->CoinIncrement();
+		}
+		(*it)->Update(camera);
+	}
 
 #ifdef _DEBUG
 	if(dummy->GetIsDeadAudioOnce())	gameManager->AudioPlay(2,0.2f);
@@ -335,6 +357,10 @@ void GameScene::Draw()
 
 	rock->Draw();
 
+	for(auto it = coin.begin(); it != coin.end(); it++){
+		(*it)->Draw();
+	}
+
 #pragma region パーティクル
 	for(auto it = enemy.begin(); it != enemy.end(); it++){
 		(*it)->ParticleDraw();
@@ -367,14 +393,15 @@ void GameScene::Draw()
 	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager->GetJudgeTimeBase());
 	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager->GetInputJudgeTime());
 	
-	debugText->Printf(200, 660, 1.f, "COMBO	: %d", gameManager->GetComboNum());
+	debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager->GetComboNum());
+	debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager->GetCoinNum());
 
 
 	debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
-	//debugText->Printf(0, 640, 1.f, "Combo : %d", combo);
 	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
 
 	debugText->Printf(1000,0,1.0f, "EnemyNum : %d", enemy.size());
+	debugText->Printf(1000,20,1.0f, "CoinNum : %d", coin.size());
 
 #endif // _DEBUG
 	BaseScene::EndDraw();
@@ -402,6 +429,10 @@ void GameScene::Finalize()
 	skydome->Finalize();
 
 	rock->Finalize();
+
+	for(auto it = coin.begin(); it != coin.end(); it++){
+		(*it)->Finalize();
+	}
 #pragma endregion _3D解放
 
 #pragma region _2D解放
@@ -475,4 +506,11 @@ void GameScene::EnemyPop(Vector2 pos, Vector2 dir)
 			break;
 		}
 	}
+}
+
+void GameScene::CoinInitPop()
+{
+	unique_ptr<Coins> newObj = make_unique<Coins>();
+	newObj->Initialize("Coins");
+	coin.push_back(move(newObj));
 }

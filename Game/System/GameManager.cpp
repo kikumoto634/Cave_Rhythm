@@ -14,10 +14,15 @@ void GameManager::Finalize()
 {
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp[i]->Finalize();
+		numberSp_combo[i]->Finalize();
 	}
-
 	comboSp->Finalize();
+
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp_coin[i]->Finalize();
+	}
+	coinSp->Finalize();
 
 	delete lightGroup;
 	lightGroup = nullptr;
@@ -34,9 +39,9 @@ void GameManager::ComboIncrement()
 	int hundred = comboNum/100;
 	int ten = (comboNum - (hundred*100))/10;
 	int one = (comboNum - (hundred*100) - (ten*10))/1;
-	numberSp[0]->SetTexNumber(hundred + TexNumberBegin);
-	numberSp[1]->SetTexNumber(ten + TexNumberBegin);
-	numberSp[2]->SetTexNumber(one + TexNumberBegin);
+	numberSp_combo[0]->SetTexNumber(hundred + TexNumberBegin);
+	numberSp_combo[1]->SetTexNumber(ten + TexNumberBegin);
+	numberSp_combo[2]->SetTexNumber(one + TexNumberBegin);
 }
 
 void GameManager::ComboReset()
@@ -46,8 +51,21 @@ void GameManager::ComboReset()
 
 	//スプライト更新
 	for(int i = 0; i <NumberSpSize; i++){
-		numberSp[i]->SetTexNumber(TexNumberBegin);
+		numberSp_combo[i]->SetTexNumber(TexNumberBegin);
 	}
+}
+
+void GameManager::CoinIncrement()
+{
+	coinNum += 1;
+
+	//スプライト更新
+	int hundred = coinNum/100;
+	int ten = (coinNum - (hundred*100))/10;
+	int one = (coinNum - (hundred*100) - (ten*10))/1;
+	numberSp_coin[0]->SetTexNumber(hundred + TexNumberBegin);
+	numberSp_coin[1]->SetTexNumber(ten + TexNumberBegin);
+	numberSp_coin[2]->SetTexNumber(one + TexNumberBegin);
 }
 
 void GameManager::AudioAdd(int number, std::string path)
@@ -175,20 +193,30 @@ Vector2 GameManager::EnemyRandomDir(Vector2 pos)
 void GameManager::SpriteUpdate()
 {
 	comboSp->Update();
-
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp[i]->Update();
+		numberSp_combo[i]->Update();
+	}
+
+	coinSp->Update();
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp_coin[i]->Update();
 	}
 }
 
 void GameManager::SpriteDraw()
 {
 	comboSp->Draw();
-
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp[i]->Draw();
+		numberSp_combo[i]->Draw();
+	}
+
+	coinSp->Draw();
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp_coin[i]->Draw();
 	}
 }
 
@@ -225,9 +253,23 @@ void GameManager::SpriteInitialize()
 
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp[i] = make_unique<BaseSprites>();
-		numberSp[i]->Initialize(TexNumberBegin + 0);
-		numberSp[i]->SetPosition({float(50+(i*50)),375});
-		numberSp[i]->SetSize({50,75});
+		numberSp_combo[i] = make_unique<BaseSprites>();
+		numberSp_combo[i]->Initialize(TexNumberBegin + 0);
+		numberSp_combo[i]->SetPosition({float(50+(i*50)),375});
+		numberSp_combo[i]->SetSize({50,75});
+	}
+
+	//コンボテキスト
+	coinSp = make_unique<BaseSprites>();
+	coinSp->Initialize(13);
+	coinSp->SetPosition({50,100});
+	coinSp->SetSize({150,75});
+
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp_coin[i] = make_unique<BaseSprites>();
+		numberSp_coin[i]->Initialize(TexNumberBegin + 0);
+		numberSp_coin[i]->SetPosition({float(50+(i*50)),175});
+		numberSp_coin[i]->SetSize({50,75});
 	}
 }

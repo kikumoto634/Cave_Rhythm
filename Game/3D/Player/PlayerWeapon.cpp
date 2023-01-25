@@ -21,7 +21,7 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
 
 	//当たり判定属性
-	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+	collider->SetAttribute(COLLISION_ATTR_WEAPONS);
 
 	//球コライダー取得
 	sphereCollider = dynamic_cast<SphereCollider*>(collider);

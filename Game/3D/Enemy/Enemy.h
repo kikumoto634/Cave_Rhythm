@@ -23,12 +23,12 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(Camera* camera);
+	void Update(Camera* camera) override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// パーティクル描画
@@ -38,7 +38,7 @@ public:
 	/// <summary>
 	/// 後処理
 	/// </summary>
-	void Finalize();
+	void Finalize() override;
 
 	/// <summary>
 	/// 当たり判定
@@ -53,6 +53,7 @@ public:
 	//Getter
 	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
 	bool GetIsNotApp()	{return IsNotApp;}
+	Vector3 GetDeadParticlePos()	{return DeadParticlePos;}
 
 	//Setter
 	void SetDirection(Vector3 _dir);

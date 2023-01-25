@@ -28,21 +28,25 @@ void SceneManager::Delete()
 void SceneManager::Update()
 {
 	if(nextScene){
-		
+#ifdef _DEBUG
 		DebugText* text = nextScene->GetDebugText();
 		imguiManager* imgui = nextScene->GetImGui();
-
+#endif // _DEBUG
 		if(scene){
+#ifdef _DEBUG
 			text = scene->GetDebugText();
 			imgui = scene->GetImGui();
+#endif // _DEBUG
 			scene->Finalize();
 			delete scene;
 		}
 
 		//シーン切り替え
 		scene = nextScene;
+#ifdef _DEBUG
 		scene->SetDebugText(text);
 		scene->SetImGui(imgui);
+#endif // _DEBUG
 		nextScene = nullptr;
 
 		//シーンマネージャーセット

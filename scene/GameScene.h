@@ -9,6 +9,7 @@
 #include "../Game/3D/Enemy/Enemy.h"
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
+#include "../Game/3D/Coins/Coins.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
@@ -68,6 +69,8 @@ private:
 	void EnemyInitPop();
 	void EnemyPop(Vector2 pos, Vector2 dir);
 
+	void CoinInitPop();
+
 private:
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
@@ -100,6 +103,10 @@ private:
 
 	//岩
 	std::unique_ptr<AreaOutRock> rock;
+
+	//コイン
+	const int IniCreateCoinNum = 10;
+	std::list<std::unique_ptr<Coins>> coin;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ

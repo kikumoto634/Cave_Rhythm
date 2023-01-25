@@ -182,12 +182,17 @@ void Enemy::OnCollision(const CollisionInfo &info)
 {
 	if(IsNotApp) return;
 	if(!IsPop) return;
-	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+
+	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
 		DeadParticlePos = info.objObject->GetPosition();
 		SetPosition(DeadPos);
 		IsDead = true;
 		IsDeadAudioOnce = true;
 		IsDeadParticleOnce = true;
+	}
+	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+		SetPosition(DeadPos);
+		IsDead = true;
 	}
 }
 

@@ -187,6 +187,12 @@
     <Filter Include="ソース ファイル\Game\3D\AreaOut">
       <UniqueIdentifier>{150922d6-8d1a-4552-be94-198985816c9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Coins">
+      <UniqueIdentifier>{dafdb6d6-5359-4863-84cf-a9c10cba1380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Coins">
+      <UniqueIdentifier>{fa8ca85f-bb1b-4806-8d58-30f1e74e1b1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -341,6 +347,9 @@
     </ClCompile>
     <ClCompile Include="scene\EventScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Coins\Coins.cpp">
+      <Filter>ソース ファイル\Game\3D\Coins</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -523,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="scene\EventScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Coins\Coins.h">
+      <Filter>ヘッダー ファイル\Game\3D\Coins</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
