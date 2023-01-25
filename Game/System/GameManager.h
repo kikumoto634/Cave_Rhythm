@@ -28,7 +28,7 @@ public:
 	int GetCoinNum()	{return coinNum;}
 
 	//体力初期設定
-	void InitializeSetHp(int _hp)	{hp = _hp;}
+	void InitializeSetHp(int _hp);
 	//体力スプライトリズムフラグ
 	void IsBeatEndOn()	{IsHpScaleChange = true;}
 	//体力減少
@@ -106,9 +106,9 @@ private:
 	std::unique_ptr<BaseSprites> numberSp_coin[3];
 
 	//体力
-	const int HpSpSize = 4;
-	int DamageHpSpriteIndex = 3;
-	std::unique_ptr<BaseSprites> hpSp[4];
+	int HpSpSize = 0;
+	int DamageHpSpriteIndex = 0;
+	std::vector<std::unique_ptr<BaseSprites>> hpSp;
 	bool IsHpScaleChange = false;
 };
 

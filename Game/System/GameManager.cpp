@@ -71,6 +71,23 @@ void GameManager::CoinIncrement()
 	numberSp_coin[2]->SetTexNumber(one + TexNumberBegin);
 }
 
+void GameManager::InitializeSetHp(int _hp)
+{
+	hp = _hp;
+
+	//‘Ì—Í
+	HpSpSize = hp;
+	DamageHpSpriteIndex = hp-1;
+	for(int i = 0; i < HpSpSize; i++){
+		std::unique_ptr<BaseSprites> Sp = make_unique<BaseSprites>();
+		Sp->Initialize(14);
+		Sp->SetPosition({float(900 + (i*80)), 55});
+		Sp->SetSize({75,75});
+		Sp->SetAnchorPoint({0.5f,0.5f});
+		hpSp.push_back(move(Sp));
+	}
+}
+
 void GameManager::HpDecrement()
 {
 	if(DamageHpSpriteIndex < 0)	return;
@@ -290,14 +307,5 @@ void GameManager::SpriteInitialize()
 		numberSp_coin[i]->Initialize(TexNumberBegin + 0);
 		numberSp_coin[i]->SetPosition({float(125+(i*50)),175});
 		numberSp_coin[i]->SetSize({50,75});
-	}
-
-	//‘Ì—Í
-	for(int i = 0; i < HpSpSize; i++){
-		hpSp[i] = make_unique<BaseSprites>();
-		hpSp[i]->Initialize(14);
-		hpSp[i]->SetPosition({float(980 + (i*80)), 55});
-		hpSp[i]->SetSize({75,75});
-		hpSp[i]->SetAnchorPoint({0.5f,0.5f});
 	}
 }
