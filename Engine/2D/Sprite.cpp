@@ -308,6 +308,12 @@ void Sprite::SetColor(XMFLOAT4 color)
 	SpriteTransferVertexBuffer();
 }
 
+void Sprite::SetTexNumber(UINT texNumber)
+{
+	this->texNumber = texNumber;
+	SpriteTransferVertexBuffer();
+}
+
 void Sprite::Common::InitializeGraphicsPipeline(const std::string& directoryPath)
 {
 	HRESULT result;

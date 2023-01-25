@@ -150,6 +150,11 @@ public://メンバ関数
 	/// </summary>
 	void SetColor(XMFLOAT4 color);
 
+	/// <summary>
+	/// テクスチャ番号
+	/// </summary>
+	void SetTexNumber(UINT texNumber);
+
 protected://メンバ変数
 	///頂点バッファ
 	ComPtr<ID3D12Resource> vertBuff;

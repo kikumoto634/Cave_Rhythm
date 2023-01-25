@@ -10,8 +10,6 @@
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
 
-#include "../Game/2D/BaseSprites.h"
-
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
 
@@ -93,7 +91,7 @@ private:
 	//ゲームマネージャー
 	GameManager* gameManager = nullptr;
 
-
+	//リズム入力
 	bool IsRhythmInput = false;
 
 	//敵

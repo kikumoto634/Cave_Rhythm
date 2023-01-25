@@ -7,10 +7,18 @@ void GameManager::Initialize()
 {
 	AudioInitialize();
 	LightInitialize();
+	SpriteInitialize();
 }
 
 void GameManager::Finalize()
 {
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp[i]->Finalize();
+	}
+
+	comboSp->Finalize();
+
 	delete lightGroup;
 	lightGroup = nullptr;
 
@@ -21,12 +29,25 @@ void GameManager::Finalize()
 void GameManager::ComboIncrement()
 {
 	comboNum += 1;
+
+	//スプライト更新
+	int hundred = comboNum/100;
+	int ten = (comboNum - (hundred*100))/10;
+	int one = (comboNum - (hundred*100) - (ten*10))/1;
+	numberSp[0]->SetTexNumber(hundred + TexNumberBegin);
+	numberSp[1]->SetTexNumber(ten + TexNumberBegin);
+	numberSp[2]->SetTexNumber(one + TexNumberBegin);
 }
 
 void GameManager::ComboReset()
 {
 	comboNum = 0;
 	AudioPlay(1,0.2f);
+
+	//スプライト更新
+	for(int i = 0; i <NumberSpSize; i++){
+		numberSp[i]->SetTexNumber(TexNumberBegin);
+	}
 }
 
 void GameManager::AudioAdd(int number, std::string path)
@@ -151,6 +172,25 @@ Vector2 GameManager::EnemyRandomDir(Vector2 pos)
 	return ldir;
 }
 
+void GameManager::SpriteUpdate()
+{
+	comboSp->Update();
+
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp[i]->Update();
+	}
+}
+
+void GameManager::SpriteDraw()
+{
+	comboSp->Draw();
+
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp[i]->Draw();
+	}
+}
 
 void GameManager::AudioInitialize()
 {
@@ -173,4 +213,21 @@ void GameManager::LightInitialize()
 
 	//丸影
 	lightGroup->SetCircleShadowActive(0, true);
+}
+
+void GameManager::SpriteInitialize()
+{
+	//コンボテキスト
+	comboSp = make_unique<BaseSprites>();
+	comboSp->Initialize(2);
+	comboSp->SetPosition({50,300});
+	comboSp->SetSize({150,75});
+
+	//数字
+	for(int i = 0;i < NumberSpSize; i++){
+		numberSp[i] = make_unique<BaseSprites>();
+		numberSp[i]->Initialize(TexNumberBegin + 0);
+		numberSp[i]->SetPosition({float(50+(i*50)),375});
+		numberSp[i]->SetSize({50,75});
+	}
 }

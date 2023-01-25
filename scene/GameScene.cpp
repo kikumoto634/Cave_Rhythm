@@ -99,10 +99,15 @@ void GameScene::Initialize()
 	fade->Initialize(1);
 	fade->SetColor(fadeColor);
 	fade->SetSize({fadeInSize});
+
+#pragma region _2D‰Šú‰»
+	
+#pragma endregion
 }
 
 void GameScene::Update()
 {
+	//Œv‘ªŠJn
 	if(!IsPrevSceneChange){
 		//ƒŠƒYƒ€Œv‘ª
 		rhythmManager->StartMeasurement(clock());
@@ -135,11 +140,6 @@ void GameScene::Update()
 	else if(input->Push(DIK_S)){
 		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
-	}
-
-	//ENTER
-	if(!IsPrevSceneChange&&input->Trigger(DIK_Z)){
-		IsNextSceneChange = true;
 	}
 
 #endif // _DEBUG
@@ -248,6 +248,11 @@ void GameScene::Update()
 
 #pragma endregion _3DXV
 
+#pragma region _2DXV
+
+	gameManager->SpriteUpdate();
+
+#pragma endregion
 
 #pragma region ”Ä—pXV	
 	gameManager->LightUpdate();
@@ -261,7 +266,7 @@ void GameScene::Update()
 		//À•W
 		ImGui::SetNextWindowPos(ImVec2{0,100});
 		//ƒTƒCƒY
-		ImGui::SetNextWindowSize(ImVec2{300,300});
+		ImGui::SetNextWindowSize(ImVec2{300,200});
 		ImGui::Begin("Debug");
 		//ƒJƒƒ‰ ‰ñ“]:false , ˆÚ“®:true
 		ImGui::Text("Camera");
@@ -290,6 +295,22 @@ void GameScene::Update()
 		}
 		ImGui::End();
 	}
+
+	//Scene
+	{
+		//À•W
+		ImGui::SetNextWindowPos(ImVec2{1000,40});
+		//ƒTƒCƒY
+		ImGui::SetNextWindowSize(ImVec2{280,100});
+		ImGui::Begin("SCENE");
+
+		ImGui::Text("Now:Game   Next:Title");
+		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
+			IsNextSceneChange = true;
+		}
+
+		ImGui::End();
+	}
 #endif // _DEBUG
 
 	BaseScene::EndUpdate();
@@ -298,10 +319,6 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	BaseScene::Draw();
-
-#pragma region _2D_”wŒi•`‰æ
-	
-#pragma endregion _2D_”wŒi•`‰æ
 
 #pragma region _3D•`‰æ
 	player->Draw();
@@ -335,7 +352,10 @@ void GameScene::Draw()
 #pragma region _2D_UI•`‰æ
 	Sprite::SetPipelineState();
 
+	//ƒV[ƒ“‘JˆÚ
 	fade->Draw();
+
+	gameManager->SpriteDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);

@@ -33,6 +33,7 @@ public:
 	void SetPosition(const Vector2& position)	{this->position = position;}
 	void SetSize(const Vector2& size)	{this->size = size;}
 	void SetColor(DirectX::XMFLOAT4 color)	{this->color = color;}
+	void SetTexNumber(UINT texNumber)	{sprite->SetTexNumber(texNumber);}
 
 protected:
 	Sprite* sprite;

@@ -64,7 +64,18 @@ void Application::Initialize()
 	TextureManager::GetInstance()->Initialize(dxCommon);
 	TextureManager::Load(0, "texfont.png");
 	TextureManager::Load(1, "white1x1.png");
-	TextureManager::Load(2, "Texture.jpg");
+	TextureManager::Load(2, "2DText/combo.png");
+	TextureManager::Load(3, "2DText/number0.png");
+	TextureManager::Load(4, "2DText/number1.png");
+	TextureManager::Load(5, "2DText/number2.png");
+	TextureManager::Load(6, "2DText/number3.png");
+	TextureManager::Load(7, "2DText/number4.png");
+	TextureManager::Load(8, "2DText/number5.png");
+	TextureManager::Load(9, "2DText/number6.png");
+	TextureManager::Load(10, "2DText/number7.png");
+	TextureManager::Load(11, "2DText/number8.png");
+	TextureManager::Load(12, "2DText/number9.png");
+
 #pragma endregion
 
 	//スプライト静的初期化

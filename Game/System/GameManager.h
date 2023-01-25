@@ -2,7 +2,10 @@
 #include "../Engine/audio/Audio.h"
 #include "../../Engine/light/LightGroup.h"
 
+#include "../Game/2D/BaseSprites.h"
+
 #include <string>
+#include <vector>
 
 class GameManager
 {
@@ -34,12 +37,21 @@ public:
 	Vector2 EnemyRandomPos(const int groundWidth, const float Plane_Size);
 	Vector2 EnemyRandomDir(Vector2 pos);
 
+	//2Dスプライト更新
+	void SpriteUpdate();
+
+	//2Dスプライト描画
+	void SpriteDraw();
+
 private:
 	//オーディオ初期化
 	void AudioInitialize();
 
 	//ライト初期化
 	void LightInitialize();
+
+	//スプライト初期化
+	void SpriteInitialize();
 
 private:
 	//コンボ
@@ -62,5 +74,14 @@ private:
 	int currentEnemyPopBeatTurn = 0;
 	//1ビートでの敵POP数
 	const int EnemyPopCreateNum = 1;
+
+
+	//2Dテキスト
+	//コンボテキスト
+	std::unique_ptr<BaseSprites> comboSp;
+	//数字(TexNumber 3~12)
+	const int NumberSpSize = 3;
+	const int TexNumberBegin = 3;
+	std::unique_ptr<BaseSprites> numberSp[3];
 };
 

@@ -63,16 +63,6 @@ void TitleScene::Update()
 {
 	BaseScene::Update();
 
-#pragma region Input Update
-#ifdef _DEBUG
-	//シーン
-	if(!IsPrevSceneChange&&input->Trigger(DIK_Z)){
-		IsNextSceneChange = true;
-	}
-#endif // _DEBUG
-
-#pragma endregion
-
 #pragma region _3DObj Update
 	playerobj->Update(camera);
 	enemyobj->Update(camera);
@@ -153,6 +143,22 @@ void TitleScene::Update()
 			lscale = {scale[0],scale[1],scale[2]};
 			enemyobj->SetScale(lscale);
 		}
+		ImGui::End();
+	}
+
+	//Scene
+	{
+		//座標
+		ImGui::SetNextWindowPos(ImVec2{1000,40});
+		//サイズ
+		ImGui::SetNextWindowSize(ImVec2{280,100});
+		ImGui::Begin("SCENE");
+
+		ImGui::Text("Now:Title   Next:Game");
+		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
+			IsNextSceneChange = true;
+		}
+
 		ImGui::End();
 	}
 
