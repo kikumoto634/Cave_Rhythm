@@ -18,7 +18,7 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	input = Input::GetInstance();
 	//武器
 	weapon = new PlayerWeapon();
-	weapon->Initialize("sphere", true);
+	weapon->Initialize("Slash", true);
 	//攻撃モデル
 	attackModel = new ObjModelManager();
 	attackModel->CreateModel("human2");
@@ -88,6 +88,7 @@ void Player::Update(Camera *camera)
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
+	weapon->SetRotation(moveRotation);
 
 	//更新関数
 	//ダメージ
@@ -246,58 +247,3 @@ void Player::DamageUpdate()
 	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
 	IsDamage = false;
 }
-
-//void Player::GravityFall()
-//{
-//	//落下処理
-//	if(!IsGround){
-//		//下向き加速度
-//		const float fallAcc = -0.01f;
-//		const float fallVYMin = -0.5f;
-//		//加速
-//		fallV.y = max(fallV.y + fallAcc, fallVYMin);
-//		//移動
-//		world.translation.x += fallV.x;
-//		world.translation.y += fallV.y;
-//		world.translation.z += fallV.z;
-//	}
-//}
-
-//void Player::GroundCollider()
-//{
-//	//球の上端から球の下端までの例キャスト用レイを準備
-//	Ray ray;
-//	ray.start = sphereCollider->center;
-//	ray.start.m128_f32[1] += sphereCollider->GetRadius();
-//	ray.dir = {0,-1,0,0};
-//	RaycastHit raycastHit;
-//
-//	//接地状態
-//	if(IsGround){
-//		//スムーズに坂を下る為の吸着距離
-//		const float adsDistance = 0.2f;
-//		//接地を維持
-//		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
-//			IsGround = true;
-//			world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-//			//行列の更新など
-//			BaseObjObject::Update(this->camera);
-//		}
-//		//地面がないので落下
-//		else{
-//			IsGround = false;
-//			fallV = {};
-//		}
-//	}
-//	//落下状態
-//	else if(fallV.y <= 0.0f){
-//		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius()*2.0f)){
-//			//着地
-//			IsGround = true;
-//			world.translation.y -= (raycastHit.distance - sphereCollider->GetRadius()*2.0f);
-//			//行列の更新など
-//			BaseObjObject::Update(this->camera);
-//		}
-//	}
-//}
-

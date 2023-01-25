@@ -44,8 +44,8 @@ private:
 	bool IsAppear = false;
 
 	//生存時間(フレーム)
-	int aliveCurrentFrame = 0;
-	const int AliveFrame = 10;
+	float aliveCurrentTime = 0;
+	const float AliveTime = 0.2f;
 
 	//コライダー
 	SphereCollider* sphereCollider = nullptr;

@@ -2,6 +2,8 @@
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
+#include "../../../Engine/math/Easing/Easing.h"
+
 using namespace DirectX;
 
 PlayerWeapon::~PlayerWeapon()
@@ -13,7 +15,7 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
-	object->SetColor({1.0f,0.0f,0.0f,1.0f});
+	object->SetColor({1.0f,1.0f,1.0f,1.0f});
 
 	//コライダーの追加
 	float radius = 0.6f;
@@ -34,8 +36,8 @@ void PlayerWeapon::Update(Camera *camera)
 	this->camera = camera;
 	
 	//生存フレーム
-	if(aliveCurrentFrame >= AliveFrame) {
-		aliveCurrentFrame = 0;
+	if(aliveCurrentTime >= AliveTime) {
+		aliveCurrentTime = 0;
 
 		world.translation = Vector3(0,-10,0);
 		BaseObjObject::Update(this->camera);
@@ -43,7 +45,7 @@ void PlayerWeapon::Update(Camera *camera)
 		IsAppear = false;
 		return;
 	}
-	aliveCurrentFrame++;
+	world.scale = Easing_Linear_Point2({1,1,1}, {0,0,0},Time_OneWay(aliveCurrentTime, AliveTime));
 
 	//コライダー更新
 	collider->Update();
@@ -54,11 +56,9 @@ void PlayerWeapon::Update(Camera *camera)
 
 void PlayerWeapon::Draw()
 {
-#ifdef _DEBUG
 	if(!IsAppear) return;
 
 	BaseObjObject::Draw();
-#endif // _DEBUG
 }
 
 void PlayerWeapon::Finalize()
@@ -77,4 +77,5 @@ void PlayerWeapon::Attack()
 {
 	IsAppear = true;
 	world.translation = Vector3(0,1,2.5);
+	SetScale({1,1,1});
 }
