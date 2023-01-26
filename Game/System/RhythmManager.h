@@ -41,6 +41,8 @@ public:
 	inline double GetMoveUpNumber()	{return moveUpNumber;}
 	//ビートタイミング
 	inline bool GetIsRhythmEnd()	{return IsRhythmEnd;}
+	//リズム判別時の絶対値差分
+	inline double GetBPMTimeSub()	{return BPMTimeSub;}
 
 	//メンバ変数
 private:
@@ -65,5 +67,8 @@ private:
 
 	//BPM計算式
 	double BPMTime = (1*secondFrame/bpm);
+
+	//リズム判別時の絶対値差分
+	double BPMTimeSub;
 };
 

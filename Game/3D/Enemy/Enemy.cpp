@@ -5,6 +5,8 @@
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
+#include "../../../Engine/math/Easing/Easing.h"
+
 #ifdef _DEBUG
 	#include "../../../Engine/input/Input.h"
 #endif // _DEBUG
@@ -21,9 +23,13 @@ void Enemy::Initialize(std::string filePath, bool IsSmoothing)
 
 	//座標
 	SetPosition(DeadPos);
+	world.UpdateMatrix();
 
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
+
+	IsDead = true;
+	IsNotApp = true;
 
 	//コライダー
 	float radius = 0.6f;
@@ -54,6 +60,7 @@ void Enemy::Update(Camera *camera)
 				SetPosition(popPosition);
 				popCount = 0;
 				IsPop = true;
+				IsDead = false;
 				return;
 			}
 		}
@@ -85,16 +92,34 @@ void Enemy::Update(Camera *camera)
 		if(IsBeatEnd){
 
 			//待機、移動、切り替え
-			if(!IsWait) IsWait = true;
-			else if(IsWait) IsWait = false;
+			waitNum++;
 
 			//移動
-			if(IsWait)world.translation += direction*2.5f;
+			if(waitNum >= WaitTime){
+				waitNum = 0;
+				//world.translation += direction*2.5f;
+				IsMoveEasing = true;
+				movePosition = world.translation + direction*2.5f;
+				moveEasingPos = world.translation;
+			}
 
 			//スケール
 			IsScale  = true;
 			//拍終了
 			IsBeatEnd = false;
+		}
+
+		//移動イージング
+		if(IsMoveEasing){
+			world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+		
+			if(world.translation.x == movePosition.x && world.translation.z == movePosition.z){
+				IsMoveEasing = false;
+				world.translation = movePosition;
+				moveEasingPos = {};
+				movePosition = {};
+				moveEasingFrame = 0;
+			}
 		}
 
 		//スケール遷移
@@ -219,7 +244,7 @@ void Enemy::Reset()
 
 	IsScale = false;
 
-	IsWait = false;
+	waitNum = 0;
 
 	direction = {};
 

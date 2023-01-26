@@ -2,6 +2,8 @@
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
+#include "../../../Engine/math/Easing/Easing.h"
+
 using namespace DirectX;
 
 
@@ -24,7 +26,10 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	attackModel->CreateModel("human2");
 
 	//サイズ変更の最小値変更
-	ScaleMin = {0.7f, 0.7f, 0.7f};
+	ScaleMin = {0.7f, 0.6f, 0.7f};
+
+	//待機フラグ
+	IsWait = true;
 
 	//コライダーの追加
 	float radius = 0.6f;
@@ -59,17 +64,20 @@ void Player::Update(Camera *camera)
 		//スケールイージング
 		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 			IsBeatEnd = false;
+
+			//待機フラグ解除
+			if(IsWait)IsWait = false;
 		}
 
 		if(IsInputJudge){
 			IsInputJudge = false;
 			//移動
 			if(IsMove){
-				world.translation += movePosition;
-				world.rotation = moveRotation;
-				MoveModelSet();
-				movePosition = {};
+				IsMoveEasing = true;
 				IsMove = false;
+				world.rotation = moveRotation;
+				moveEasingPos = world.translation;
+				MoveModelSet();
 			}
 			//攻撃
 			else if(IsAttack){
@@ -79,6 +87,20 @@ void Player::Update(Camera *camera)
 			}
 		}
 	}
+
+	//移動イージング
+	if(IsMoveEasing){
+		world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+		
+		if(world.translation.x == movePosition.x && world.translation.z == movePosition.z){
+			IsMoveEasing = false;
+			world.translation = movePosition;
+			moveEasingPos = {};
+			movePosition = {};
+			moveEasingFrame = 0;
+		}
+	}
+
 
 	//移動制限
 	world.translation.x = max(world.translation.x , -12.5f);
@@ -122,6 +144,8 @@ void Player::Finalize()
 
 void Player::OnCollision(const CollisionInfo &info)
 {
+	if(IsWait) return;
+
 	//敵接触
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
 		Damage();
@@ -149,37 +173,36 @@ bool Player::DamageSound()
 }
 
 
-
 bool Player::MovementInput()
 {
 	//戻り値
 	bool IsReturn = false;
 
+	if(IsWait) return false;
 	if(IsAttack) return false;
+	if(IsMoveEasing) return false;
 
-	//過去の位置取得
-	oldPosition = GetPosition();
 	//歩行
 	if(input->Trigger(DIK_UP)){
-		movePosition.z = 2.5f;
+		movePosition = Vector3{0,0,2.5f};
 		moveRotation.y = 0;
 		offSetWeaponPos = {0,0,2.5};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
-		movePosition.z = -2.5f;
+		movePosition = Vector3{0,0,-2.5f};
 		moveRotation.y = XMConvertToRadians(180);
 		offSetWeaponPos = {0,0,-2.5};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
-		movePosition.x = 2.5f;
+		movePosition = Vector3{2.5f,0,0};
 		moveRotation.y = XMConvertToRadians(90);
 		offSetWeaponPos = {2.5,0,0};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
-		movePosition.x = -2.5f;
+		movePosition = Vector3{-2.5f,0,0};
 		moveRotation.y = XMConvertToRadians(-90);
 		offSetWeaponPos = {-2.5,0,0};
 		IsReturn = true;
@@ -189,7 +212,10 @@ bool Player::MovementInput()
 		IsModelJudge = false;
 		//行動
 		IsMove = true;
+		//移動後座標
+		movePosition += world.translation;
 	}
+
 	return IsReturn;
 }
 
@@ -203,6 +229,7 @@ bool Player::AttackInput()
 	//戻り値
 	bool IsReturn = false;
 
+	if(IsWait) return false;
 	if(IsMove) return false;
 
 	if(input->Trigger(DIK_Z)){

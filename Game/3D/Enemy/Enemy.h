@@ -7,9 +7,11 @@ class Enemy : public BaseObjObject
 //定数
 private:
 	//ビートx回数終了時にPOP
-	const int POP_COUNT = 4;
+	const int POP_COUNT = 6;
 	//死亡後のリセット時間
 	const int AppearanceResetFrame = 50;
+	//待機テンポ回数
+	const int WaitTime = 3;
 
 //メンバ変数
 public:
@@ -57,6 +59,8 @@ public:
 
 	//Setter
 	void SetDirection(Vector3 _dir);
+	inline void SetMoveEasingMaxTime(float time)	{MoveEasingMaxTime = time;}
+
 
 private:
 	//Reset
@@ -79,7 +83,7 @@ private:
 	int appearanceResetFrame = 0;
 
 	//死亡
-	bool IsDead = false;
+	bool IsDead = true;
 	bool IsDeadAudioOnce = false;
 	//死亡地点(パーティクル用)
 	Vector3 DeadParticlePos = {};
@@ -91,10 +95,18 @@ private:
 	bool IsScale = false;
 
 	//待機
-	bool IsWait = false;
+	int waitNum = 0;
 
 	//移動方向
 	Vector3 direction = {-1,0,0};
+
+	//移動
+	Vector3 movePosition;
+	bool IsMoveEasing = false;
+	float moveEasingFrame = 0;
+	float MoveEasingMaxTime = 0.05f;
+	Vector3 moveEasingPos;
+
 
 	//ポップ
 	bool IsPop = false;

@@ -102,6 +102,9 @@ public:
 	inline int GetHP()	{return HP;}
 	inline bool GetIsInputOnce()	{return IsInputOnce;}
 
+	//Setter
+	inline void SetMoveEasingMaxTime(float time)	{MoveEasingMaxTime = time;}
+
 private:
 	//移動
 	bool MovementInput();
@@ -116,27 +119,23 @@ private:
 	//ダメージ更新
 	void DamageUpdate();
 
-	//重力
-	//void GravityFall();
-
-	//コライダー
-	//地面接触判定
-	//void GroundCollider();
-
-private:
-	//接地フラグ
-	//bool IsGround = true;
-	//落下ベクトル
-	//Vector3 fallV;
-	
+private:	
 	//移動
 	Vector3 movePosition = {0,0,0};
 	Vector3 moveRotation = {0,0,0};
-	Vector3 oldPosition = {};
 	bool IsMove = false;
+
+	//移動イージング
+	bool IsMoveEasing = false;
+	float moveEasingFrame = 0;
+	float MoveEasingMaxTime = 0.05f;
+	Vector3 moveEasingPos;
 
 	//HP
 	int HP = 5;
+
+	//待機フラグ
+	bool IsWait = false;
 
 	//ダメージ
 	bool IsDamage = false;

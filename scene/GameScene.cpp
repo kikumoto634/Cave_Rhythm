@@ -241,6 +241,7 @@ void GameScene::Update()
 		gameManager->HpDecrement();
 	}
 	player->Update(camera);
+	player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//’n–Ê
 	for(int i = 0; i < DIV_NUM; i++){
