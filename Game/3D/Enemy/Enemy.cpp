@@ -97,7 +97,6 @@ void Enemy::Update(Camera *camera)
 			//ˆÚ“®
 			if(waitNum >= WaitTime){
 				waitNum = 0;
-				//world.translation += direction*2.5f;
 				IsMoveEasing = true;
 				movePosition = world.translation + direction*2.5f;
 				moveEasingPos = world.translation;

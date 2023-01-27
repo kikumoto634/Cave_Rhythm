@@ -36,7 +36,7 @@ void Planes::Update(Camera *camera)
 			}
 		}
 		else if(IsInit && !IsPlayerContact){
-			object->SetColor({1.f,1.f,1.f,1.f});
+			//object->SetColor({1.f,1.f,1.f,1.f});
 			IsInit = false;
 		}
 	}

@@ -19,12 +19,12 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(Camera* camera);
+	void Update(Camera* camera) override;
 
 	/// <summary>
 	/// 3D描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// パーティクル描画

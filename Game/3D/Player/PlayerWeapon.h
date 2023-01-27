@@ -16,22 +16,22 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(Camera* camera);
+	void Update(Camera* camera) override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// 後処理
 	/// </summary>
-	void Finalize();
+	void Finalize() override;
 
 	/// <summary>
 	/// 衝突時コールバック関数
 	/// </summary>
-	void OnCollision(const CollisionInfo &info);
+	void OnCollision(const CollisionInfo &info) override;
 
 	/// <summary>
 	/// 攻撃

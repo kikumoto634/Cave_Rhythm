@@ -6,10 +6,9 @@
 #include "../Engine/3D/TouchableObject.h"
 
 #include "../Game/3D/Player/Player.h"
-#include "../Game/3D/Enemy/Enemy.h"
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
-#include "../Game/3D/Coins/Coins.h"
+#include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
@@ -20,7 +19,11 @@
 #include <list>
 #include <time.h>
 
-class GameScene : public BaseScene
+#ifdef _DEBUG
+#include "../Game/3D/Enemy/TrainingDummy.h"
+#endif // _DEBUG
+
+class HomeScene : public BaseScene
 {
 private:
 	//シーン遷移
@@ -29,7 +32,7 @@ private:
 public:
 	
 	//コンストラクタ
-	GameScene(DirectXCommon* dxCommon, Window* window);
+	HomeScene(DirectXCommon* dxCommon, Window* window);
 
 	/// <summary>
 	/// 起動時
@@ -61,12 +64,6 @@ private:
 	void NextSceneChange();
 	void SceneChange();
 
-	//POP関数
-	void EnemyInitPop();
-	void EnemyPop(Vector2 pos, Vector2 dir);
-
-	void CoinInitPop();
-
 private:
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
@@ -93,27 +90,17 @@ private:
 	//リズム入力
 	bool IsRhythmInput = false;
 
-	//敵
-	std::list<std::unique_ptr<Enemy>> enemy;
-	const int IniCreateEnemyNum = 10;
-
 	//岩
 	std::unique_ptr<AreaOutRock> rock;
 
-	//コイン
-	const int IniCreateCoinNum = 10;
-	std::list<std::unique_ptr<Coins>> coin;
-
 	//出口
-	std::unique_ptr<BaseObjObject> exit;
+	std::unique_ptr<Exit> exit;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
 	bool IsCameraMovementChange = true;
 
-	//敵POP情報
-	int popPosition[2] = {5,5};
-	int popDirection[2] = {1,0};
+	std::unique_ptr<TrainingDummy> dummy;
 #endif // _DEBUG
 
 	//シーン遷移

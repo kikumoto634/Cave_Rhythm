@@ -185,6 +185,7 @@
     <ClCompile Include="Game\3D\Coins\Coins.cpp" />
     <ClCompile Include="Game\3D\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\3D\Enemy\TrainingDummy.cpp" />
+    <ClCompile Include="Game\3D\Exit\Exit.cpp" />
     <ClCompile Include="Game\3D\ParticleObject.cpp" />
     <ClCompile Include="Game\3D\Plane\Planes.cpp" />
     <ClCompile Include="Game\3D\Player\Player.cpp" />
@@ -204,7 +205,7 @@
     <ClCompile Include="Game\System\RhythmManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\BaseScene.cpp" />
-    <ClCompile Include="scene\EventScene.cpp" />
+    <ClCompile Include="scene\HomeScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Game\3D\Coins\Coins.h" />
     <ClInclude Include="Game\3D\Enemy\Enemy.h" />
     <ClInclude Include="Game\3D\Enemy\TrainingDummy.h" />
+    <ClInclude Include="Game\3D\Exit\Exit.h" />
     <ClInclude Include="Game\3D\ParticleObject.h" />
     <ClInclude Include="Game\3D\Plane\Planes.h" />
     <ClInclude Include="Game\3D\Player\Player.h" />
@@ -267,7 +269,7 @@
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
     <ClInclude Include="scene\BaseScene.h" />
-    <ClInclude Include="scene\EventScene.h" />
+    <ClInclude Include="scene\HomeScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="scene\TitleScene.h" />

@@ -2,7 +2,7 @@
 
 #include "SceneManager.h"
 #include "GameScene.h"
-#include "EventScene.h"
+#include "HomeScene.h"
 
 #include "../Engine/math/Easing/Easing.h"
 
@@ -156,7 +156,7 @@ void TitleScene::Update()
 		ImGui::SetNextWindowSize(ImVec2{280,100});
 		ImGui::Begin("SCENE");
 
-		ImGui::Text("Now:Title   Next:Game");
+		ImGui::Text("Now:Title   Next:Home");
 		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
 			IsNextSceneChange = true;
 		}
@@ -203,7 +203,7 @@ void TitleScene::Finalize()
 
 void TitleScene::NextSceneChange()
 {
-	sceneManager->SetNextScene(new GameScene(dxCommon,window));
+	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
 }
 
 void TitleScene::SceneChange()

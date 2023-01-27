@@ -18,7 +18,8 @@ void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
-	SetPosition({0.f,-3.5f, 0.f});
+	SetPosition({-7.5f,-3.5f, 0.f});
+	SetRotation({0,XMConvertToRadians(180.f),0});
 
 	//コライダー
 	float radius = 0.6f;
@@ -114,7 +115,7 @@ void TrainingDummy::OnCollision(const CollisionInfo &info)
 {
 	if(IsDead) return;
 
-	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
 		IsDead = true;
 		IsDeadAudioOnce = true;
 		RespawnPos = GetPosition();

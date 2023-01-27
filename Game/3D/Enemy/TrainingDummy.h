@@ -19,17 +19,17 @@ public:
 	/// <summary>
 	/// XV
 	/// </summary>
-	void Update(Camera* camera);
+	void Update(Camera* camera) override;
 
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// Œãˆ—
 	/// </summary>
-	void Finalize();
+	void Finalize() override;
 
 	/// <summary>
 	/// “–‚½‚è”»’è

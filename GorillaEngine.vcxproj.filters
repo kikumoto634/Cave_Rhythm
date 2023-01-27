@@ -193,6 +193,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Coins">
       <UniqueIdentifier>{fa8ca85f-bb1b-4806-8d58-30f1e74e1b1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Exit">
+      <UniqueIdentifier>{ec9dcdcc-0a93-477b-861e-1b51f65cc100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Exit">
+      <UniqueIdentifier>{b525510e-d601-40c0-9c1a-93abf8829e26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -345,11 +351,14 @@
     <ClCompile Include="scene\SceneManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="scene\EventScene.cpp">
+    <ClCompile Include="scene\HomeScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="Game\3D\Coins\Coins.cpp">
       <Filter>ソース ファイル\Game\3D\Coins</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Exit\Exit.cpp">
+      <Filter>ソース ファイル\Game\3D\Exit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -530,11 +539,14 @@
     <ClInclude Include="scene\SceneManager.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="scene\EventScene.h">
+    <ClInclude Include="scene\HomeScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\Coins\Coins.h">
       <Filter>ヘッダー ファイル\Game\3D\Coins</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Exit\Exit.h">
+      <Filter>ヘッダー ファイル\Game\3D\Exit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,12 +17,12 @@ public:
 	/// <summary>
 	/// XV
 	/// </summary>
-	void Update(Camera* camera);
+	void Update(Camera* camera) override;
 
 	/// <summary>
 	/// 3D•`‰æ
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// Œãˆ—
