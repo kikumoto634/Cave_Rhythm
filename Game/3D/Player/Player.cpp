@@ -26,7 +26,7 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	attackModel->CreateModel("human2");
 
 	//サイズ変更の最小値変更
-	ScaleMin = {0.7f, 0.6f, 0.7f};
+	ScaleMin = {0.7f, 1.0f, 0.7f};
 
 	//待機フラグ
 	IsWait = true;
@@ -234,6 +234,12 @@ bool Player::AttackInput()
 
 	if(input->Trigger(DIK_Z)){
 		IsReturn = true;
+
+		//出口
+		if(IsExitOpen){
+			IsNextScene = true;
+			return false;
+		}
 	}
 
 	if(IsReturn) {

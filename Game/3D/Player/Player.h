@@ -101,9 +101,11 @@ public:
 	//Getter
 	inline int GetHP()	{return HP;}
 	inline bool GetIsInputOnce()	{return IsInputOnce;}
+	inline bool GetIsNextScene()	{return IsNextScene;}
 
 	//Setter
 	inline void SetMoveEasingMaxTime(float time)	{MoveEasingMaxTime = time;}
+	inline void SetIsExitOpen(bool IsFlag)	{IsExitOpen = IsFlag;}
 
 private:
 	//ˆÚ“®
@@ -163,5 +165,9 @@ private:
 
 	//UŒ‚ƒ‚ƒfƒ‹
 	ObjModelManager* attackModel = nullptr;
+
+	//Ÿ‚ÌƒV[ƒ“
+	bool IsNextScene = false;
+	bool IsExitOpen = false;
 };
 

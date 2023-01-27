@@ -37,6 +37,11 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 		coinSpNum[i]->SetSize({40,40});
 		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
 	}
+
+	exitOpenSp = make_unique<BaseSprites>();
+	exitOpenSp->Initialize(17);
+	exitOpenSp->SetSize({30,30});
+	exitOpenSp->SetAnchorPoint({0.5f,0.5f});
 }
 
 void Exit::Update(Camera *camera)
@@ -62,6 +67,11 @@ void Exit::Update(Camera *camera)
 		coinSpNum[i]->SetPosition(pos);
 		coinSpNum[i]->Update();
 	}
+	{
+		Vector2 pos = coinSp->GetPosition() + Vector2{-40,20};
+		exitOpenSp->SetPosition(pos);
+		exitOpenSp->Update();
+	}
 
 	BaseObjObject::Update(this->camera);
 }
@@ -78,6 +88,9 @@ void Exit::Draw2D()
 	for(int i = 0; i < CoinSpNumSize; i++){
 		coinSpNum[i]->Draw();
 	}
+
+	if(!IsOpen) return ;
+	exitOpenSp->Draw();
 }
 
 void Exit::Finalize()
@@ -86,6 +99,7 @@ void Exit::Finalize()
 	for(int i = 0; i < CoinSpNumSize; i++){
 		coinSpNum[i]->Finalize();
 	}
+	exitOpenSp->Finalize();
 
 	BaseObjObject::Finalize();
 }

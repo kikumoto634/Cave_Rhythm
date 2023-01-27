@@ -245,6 +245,19 @@ void HomeScene::Update()
 #pragma region 汎用更新	
 	gameManager->LightUpdate();
 
+	//出口
+	exit->ExitClose();
+	player->SetIsExitOpen(false);
+	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
+		exit->ExitOpen();
+		player->SetIsExitOpen(true);
+	}
+
+	//シーン遷移
+	if(player->GetIsNextScene())	{
+		IsNextSceneChange = true;
+	}
+
 	//すべての衝突をチェック
 	collisionManager->CheckAllCollisions();
 #pragma endregion 汎用更新

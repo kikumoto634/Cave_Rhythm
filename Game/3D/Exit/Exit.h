@@ -42,8 +42,20 @@ public:
 	//3D->2D変換
 	Vector2 ChangeTransformation(Vector3 targetpos);
 
+	/// <summary>
+	/// 出口解放
+	/// </summary>
+	void ExitOpen()	{IsOpen = true;}
+
+	/// <summary>
+	/// 出口施錠
+	/// </summary>
+	void ExitClose()	{IsOpen = false;}
+
 	//Getter
+	inline bool GetIsPlayerContact() {return IsPlayerContact;}
 	inline bool GetCoinSpAlive()	{return IsPlayerContact;}
+	inline const int GetExitNeedCoinNum() {return ExitNeedCoinsNum;}
 
 	//Setter
 	inline void SetCoinSpPosition(Vector2 pos)	{coinSp->SetPosition(pos);}
@@ -63,5 +75,7 @@ private:
 	const int CoinSpNumSize = 3;	//サイズ
 	std::unique_ptr<BaseSprites> coinSpNum[3];
 
+	bool IsOpen = false;
+	std::unique_ptr<BaseSprites> exitOpenSp;
 };
 

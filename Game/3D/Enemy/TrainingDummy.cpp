@@ -121,4 +121,8 @@ void TrainingDummy::OnCollision(const CollisionInfo &info)
 		RespawnPos = GetPosition();
 		SetPosition(DeadPos);
 	}
+	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+		SetPosition(DeadPos);
+		IsDead = true;
+	}
 }
