@@ -19,9 +19,7 @@
 #include <list>
 #include <time.h>
 
-#ifdef _DEBUG
 #include "../Game/3D/Enemy/TrainingDummy.h"
-#endif // _DEBUG
 
 class HomeScene : public BaseScene
 {
@@ -99,9 +97,9 @@ private:
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
 	bool IsCameraMovementChange = true;
+#endif // _DEBUG
 
 	std::unique_ptr<TrainingDummy> dummy;
-#endif // _DEBUG
 
 	//シーン遷移
 	std::unique_ptr<BaseSprites> fade;

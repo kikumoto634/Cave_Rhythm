@@ -18,7 +18,6 @@ void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
-	SetPosition({-7.5f,-3.5f, 0.f});
 	SetRotation({0,XMConvertToRadians(180.f),0});
 
 	//コライダー

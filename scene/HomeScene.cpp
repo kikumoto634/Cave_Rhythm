@@ -83,10 +83,9 @@ void HomeScene::Initialize()
 
 #pragma endregion _3D‰Šú‰»
 
-#ifdef _DEBUG
 	dummy = make_unique<TrainingDummy>();
-	dummy->Initialize("slime");
-#endif // _DEBUG
+	dummy->Initialize("Dummy");
+	dummy->SetPosition({-7.5f,-3.5f, -2.5f});
 
 	//ƒV[ƒ“‘JˆÚ(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
@@ -229,11 +228,9 @@ void HomeScene::Update()
 	Vector2 pos = exit->ChangeTransformation(target);
 	exit->SetCoinSpPosition(pos);
 
-#ifdef _DEBUG
 	if(dummy->GetIsDeadAudioOnce())	{
 		gameManager->AudioPlay(2,0.2f);}
 	dummy->Update(camera);
-#endif // _DEBUG
 
 #pragma endregion _3DXV
 
@@ -325,9 +322,7 @@ void HomeScene::Draw()
 
 #pragma endregion _3D•`‰æ
 
-#ifdef _DEBUG
 	dummy->Draw();
-#endif // _DEBUG
 
 #pragma region _2D_UI•`‰æ
 	Sprite::SetPipelineState();
@@ -365,9 +360,7 @@ void HomeScene::Draw()
 
 void HomeScene::Finalize()
 {
-#ifdef _DEBUG
 	dummy->Finalize();
-#endif // _DEBUG
 
 #pragma region _3D‰ğ•ú
 	player->Finalize();
