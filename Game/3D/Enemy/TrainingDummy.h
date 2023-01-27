@@ -43,7 +43,8 @@ public:
 	void OnCollision(const CollisionInfo& info) override;
 
 	//Getter
-	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
+	inline bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
+	inline Vector3 GetDeadParticlePos()	{return DeadParticlePos;}
 
 	//死亡エフェクト
 	void DeadParticleApp();

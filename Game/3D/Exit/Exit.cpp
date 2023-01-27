@@ -55,8 +55,8 @@ void Exit::Update(Camera *camera)
 		if(IsPlayerContact){
 			//サイズ変更
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
-				IsPlayerContact = false;
 				IsBeatEnd = false;
+				IsPlayerContact = false;
 			}
 		}
 	}
@@ -108,7 +108,7 @@ void Exit::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsPlayerContact = true;
-	}	
+	}
 }
 
 Vector2 Exit::ChangeTransformation(Vector3 targetpos)

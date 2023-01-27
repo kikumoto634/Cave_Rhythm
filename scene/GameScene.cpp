@@ -200,6 +200,8 @@ void GameScene::Update()
 				if((*it)->GetIsAlive())(*it)->IsBeatEndOn();
 			}
 
+			exit->IsBeatEndOn();
+
 			gameManager->IsBeatEndOn();
 
 			//敵生成
@@ -273,11 +275,18 @@ void GameScene::Update()
 	gameManager->LightUpdate();
 
 	//出口
-	exit->ExitClose();
-	player->SetIsExitOpen(false);
 	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
 		exit->ExitOpen();
 		player->SetIsExitOpen(true);
+	}
+	else if(!exit->GetIsPlayerContact()){
+		exit->ExitClose();
+		player->SetIsExitOpen(false);
+	}
+
+	//シーン遷移
+	if(player->GetIsNextScene())	{
+		IsNextSceneChange = true;
 	}
 
 	//すべての衝突をチェック
@@ -380,10 +389,10 @@ void GameScene::Draw()
 	//出口
 	exit->Draw2D();
 
+	gameManager->SpriteDraw();
+
 	//シーン遷移
 	fade->Draw();
-
-	gameManager->SpriteDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);

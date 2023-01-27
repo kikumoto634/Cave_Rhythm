@@ -54,7 +54,6 @@ public:
 
 	//Getter
 	inline bool GetIsPlayerContact() {return IsPlayerContact;}
-	inline bool GetCoinSpAlive()	{return IsPlayerContact;}
 	inline const int GetExitNeedCoinNum() {return ExitNeedCoinsNum;}
 
 	//Setter

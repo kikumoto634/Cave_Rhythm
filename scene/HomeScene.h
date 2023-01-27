@@ -8,6 +8,7 @@
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
+#include "../Game/3D/Coins/Coins.h"
 #include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
@@ -91,6 +92,8 @@ private:
 	//ä‚
 	std::unique_ptr<AreaOutRock> rock;
 
+	//ÉRÉCÉì
+	std::unique_ptr<Coins> coin;
 	//èoå˚
 	std::unique_ptr<Exit> exit;
 

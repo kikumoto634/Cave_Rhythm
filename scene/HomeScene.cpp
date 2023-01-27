@@ -76,16 +76,19 @@ void HomeScene::Initialize()
 	rock = make_unique<AreaOutRock>();
 	rock->Initialize("AreaRock", true);
 
+	coin = make_unique<Coins>();
+	coin->Initialize("Coins");
+
 	//出口
 	exit = make_unique<Exit>();
 	exit->Initialize("Exit");
 	exit->SetPosition({0,-5,-12.5f});
 
-#pragma endregion _3D初期化
-
 	dummy = make_unique<TrainingDummy>();
 	dummy->Initialize("Dummy");
 	dummy->SetPosition({-7.5f,-3.5f, -2.5f});
+
+#pragma endregion _3D初期化
 
 	//シーン遷移(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
@@ -194,6 +197,8 @@ void HomeScene::Update()
 
 			exit->IsBeatEndOn();
 
+			if(coin->GetIsAlive())	coin->IsBeatEndOn();
+
 			gameManager->IsBeatEndOn();
 
 			#ifdef _DEBUG
@@ -222,6 +227,7 @@ void HomeScene::Update()
 	skydome->Update(camera);
 	//岩
 	rock->Update(camera);
+
 	//出口
 	exit->Update(camera);
 	Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
@@ -229,8 +235,17 @@ void HomeScene::Update()
 	exit->SetCoinSpPosition(pos);
 
 	if(dummy->GetIsDeadAudioOnce())	{
-		gameManager->AudioPlay(2,0.2f);}
+		gameManager->AudioPlay(2,0.2f);
+		if(coin->PopPossible()){
+			coin->Pop({dummy->GetDeadParticlePos().x, -5 , dummy->GetDeadParticlePos().z});
+		}
+	}
 	dummy->Update(camera);
+
+	if(coin->GetCoin()){
+		gameManager->CoinIncrement();
+	}
+	coin->Update(camera);
 
 #pragma endregion _3D更新
 
@@ -244,11 +259,13 @@ void HomeScene::Update()
 	gameManager->LightUpdate();
 
 	//出口
-	exit->ExitClose();
-	player->SetIsExitOpen(false);
 	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
 		exit->ExitOpen();
 		player->SetIsExitOpen(true);
+	}
+	else if(!exit->GetIsPlayerContact()){
+		exit->ExitClose();
+		player->SetIsExitOpen(false);
 	}
 
 	//シーン遷移
@@ -315,6 +332,10 @@ void HomeScene::Draw()
 
 	exit->Draw();
 
+	dummy->Draw();
+
+	coin->Draw();
+
 #pragma region パーティクル
 	dummy->ParticleDraw();
 	rock->ParticleDraw();
@@ -322,18 +343,16 @@ void HomeScene::Draw()
 
 #pragma endregion _3D描画
 
-	dummy->Draw();
-
 #pragma region _2D_UI描画
 	Sprite::SetPipelineState();
 
 	//出口
 	exit->Draw2D();
 
+	gameManager->SpriteDraw();
+
 	//シーン遷移
 	fade->Draw();
-
-	gameManager->SpriteDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
@@ -360,8 +379,6 @@ void HomeScene::Draw()
 
 void HomeScene::Finalize()
 {
-	dummy->Finalize();
-
 #pragma region _3D解放
 	player->Finalize();
 
@@ -376,6 +393,10 @@ void HomeScene::Finalize()
 	rock->Finalize();
 
 	exit->Finalize();
+
+	dummy->Finalize();
+
+	coin->Finalize();
 #pragma endregion _3D解放
 
 #pragma region _2D解放
