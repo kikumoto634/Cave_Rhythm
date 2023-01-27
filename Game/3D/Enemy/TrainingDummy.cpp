@@ -24,7 +24,11 @@ void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)
 	//コライダー
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0,0}, radius));
-	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+	collider->SetAttribute(COLLISION_ATTR_DUMMY);
+
+	//パーティクル
+	DeadParticle = new ParticleObject();
+	DeadParticle->Initialize();
 }
 
 void TrainingDummy::Update(Camera *camera)
@@ -36,6 +40,7 @@ void TrainingDummy::Update(Camera *camera)
 			IsDeadAudioOnce = false;
 			appearanceResetFrame = 0;
 		}
+		DeadParticleApp();
 
 		if(appearanceResetFrame >= AppearanceResetFrame){
 			IsDead = false;
@@ -60,43 +65,12 @@ void TrainingDummy::Update(Camera *camera)
 			}
 		}
 
-		//落下処理
-		if(!IsGround){
-			IsDead = true;
-		}
-
 		//行列、カメラ更新
 		BaseObjObject::Update(this->camera);
 		//コライダー更新
 		collider->Update();
-
-		//球コライダー取得
-		SphereCollider* sphereCollider = dynamic_cast<SphereCollider*>(collider);
-		assert(sphereCollider);
-
-
-		//球の上端から球の下端までの例キャスト用レイを準備
-		Ray ray;
-		ray.start = sphereCollider->center;
-		ray.start.m128_f32[1] += sphereCollider->GetRadius();
-		ray.dir = {0,-1,0,0};
-		RaycastHit raycastHit;
-
-		//接地状態
-		if(IsGround){
-			//スムーズに坂を下る為の吸着距離
-			const float adsDistance = 0.2f;
-			//接地を維持
-			if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
-				IsGround = true;
-			}
-			//地面がないので落下
-			else{
-				IsGround = false;
-			}
-		}
 	}
-	BaseObjObject::Update(this->camera);
+	DeadParticle->Update(this->camera);
 }
 
 void TrainingDummy::Draw()
@@ -106,8 +80,16 @@ void TrainingDummy::Draw()
 	BaseObjObject::Draw();
 }
 
+void TrainingDummy::ParticleDraw()
+{
+	if(IsDead){
+		DeadParticle->Draw();
+	}
+}
+
 void TrainingDummy::Finalize()
 {
+	DeadParticle->Finalize();
 	BaseObjObject::Finalize();
 }
 
@@ -120,9 +102,32 @@ void TrainingDummy::OnCollision(const CollisionInfo &info)
 		IsDeadAudioOnce = true;
 		RespawnPos = GetPosition();
 		SetPosition(DeadPos);
+		DeadParticlePos = info.objObject->GetPosition();
+		IsDeadParticleOnce = true;
 	}
 	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		SetPosition(DeadPos);
 		IsDead = true;
 	}
+}
+
+void TrainingDummy::DeadParticleApp()
+{
+	if(!IsDeadParticleOnce) return;
+
+	for (int i = 0; i < 10; i++) {
+		const float rnd_vel = 0.08f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.06f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		acc.y = -0.005f;
+
+		DeadParticle->ParticleSet(AppearanceResetFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
+		DeadParticle->ParticleAppearance();
+	}
+
+	IsDeadParticleOnce = false;
 }

@@ -1,11 +1,12 @@
 #pragma once
 #include "../BaseObjObject.h"
+#include "../../3D/ParticleObject.h"
 
 class TrainingDummy : public BaseObjObject
 {
 private:
 	//死亡後のリセット時間
-	const int AppearanceResetFrame = 60;
+	const int AppearanceResetFrame = 180;
 
 //メンバ変数
 public:
@@ -27,6 +28,11 @@ public:
 	void Draw() override;
 
 	/// <summary>
+	/// パーティクル描画
+	/// </summary>
+	void ParticleDraw();
+
+	/// <summary>
 	/// 後処理
 	/// </summary>
 	void Finalize() override;
@@ -38,6 +44,9 @@ public:
 
 	//Getter
 	bool GetIsDeadAudioOnce()	{return IsDeadAudioOnce;}
+
+	//死亡エフェクト
+	void DeadParticleApp();
 
 private:
 	//接地フラグ
@@ -53,5 +62,13 @@ private:
 	Vector3 DeadPos = {50,50,50};
 	//リスポーン地点
 	Vector3 RespawnPos = {};
+
+
+	//死亡地点(パーティクル用)
+	Vector3 DeadParticlePos = {};
+	bool IsDeadParticleOnce = false;
+
+	//パーティクル
+	ParticleObject* DeadParticle = nullptr;
 };
 

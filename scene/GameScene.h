@@ -10,6 +10,7 @@
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
 #include "../Game/3D/Coins/Coins.h"
+#include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
@@ -105,7 +106,7 @@ private:
 	std::list<std::unique_ptr<Coins>> coin;
 
 	//出口
-	std::unique_ptr<BaseObjObject> exit;
+	std::unique_ptr<Exit> exit;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ

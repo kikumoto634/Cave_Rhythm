@@ -83,7 +83,7 @@ void GameScene::Initialize()
 	}
 
 	//出口
-	exit = make_unique<BaseObjObject>();
+	exit = make_unique<Exit>();
 	exit->Initialize("Exit");
 	exit->SetPosition({0,-5,0});
 
@@ -257,6 +257,9 @@ void GameScene::Update()
 	}
 	//出口
 	exit->Update(camera);
+	Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
+	Vector2 pos = exit->ChangeTransformation(target);
+	exit->SetCoinSpPosition(pos);
 
 #pragma endregion _3D更新
 
@@ -268,6 +271,14 @@ void GameScene::Update()
 
 #pragma region 汎用更新	
 	gameManager->LightUpdate();
+
+	//出口
+	exit->ExitClose();
+	player->SetIsExitOpen(false);
+	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
+		exit->ExitOpen();
+		player->SetIsExitOpen(true);
+	}
 
 	//すべての衝突をチェック
 	collisionManager->CheckAllCollisions();
@@ -365,6 +376,9 @@ void GameScene::Draw()
 
 #pragma region _2D_UI描画
 	Sprite::SetPipelineState();
+
+	//出口
+	exit->Draw2D();
 
 	//シーン遷移
 	fade->Draw();

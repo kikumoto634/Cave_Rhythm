@@ -112,7 +112,7 @@ void Enemy::Update(Camera *camera)
 		if(IsMoveEasing){
 			world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 		
-			if(world.translation.x == movePosition.x && world.translation.z == movePosition.z){
+			if(moveEasingFrame >= 1.f){
 				IsMoveEasing = false;
 				world.translation = movePosition;
 				moveEasingPos = {};

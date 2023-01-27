@@ -60,9 +60,9 @@ public:
 	inline const ObjModelObject* GetObjObject()	{return object;}
 
 	//Setter
-	inline void SetPosition(const Vector3& position)	{world.translation = position;}
-	inline void SetRotation(const Vector3& rotation)	{world.rotation = rotation;}
-	inline void SetScale(const Vector3& scale)			{world.scale = scale;}
+	void SetPosition(const Vector3& position)	{world.translation = position, world.UpdateMatrix();}
+	void SetRotation(const Vector3& rotation)	{world.rotation = rotation, world.UpdateMatrix();}
+	void SetScale(const Vector3& scale)			{world.scale = scale, world.UpdateMatrix();}
 	void SetCollider(BaseCollider* collider);
 	inline void SetObject(ObjModelObject* object)	{this->object = object;}
 	inline void SetModel(ObjModelManager* model)	{this->model = model;}

@@ -44,7 +44,7 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
-	
+
 	//Once用毎ループ初期化
 	IsInputOnce = false;
 	IsDamageSoundOnce = false;
@@ -91,8 +91,7 @@ void Player::Update(Camera *camera)
 	//移動イージング
 	if(IsMoveEasing){
 		world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
-		
-		if(world.translation.x == movePosition.x && world.translation.z == movePosition.z){
+		if(moveEasingFrame >= 1.f){
 			IsMoveEasing = false;
 			world.translation = movePosition;
 			moveEasingPos = {};
@@ -184,25 +183,25 @@ bool Player::MovementInput()
 
 	//歩行
 	if(input->Trigger(DIK_UP)){
-		movePosition = Vector3{0,0,2.5f};
+		movePosition = Vector3{0.0f,0.0f,2.5f};
 		moveRotation.y = 0;
 		offSetWeaponPos = {0,0,2.5};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
-		movePosition = Vector3{0,0,-2.5f};
+		movePosition = Vector3{0.0f,0.0f,-2.5f};
 		moveRotation.y = XMConvertToRadians(180);
 		offSetWeaponPos = {0,0,-2.5};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
-		movePosition = Vector3{2.5f,0,0};
+		movePosition = Vector3{2.5f,0.0f,0.0f};
 		moveRotation.y = XMConvertToRadians(90);
 		offSetWeaponPos = {2.5,0,0};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
-		movePosition = Vector3{-2.5f,0,0};
+		movePosition = Vector3{-2.5f,0.0f,0.0f};
 		moveRotation.y = XMConvertToRadians(-90);
 		offSetWeaponPos = {-2.5,0,0};
 		IsReturn = true;

@@ -108,7 +108,7 @@ void HomeScene::Update()
 		rhythmManager->StartMeasurement(clock());
 		//計測開始時
 		if(rhythmManager->GetMoveUpNumber() == 0){
-			gameManager->AudioPlay(3, 0.5f, true);
+			//gameManager->AudioPlay(3, 0.5f, true);
 		}
 		//リズム繰り上がり
 		rhythmManager->BeatMoveUp();
@@ -230,7 +230,8 @@ void HomeScene::Update()
 	exit->SetCoinSpPosition(pos);
 
 #ifdef _DEBUG
-	if(dummy->GetIsDeadAudioOnce())	gameManager->AudioPlay(2,0.2f);
+	if(dummy->GetIsDeadAudioOnce())	{
+		gameManager->AudioPlay(2,0.2f);}
 	dummy->Update(camera);
 #endif // _DEBUG
 
@@ -318,6 +319,7 @@ void HomeScene::Draw()
 	exit->Draw();
 
 #pragma region パーティクル
+	dummy->ParticleDraw();
 	rock->ParticleDraw();
 #pragma endregion パーティクル
 
