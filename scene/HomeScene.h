@@ -76,6 +76,7 @@ private:
 	static const int DIV_NUM = 11;
 	static const float Plane_Size;
 	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
+	bool IsComboColorChange = false;
 
 	//skydome
 	std::unique_ptr<SampleObjObject> skydome;

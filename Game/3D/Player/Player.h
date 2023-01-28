@@ -106,6 +106,7 @@ public:
 	//Setter
 	inline void SetMoveEasingMaxTime(float time)	{MoveEasingMaxTime = time;}
 	inline void SetIsExitOpen(bool IsFlag)	{IsExitOpen = IsFlag;}
+	inline void SetIsWait(bool IsFlag)	{IsWait = IsFlag;}
 
 private:
 	//ˆÚ“®

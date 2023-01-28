@@ -32,12 +32,7 @@ void Planes::Update(Camera *camera)
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsPlayerContact = false;
 				IsBeatEnd = false;
-				IsInit = true;
 			}
-		}
-		else if(IsInit && !IsPlayerContact){
-			//object->SetColor({1.f,1.f,1.f,1.f});
-			IsInit = false;
 		}
 	}
 
@@ -58,6 +53,25 @@ void Planes::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsPlayerContact = true;
-		//object->SetColor({0.8f, 0.0f, 0.8f,1.0f});
 	}	
+}
+
+void Planes::PlaneColorChange(bool IsSwitch,  bool IsColorChange)
+{
+	if(IsSwitch){
+		if(IsColorChange){
+			object->SetColor({0.8f, 0.0f, 0.8f,1.0f});
+		}
+		else if(!IsColorChange){
+			object->SetColor({1.f,1.f,1.f,1.f});
+		}
+	}
+	else if(!IsSwitch){
+		if(IsColorChange){
+			object->SetColor({1.f,1.f,1.f,1.f});
+		}
+		else if(!IsColorChange){
+			object->SetColor({0.8f, 0.0f, 0.8f,1.0f});
+		}
+	}
 }

@@ -35,6 +35,12 @@ public:
 	/// <param name="info">Õ“Ëî•ñ</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	/// <summary>
+	/// F•Ï‰»
+	/// </summary>
+	void PlaneColorChange(bool IsSwitch,  bool IsColorChange);
+	void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
+
 
 	//Getter
 	inline bool GetIsPlayerContact()	{return IsPlayerContact;}
@@ -44,8 +50,5 @@ public:
 
 private:
 	bool IsPlayerContact = false;
-
-	//ˆê“xÚG‰ºêŠ‚Í‰Šú‰»
-	bool IsInit = false;
 };
 

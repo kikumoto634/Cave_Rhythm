@@ -192,8 +192,20 @@ void GameScene::Update()
 			for(auto it = enemy.begin(); it != enemy.end(); it++){
 				(*it)->IsBeatEndOn();
 			}
+
+			IsComboColorChange = !IsComboColorChange;
 			for(int i = 0; i < DIV_NUM; i++){
 				for(int j = 0; j < DIV_NUM; j++){
+					//コンボ数に応じて色変化
+					if(gameManager->GetComboNum() >= 10){
+						
+						int changePos = i%2+j%2;
+						if(changePos == 0 || changePos == 2)		{plane[i][j]->PlaneColorChange(true, IsComboColorChange);}
+						if(changePos == 1)							{plane[i][j]->PlaneColorChange(false, IsComboColorChange);}
+					}
+					else if(gameManager->GetComboNum() < 10){
+						plane[i][j]->PlaneColorReset();
+					}
 					plane[i][j]->IsBeatEndOn();
 				}
 			}
@@ -288,7 +300,12 @@ void GameScene::Update()
 	//シーン遷移
 	if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
-		exit->ModelChange();
+		if(!exit->GetIsOpenAudioOnce()){
+			gameManager->AudioPlay(6, 0.5f);
+			camera->ShakeStart();
+			player->SetIsWait(true);
+			exit->ModelChange();
+		}
 	}
 
 	//すべての衝突をチェック

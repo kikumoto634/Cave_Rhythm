@@ -66,7 +66,7 @@ void Player::Update(Camera *camera)
 			IsBeatEnd = false;
 
 			//‘Ò‹@ƒtƒ‰ƒO‰ğœ
-			if(IsWait)IsWait = false;
+			if(IsWait && !IsNextScene)IsWait = false;
 		}
 
 		if(IsInputJudge){

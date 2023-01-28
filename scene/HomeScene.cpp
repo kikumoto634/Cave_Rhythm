@@ -190,8 +190,21 @@ void HomeScene::Update()
 
 			//各オブジェクト処理
 			player->IsBeatEndOn();
+
+			IsComboColorChange = !IsComboColorChange;
 			for(int i = 0; i < DIV_NUM; i++){
 				for(int j = 0; j < DIV_NUM; j++){
+					//コンボ数に応じて色変化
+					if(gameManager->GetComboNum() >= 10){
+						
+						int changePos = i%2+j%2;
+						if(changePos == 0 || changePos == 2)		{plane[i][j]->PlaneColorChange(true, IsComboColorChange);}
+						if(changePos == 1)							{plane[i][j]->PlaneColorChange(false, IsComboColorChange);}
+					}
+					else if(gameManager->GetComboNum() < 10){
+						plane[i][j]->PlaneColorReset();
+					}
+
 					plane[i][j]->IsBeatEndOn();
 				}
 			}
@@ -275,8 +288,9 @@ void HomeScene::Update()
 		if(!exit->GetIsOpenAudioOnce()){
 			gameManager->AudioPlay(6, 0.5f);
 			camera->ShakeStart();
+			player->SetIsWait(true);
+			exit->ModelChange();
 		}
-		exit->ModelChange();
 	}
 
 	//すべての衝突をチェック
