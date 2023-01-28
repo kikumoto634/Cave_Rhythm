@@ -84,6 +84,7 @@ void GameScene::Initialize()
 
 	//出口
 	exit = make_unique<Exit>();
+	exit->SetExitOpenNeedCoin(10);
 	exit->Initialize("Exit");
 	exit->SetPosition({0,-5,0});
 
@@ -287,6 +288,7 @@ void GameScene::Update()
 	//シーン遷移
 	if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
+		exit->ModelChange();
 	}
 
 	//すべての衝突をチェック

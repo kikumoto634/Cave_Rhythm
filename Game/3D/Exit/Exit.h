@@ -52,12 +52,16 @@ public:
 	/// </summary>
 	void ExitClose()	{IsOpen = false;}
 
+	//モデル変更
+	void ModelChange()	{this->object->SetModel(stairsModel);}
+
 	//Getter
 	inline bool GetIsPlayerContact() {return IsPlayerContact;}
 	inline const int GetExitNeedCoinNum() {return ExitNeedCoinsNum;}
 
 	//Setter
 	inline void SetCoinSpPosition(Vector2 pos)	{coinSp->SetPosition(pos);}
+	inline void SetExitOpenNeedCoin(int num)	{ExitNeedCoinsNum = num;}
 
 private:
 	//ベクトル*行列
@@ -66,15 +70,22 @@ private:
 private:
 	Window* window = nullptr;
 
+	//プレイヤー接触
 	bool IsPlayerContact = false;
 
+	//必要コイン数
 	std::unique_ptr<BaseSprites> coinSp;
-	const int ExitNeedCoinsNum = 1;
+	int ExitNeedCoinsNum = 1;
 	const int TexNumberBegin = 3;	//テクスチャ番号
 	const int CoinSpNumSize = 3;	//サイズ
 	std::unique_ptr<BaseSprites> coinSpNum[3];
 
+	//開閉
 	bool IsOpen = false;
 	std::unique_ptr<BaseSprites> exitOpenSp;
+
+	//階段モデル
+	ObjModelManager* stairsModel = nullptr;
+	bool IsModelChange = false;
 };
 

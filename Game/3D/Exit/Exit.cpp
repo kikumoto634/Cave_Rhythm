@@ -31,8 +31,12 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 	for(int i = 0; i < CoinSpNumSize; i++){
 		coinSpNum[i] = make_unique<BaseSprites>();
 		
+		int value_Ten = ExitNeedCoinsNum/10;
+		int value_One = ExitNeedCoinsNum - value_Ten*10;
+
 		if(i == 0)coinSpNum[i]->Initialize(16);
-		else if(i != 0)coinSpNum[i]->Initialize(TexNumberBegin+i-1);
+		else if(i == 1)coinSpNum[i]->Initialize(TexNumberBegin + value_Ten);
+		else if(i == 2)coinSpNum[i]->Initialize(TexNumberBegin + value_One);
 
 		coinSpNum[i]->SetSize({40,40});
 		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
@@ -42,6 +46,10 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 	exitOpenSp->Initialize(17);
 	exitOpenSp->SetSize({30,30});
 	exitOpenSp->SetAnchorPoint({0.5f,0.5f});
+
+	//ŠK’iƒ‚ƒfƒ‹
+	stairsModel = new ObjModelManager();
+	stairsModel->CreateModel("Stairs");
 }
 
 void Exit::Update(Camera *camera)
@@ -95,6 +103,9 @@ void Exit::Draw2D()
 
 void Exit::Finalize()
 {
+	delete stairsModel;
+	stairsModel = nullptr;;
+
 	coinSp->Finalize();
 	for(int i = 0; i < CoinSpNumSize; i++){
 		coinSpNum[i]->Finalize();

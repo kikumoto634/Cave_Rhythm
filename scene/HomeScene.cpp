@@ -81,6 +81,7 @@ void HomeScene::Initialize()
 
 	//ПoМы
 	exit = make_unique<Exit>();
+	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
 	exit->SetPosition({0,-5,-12.5f});
 
