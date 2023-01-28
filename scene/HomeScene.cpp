@@ -272,6 +272,11 @@ void HomeScene::Update()
 	//シーン遷移
 	if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
+		if(!exit->GetIsOpenAudioOnce()){
+			gameManager->AudioPlay(6, 0.5f);
+			camera->ShakeStart();
+		}
+		exit->ModelChange();
 	}
 
 	//すべての衝突をチェック

@@ -53,11 +53,12 @@ public:
 	void ExitClose()	{IsOpen = false;}
 
 	//モデル変更
-	void ModelChange()	{this->object->SetModel(stairsModel);}
+	void ModelChange()	{this->object->SetModel(stairsModel), IsOpenAudioOnce = true;}
 
 	//Getter
 	inline bool GetIsPlayerContact() {return IsPlayerContact;}
 	inline const int GetExitNeedCoinNum() {return ExitNeedCoinsNum;}
+	inline bool GetIsOpenAudioOnce()	{return IsOpenAudioOnce;}
 
 	//Setter
 	inline void SetCoinSpPosition(Vector2 pos)	{coinSp->SetPosition(pos);}
@@ -87,5 +88,6 @@ private:
 	//階段モデル
 	ObjModelManager* stairsModel = nullptr;
 	bool IsModelChange = false;
+	bool IsOpenAudioOnce = false;
 };
 

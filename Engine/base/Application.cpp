@@ -89,6 +89,7 @@ void Application::Initialize()
 	Audio::Load(3,"ex)_BPM90.wav");
 	Audio::Load(4,"ex)_BPM120.wav");
 	Audio::Load(5,"ex)_BPM180.wav");
+	Audio::Load(6,"OpenExit.wav");
 
 #pragma endregion
 
