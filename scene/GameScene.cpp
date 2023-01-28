@@ -197,7 +197,7 @@ void GameScene::Update()
 			for(int i = 0; i < DIV_NUM; i++){
 				for(int j = 0; j < DIV_NUM; j++){
 					//ƒRƒ“ƒ{”‚É‰ž‚¶‚ÄF•Ï‰»
-					if(gameManager->GetComboNum() >= 10){
+					if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 						
 						int changePos = i%2+j%2;
 						if(changePos == 0 || changePos == 2)		{plane[i][j]->PlaneColorChange(true, IsComboColorChange);}

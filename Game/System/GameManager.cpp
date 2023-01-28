@@ -50,7 +50,7 @@ void GameManager::ComboIncrement()
 void GameManager::ComboReset()
 {
 	comboNum = 0;
-	AudioPlay(1,0.2f);
+	AudioPlay(1,0.4f);
 
 	//スプライト更新
 	for(int i = 0; i <NumberSpSize; i++){

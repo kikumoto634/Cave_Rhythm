@@ -5,6 +5,7 @@
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
 using namespace DirectX;
+using namespace std;
 
 TrainingDummy::~TrainingDummy()
 {
@@ -14,6 +15,8 @@ TrainingDummy::~TrainingDummy()
 void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
+
+	window = Window::GetInstance();
 
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 0.7f, 0.7f};
@@ -28,6 +31,11 @@ void TrainingDummy::Initialize(std::string filePath, bool IsSmoothing)
 	//パーティクル
 	DeadParticle = new ParticleObject();
 	DeadParticle->Initialize();
+
+	buttonSp = make_unique<BaseSprites>();
+	buttonSp->Initialize(17);
+	buttonSp->SetSize({35,35});
+	buttonSp->SetAnchorPoint({0.5f,0.5f});
 }
 
 void TrainingDummy::Update(Camera *camera)
@@ -63,13 +71,13 @@ void TrainingDummy::Update(Camera *camera)
 				IsScale = false;
 			}
 		}
-
-		//行列、カメラ更新
-		BaseObjObject::Update(this->camera);
-		//コライダー更新
-		collider->Update();
 	}
 	DeadParticle->Update(this->camera);
+	buttonSp->Update();
+	//行列、カメラ更新
+	BaseObjObject::Update(this->camera);
+	//コライダー更新
+	collider->Update();
 }
 
 void TrainingDummy::Draw()
@@ -77,6 +85,11 @@ void TrainingDummy::Draw()
 	if(IsDead) return;
 
 	BaseObjObject::Draw();
+}
+
+void TrainingDummy::Draw2D()
+{
+	buttonSp->Draw();
 }
 
 void TrainingDummy::ParticleDraw()
@@ -88,6 +101,8 @@ void TrainingDummy::ParticleDraw()
 
 void TrainingDummy::Finalize()
 {
+	buttonSp->Finalize();
+
 	DeadParticle->Finalize();
 	BaseObjObject::Finalize();
 }
@@ -129,4 +144,32 @@ void TrainingDummy::DeadParticleApp()
 	}
 
 	IsDeadParticleOnce = false;
+}
+
+Vector2 TrainingDummy::ChangeTransformation(Vector3 targetpos)
+{
+	DirectX::XMMATRIX matViewport = 
+	{
+		(float)window->GetWindowWidth()/2, 0								  , 0, 0,
+		0								 , -((float)window->GetWindowHeight())/2, 0, 0,
+		0								 , 0								  , 1, 0, 
+		(float)window->GetWindowWidth()/2, (float)window->GetWindowHeight()/2 , 0, 1,
+	};
+	DirectX::XMMATRIX matViewProjectionViewPort = camera->GetMatView() * camera->GetMatProjection() * matViewport;
+	Vector3 positionreticle = Vector3Transform(targetpos, matViewProjectionViewPort);
+	return Vector2{positionreticle.x, positionreticle.y};
+}
+
+Vector3 TrainingDummy::Vector3Transform(Vector3 &v, DirectX::XMMATRIX &m)
+{
+	float w = v.x * m.r[0].m128_f32[3] + v.y * m.r[1].m128_f32[3] + v.z * m.r[2].m128_f32[3] + m.r[3].m128_f32[3];
+
+	Vector3 result
+	{
+		(v.x*m.r[0].m128_f32[0] + v.y*m.r[1].m128_f32[0] + v.z*m.r[2].m128_f32[0] + m.r[3].m128_f32[0])/w,
+		(v.x*m.r[0].m128_f32[1] + v.y*m.r[1].m128_f32[1] + v.z*m.r[2].m128_f32[1] + m.r[3].m128_f32[1])/w,
+		(v.x*m.r[0].m128_f32[2] + v.y*m.r[1].m128_f32[2] + v.z*m.r[2].m128_f32[2] + m.r[3].m128_f32[2])/w
+	};
+
+	return result;
 }

@@ -195,7 +195,7 @@ void HomeScene::Update()
 			for(int i = 0; i < DIV_NUM; i++){
 				for(int j = 0; j < DIV_NUM; j++){
 					//コンボ数に応じて色変化
-					if(gameManager->GetComboNum() >= 10){
+					if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 						
 						int changePos = i%2+j%2;
 						if(changePos == 0 || changePos == 2)		{plane[i][j]->PlaneColorChange(true, IsComboColorChange);}
@@ -215,9 +215,7 @@ void HomeScene::Update()
 
 			gameManager->IsBeatEndOn();
 
-			#ifdef _DEBUG
 			dummy->IsBeatEndOn();
-			#endif // _DEBUG
 		}
 	}
 
@@ -244,9 +242,11 @@ void HomeScene::Update()
 
 	//出口
 	exit->Update(camera);
-	Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
-	Vector2 pos = exit->ChangeTransformation(target);
-	exit->SetCoinSpPosition(pos);
+	{
+		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
+		Vector2 pos = exit->ChangeTransformation(target);
+		exit->SetCoinSpPosition(pos);
+	}
 
 	if(dummy->GetIsDeadAudioOnce())	{
 		gameManager->AudioPlay(2,0.2f);
@@ -255,6 +255,11 @@ void HomeScene::Update()
 		}
 	}
 	dummy->Update(camera);
+	{
+		Vector3 target = dummy->GetPosition() + Vector3{-1, 2, 0};
+		Vector2 pos = dummy->ChangeTransformation(target);
+		dummy->SetButtonSpPosition(pos);
+	}
 
 	if(coin->GetCoin()){
 		gameManager->CoinIncrement();
@@ -368,6 +373,8 @@ void HomeScene::Draw()
 
 	//出口
 	exit->Draw2D();
+
+	dummy->Draw2D();
 
 	gameManager->SpriteDraw();
 

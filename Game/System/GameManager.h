@@ -21,6 +21,8 @@ public:
 	void ComboReset();
 	//コンボ数取得
 	int GetComboNum()	{return comboNum;}
+	//地面色変化コンボ数
+	int GetPlaneColorChangeCombo()	{return PlaneColorChangeConboNum;}
 
 	//コイン加算
 	void CoinIncrement();
@@ -66,6 +68,7 @@ private:
 private:
 	//コンボ
 	int comboNum = 0;
+	const int PlaneColorChangeConboNum = 5;
 
 	//コイン
 	int coinNum = 0;
