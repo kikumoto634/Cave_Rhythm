@@ -119,6 +119,7 @@ void TrainingDummy::OnCollision(const CollisionInfo &info)
 		SetPosition(DeadPos);
 		DeadParticlePos = info.objObject->GetPosition();
 		IsDeadParticleOnce = true;
+		
 	}
 	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		RespawnPos = GetPosition();

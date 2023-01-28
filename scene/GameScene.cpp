@@ -47,8 +47,8 @@ void GameScene::Initialize()
 	gameManager->Initialize();
 
 	//ƒJƒƒ‰
-	camera->SetTarget(Vector3(0.f, 3.f, -10.f));
-	camera->SetEye(Vector3(0.f, 18.f, -22.f));
+	camera->SetTarget(Vector3(0.f, 2.f, -14.f));
+	camera->SetEye(Vector3(0.f, 12.f, -31.f));
 
 #pragma endregion ”Ä—p‰Šú‰»
 
@@ -274,6 +274,7 @@ void GameScene::Update()
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		if((*it)->GetCoin()){
 			gameManager->CoinIncrement();
+			gameManager->AudioPlay(7,0.5f);
 		}
 		(*it)->Update(camera);
 	}
