@@ -47,8 +47,8 @@ void GameScene::Initialize()
 	gameManager->Initialize();
 
 	//ƒJƒƒ‰
-	camera->SetTarget(Vector3(0.f, 0.f, -12.f));
-	camera->SetEye(Vector3(0.f, 9.f, -30.f));
+	camera->SetTarget(Vector3(0.f, 3.f, -10.f));
+	camera->SetEye(Vector3(0.f, 18.f, -22.f));
 
 #pragma endregion ”Ä—p‰Šú‰»
 
@@ -137,6 +137,13 @@ void GameScene::Update()
 	else if(input->Push(DIK_S)){
 		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
+	}
+
+	if(input->Push(DIK_Q)){
+		camera->MoveVector({0.f, 1.f, 0.f});
+	}
+	else if(input->Push(DIK_E)){
+		camera->MoveVector({0.f, -1.f, 0.f});
 	}
 
 #endif // _DEBUG

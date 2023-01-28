@@ -272,8 +272,8 @@ void GameManager::LightInitialize()
 	ObjModelObject::SetLight(lightGroup);
 
 	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, false);
-	lightGroup->SetDirLightActive(2, false);
+	lightGroup->SetDirLightActive(1, true);
+	lightGroup->SetDirLightActive(2, true);
 
 	//ŠÛ‰e
 	lightGroup->SetCircleShadowActive(0, true);

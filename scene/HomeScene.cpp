@@ -47,8 +47,8 @@ void HomeScene::Initialize()
 	gameManager->Initialize();
 
 	//ƒJƒƒ‰
-	camera->SetTarget(Vector3(0.f, 0.f, -12.f));
-	camera->SetEye(Vector3(0.f, 9.f, -30.f));
+	camera->SetTarget(Vector3(0.f, 3.f, -10.f));
+	camera->SetEye(Vector3(0.f, 18.f, -22.f));
 
 #pragma endregion ”Ä—p‰Šú‰»
 
@@ -87,7 +87,6 @@ void HomeScene::Initialize()
 
 	dummy = make_unique<TrainingDummy>();
 	dummy->Initialize("Dummy");
-	dummy->SetPosition({-7.5f,-3.5f, -2.5f});
 
 #pragma endregion _3D‰Šú‰»
 
@@ -138,6 +137,13 @@ void HomeScene::Update()
 	else if(input->Push(DIK_S)){
 		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
+	}
+
+	if(input->Push(DIK_Q)){
+		camera->MoveVector({0.f, 1.f, 0.f});
+	}
+	else if(input->Push(DIK_E)){
+		camera->MoveVector({0.f, -1.f, 0.f});
 	}
 
 #endif // _DEBUG
