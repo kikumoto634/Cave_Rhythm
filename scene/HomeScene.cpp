@@ -11,6 +11,7 @@
 
 #include "SceneManager.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 
 #include "../Engine/math/Easing/Easing.h"
 
@@ -58,6 +59,7 @@ void HomeScene::Initialize()
 	player = make_unique<Player>();
 	player->Initialize("human1");
 	player->SetPosition({0, -3.f, -2.5f});
+	player->SetWeaponPos({0,0,-2.5f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	gameManager->InitializeSetHp(player->GetHP());
 
@@ -150,8 +152,6 @@ void HomeScene::Update()
 
 	//シーン更新
 	SceneChange();
-	fade->Update();
-
 
 	if(!IsPrevSceneChange){
 
@@ -189,13 +189,13 @@ void HomeScene::Update()
 		}
 
 		//リズム終了時処理
-		if(rhythmManager->GetIsRhythmEnd()){
+		if(rhythmManager->GetIsRhythmEnd() && !IsGameEnd){
 		
 			//SE
 			gameManager->AudioPlay(0,0.25f);
 
 			//各オブジェクト処理
-			player->IsBeatEndOn();
+			if(!player->GetIsDead())player->IsBeatEndOn();
 
 			IsComboColorChange = !IsComboColorChange;
 			for(int i = 0; i < DIV_NUM; i++){
@@ -234,6 +234,10 @@ void HomeScene::Update()
 	}
 	player->Update(camera);
 	player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
+	if(player->GetIsDead())	{
+		gameManager->AudioPlay(2,0.5f);
+		IsGameEnd = true;
+	}
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
@@ -282,7 +286,7 @@ void HomeScene::Update()
 #pragma endregion
 
 #pragma region 汎用更新	
-	gameManager->LightUpdate();
+	gameManager->LightUpdate(player->GetIsDead());
 
 	//出口
 	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
@@ -331,12 +335,16 @@ void HomeScene::Update()
 		//座標
 		ImGui::SetNextWindowPos(ImVec2{1000,40});
 		//サイズ
-		ImGui::SetNextWindowSize(ImVec2{280,100});
+		ImGui::SetNextWindowSize(ImVec2{280,150});
 		ImGui::Begin("SCENE");
 
 		ImGui::Text("Now:Home   Next:Game");
 		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
 			IsNextSceneChange = true;
+		}
+		ImGui::Text("Now:Home   Next:Title");
+		if(!IsPrevSceneChange && ImGui::Button("GameEnd")){
+			IsGameEnd = true;
 		}
 
 		ImGui::End();
@@ -455,6 +463,11 @@ void HomeScene::NextSceneChange()
 	sceneManager->SetNextScene(new GameScene(dxCommon,window));
 }
 
+void HomeScene::SceneGameEnd()
+{
+	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
+}
+
 void HomeScene::SceneChange()
 {
 	//PrevSceneからの移動後処理
@@ -470,16 +483,19 @@ void HomeScene::SceneChange()
 		fadeColor.w = 
 			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
 		fade->SetColor(fadeColor);
+		fade->Update();
 	}
 	//NextSceneへの移動
-	else if(IsNextSceneChange){
+	else if(IsNextSceneChange || IsGameEnd){
 
 		if(fadeColor.w >= 1){
-			NextSceneChange();
+			if(IsNextSceneChange)NextSceneChange();
+			else if(IsGameEnd)	SceneGameEnd();
 		}
 
 		fadeColor.w = 
 			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame, FadeSecond));
 		fade->SetColor(fadeColor);
+		fade->Update();
 	}
 }

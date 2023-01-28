@@ -11,6 +11,7 @@
 
 #include "SceneManager.h"
 #include "TitleScene.h"
+#include "HomeScene.h"
 
 #include "../Engine/math/Easing/Easing.h"
 
@@ -150,8 +151,6 @@ void GameScene::Update()
 
 	//シーン更新
 	SceneChange();
-	fade->Update();
-
 
 	if(!IsPrevSceneChange){
 
@@ -189,13 +188,13 @@ void GameScene::Update()
 		}
 
 		//リズム終了時処理
-		if(rhythmManager->GetIsRhythmEnd()){
+		if(rhythmManager->GetIsRhythmEnd() && !IsGameEnd){
 		
 			//SE
 			gameManager->AudioPlay(0,0.25f);
 
 			//各オブジェクト処理
-			player->IsBeatEndOn();
+			if(!player->GetIsDead())player->IsBeatEndOn();
 			for(auto it = enemy.begin(); it != enemy.end(); it++){
 				(*it)->IsBeatEndOn();
 			}
@@ -259,6 +258,10 @@ void GameScene::Update()
 	}
 	player->Update(camera);
 	player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
+	if(player->GetIsDead())	{
+		gameManager->AudioPlay(2,0.5f);
+		IsGameEnd = true;
+	}
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
@@ -293,7 +296,7 @@ void GameScene::Update()
 #pragma endregion
 
 #pragma region 汎用更新	
-	gameManager->LightUpdate();
+	gameManager->LightUpdate(player->GetIsDead());
 
 	//出口
 	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
@@ -366,6 +369,10 @@ void GameScene::Update()
 		ImGui::Text("Now:Game   Next:Title");
 		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
 			IsNextSceneChange = true;
+		}
+		ImGui::Text("Now:Game   Next:Title");
+		if(!IsPrevSceneChange && ImGui::Button("GameEnd")){
+			IsGameEnd = true;
 		}
 
 		ImGui::End();
@@ -490,6 +497,11 @@ void GameScene::Finalize()
 
 void GameScene::NextSceneChange()
 {
+	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
+}
+
+void GameScene::SceneGameEnd()
+{
 	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
 }
 
@@ -508,17 +520,20 @@ void GameScene::SceneChange()
 		fadeColor.w = 
 			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
 		fade->SetColor(fadeColor);
+		fade->Update();
 	}
 	//NextSceneへの移動
-	else if(IsNextSceneChange){
+	else if(IsNextSceneChange || IsGameEnd){
 
 		if(fadeColor.w >= 1){
-			NextSceneChange();
+			if(IsNextSceneChange)NextSceneChange();
+			else if(IsGameEnd)	SceneGameEnd();
 		}
 
 		fadeColor.w = 
 			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame, FadeSecond));
 		fade->SetColor(fadeColor);
+		fade->Update();
 	}
 }
 

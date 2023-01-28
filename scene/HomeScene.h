@@ -61,8 +61,8 @@ public:
 private:
 	//シーン遷移
 	void NextSceneChange();
+	void SceneGameEnd();
 	void SceneChange();
-
 private:
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
@@ -114,4 +114,7 @@ private:
 	bool IsPrevSceneChange = true;
 	//Next
 	bool IsNextSceneChange = false;
+
+	//GameOver
+	bool IsGameEnd = false;
 };

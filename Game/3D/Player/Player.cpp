@@ -24,6 +24,9 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	//攻撃モデル
 	attackModel = new ObjModelManager();
 	attackModel->CreateModel("human2");
+	//死亡モデル
+	deadModel = new ObjModelManager();
+	deadModel->CreateModel("human3");
 
 	//サイズ変更の最小値変更
 	ScaleMin = {0.7f, 1.0f, 0.7f};
@@ -66,7 +69,9 @@ void Player::Update(Camera *camera)
 			IsBeatEnd = false;
 
 			//待機フラグ解除
-			if(IsWait && !IsNextScene)IsWait = false;
+			if(IsWait && !IsNextScene){
+				IsWait = false;
+			}
 		}
 
 		if(IsInputJudge){
@@ -100,6 +105,18 @@ void Player::Update(Camera *camera)
 		}
 	}
 
+	//死亡
+#ifdef _DEBUG
+	if(input->Trigger(DIK_SPACE)){
+		HP = 0;
+	}
+#endif // _DEBUG
+	if(HP <= 0 && !IsDead){
+		IsDead = true;
+		IsDeadAudioOnce = true;
+		this->object->SetModel(deadModel);
+		this->camera->ShakeStart();
+	}
 
 	//移動制限
 	world.translation.x = max(world.translation.x , -12.5f);
@@ -109,7 +126,7 @@ void Player::Update(Camera *camera)
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
-	weapon->SetRotation(moveRotation);
+	weapon->SetRotation(GetRotation());
 
 	//更新関数
 	//ダメージ
@@ -135,6 +152,9 @@ void Player::Finalize()
 	delete weapon;
 	weapon = nullptr;
 
+	delete deadModel;
+	deadModel = nullptr;
+
 	delete attackModel;
 	attackModel = nullptr;
 
@@ -144,6 +164,7 @@ void Player::Finalize()
 void Player::OnCollision(const CollisionInfo &info)
 {
 	if(IsWait) return;
+	if(IsDead) return;
 
 	//敵接触
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
@@ -171,6 +192,15 @@ bool Player::DamageSound()
 	return false;
 }
 
+bool Player::GetIsDead()
+{
+	if(IsDead && IsDeadAudioOnce) {
+		IsDeadAudioOnce = false;
+		return true;
+	}
+	return false;
+}
+
 
 bool Player::MovementInput()
 {
@@ -178,6 +208,7 @@ bool Player::MovementInput()
 	bool IsReturn = false;
 
 	if(IsWait) return false;
+	if(IsDead) return false;
 	if(IsAttack) return false;
 	if(IsMoveEasing) return false;
 
@@ -229,6 +260,7 @@ bool Player::AttackInput()
 	bool IsReturn = false;
 
 	if(IsWait) return false;
+	if(IsDead) return false;
 	if(IsMove) return false;
 
 	if(input->Trigger(DIK_Z)){

@@ -40,7 +40,7 @@ public:
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);
 
 	//ライト更新
-	void LightUpdate();
+	void LightUpdate(bool IsPlayerShadowDead = false);
 	//プレイヤー丸影の設置
 	void PlayerCircleShadowSet(Vector3 pos);
 
@@ -83,6 +83,7 @@ private:
 	LightGroup* lightGroup = nullptr;
 	//丸影
 	//プレイヤー
+	bool IsPlayerShadowAlive = true;
 	Vector3 circleShadowDir = { 0,-1,0 };
 	Vector3 circleShadowAtten = { 0.5f,0.6f,0.0f };
 	Vector2 circleShadowFactorAngle = { 0.0f, 0.5f };

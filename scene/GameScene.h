@@ -60,6 +60,7 @@ public:
 private:
 	//シーン遷移
 	void NextSceneChange();
+	void SceneGameEnd();
 	void SceneChange();
 
 	//POP関数
@@ -103,7 +104,7 @@ private:
 	std::unique_ptr<AreaOutRock> rock;
 
 	//コイン
-	const int IniCreateCoinNum = 10;
+	const int IniCreateCoinNum = 5;
 	std::list<std::unique_ptr<Coins>> coin;
 
 	//出口
@@ -127,4 +128,7 @@ private:
 	bool IsPrevSceneChange = true;
 	//Next
 	bool IsNextSceneChange = false;
+
+	//GameOver
+	bool IsGameEnd = false;
 };

@@ -102,13 +102,17 @@ void GameManager::AudioPlay(int number, float volume, bool loop)
 	audio->PlayWave(number, volume, loop);
 }
 
-void GameManager::LightUpdate()
+void GameManager::LightUpdate(bool IsPlayerShadowDead)
 {
-	{	
+	if(!IsPlayerShadowAlive && !IsPlayerShadowDead){	
 		//ŠÛ‰e
 		lightGroup->SetCircleShadowDir(0, {circleShadowDir.x, circleShadowDir.y, circleShadowDir.z, 0});
 		lightGroup->SetCircleShadowAtten(0, circleShadowAtten);
 		lightGroup->SetCircleShadowFactorAngle(0, circleShadowFactorAngle);
+	}
+	else if(IsPlayerShadowDead){
+		IsPlayerShadowAlive = true;
+		lightGroup->SetCircleShadowActive(0,false);
 	}
 	lightGroup->Update();
 }

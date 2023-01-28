@@ -98,6 +98,8 @@ public:
 	/// </summary>
 	bool DamageSound();
 
+	bool GetIsDead();
+
 	//Getter
 	inline int GetHP()	{return HP;}
 	inline bool GetIsInputOnce()	{return IsInputOnce;}
@@ -107,6 +109,7 @@ public:
 	inline void SetMoveEasingMaxTime(float time)	{MoveEasingMaxTime = time;}
 	inline void SetIsExitOpen(bool IsFlag)	{IsExitOpen = IsFlag;}
 	inline void SetIsWait(bool IsFlag)	{IsWait = IsFlag;}
+	inline void SetWeaponPos(Vector3 pos)	{offSetWeaponPos = pos;}
 
 private:
 	//移動
@@ -135,6 +138,8 @@ private:
 	Vector3 moveEasingPos;
 
 	//HP
+	bool IsDead = false;
+	bool IsDeadAudioOnce = false;
 	int HP = 5;
 
 	//待機フラグ
@@ -166,6 +171,9 @@ private:
 
 	//攻撃モデル
 	ObjModelManager* attackModel = nullptr;
+
+	//死亡モデル
+	ObjModelManager* deadModel = nullptr;
 
 	//次のシーン
 	bool IsNextScene = false;
