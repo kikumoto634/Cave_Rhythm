@@ -66,6 +66,9 @@ private:
 	//îwåi
 	std::unique_ptr<BaseObjObject> back;
 
+	//âπê∫
+	Audio* audio = nullptr;
+
 	//ÉâÉCÉg
 	LightGroup* lightGroup = nullptr;
 

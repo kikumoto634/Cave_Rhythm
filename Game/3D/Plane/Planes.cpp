@@ -71,7 +71,7 @@ void Planes::PlaneColorChange(bool IsSwitch,  bool IsColorChange)
 			object->SetColor({1.f,1.f,1.f,1.f});
 		}
 		else if(!IsColorChange){
-			object->SetColor({0.0f, 0.8f, 0.0f,1.0f});
+			object->SetColor({0.8f, 0.0f, 0.0f,1.0f});
 		}
 	}
 }

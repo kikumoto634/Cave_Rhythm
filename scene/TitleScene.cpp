@@ -69,6 +69,8 @@ void TitleScene::Initialize()
 	back->Initialize("wall");
 	back->SetPosition({0,0,7});
 
+	audio = Audio::GetInstance();
+
 	//ƒ‰ƒCƒg
 	lightGroup = LightGroup::Create();
 	//FÝ’è
@@ -92,7 +94,10 @@ void TitleScene::Update()
 {
 	BaseScene::Update();
 
-	if(input->Trigger(DIK_Z))IsNextSceneChange = true;
+	if(input->Trigger(DIK_Z)){
+		IsNextSceneChange = true;
+		audio->PlayWave(7,0.8f);
+	}
 
 #pragma region _3DObj Update
 	playerobj->Update(camera);
@@ -246,7 +251,6 @@ void TitleScene::Draw()
 {
 
 	BaseScene::Draw();
-
 #pragma region _3DObj Draw
 	playerobj->Draw();
 	enemyobj->Draw();
@@ -267,6 +271,8 @@ void TitleScene::Draw()
 
 void TitleScene::Finalize()
 {
+	audio->Finalize();
+
 	back->Finalize();
 
 	button->Finalize();
