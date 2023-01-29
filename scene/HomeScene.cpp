@@ -20,11 +20,12 @@ using namespace DirectX;
 
 const float HomeScene::Plane_Size = 2.5f;
 
-HomeScene::HomeScene(DirectXCommon *dxCommon, Window *window)
+HomeScene::HomeScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 		: BaseScene(
 		dxCommon,
 		window)
 {
+	this->saveHP = saveHP;
 }
 
 void HomeScene::Application()
@@ -61,6 +62,7 @@ void HomeScene::Initialize()
 	player->SetPosition({0, -3.f, -2.5f});
 	player->SetWeaponPos({0,0,-2.5f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
+	player->SetHp(saveHP);
 	gameManager->InitializeSetHp(player->GetHP());
 
 
@@ -85,7 +87,7 @@ void HomeScene::Initialize()
 	exit = make_unique<Exit>();
 	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
-	exit->SetPosition({0,-5,-12.5f});
+	exit->SetPosition({0,-5,-10.0f});
 
 	dummy = make_unique<TrainingDummy>();
 	dummy->Initialize("Dummy");

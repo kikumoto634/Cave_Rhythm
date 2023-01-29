@@ -112,6 +112,7 @@ public:
 	inline void SetIsExitOpen(bool IsFlag)	{IsExitOpen = IsFlag;}
 	inline void SetIsWait(bool IsFlag)	{IsWait = IsFlag;}
 	inline void SetWeaponPos(Vector3 pos)	{offSetWeaponPos = pos;}
+	inline void SetHp(int hp)	{HP = hp;}
 
 private:
 	//ˆÚ“®

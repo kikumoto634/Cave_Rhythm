@@ -68,7 +68,7 @@ private:
 private:
 	//コンボ
 	int comboNum = 0;
-	const int PlaneColorChangeConboNum = 5;
+	const int PlaneColorChangeConboNum = 10;
 
 	//コイン
 	int coinNum = 0;

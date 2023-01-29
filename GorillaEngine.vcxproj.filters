@@ -366,6 +366,9 @@
     <ClCompile Include="scene\DebugScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="scene\GameScene2.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -558,6 +561,9 @@
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="scene\DebugScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\GameScene2.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>

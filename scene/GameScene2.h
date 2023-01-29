@@ -22,7 +22,7 @@
 #include <list>
 #include <time.h>
 
-class GameScene : public BaseScene
+class GameScene2 : public BaseScene
 {
 private:
 	//シーン遷移
@@ -31,7 +31,7 @@ private:
 public:
 	
 	//コンストラクタ
-	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+	GameScene2(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 	/// <summary>
 	/// 起動時

@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "GameScene2.h"
 
 #include "../Engine/math//Easing/Easing.h"
 
@@ -12,16 +12,15 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 #include "HomeScene.h"
-#include "GameScene2.h"
 
 #include "../Engine/math/Easing/Easing.h"
 
 using namespace std;
 using namespace DirectX;
 
-const float GameScene::Plane_Size = 2.5f;
+const float GameScene2::Plane_Size = 2.5f;
 
-GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP)
+GameScene2::GameScene2(DirectXCommon *dxCommon, Window *window,int saveHP)
 		: BaseScene(
 		dxCommon,
 		window)
@@ -29,12 +28,12 @@ GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	this->saveHP = saveHP;
 }
 
-void GameScene::Application()
+void GameScene2::Application()
 {
 	BaseScene::Application();
 }
 
-void GameScene::Initialize()
+void GameScene2::Initialize()
 {
 	BaseScene::Initialize();
 
@@ -88,7 +87,7 @@ void GameScene::Initialize()
 
 	//出口
 	exit = make_unique<Exit>();
-	exit->SetExitOpenNeedCoin(10);
+	exit->SetExitOpenNeedCoin(15);
 	exit->Initialize("Exit");
 	exit->SetPosition({0,-5,0});
 
@@ -106,7 +105,7 @@ void GameScene::Initialize()
 #pragma endregion
 }
 
-void GameScene::Update()
+void GameScene2::Update()
 {
 	//計測開始
 	if(!IsPrevSceneChange){
@@ -229,9 +228,9 @@ void GameScene::Update()
 
 			gameManager->IsBeatEndOn();
 
-			int randomPop = rand()%3;
+			int randomPop = rand()%2;
 			//敵生成
-			if(randomPop == 0 || randomPop == 1){
+			if(randomPop == 0){
 				for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
 					//座標;
 					Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);
@@ -409,7 +408,7 @@ void GameScene::Update()
 		ImGui::SetNextWindowSize(ImVec2{280,100});
 		ImGui::Begin("SCENE");
 
-		ImGui::Text("Now:Game   Next:Game2");
+		ImGui::Text("Now:Game   Next:Title");
 		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
 			IsNextSceneChange = true;
 		}
@@ -425,7 +424,7 @@ void GameScene::Update()
 	BaseScene::EndUpdate();
 }
 
-void GameScene::Draw()
+void GameScene2::Draw()
 {
 	BaseScene::Draw();
 
@@ -503,7 +502,7 @@ void GameScene::Draw()
 #pragma endregion _2D_UI描画
 }
 
-void GameScene::Finalize()
+void GameScene2::Finalize()
 {
 #pragma region _3D解放
 	player->Finalize();
@@ -548,17 +547,17 @@ void GameScene::Finalize()
 	BaseScene::Finalize();
 }
 
-void GameScene::NextSceneChange()
+void GameScene2::NextSceneChange()
 {
-	sceneManager->SetNextScene(new GameScene2(dxCommon,window,player->GetHP()));
+	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
 }
 
-void GameScene::SceneGameEnd()
+void GameScene2::SceneGameEnd()
 {
 	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
 }
 
-void GameScene::SceneChange()
+void GameScene2::SceneChange()
 {
 	//PrevSceneからの移動後処理
 	if(IsPrevSceneChange){
@@ -590,7 +589,7 @@ void GameScene::SceneChange()
 	}
 }
 
-void GameScene::EnemyInitPop()
+void GameScene2::EnemyInitPop()
 {
 	unique_ptr<Enemy> newObj = make_unique<Enemy>();
 	newObj->Initialize("slime");
@@ -601,7 +600,7 @@ void GameScene::EnemyInitPop()
 	enemy2.push_back(move(newObj2));
 }
 
-void GameScene::EnemyPop(Vector2 pos, Vector2 dir)
+void GameScene2::EnemyPop(Vector2 pos, Vector2 dir)
 {
 	Vector3 lpos = {pos.x, -3.5f, pos.y};
 	Vector3 ldir = {dir.x, 0, dir.y};
@@ -616,7 +615,7 @@ void GameScene::EnemyPop(Vector2 pos, Vector2 dir)
 	}
 }
 
-void GameScene::Enemy2Pop(Vector2 pos)
+void GameScene2::Enemy2Pop(Vector2 pos)
 {
 	Vector3 lpos = {pos.x, -3.5f, pos.y};
 
@@ -629,7 +628,7 @@ void GameScene::Enemy2Pop(Vector2 pos)
 	}
 }
 
-void GameScene::CoinInitPop()
+void GameScene2::CoinInitPop()
 {
 	unique_ptr<Coins> newObj = make_unique<Coins>();
 	newObj->Initialize("Coins");

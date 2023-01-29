@@ -293,7 +293,7 @@ void TitleScene::Finalize()
 
 void TitleScene::NextSceneChange()
 {
-	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
+	sceneManager->SetNextScene(new HomeScene(dxCommon,window, 5));
 }
 
 void TitleScene::DebugSceneChange()

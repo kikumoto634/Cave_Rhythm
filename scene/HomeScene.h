@@ -31,7 +31,7 @@ private:
 public:
 	
 	//コンストラクタ
-	HomeScene(DirectXCommon* dxCommon, Window* window);
+	HomeScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 	/// <summary>
 	/// 起動時
@@ -71,6 +71,8 @@ private:
 
 	//player
 	std::unique_ptr<Player> player;
+	//セーブ体力
+	int saveHP = 0;
 
 	//Plane
 	static const int DIV_NUM = 11;
