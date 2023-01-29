@@ -37,10 +37,25 @@ void TitleScene::Initialize()
 	//エネミー
 	enemyobj = make_unique<BaseObjObject>();
 	enemyobj->Initialize("slime");
-	enemyobj->SetPosition({7.f, 0.f, 0.f});
-	enemyobj->SetRotation({0.f, XMConvertToRadians(220), 0.f});
+	enemyobj->SetPosition({9.f, -3.f, -1.f});
+	enemyobj->SetRotation({XMConvertToRadians(5.f), XMConvertToRadians(220), 0.f});
 	enemyobj->SetScale({3,3,3});
 
+	enemyobj2 = make_unique<BaseObjObject>();
+	enemyobj2->Initialize("Skeleton");
+	enemyobj2->SetPosition({7.f, -3.f, 2.f});
+	enemyobj2->SetRotation({XMConvertToRadians(5), XMConvertToRadians(230), 0.f});
+	enemyobj2->SetScale({5,5,5});
+
+	title = make_unique<BaseSprites>();
+	title->Initialize(18);
+	title->SetPosition({640, 150});
+	title->SetSize({800, 160});
+	title->SetAnchorPoint({0.5f,0.5f});
+
+	back = make_unique<BaseObjObject>();
+	back->Initialize("wall");
+	back->SetPosition({0,0,7});
 
 	//ライト
 	lightGroup = LightGroup::Create();
@@ -50,8 +65,8 @@ void TitleScene::Initialize()
 	ObjModelObject::SetLight(lightGroup);
 
 	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
+	lightGroup->SetDirLightActive(1, false);
+	lightGroup->SetDirLightActive(2, false);
 
 	//シーン遷移(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
@@ -70,11 +85,15 @@ void TitleScene::Update()
 #pragma region _3DObj Update
 	playerobj->Update(camera);
 	enemyobj->Update(camera);
+	enemyobj2->Update(camera);
+	back->Update(camera);
 #pragma endregion
 
 #pragma region _2DObj Update
 	SceneChange();
 	fade->Update();
+
+	title->Update();
 #pragma endregion
 
 #pragma region Common Update
@@ -149,6 +168,39 @@ void TitleScene::Update()
 		}
 		ImGui::End();
 	}
+	//エネミー2
+	{
+		//座標
+		ImGui::SetNextWindowPos(ImVec2{0,300});
+		//サイズ
+		ImGui::SetNextWindowSize(ImVec2{300,100});
+		ImGui::Begin("Enemy2");
+		{
+			//座標
+			Vector3 lpos = enemyobj2->GetPosition();
+			float pos[3] = {lpos.x, lpos.y, lpos.z};
+			ImGui::DragFloat3("Position", pos, 0.05f);
+			lpos = {pos[0],pos[1],pos[2]};
+			enemyobj2->SetPosition(lpos);
+		}
+		{
+			//回転
+			Vector3 lrot = enemyobj2->GetRotation();
+			float rot[3] = {XMConvertToDegrees(lrot.x), XMConvertToDegrees(lrot.y), XMConvertToDegrees(lrot.z)};
+			ImGui::DragFloat3("Rotation", rot);
+			lrot = {XMConvertToRadians(rot[0]),XMConvertToRadians(rot[1]),XMConvertToRadians(rot[2])};
+			enemyobj2->SetRotation(lrot);
+		}
+		{
+			//スケール
+			Vector3 lscale = enemyobj2->GetScale();
+			float scale[3] = {lscale.x, lscale.y, lscale.z};
+			ImGui::InputFloat3("Scale", scale);
+			lscale = {scale[0],scale[1],scale[2]};
+			enemyobj2->SetScale(lscale);
+		}
+		ImGui::End();
+	}
 
 	//Scene
 	{
@@ -184,10 +236,13 @@ void TitleScene::Draw()
 #pragma region _3DObj Draw
 	playerobj->Draw();
 	enemyobj->Draw();
+	enemyobj2->Draw();
+	back->Draw();
 #pragma endregion
 
 #pragma region _2D_UIDraw
 	Sprite::SetPipelineState();
+	title->Draw();
 	fade->Draw();
 #pragma endregion
 
@@ -196,11 +251,16 @@ void TitleScene::Draw()
 
 void TitleScene::Finalize()
 {
+	back->Finalize();
+
+	title->Finalize();
+
 	fade->Finalize();
 
 	delete lightGroup;
 	lightGroup = nullptr;
 
+	enemyobj2->Finalize();
 	enemyobj->Finalize();
 	playerobj->Finalize();
 

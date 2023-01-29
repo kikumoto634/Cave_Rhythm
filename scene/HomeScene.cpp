@@ -112,7 +112,7 @@ void HomeScene::Update()
 		rhythmManager->StartMeasurement(clock());
 		//計測開始時
 		if(rhythmManager->GetMoveUpNumber() == 0){
-			gameManager->AudioPlay(3, 0.5f, true);
+			//gameManager->AudioPlay(9, 0.5f, true);
 		}
 		//リズム繰り上がり
 		rhythmManager->BeatMoveUp();

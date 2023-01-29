@@ -80,6 +80,7 @@ void Application::Initialize()
 	TextureManager::Load(15, "2DText/HeartEmpty.png");
 	TextureManager::Load(16, "2DText/cross.png");
 	TextureManager::Load(17, "2DText/buttonZ.png");
+	TextureManager::Load(18, "2DText/TitleLog.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();
@@ -91,6 +92,8 @@ void Application::Initialize()
 	Audio::Load(5,"ex)_BPM180.wav");
 	Audio::Load(6,"OpenExit.wav");
 	Audio::Load(7,"coinGet.wav");
+	Audio::Load(8,"BPM120_Game.wav");
+	Audio::Load(9,"BPM120_Home.wav");
 
 #pragma endregion
 

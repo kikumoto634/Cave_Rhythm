@@ -56,6 +56,13 @@ private:
 
 	//エネミー
 	std::unique_ptr<BaseObjObject> enemyobj;
+	std::unique_ptr<BaseObjObject> enemyobj2;
+
+	//タイトル
+	std::unique_ptr<BaseSprites> title;
+
+	//背景
+	std::unique_ptr<BaseObjObject> back;
 
 	//ライト
 	LightGroup* lightGroup = nullptr;
