@@ -226,9 +226,9 @@ void GameScene::Update()
 
 			gameManager->IsBeatEndOn();
 
-			int randomPop = rand()%2;
+			int randomPop = rand()%3;
 			//ìGê∂ê¨
-			if(randomPop == 0){
+			if(randomPop == 0 || randomPop == 1){
 				for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
 					//ç¿ïW;
 					Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);

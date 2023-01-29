@@ -101,6 +101,19 @@ void HomeScene::Initialize()
 
 #pragma region _2D初期化
 	
+	for(int i = 0; i < 4; i++){
+		buttonSp[i] = make_unique<BaseSprites>();
+		buttonSp[i]->Initialize(20 + i);
+		buttonSp[i]->SetAnchorPoint({0.5f,0.5f});
+		buttonSp[i]->SetSize({50,50});
+		IsButtonPush[i] = false;
+	}
+	buttonSp[0]->SetPosition({1150,300});
+	buttonSp[1]->SetPosition(buttonSp[0]->GetPosition() - Vector2{60,0});
+	buttonSp[2]->SetPosition(buttonSp[0]->GetPosition() - Vector2{0,60});
+	buttonSp[3]->SetPosition(buttonSp[0]->GetPosition() - Vector2{-60,0});
+
+
 #pragma endregion
 }
 
@@ -225,6 +238,20 @@ void HomeScene::Update()
 		}
 	}
 
+	//おまけボタン色つけ
+	if(input->Push(DIK_DOWN)){
+		IsButtonPush[0] = true;
+	}
+	else if(input->Push(DIK_LEFT)){
+		IsButtonPush[1] = true;
+	}
+	else if(input->Push(DIK_UP)){
+		IsButtonPush[2] = true;
+	}
+	else if(input->Push(DIK_RIGHT)){
+		IsButtonPush[3] = true;
+	}
+
 #pragma region _3D更新
 
 	//プレイヤー
@@ -281,6 +308,18 @@ void HomeScene::Update()
 #pragma endregion _3D更新
 
 #pragma region _2D更新
+
+	for(int i= 0; i < 4; i++){
+		buttonSp[i]->Update();
+		
+		if(IsButtonPush[i]){
+			buttonSp[i]->SetColor({0.2f,0.2f,0.2f,1.0f});
+		}
+		else{
+			buttonSp[i]->SetColor({1.0f,1.0f,1.0f,1.0f});
+		}
+		IsButtonPush[i] = false;
+	}
 
 	gameManager->SpriteUpdate();
 
@@ -392,6 +431,10 @@ void HomeScene::Draw()
 
 	dummy->Draw2D();
 
+	for(int i = 0; i < 4; i++){
+		buttonSp[i]->Draw();
+	}
+
 	gameManager->SpriteDraw();
 
 	//シーン遷移
@@ -443,6 +486,9 @@ void HomeScene::Finalize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
+	for(int i = 0; i < 4; i++){
+		buttonSp[i]->Finalize();
+	}
 	fade->Finalize();
 #pragma endregion _2D解放
 

@@ -17,7 +17,7 @@ public://エイリアス
 
 public:	//定数
 	//テクスチャの最大枚数
-	static const int maxTextureCount = 512;
+	static const int maxTextureCount = 1024;
 
 	//ディレクトリパス
 	const std::string directoryPath = "Resources/";

@@ -94,7 +94,7 @@ void TitleScene::Update()
 {
 	BaseScene::Update();
 
-	if(input->Trigger(DIK_Z)){
+	if(input->Trigger(DIK_Z) && !IsNextSceneChange){
 		IsNextSceneChange = true;
 		audio->PlayWave(7,0.8f);
 	}

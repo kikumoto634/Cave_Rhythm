@@ -98,6 +98,10 @@ private:
 	//出口
 	std::unique_ptr<Exit> exit;
 
+	//スプライト
+	std::unique_ptr<BaseSprites> buttonSp[4];
+	bool IsButtonPush[4] = {};
+
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
 	bool IsCameraMovementChange = true;
