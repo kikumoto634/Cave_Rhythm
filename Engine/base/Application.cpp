@@ -81,6 +81,7 @@ void Application::Initialize()
 	TextureManager::Load(16, "2DText/cross.png");
 	TextureManager::Load(17, "2DText/buttonZ.png");
 	TextureManager::Load(18, "2DText/TitleLog.png");
+	TextureManager::Load(19, "2DText/pushText.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();

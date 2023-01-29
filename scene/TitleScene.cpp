@@ -53,6 +53,18 @@ void TitleScene::Initialize()
 	title->SetSize({800, 160});
 	title->SetAnchorPoint({0.5f,0.5f});
 
+	push = make_unique<BaseSprites>();
+	push->Initialize(19);
+	push->SetPosition({550, 600});
+	push->SetSize({180, 60});
+	push->SetAnchorPoint({0.5f,0.5f});
+
+	button = make_unique<BaseSprites>();
+	button->Initialize(17);
+	button->SetPosition({700, 600});
+	button->SetSize({60, 60});
+	button->SetAnchorPoint({0.5f,0.5f});
+
 	back = make_unique<BaseObjObject>();
 	back->Initialize("wall");
 	back->SetPosition({0,0,7});
@@ -94,6 +106,8 @@ void TitleScene::Update()
 	fade->Update();
 
 	title->Update();
+	push->Update();
+	button->Update();
 #pragma endregion
 
 #pragma region Common Update
@@ -243,6 +257,8 @@ void TitleScene::Draw()
 #pragma region _2D_UIDraw
 	Sprite::SetPipelineState();
 	title->Draw();
+	push->Draw();
+	button->Draw();
 	fade->Draw();
 #pragma endregion
 
@@ -253,6 +269,8 @@ void TitleScene::Finalize()
 {
 	back->Finalize();
 
+	button->Finalize();
+	push->Finalize();
 	title->Finalize();
 
 	fade->Finalize();

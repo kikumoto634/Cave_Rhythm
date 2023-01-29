@@ -60,6 +60,8 @@ private:
 
 	//ƒ^ƒCƒgƒ‹
 	std::unique_ptr<BaseSprites> title;
+	std::unique_ptr<BaseSprites> push;
+	std::unique_ptr<BaseSprites> button;
 
 	//”wŒi
 	std::unique_ptr<BaseObjObject> back;
