@@ -47,6 +47,7 @@ public:
 private:
 	//ƒV[ƒ“‘JˆÚ
 	void NextSceneChange();
+	void DebugSceneChange();
 	void SceneChange();
 
 private:
@@ -68,5 +69,8 @@ private:
 	bool IsPrevSceneChange = true;
 	//Next
 	bool IsNextSceneChange = false;
+
+	bool IsDebugScene= false;
+
 };
 

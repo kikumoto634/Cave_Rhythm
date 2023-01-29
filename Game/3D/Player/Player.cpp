@@ -192,12 +192,13 @@ bool Player::DamageSound()
 	return false;
 }
 
-bool Player::GetIsDead()
+bool Player::GetIsDeadAudioOnce()
 {
-	if(IsDead && IsDeadAudioOnce) {
+	if(IsDeadAudioOnce) {
 		IsDeadAudioOnce = false;
 		return true;
 	}
+
 	return false;
 }
 

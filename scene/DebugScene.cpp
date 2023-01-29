@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "DebugScene.h"
 
 #include "../Engine/math//Easing/Easing.h"
 
@@ -10,29 +10,29 @@
 #include <iomanip>
 
 #include "SceneManager.h"
+#include "GameScene.h"
 #include "TitleScene.h"
-#include "HomeScene.h"
 
 #include "../Engine/math/Easing/Easing.h"
 
 using namespace std;
 using namespace DirectX;
 
-const float GameScene::Plane_Size = 2.5f;
+const float DebugScene::Plane_Size = 2.5f;
 
-GameScene::GameScene(DirectXCommon *dxCommon, Window *window)
+DebugScene::DebugScene(DirectXCommon *dxCommon, Window *window)
 		: BaseScene(
 		dxCommon,
 		window)
 {
 }
 
-void GameScene::Application()
+void DebugScene::Application()
 {
 	BaseScene::Application();
 }
 
-void GameScene::Initialize()
+void DebugScene::Initialize()
 {
 	BaseScene::Initialize();
 
@@ -58,12 +58,11 @@ void GameScene::Initialize()
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
 	player->Initialize("human1");
-	player->SetPosition({0, -3.f, -12.5f});
+	player->SetPosition({0, -3.f, -2.5f});
+	player->SetWeaponPos({0,0,-2.5f});
+	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	gameManager->InitializeSetHp(player->GetHP());
 
-	for(int i = 0; i < IniCreateEnemyNum; i++){
-		EnemyInitPop();
-	}
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -79,15 +78,22 @@ void GameScene::Initialize()
 	rock = make_unique<AreaOutRock>();
 	rock->Initialize("AreaRock", true);
 
-	for(int i = 0; i < IniCreateCoinNum; i++){
-		CoinInitPop();
-	}
+	coin = make_unique<Coins>();
+	coin->Initialize("Coins");
 
 	//出口
 	exit = make_unique<Exit>();
-	exit->SetExitOpenNeedCoin(10);
+	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
-	exit->SetPosition({0,-5,0});
+	exit->SetPosition({0,-5,-12.5f});
+
+	dummy = make_unique<TrainingDummy>();
+	dummy->Initialize("Dummy");
+
+	enemy = make_unique<Enemy>();
+	enemy->Initialize("Slime");
+	enemy2 = make_unique<Enemy2>();
+	enemy2->Initialize("Skeleton");
 
 #pragma endregion _3D初期化
 
@@ -103,7 +109,7 @@ void GameScene::Initialize()
 #pragma endregion
 }
 
-void GameScene::Update()
+void DebugScene::Update()
 {
 	//計測開始
 	if(!IsPrevSceneChange){
@@ -195,12 +201,6 @@ void GameScene::Update()
 
 			//各オブジェクト処理
 			if(!player->GetIsDead())player->IsBeatEndOn();
-			for(auto it = enemy.begin(); it != enemy.end(); it++){
-				(*it)->IsBeatEndOn();
-			}
-			for(auto it = enemy2.begin(); it != enemy2.end(); it++){
-				(*it)->IsBeatEndOn();
-			}
 
 			IsComboColorChange = !IsComboColorChange;
 			for(int i = 0; i < DIV_NUM; i++){
@@ -215,70 +215,25 @@ void GameScene::Update()
 					else if(gameManager->GetComboNum() < 10){
 						plane[i][j]->PlaneColorReset();
 					}
+
 					plane[i][j]->IsBeatEndOn();
 				}
-			}
-			for(auto it = coin.begin(); it != coin.end(); it++){
-				if((*it)->GetIsAlive())(*it)->IsBeatEndOn();
 			}
 
 			exit->IsBeatEndOn();
 
+			if(coin->GetIsAlive())	coin->IsBeatEndOn();
+
 			gameManager->IsBeatEndOn();
 
-			int randomPop = rand()%2;
-			//敵生成
-			if(randomPop == 0){
-				for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
-					//座標;
-					Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);
-					//方向
-					Vector2 ldir = gameManager->EnemyRandomDir(lpos);
-					//POP
-					EnemyPop(lpos, ldir);
-				}
-			}
-			else{
-				for(int i = 0; i < gameManager->EnemyPopTurnCount(); i++){
-					//座標;
-					Vector2 lpos = gameManager->EnemyRandomPos(DIV_NUM, Plane_Size);
-					//POP
-					Enemy2Pop(lpos);
-				}
-			}
+			dummy->IsBeatEndOn();
+			enemy->IsBeatEndOn();
+			enemy2->IsBeatEndOn();
 		}
 	}
 
 #pragma region _3D更新
-	//エネミー
-	for(auto it = enemy.begin(); it != enemy.end(); it++){
-		if(!(*it)->GetIsNotApp()){
-			if((*it)->GetIsDeadAudioOnce())	{
-				gameManager->AudioPlay(2,0.2f);
-				for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
-					if((*it2)->PopPossible()){
-						(*it2)->Pop({(*it)->GetDeadParticlePos().x, -5, (*it)->GetDeadParticlePos().z});
-						break;
-					}
-				}
-			}
-			(*it)->Update(camera);
-		}
-	}
-	for(auto it = enemy2.begin(); it != enemy2.end(); it++){
-		if(!(*it)->GetIsNotApp()){
-			if((*it)->GetIsDeadAudioOnce())	{
-				gameManager->AudioPlay(2,0.2f);
-				for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
-					if((*it2)->PopPossible()){
-						(*it2)->Pop({(*it)->GetDeadParticlePos().x, -5, (*it)->GetDeadParticlePos().z});
-						break;
-					}
-				}
-			}
-			(*it)->Update(camera,player->GetPosition());
-		}
-	}
+
 	//プレイヤー
 	if(player->DamageSound())	{
 		gameManager->AudioPlay(2,0.2f);
@@ -301,19 +256,52 @@ void GameScene::Update()
 	skydome->Update(camera);
 	//岩
 	rock->Update(camera);
-	//コイン
-	for(auto it = coin.begin(); it != coin.end(); it++){
-		if((*it)->GetCoin()){
-			gameManager->CoinIncrement();
-			gameManager->AudioPlay(7,0.5f);
-		}
-		(*it)->Update(camera);
-	}
+
 	//出口
 	exit->Update(camera);
-	Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
-	Vector2 pos = exit->ChangeTransformation(target);
-	exit->SetCoinSpPosition(pos);
+	{
+		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
+		Vector2 pos = exit->ChangeTransformation(target);
+		exit->SetCoinSpPosition(pos);
+	}
+
+	//ダミー
+	if(dummy->GetIsDeadAudioOnce())	{
+		gameManager->AudioPlay(2,0.2f);
+		if(coin->PopPossible()){
+			coin->Pop({dummy->GetDeadParticlePos().x, -5 , dummy->GetDeadParticlePos().z});
+		}
+	}
+	dummy->Update(camera);
+
+	//エネミー
+	if(!enemy->GetIsNotApp()){
+		if(enemy->GetIsDeadAudioOnce())	{
+			gameManager->AudioPlay(2,0.2f);
+			if(coin->PopPossible()){
+				coin->Pop({enemy->GetDeadParticlePos().x, -5 , enemy->GetDeadParticlePos().z});
+			}
+		}
+		enemy->Update(camera);
+	}
+
+	//エネミー2
+	if(!enemy2->GetIsNotApp()){
+		if(enemy2->GetIsDeadAudioOnce())	{
+			gameManager->AudioPlay(2,0.2f);
+			if(coin->PopPossible()){
+				coin->Pop({enemy2->GetDeadParticlePos().x, -5 , enemy2->GetDeadParticlePos().z});
+			}
+		}
+		enemy2->Update(camera, player->GetPosition());
+	}
+
+
+	if(coin->GetCoin()){
+		gameManager->CoinIncrement();
+		gameManager->AudioPlay(7,0.5f);
+	}
+	coin->Update(camera);
 
 #pragma endregion _3D更新
 
@@ -366,14 +354,14 @@ void GameScene::Update()
 			camera->ShakeStart();
 		}
 
-		ImGui::Text("Pop, pos dir");
+		ImGui::Text("POP:pos dir");
 		ImGui::InputInt2("EnemyPos X,Z : 0~11", popPosition);
 		ImGui::InputInt2("EnemyDir X,Z : -1~1", popDirection);
 
 		//敵の出現
 		ImGui::Text("EnemyPOP");
 		//生成
-		if (ImGui::Button("POP")) {
+		if (ImGui::Button("POP1")) {
 			//座標;
 			Vector2 pos = {(-12.5f + (float)popPosition[0]*2.5f), (-12.5f + (float)popPosition[1]*2.5f)};
 			//方向
@@ -397,20 +385,19 @@ void GameScene::Update()
 		}
 		ImGui::End();
 	}
-
 	//Scene
 	{
 		//座標
 		ImGui::SetNextWindowPos(ImVec2{1000,40});
 		//サイズ
-		ImGui::SetNextWindowSize(ImVec2{280,100});
+		ImGui::SetNextWindowSize(ImVec2{280,150});
 		ImGui::Begin("SCENE");
 
-		ImGui::Text("Now:Game   Next:Title");
+		ImGui::Text("Now:Home   Next:Game");
 		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
 			IsNextSceneChange = true;
 		}
-		ImGui::Text("Now:Game   Next:Title");
+		ImGui::Text("Now:Home   Next:Title");
 		if(!IsPrevSceneChange && ImGui::Button("GameEnd")){
 			IsGameEnd = true;
 		}
@@ -422,19 +409,13 @@ void GameScene::Update()
 	BaseScene::EndUpdate();
 }
 
-void GameScene::Draw()
+void DebugScene::Draw()
 {
 	BaseScene::Draw();
 
 #pragma region _3D描画
 	player->Draw();
 
-	for(auto it = enemy.begin(); it != enemy.end(); it++){
-		(*it)->Draw();
-	}
-	for(auto it = enemy2.begin(); it != enemy2.end(); it++){
-		(*it)->Draw();
-	}
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Draw();
@@ -444,20 +425,18 @@ void GameScene::Draw()
 
 	rock->Draw();
 
-	for(auto it = coin.begin(); it != coin.end(); it++){
-		(*it)->Draw();
-	}
-
 	exit->Draw();
 
-#pragma region パーティクル
-	for(auto it = enemy.begin(); it != enemy.end(); it++){
-		(*it)->ParticleDraw();
-	}
-	for(auto it = enemy2.begin(); it != enemy2.end(); it++){
-		(*it)->ParticleDraw();
-	}
+	dummy->Draw();
+	enemy->Draw();
+	enemy2->Draw();
 
+	coin->Draw();
+
+#pragma region パーティクル
+	dummy->ParticleDraw();
+	enemy->ParticleDraw();
+	enemy2->ParticleDraw();
 	rock->ParticleDraw();
 #pragma endregion パーティクル
 
@@ -468,6 +447,8 @@ void GameScene::Draw()
 
 	//出口
 	exit->Draw2D();
+
+	dummy->Draw2D();
 
 	gameManager->SpriteDraw();
 
@@ -491,26 +472,17 @@ void GameScene::Draw()
 	debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
 	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
 
-	debugText->Printf(1000,0,1.0f, "EnemyNum : %d", enemy.size());
-	debugText->Printf(1000,20,1.0f, "Enemy2Num : %d", enemy2.size());
-	debugText->Printf(1000,40,1.0f, "CoinNum : %d", coin.size());
 
 #endif // _DEBUG
 	BaseScene::EndDraw();
 #pragma endregion _2D_UI描画
 }
 
-void GameScene::Finalize()
+void DebugScene::Finalize()
 {
 #pragma region _3D解放
 	player->Finalize();
 
-	for(auto it = enemy.begin(); it != enemy.end(); it++){
-		(*it)->Finalize();
-	}
-	for(auto it = enemy2.begin(); it != enemy2.end(); it++){
-		(*it)->Finalize();
-	}
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Finalize();
@@ -521,11 +493,13 @@ void GameScene::Finalize()
 
 	rock->Finalize();
 
-	for(auto it = coin.begin(); it != coin.end(); it++){
-		(*it)->Finalize();
-	}
-
 	exit->Finalize();
+
+	dummy->Finalize();
+	enemy->Finalize();
+	enemy2->Finalize();
+
+	coin->Finalize();
 #pragma endregion _3D解放
 
 #pragma region _2D解放
@@ -545,17 +519,39 @@ void GameScene::Finalize()
 	BaseScene::Finalize();
 }
 
-void GameScene::NextSceneChange()
+void DebugScene::EnemyPop(Vector2 pos, Vector2 dir)
 {
-	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
+	Vector3 lpos = {pos.x, -3.5f, pos.y};
+	Vector3 ldir = {dir.x, 0, dir.y};
+
+	if(enemy->GetIsNotApp()){
+		enemy->SetPopPoasition(lpos);
+		enemy->SetDirection(ldir);
+		enemy->BeginAppearance();
+	}
 }
 
-void GameScene::SceneGameEnd()
+void DebugScene::Enemy2Pop(Vector2 pos)
+{
+	Vector3 lpos = {pos.x, -3.5f, pos.y};
+
+	if(enemy2->GetIsNotApp()){
+		enemy2->SetPopPoasition(lpos);
+		enemy2->BeginAppearance();
+	}
+}
+
+void DebugScene::NextSceneChange()
+{
+	sceneManager->SetNextScene(new GameScene(dxCommon,window));
+}
+
+void DebugScene::SceneGameEnd()
 {
 	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
 }
 
-void GameScene::SceneChange()
+void DebugScene::SceneChange()
 {
 	//PrevSceneからの移動後処理
 	if(IsPrevSceneChange){
@@ -585,50 +581,4 @@ void GameScene::SceneChange()
 		fade->SetColor(fadeColor);
 		fade->Update();
 	}
-}
-
-void GameScene::EnemyInitPop()
-{
-	unique_ptr<Enemy> newObj = make_unique<Enemy>();
-	newObj->Initialize("slime");
-	enemy.push_back(move(newObj));
-
-	unique_ptr<Enemy2> newObj2 = make_unique<Enemy2>();
-	newObj2->Initialize("Skeleton");
-	enemy2.push_back(move(newObj2));
-}
-
-void GameScene::EnemyPop(Vector2 pos, Vector2 dir)
-{
-	Vector3 lpos = {pos.x, -3.5f, pos.y};
-	Vector3 ldir = {dir.x, 0, dir.y};
-
-	for(auto it = enemy.begin(); it != enemy.end(); it++){
-		if((*it)->GetIsNotApp()){
-			(*it)->SetPopPoasition(lpos);
-			(*it)->SetDirection(ldir);
-			(*it)->BeginAppearance();
-			break;
-		}
-	}
-}
-
-void GameScene::Enemy2Pop(Vector2 pos)
-{
-	Vector3 lpos = {pos.x, -3.5f, pos.y};
-
-	for(auto it = enemy2.begin(); it != enemy2.end(); it++){
-		if((*it)->GetIsNotApp()){
-			(*it)->SetPopPoasition(lpos);
-			(*it)->BeginAppearance();
-			break;
-		}
-	}
-}
-
-void GameScene::CoinInitPop()
-{
-	unique_ptr<Coins> newObj = make_unique<Coins>();
-	newObj->Initialize("Coins");
-	coin.push_back(move(newObj));
 }

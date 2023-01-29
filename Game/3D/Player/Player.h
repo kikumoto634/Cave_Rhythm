@@ -98,7 +98,9 @@ public:
 	/// </summary>
 	bool DamageSound();
 
-	bool GetIsDead();
+	bool GetIsDead()	{return IsDead;};
+	bool GetIsDeadAudioOnce();
+
 
 	//Getter
 	inline int GetHP()	{return HP;}

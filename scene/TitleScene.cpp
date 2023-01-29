@@ -4,6 +4,8 @@
 #include "GameScene.h"
 #include "HomeScene.h"
 
+#include "DebugScene.h"
+
 #include "../Engine/math/Easing/Easing.h"
 
 using namespace std;
@@ -160,6 +162,10 @@ void TitleScene::Update()
 		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
 			IsNextSceneChange = true;
 		}
+		ImGui::Text("Now:Title   Next:Debug");
+		if(!IsPrevSceneChange && ImGui::Button("DebugScene")){
+			IsDebugScene = true;
+		}
 
 		ImGui::End();
 	}
@@ -206,6 +212,11 @@ void TitleScene::NextSceneChange()
 	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
 }
 
+void TitleScene::DebugSceneChange()
+{
+	sceneManager->SetNextScene(new DebugScene(dxCommon,window));
+}
+
 void TitleScene::SceneChange()
 {
 	//PrevScene‚©‚ç‚ÌˆÚ“®Œãˆ—
@@ -221,10 +232,11 @@ void TitleScene::SceneChange()
 		fade->SetColor(fadeColor);
 	}
 	//NextScene‚Ö‚ÌˆÚ“®
-	else if(IsNextSceneChange){
+	else if(IsNextSceneChange || IsDebugScene){
 
 		if(fadeColor.w >= 1){
-			NextSceneChange();
+			if(IsNextSceneChange)NextSceneChange();
+			else if(IsDebugScene)DebugSceneChange();
 		}
 
 		fadeColor.w = 

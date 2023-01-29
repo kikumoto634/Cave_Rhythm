@@ -83,7 +83,7 @@ private:
 	LightGroup* lightGroup = nullptr;
 	//ä€âe
 	//ÉvÉåÉCÉÑÅ[
-	bool IsPlayerShadowAlive = true;
+	bool IsPlayerShadowAlive = false;
 	Vector3 circleShadowDir = { 0,-1,0 };
 	Vector3 circleShadowAtten = { 0.5f,0.6f,0.0f };
 	Vector2 circleShadowFactorAngle = { 0.0f, 0.5f };

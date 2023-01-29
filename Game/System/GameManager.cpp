@@ -110,7 +110,8 @@ void GameManager::LightUpdate(bool IsPlayerShadowDead)
 		lightGroup->SetCircleShadowAtten(0, circleShadowAtten);
 		lightGroup->SetCircleShadowFactorAngle(0, circleShadowFactorAngle);
 	}
-	else if(IsPlayerShadowDead){
+
+	if(IsPlayerShadowDead){
 		IsPlayerShadowAlive = true;
 		lightGroup->SetCircleShadowActive(0,false);
 	}

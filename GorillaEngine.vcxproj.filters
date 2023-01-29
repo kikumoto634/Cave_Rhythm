@@ -360,6 +360,12 @@
     <ClCompile Include="Game\3D\Exit\Exit.cpp">
       <Filter>ソース ファイル\Game\3D\Exit</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Enemy2.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\DebugScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -547,6 +553,12 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Exit\Exit.h">
       <Filter>ヘッダー ファイル\Game\3D\Exit</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Enemy2.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\DebugScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

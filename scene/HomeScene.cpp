@@ -112,7 +112,7 @@ void HomeScene::Update()
 		rhythmManager->StartMeasurement(clock());
 		//計測開始時
 		if(rhythmManager->GetMoveUpNumber() == 0){
-			//gameManager->AudioPlay(3, 0.5f, true);
+			gameManager->AudioPlay(3, 0.5f, true);
 		}
 		//リズム繰り上がり
 		rhythmManager->BeatMoveUp();
@@ -234,7 +234,7 @@ void HomeScene::Update()
 	}
 	player->Update(camera);
 	player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
-	if(player->GetIsDead())	{
+	if(player->GetIsDead() && player->GetIsDeadAudioOnce())	{
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
 	}
@@ -258,6 +258,7 @@ void HomeScene::Update()
 		exit->SetCoinSpPosition(pos);
 	}
 
+	//ダミー
 	if(dummy->GetIsDeadAudioOnce())	{
 		gameManager->AudioPlay(2,0.2f);
 		if(coin->PopPossible()){
