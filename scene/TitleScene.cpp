@@ -4,7 +4,7 @@
 #include "GameScene.h"
 #include "HomeScene.h"
 
-#include "DebugScene.h"
+#include "SampleGameScene.h"
 
 #include "../Engine/math/Easing/Easing.h"
 
@@ -298,7 +298,7 @@ void TitleScene::NextSceneChange()
 
 void TitleScene::DebugSceneChange()
 {
-	sceneManager->SetNextScene(new DebugScene(dxCommon,window));
+	sceneManager->SetNextScene(new SampleGameScene(dxCommon,window));
 }
 
 void TitleScene::SceneChange()

@@ -8,7 +8,6 @@
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
-#include "../Game/3D/Coins/Coins.h"
 #include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
@@ -17,14 +16,9 @@
 #include "../Game/System/RhythmManager.h"
 #include "../Game/System/GameManager.h"
 
-#include <list>
 #include <time.h>
 
-#include "../Game/3D/Enemy/TrainingDummy.h"
-#include "../Game/3D/Enemy/Enemy.h"
-#include "../Game/3D/Enemy/Enemy2.h"
-
-class DebugScene : public BaseScene
+class BaseGameScene : public BaseScene
 {
 private:
 	//シーン遷移
@@ -33,7 +27,7 @@ private:
 public:
 	
 	//コンストラクタ
-	DebugScene(DirectXCommon* dxCommon, Window* window);
+	BaseGameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 	/// <summary>
 	/// 起動時
@@ -60,61 +54,105 @@ public:
 	/// </summary>
 	void Finalize() override;
 
-	void EnemyPop(Vector2 pos, Vector2 dir);
-	void Enemy2Pop(Vector2 pos);
+protected:
+	//シーン遷移
+	virtual void NextSceneChange() = 0;
+
+	///追加
+
+	//初期化
+	virtual void AddCommonInitialize() = 0;
+	virtual void AddObject3DInitialize() = 0;
+	virtual void AddObject2DInitialize() = 0;
+
+	//更新
+	virtual void AddInputUpdate() = 0;
+	virtual void AddObject3DUpdate() = 0;
+	virtual void AddObject2DUpdate() = 0;
+	virtual void AddCommonUpdate() = 0;
+
+	virtual void AddBeatEndUpdate() = 0;
+
+	//描画
+	virtual void AddObject3DDraw() = 0;
+	virtual void AddObject2DDraw() = 0;
+	virtual void AddParticleDraw() = 0;
+	virtual void AddUIDraw() = 0;
+
+	//後処理
+	virtual void AddObjectFinalize() = 0;
+	virtual void AddCommonFinalize()= 0;
+
+#ifdef _DEBUG
+	virtual void AddDebugUpdate() = 0;
+	virtual void AddDebugDraw() = 0;
+	virtual void AddDebugFinalize() = 0;
+#endif // _DEBUG
+
 
 private:
+
+	//初期化
+	void CommonInitialize();
+	void Object3DInitialize();
+	void Object2DInitialize();
+
+	//更新
+	void InputUpdate();
+	void Object3DUpdate();
+	void Object2DUpdate();
+	void CommonUpdate();
+
+	//リズム関連
+	void RhythmMeasure();
+	void RhythmJudgeUpdate();
+	void BeatEndUpdate();
+
+	//描画
+	void Object3DDraw();
+	void ParticleDraw();
+	void UIDraw();
+
 	//シーン遷移
-	void NextSceneChange();
 	void SceneGameEnd();
 	void SceneChange();
-private:
+
+	//後処理
+	void ObjectFinaize();
+	void CommonFinalize();
+
+
+protected:
+	//共通
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
 
-	//3Dオブジェクト
-
 	//player
 	std::unique_ptr<Player> player;
-
+	//セーブ体力
+	int saveHP = 0;
 	//Plane
 	static const int DIV_NUM = 11;
 	static const float Plane_Size;
 	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
 	bool IsComboColorChange = false;
-
 	//skydome
 	std::unique_ptr<SampleObjObject> skydome;
-
 	//リズムカウント
 	RhythmManager* rhythmManager = nullptr;
-
 	//ゲームマネージャー
 	GameManager* gameManager = nullptr;
-
 	//リズム入力
 	bool IsRhythmInput = false;
-
 	//岩
 	std::unique_ptr<AreaOutRock> rock;
-
-	//コイン
-	std::unique_ptr<Coins> coin;
 	//出口
 	std::unique_ptr<Exit> exit;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
 	bool IsCameraMovementChange = true;
-
-	//敵POP情報
-	int popPosition[2] = {5,5};
-	int popDirection[2] = {1,0};
 #endif // _DEBUG
-
-	std::unique_ptr<TrainingDummy> dummy;
-	std::unique_ptr<Enemy> enemy;
-	std::unique_ptr<Enemy2> enemy2;
 
 	//シーン遷移
 	std::unique_ptr<BaseSprites> fade;
@@ -128,4 +166,7 @@ private:
 
 	//GameOver
 	bool IsGameEnd = false;
+
+	//BGM再生フラグ
+	bool IsBGMStart = false;
 };

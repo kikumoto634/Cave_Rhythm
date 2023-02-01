@@ -205,11 +205,12 @@
     <ClCompile Include="Game\System\GameManager.cpp" />
     <ClCompile Include="Game\System\RhythmManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scene\BaseGameScene.cpp" />
     <ClCompile Include="scene\BaseScene.cpp" />
-    <ClCompile Include="scene\DebugScene.cpp" />
     <ClCompile Include="scene\GameScene2.cpp" />
     <ClCompile Include="scene\HomeScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
+    <ClCompile Include="scene\SampleGameScene.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
   </ItemGroup>
@@ -272,11 +273,12 @@
     <ClInclude Include="Game\Collision\SphereCollider.h" />
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
+    <ClInclude Include="scene\BaseGameScene.h" />
     <ClInclude Include="scene\BaseScene.h" />
-    <ClInclude Include="scene\DebugScene.h" />
     <ClInclude Include="scene\GameScene2.h" />
     <ClInclude Include="scene\HomeScene.h" />
     <ClInclude Include="scene\GameScene.h" />
+    <ClInclude Include="scene\SampleGameScene.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="scene\TitleScene.h" />
   </ItemGroup>

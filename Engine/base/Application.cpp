@@ -2,6 +2,8 @@
 #include "../../scene/GameScene.h"
 #include "../../scene/TitleScene.h"
 
+#include "../../scene/BaseGameScene.h"
+
 Application* Application::app = nullptr;
 
 using namespace std;
