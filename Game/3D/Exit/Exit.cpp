@@ -28,19 +28,7 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 	coinSp->SetSize({40,40});
 	coinSp->SetAnchorPoint({0.5f,0.5f});
 
-	for(int i = 0; i < CoinSpNumSize; i++){
-		coinSpNum[i] = make_unique<BaseSprites>();
-		
-		int value_Ten = ExitNeedCoinsNum/10;
-		int value_One = ExitNeedCoinsNum - value_Ten*10;
-
-		if(i == 0)coinSpNum[i]->Initialize(16);
-		else if(i == 1)coinSpNum[i]->Initialize(TexNumberBegin + value_Ten);
-		else if(i == 2)coinSpNum[i]->Initialize(TexNumberBegin + value_One);
-
-		coinSpNum[i]->SetSize({40,40});
-		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
-	}
+	NeedCoinSpriteUpdate();
 
 	exitOpenSp = make_unique<BaseSprites>();
 	exitOpenSp->Initialize(17);
@@ -134,6 +122,23 @@ Vector2 Exit::ChangeTransformation(Vector3 targetpos)
 	DirectX::XMMATRIX matViewProjectionViewPort = camera->GetMatView() * camera->GetMatProjection() * matViewport;
 	Vector3 positionreticle = Vector3Transform(targetpos, matViewProjectionViewPort);
 	return Vector2{positionreticle.x, positionreticle.y};
+}
+
+void Exit::NeedCoinSpriteUpdate()
+{
+	for(int i = 0; i < CoinSpNumSize; i++){
+		coinSpNum[i] = make_unique<BaseSprites>();
+		
+		int value_Ten = ExitNeedCoinsNum/10;
+		int value_One = ExitNeedCoinsNum - value_Ten*10;
+
+		if(i == 0)coinSpNum[i]->Initialize(16);
+		else if(i == 1)coinSpNum[i]->Initialize(TexNumberBegin + value_Ten);
+		else if(i == 2)coinSpNum[i]->Initialize(TexNumberBegin + value_One);
+
+		coinSpNum[i]->SetSize({40,40});
+		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
+	}
 }
 
 Vector3 Exit::Vector3Transform(Vector3 &v, DirectX::XMMATRIX &m)

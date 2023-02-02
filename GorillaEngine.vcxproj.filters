@@ -363,9 +363,6 @@
     <ClCompile Include="Game\3D\Enemy\Enemy2.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="scene\GameScene2.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="scene\BaseGameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
@@ -562,9 +559,6 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Enemy2.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\GameScene2.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="scene\BaseGameScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>

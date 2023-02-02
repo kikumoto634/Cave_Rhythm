@@ -52,6 +52,9 @@ public:
 	/// </summary>
 	void ExitClose()	{IsOpen = false;}
 
+	//必要コイン更新
+	void NeedCoinSpriteUpdate();
+
 	//モデル変更
 	void ModelChange()	{this->object->SetModel(stairsModel), IsOpenAudioOnce = true;}
 

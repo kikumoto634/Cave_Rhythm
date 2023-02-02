@@ -123,11 +123,6 @@ void HomeScene::AddObject3DDraw()
 
 void HomeScene::AddObject2DDraw()
 {
-	dummy->Draw2D();
-
-	for(int i = 0; i < 4; i++){
-		buttonSp[i]->Draw();
-	}
 }
 
 void HomeScene::AddParticleDraw()
@@ -138,6 +133,11 @@ void HomeScene::AddParticleDraw()
 
 void HomeScene::AddUIDraw()
 {
+	dummy->Draw2D();
+
+	for(int i = 0; i < 4; i++){
+		buttonSp[i]->Draw();
+	}
 }
 
 void HomeScene::AddObjectFinalize()
@@ -154,6 +154,7 @@ void HomeScene::AddCommonFinalize()
 {
 }
 
+#ifdef _DEBUG
 void HomeScene::AddDebugUpdate()
 {
 }
@@ -165,3 +166,4 @@ void HomeScene::AddDebugDraw()
 void HomeScene::AddDebugFinalize()
 {
 }
+#endif // _DEBUG
