@@ -323,12 +323,12 @@ void Enemy2::TargetMove(Vector3 targetPos)
 	
 	//âE
 	if(sita >= 135){
-		movePosition = world.translation + Vector3{2.5f,0,0};
+		movePosition = world.translation + Vector3{2.f,0,0};
 		SetRotation({0,XMConvertToRadians(90),0});
 	}
 	//ç∂
 	else if(45 >= sita){
-		movePosition = world.translation + Vector3{-2.5f,0,0};
+		movePosition = world.translation + Vector3{-2.f,0,0};
 		SetRotation({0,XMConvertToRadians(-90),0});
 	}
 	//â∫
@@ -336,12 +336,12 @@ void Enemy2::TargetMove(Vector3 targetPos)
 
 		//â∫
 		if(subVector.y > 0){
-			movePosition = world.translation + Vector3{0,0,-2.5f};
+			movePosition = world.translation + Vector3{0,0,-2.f};
 			SetRotation({0,XMConvertToRadians(180),0});
 		}
 		//è„
 		else if(subVector.y < 0){
-			movePosition = world.translation + Vector3{0,0,2.5f};
+			movePosition = world.translation + Vector3{0,0,2.f};
 			SetRotation({0,0,0});
 		}
 	}
