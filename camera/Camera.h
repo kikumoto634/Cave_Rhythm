@@ -72,8 +72,9 @@ private:
 	//アスペクト用
 	Window* window;
 
-protected:
+public:
 	ViewProjection view;
+protected:
 	float distance = 20.f;	//カメラの距離
 
 	//回転行列

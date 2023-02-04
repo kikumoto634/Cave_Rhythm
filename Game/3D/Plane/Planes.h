@@ -47,8 +47,14 @@ public:
 
 	//Setter
 	inline void SetIsPlayerContact(bool IsFlag)	{IsPlayerContact = IsFlag;}
+	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
 
 private:
 	bool IsPlayerContact = false;
+
+	Vector3 PlayerPos;
+	float distance = 0;
+
+	bool IsAlive = false;
 };
 

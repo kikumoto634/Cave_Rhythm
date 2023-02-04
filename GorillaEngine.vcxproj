@@ -210,6 +210,7 @@
     <ClCompile Include="scene\HomeScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\SampleGameScene.cpp" />
+    <ClCompile Include="scene\SampleScane.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
   </ItemGroup>
@@ -277,6 +278,7 @@
     <ClInclude Include="scene\HomeScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\SampleGameScene.h" />
+    <ClInclude Include="scene\SampleScane.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="scene\TitleScene.h" />
   </ItemGroup>

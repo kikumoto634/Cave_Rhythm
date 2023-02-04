@@ -96,6 +96,8 @@ void Player::Update(Camera *camera)
 	//移動イージング
 	if(IsMoveEasing){
 		world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+		camera->MoveVector({moveCameraPosition.x/5, 0, moveCameraPosition.z/5});
+
 		if(moveEasingFrame >= 1.f){
 			IsMoveEasing = false;
 			world.translation = movePosition;
@@ -119,10 +121,20 @@ void Player::Update(Camera *camera)
 	}
 
 	//移動制限
-	world.translation.x = max(world.translation.x , -12.5f);
-	world.translation.x = min(world.translation.x , 12.5f);
-	world.translation.z = max(world.translation.z , -12.5f);
-	world.translation.z = min(world.translation.z , 12.5f);
+	world.translation.x = max(world.translation.x , 12 * -2.f);
+	world.translation.x = min(world.translation.x , 12 * 2.f);
+	world.translation.z = max(world.translation.z , 12 * -2.f);
+	world.translation.z = min(world.translation.z , 12 * 2.f);
+
+	this->camera->view.target.x = min(this->camera->view.target.x, 24.f);
+	this->camera->view.target.x = max(this->camera->view.target.x, -24.f);
+	this->camera->view.target.z = min(this->camera->view.target.z, 12.f);
+	this->camera->view.target.z = max(this->camera->view.target.z, -36.f);
+
+	this->camera->view.eye.x = min(this->camera->view.eye.x, 24.f);
+	this->camera->view.eye.x = max(this->camera->view.eye.x, -24.f);
+	this->camera->view.eye.z = min(this->camera->view.eye.z, -5.f);
+	this->camera->view.eye.z = max(this->camera->view.eye.z, -53.f);
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
@@ -215,27 +227,27 @@ bool Player::MovementInput()
 
 	//歩行
 	if(input->Trigger(DIK_UP)){
-		movePosition = Vector3{0.0f,0.0f,2.5f};
+		movePosition = Vector3{0.0f,0.0f,2.f};
 		moveRotation.y = 0;
-		offSetWeaponPos = {0,0,2.5};
+		offSetWeaponPos = {0,0,2.f};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
-		movePosition = Vector3{0.0f,0.0f,-2.5f};
+		movePosition = Vector3{0.0f,0.0f,-2.f};
 		moveRotation.y = XMConvertToRadians(180);
-		offSetWeaponPos = {0,0,-2.5};
+		offSetWeaponPos = {0,0,-2.f};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
-		movePosition = Vector3{2.5f,0.0f,0.0f};
+		movePosition = Vector3{2.f,0.0f,0.0f};
 		moveRotation.y = XMConvertToRadians(90);
-		offSetWeaponPos = {2.5,0,0};
+		offSetWeaponPos = {2.f,0,0};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
-		movePosition = Vector3{-2.5f,0.0f,0.0f};
+		movePosition = Vector3{-2.f,0.0f,0.0f};
 		moveRotation.y = XMConvertToRadians(-90);
-		offSetWeaponPos = {-2.5,0,0};
+		offSetWeaponPos = {-2.f,0,0};
 		IsReturn = true;
 	}
 	if(IsReturn) {
@@ -244,6 +256,7 @@ bool Player::MovementInput()
 		//行動
 		IsMove = true;
 		//移動後座標
+		moveCameraPosition = movePosition;
 		movePosition += world.translation;
 	}
 

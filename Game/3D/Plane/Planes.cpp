@@ -22,6 +22,15 @@ void Planes::Initialize(std::string filePath, bool IsSmmothing)
 void Planes::Update(Camera *camera)
 {
 	this->camera = camera;
+	Vector3 pos = PlayerPos - world.translation;
+	distance = pos.length();
+
+	if(-20 <= distance && distance <= 20)		{
+		IsAlive = true;
+	}
+	else if(-20 > distance || distance > 20)	IsAlive = false;
+	
+	if(!IsAlive) return;
 
 	//”I‚í‚èŽž
 	if(IsBeatEnd){
@@ -41,6 +50,7 @@ void Planes::Update(Camera *camera)
 
 void Planes::Draw()
 {
+	if(!IsAlive) return;
 	BaseObjObject::Draw();
 }
 
@@ -51,6 +61,7 @@ void Planes::Finalize()
 
 void Planes::OnCollision(const CollisionInfo &info)
 {
+	if(!IsAlive) return;
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsPlayerContact = true;
 	}	
@@ -58,6 +69,7 @@ void Planes::OnCollision(const CollisionInfo &info)
 
 void Planes::PlaneColorChange(bool IsSwitch,  bool IsColorChange)
 {
+	if(!IsAlive) return;
 	if(IsSwitch){
 		if(IsColorChange){
 			object->SetColor({0.0f, 0.8f, 0.0f,1.0f});

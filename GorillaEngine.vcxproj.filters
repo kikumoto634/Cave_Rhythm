@@ -199,6 +199,18 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Exit">
       <UniqueIdentifier>{b525510e-d601-40c0-9c1a-93abf8829e26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\scene\Base">
+      <UniqueIdentifier>{c451715e-44b7-4d1f-bd91-a4924a872a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\Base">
+      <UniqueIdentifier>{37d913e6-93f2-4bf2-b833-cb4c7790cd12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\Sample">
+      <UniqueIdentifier>{68ee3759-9694-4789-9393-7992b168c706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\Sample">
+      <UniqueIdentifier>{abfadce0-77e3-473e-968a-d97f2c19617e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -206,9 +218,6 @@
     </ClCompile>
     <ClCompile Include="camera\Camera.cpp">
       <Filter>ソース ファイル\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\BaseScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
@@ -364,18 +373,21 @@
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="scene\BaseGameScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
+      <Filter>ソース ファイル\scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\BaseScene.cpp">
+      <Filter>ソース ファイル\scene\Base</Filter>
     </ClCompile>
     <ClCompile Include="scene\SampleGameScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
+      <Filter>ソース ファイル\scene\Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SampleScane.cpp">
+      <Filter>ソース ファイル\scene\Sample</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
       <Filter>ヘッダー ファイル\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\BaseScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="scene\GameScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
@@ -561,10 +573,16 @@
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="scene\BaseGameScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
+      <Filter>ヘッダー ファイル\scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\BaseScene.h">
+      <Filter>ヘッダー ファイル\scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="scene\SampleGameScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
+      <Filter>ヘッダー ファイル\scene\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SampleScane.h">
+      <Filter>ヘッダー ファイル\scene\Sample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
