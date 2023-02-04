@@ -384,6 +384,9 @@
     <ClCompile Include="scene\SampleScane.cpp">
       <Filter>ソース ファイル\scene\Sample</Filter>
     </ClCompile>
+    <ClCompile Include="Game\System\AreaManager.cpp">
+      <Filter>ソース ファイル\Game\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -583,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="scene\SampleScane.h">
       <Filter>ヘッダー ファイル\scene\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\System\AreaManager.h">
+      <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

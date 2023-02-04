@@ -18,8 +18,6 @@
 using namespace std;
 using namespace DirectX;
 
-const float SampleScane::Plane_Size = 2.f;
-
 SampleScane::SampleScane(DirectXCommon *dxCommon, Window *window, int saveHP)
 		: BaseScene(
 		dxCommon,
@@ -214,20 +212,15 @@ void SampleScane::Object3DInitialize()
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
 	player->Initialize("human1");
-	player->SetPosition({0, -3.f, -2.5f});
-	player->SetWeaponPos({0,0,-2.5f});
+	player->SetPosition({0, -3.f, -2.f});
+	player->SetWeaponPos({0,0,-2.f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player->SetHp(saveHP);
 	gameManager->InitializeSetHp(player->GetHP());
 
 
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j] = make_unique<Planes>();
-			plane[i][j]->Initialize("GroundBlock");
-			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Plane_Size) + (i*Plane_Size)) ,-5 ,float(-((DIV_NUM/2)*Plane_Size) + (j*Plane_Size))});
-		}
-	}
+	areaManager = make_unique<AreaManager>();
+	areaManager->Initialize();
 
 	skydome = make_unique<SampleObjObject>();
 	skydome->Initialize("skydome", true);
@@ -282,12 +275,7 @@ void SampleScane::Object3DUpdate()
 	}
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//地面
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j]->SetPlayerPos(player->GetPosition());
-			plane[i][j]->Update(camera);
-		}
-	}
+	areaManager->Update(this->camera, player->GetPosition());
 	//天球
 	skydome->Update(camera);
 	//岩
@@ -392,23 +380,7 @@ void SampleScane::BeatEndUpdate()
 		//各オブジェクト処理
 		if(!player->GetIsDead())player->IsBeatEndOn();
 
-		IsComboColorChange = !IsComboColorChange;
-		for(int i = 0; i < DIV_NUM; i++){
-			for(int j = 0; j < DIV_NUM; j++){
-				//コンボ数に応じて色変化
-				if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
-						
-					int changePos = i%2+j%2;
-					if(changePos == 0 || changePos == 2)		{plane[i][j]->PlaneColorChange(true, IsComboColorChange);}
-					if(changePos == 1)							{plane[i][j]->PlaneColorChange(false, IsComboColorChange);}
-				}
-				else if(gameManager->GetComboNum() < 10){
-					plane[i][j]->PlaneColorReset();
-				}
-
-				plane[i][j]->IsBeatEndOn();
-			}
-		}
+		areaManager->BeatEndUpdate(gameManager);
 
 		exit->IsBeatEndOn();
 		gameManager->IsBeatEndOn();
@@ -422,11 +394,7 @@ void SampleScane::Object3DDraw()
 {
 	player->Draw();
 
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j]->Draw();
-		}
-	}
+	areaManager->Draw();
 	skydome->Draw();
 
 	rock->Draw();
@@ -498,11 +466,7 @@ void SampleScane::ObjectFinaize()
 {
 #pragma region _3D解放
 	player->Finalize();
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j]->Finalize();
-		}
-	}
+	areaManager->Finalize();
 	skydome->Finalize();
 	rock->Finalize();
 	exit->Finalize();

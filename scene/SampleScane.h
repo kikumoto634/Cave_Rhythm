@@ -6,7 +6,6 @@
 #include "../Engine/3D/TouchableObject.h"
 
 #include "../Game/3D/Player/Player.h"
-#include "../Game/3D/Plane/Planes.h"
 #include "../Game/3D/AreaOut/AreaOutRock.h"
 #include "../Game/3D/Exit/Exit.h"
 
@@ -15,6 +14,7 @@
 
 #include "../Game/System/RhythmManager.h"
 #include "../Game/System/GameManager.h"
+#include "../Game/System/AreaManager.h"
 
 #include <time.h>
 
@@ -96,13 +96,7 @@ private:
 	std::unique_ptr<Player> player;
 	//セーブ体力
 	int saveHP = 0;
-	//Plane
-	static const int DIV_NUM = 25;
-	static const float Plane_Size;
-	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
-	bool IsComboColorChange = false;
-
-
+	
 	//skydome
 	std::unique_ptr<SampleObjObject> skydome;
 	//リズムカウント
@@ -115,6 +109,8 @@ private:
 	std::unique_ptr<AreaOutRock> rock;
 	//出口
 	std::unique_ptr<Exit> exit;
+	//エリアマネージャー
+	std::unique_ptr<AreaManager> areaManager;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
