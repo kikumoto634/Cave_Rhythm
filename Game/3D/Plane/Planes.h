@@ -41,6 +41,7 @@ public:
 	void PlaneColorChange(bool IsSwitch,  bool IsColorChange);
 	void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
 
+	void IsNotAlive()	{IsAlive = false;}
 
 	//Getter
 	inline bool GetIsPlayerContact()	{return IsPlayerContact;}
@@ -55,6 +56,9 @@ private:
 	Vector3 PlayerPos;
 	float distance = 0;
 
-	bool IsAlive = false;
+	//エリアで使用しない
+	bool IsAlive = true;
+	//距離に応じた非表示
+	bool IsHide = false;
 };
 

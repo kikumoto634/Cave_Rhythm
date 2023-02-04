@@ -6,8 +6,8 @@ const float AreaManager::Block_Size = 2.f;
 
 void AreaManager::Initialize()
 {
-	PlaneInitialize();
 	WallInitialize();
+	PlaneInitialize();
 }
 
 void AreaManager::Update(Camera* camera, Vector3 PlayerPos)
@@ -46,7 +46,12 @@ void AreaManager::PlaneInitialize()
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = make_unique<Planes>();
 			plane[i][j]->Initialize("GroundBlock");
-			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+			if(WallMap[i][j] == 'A') {
+				plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+			}
+			else{
+				plane[i][j]->IsNotAlive();
+			}
 		}
 	}
 }
