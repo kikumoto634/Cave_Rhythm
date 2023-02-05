@@ -113,6 +113,7 @@ public:
 	inline void SetIsWait(bool IsFlag)	{IsWait = IsFlag;}
 	inline void SetWeaponPos(Vector3 pos)	{offSetWeaponPos = pos;}
 	inline void SetHp(int hp)	{HP = hp;}
+	inline void SetCameeraInitPos(Vector3 pos)	{InitializeCameraPos = pos;}
 
 private:
 	//移動
@@ -135,9 +136,9 @@ private:
 	bool IsMove = false;
 
 	//カメラ移動
-	Vector3 CameraTarget = {};
-	Vector3 CameraEye = {};
+	bool IsCameraInit = false;
 	Vector3 moveCameraPosition = {0,0,0};
+	Vector3 InitializeCameraPos = {};
 
 	//移動イージング
 	bool IsMoveEasing = false;

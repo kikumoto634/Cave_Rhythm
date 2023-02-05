@@ -37,6 +37,7 @@ public:
 	void Finalize();
 
 	Vector3 GetExitPosition()	{return exitPosition;}
+	Vector3 GetPlayerPosition()	{return PlayerPopPosition;}
 
 private:
 	//地面
@@ -53,10 +54,13 @@ private:
 	void WallDraw();
 	void WallFinalize();
 
+	//ダンジョン生成
 	void CreateMap();
 	Room DevideRoom(Area area, bool hr = false);
 	Room CreateRoom(Area area);
 	void ConnectRoom(Room parent, Room childRoom, int divline, bool hr);
+
+	void ObjectRandomPop();
 
 private:
 	//借りもの
@@ -76,7 +80,13 @@ private:
 	char WallMap[DIV_NUM][DIV_NUM] = {};
 	Planes* Wall[DIV_NUM][DIV_NUM] = {nullptr};
 
+	//部屋
+	std::vector<Room> rooms;
+
 	//出口
 	Vector3 exitPosition = {0,-5,0};
+
+	//プレイヤー
+	Vector3 PlayerPopPosition = {0,-3,0};
 };
 

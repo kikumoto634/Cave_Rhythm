@@ -47,13 +47,14 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
+	if(!IsCameraInit){
+		this->camera->MoveVector(InitializeCameraPos);
+		IsCameraInit = true;
+	}
 
 	//Once用毎ループ初期化
 	IsInputOnce = false;
 	IsDamageSoundOnce = false;
-
-	CameraTarget= camera->GetTarget();
-	CameraEye = camera->GetEye();
 
 	//入力処理
 	if(MovementInput()){
@@ -100,7 +101,6 @@ void Player::Update(Camera *camera)
 	//移動イージング
 	if(IsMoveEasing){
 		world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
-		//camera->MoveVector({moveCameraPosition.x/5, 0, moveCameraPosition.z/5});
 
 		if(moveEasingFrame >= 1.f){
 			IsMoveEasing = false;

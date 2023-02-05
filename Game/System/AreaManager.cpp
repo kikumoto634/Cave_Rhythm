@@ -7,6 +7,7 @@ const float AreaManager::Block_Size = 2.f;
 void AreaManager::Initialize()
 {
 	CreateMap();
+	ObjectRandomPop();
 
 	WallsInitialize();
 	PlaneInitialize();
@@ -52,13 +53,6 @@ void AreaManager::PlaneInitialize()
 			plane[i][j] = make_unique<Planes>();
 			plane[i][j]->Initialize("GroundBlock");
 			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
-			//if(WallMap[i][j] == 'A') {
-			//	plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
-			//}
-			//else{
-			//	//plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-3 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
-			//	plane[i][j]->IsNotAlive();
-			//}
 		}
 	}
 }
@@ -124,7 +118,6 @@ void AreaManager::WallsInitialize()
 			if(WallMap[i][j] == '*') {
 				float startPos = float(-(DIV_NUM/2)*Block_Size);
 				Vector3 pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
-				Wall[i][j]->SetPosition(pos);
 				Wall[i][j]->SetPosition(pos);
 			}
 			else{
@@ -250,6 +243,7 @@ AreaManager::Room AreaManager::CreateRoom(Area area)
 	int H = abs(Y1 - Y2) + 2;
 
 	Room room = {X,Y,W,H};
+	rooms.push_back(room);
 
 	//マップに反映
 	for(int y = 0; y < H; y++){
@@ -308,5 +302,17 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			WallMap[Y2][divline+i] = 'A';
 		}
 	}
+}
+void AreaManager::ObjectRandomPop()
+{
+	int roomSize = (int)rooms.size();
+
+	//出口
+	int exitRoomsNum = rand()%roomSize;
+	exitPosition = {float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].Y*Block_Size)),-5.f,float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].X*Block_Size))};
+
+	//プレイヤー
+	int playerRoomsNum = rand()%roomSize;
+	PlayerPopPosition = {float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].Y*Block_Size)),-3.f,float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].X*Block_Size))};
 }
 #pragma endregion

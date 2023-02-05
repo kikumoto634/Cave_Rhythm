@@ -128,6 +128,6 @@ private:
 	bool IsGameEnd = false;
 
 	//BGMÄ¶ƒtƒ‰ƒO
-	bool IsBGMStart = false;
+	bool IsBGMStart = true;
 };
 

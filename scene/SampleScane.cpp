@@ -202,9 +202,12 @@ void SampleScane::CommonInitialize()
 	gameManager = new GameManager();
 	gameManager->Initialize();
 
+	areaManager = make_unique<AreaManager>();
+	areaManager->Initialize();
+
 	//カメラ
-	camera->SetTarget(Vector3(0.f, 2.f, -14.f));
-	camera->SetEye(Vector3(0.f, 12.f, -31.f));
+	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
+	camera->SetEye(Vector3(0.f, 20.f, -12.f));
 }
 
 void SampleScane::Object3DInitialize()
@@ -212,15 +215,13 @@ void SampleScane::Object3DInitialize()
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
 	player->Initialize("human1");
-	player->SetPosition({0, -3.f, -2.f});
+	player->SetPosition(areaManager->GetPlayerPosition());
+	player->SetCameeraInitPos(areaManager->GetPlayerPosition());
 	player->SetWeaponPos({0,0,-2.f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player->SetHp(saveHP);
 	gameManager->InitializeSetHp(player->GetHP());
 
-
-	areaManager = make_unique<AreaManager>();
-	areaManager->Initialize();
 
 	skydome = make_unique<SampleObjObject>();
 	skydome->Initialize("skydome", true);
