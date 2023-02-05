@@ -6,37 +6,42 @@ const float AreaManager::Block_Size = 2.f;
 
 void AreaManager::Initialize()
 {
-	WallInitialize();
+	CreateMap();
+
+	WallsInitialize();
 	PlaneInitialize();
 }
 
 void AreaManager::Update(Camera* camera, Vector3 PlayerPos)
 {
+	assert(camera);
+
 	this->camera = camera;
 	this->PlayerPos = PlayerPos;
 
-	PlaneUpdate();
 	WallUpdate();
+	PlaneUpdate();
 }
 
 void AreaManager::BeatEndUpdate(GameManager* gameManager)
 {
+	assert(gameManager);
+
 	this->gameManager = gameManager;
 
 	PlaneBeatEndUpdate();
-	WallUpdate();
 }
 
 void AreaManager::Draw()
 {
-	PlaneDraw();
 	WallDraw();
+	PlaneDraw();
 }
 
 void AreaManager::Finalize()
 {
-	PlaneFinalize();
 	WallFinalize();
+	PlaneFinalize();
 }
 
 #pragma region 地面
@@ -46,12 +51,14 @@ void AreaManager::PlaneInitialize()
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = make_unique<Planes>();
 			plane[i][j]->Initialize("GroundBlock");
-			if(WallMap[i][j] == 'A') {
-				plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
-			}
-			else{
-				plane[i][j]->IsNotAlive();
-			}
+			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+			//if(WallMap[i][j] == 'A') {
+			//	plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+			//}
+			//else{
+			//	//plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-3 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+			//	plane[i][j]->IsNotAlive();
+			//}
 		}
 	}
 }
@@ -107,33 +114,41 @@ void AreaManager::PlaneFinalize()
 }
 #pragma endregion
 
-#pragma region
-void AreaManager::WallInitialize()
+#pragma region 壁
+void AreaManager::WallsInitialize()
 {
-	CreateMap();
-
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			Wall[i][j] = make_unique<BaseObjObject>();
-			Wall[i][j]->Initialize("GroundBlock");
+			Wall[i][j] = new Planes();
+			Wall[i][j]->Initialize("GroundBlock2");
 			if(WallMap[i][j] == '*') {
-				Wall[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-3 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+				float startPos = float(-(DIV_NUM/2)*Block_Size);
+				Vector3 pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
+				Wall[i][j]->SetPosition(pos);
+				Wall[i][j]->SetPosition(pos);
+			}
+			else{
+				Wall[i][j]->IsNotAlive();
 			}
 		}
 	}
 }
+
 void AreaManager::WallUpdate()
 {
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			Wall[i][j]->SetPlayerPos(PlayerPos);
 			Wall[i][j]->Update(camera);
 		}
 	}
 }
+
 void AreaManager::WallBeatEndUpdate()
 {
 }
+
 void AreaManager::WallDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
@@ -142,15 +157,20 @@ void AreaManager::WallDraw()
 		}
 	}
 }
+
 void AreaManager::WallFinalize()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j]->Finalize();
+			delete Wall[i][j];
+			Wall[i][j] = nullptr;
 		}
 	}
 }
+#pragma endregion
 
+#pragma region ダンジョン自動生成
 void AreaManager::CreateMap()
 {
 	for(int y = 0; y < DIV_NUM; y++){
@@ -163,7 +183,7 @@ void AreaManager::CreateMap()
 }
 AreaManager::Room AreaManager::DevideRoom(Area area, bool hr)
 {
-	if(area.Width < 8 || area.Height < 8) {
+	if(area.Width < 10 || area.Height < 10) {
 		return CreateRoom(area);
 	}
 

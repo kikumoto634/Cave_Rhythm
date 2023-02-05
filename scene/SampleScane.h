@@ -6,7 +6,6 @@
 #include "../Engine/3D/TouchableObject.h"
 
 #include "../Game/3D/Player/Player.h"
-#include "../Game/3D/AreaOut/AreaOutRock.h"
 #include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
@@ -105,8 +104,6 @@ private:
 	GameManager* gameManager = nullptr;
 	//リズム入力
 	bool IsRhythmInput = false;
-	//岩
-	std::unique_ptr<AreaOutRock> rock;
 	//出口
 	std::unique_ptr<Exit> exit;
 	//エリアマネージャー

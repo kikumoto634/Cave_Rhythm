@@ -7,7 +7,6 @@
 
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Plane/Planes.h"
-#include "../Game/3D/AreaOut/AreaOutRock.h"
 #include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
@@ -144,8 +143,6 @@ protected:
 	GameManager* gameManager = nullptr;
 	//ƒŠƒYƒ€“ü—Í
 	bool IsRhythmInput = false;
-	//Šâ
-	std::unique_ptr<AreaOutRock> rock;
 	//oŒû
 	std::unique_ptr<Exit> exit;
 

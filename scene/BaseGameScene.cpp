@@ -243,9 +243,6 @@ void BaseGameScene::Object3DInitialize()
 	skydome = make_unique<SampleObjObject>();
 	skydome->Initialize("skydome", true);
 
-	rock = make_unique<AreaOutRock>();
-	rock->Initialize("AreaRock", true);
-
 	//oŒû
 	exit = make_unique<Exit>();
 	exit->SetExitOpenNeedCoin(1);
@@ -300,8 +297,6 @@ void BaseGameScene::Object3DUpdate()
 	}
 	//“V‹…
 	skydome->Update(camera);
-	//Šâ
-	rock->Update(camera);
 
 	//oŒû
 	exit->Update(camera);
@@ -440,14 +435,11 @@ void BaseGameScene::Object3DDraw()
 	}
 	skydome->Draw();
 
-	rock->Draw();
-
 	exit->Draw();
 }
 
 void BaseGameScene::ParticleDraw()
 {
-	rock->ParticleDraw();
 }
 
 void BaseGameScene::UIDraw()
@@ -515,7 +507,6 @@ void BaseGameScene::ObjectFinaize()
 		}
 	}
 	skydome->Finalize();
-	rock->Finalize();
 	exit->Finalize();
 #pragma endregion _3D‰ğ•ú
 

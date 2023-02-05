@@ -18,9 +18,10 @@ void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
 	model->CreateModel(filePath, IsSmmothing);
 	object = ObjModelObject::Create(model);
 	world.Initialize();
+	world.UpdateMatrix();
 
 	//ƒNƒ‰ƒX–¼‚Ì•¶Žš—ñ‚ðŽæ“¾
-	name = typeid(*this).name();
+	//name = typeid(*this).name();
 }
 
 void BaseObjObject::Update(Camera *camera)
@@ -55,6 +56,12 @@ void BaseObjObject::Finalize()
 	object = nullptr;
 
 	world = {};
+}
+
+void BaseObjObject::SetPosition(const Vector3 &position)
+{
+	world.translation = position;
+	world.UpdateMatrix();
 }
 
 void BaseObjObject::SetCollider(BaseCollider *collider)

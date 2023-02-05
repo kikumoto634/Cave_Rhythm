@@ -60,7 +60,7 @@ public:
 	inline const ObjModelObject* GetObjObject()	{return object;}
 
 	//Setter
-	void SetPosition(const Vector3& position)	{world.translation = position, world.UpdateMatrix();}
+	void SetPosition(const Vector3& position);
 	void SetRotation(const Vector3& rotation)	{world.rotation = rotation, world.UpdateMatrix();}
 	void SetScale(const Vector3& scale)			{world.scale = scale, world.UpdateMatrix();}
 	void SetCollider(BaseCollider* collider);
@@ -79,7 +79,7 @@ protected:
 
 protected:
 	//クラス名(デバック用)
-	const char* name = nullptr;
+	//const char* name = nullptr;
 
 	ObjModelManager* model;
 	ObjModelObject* object;

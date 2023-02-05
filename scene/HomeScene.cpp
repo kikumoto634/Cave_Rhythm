@@ -128,7 +128,6 @@ void HomeScene::AddObject2DDraw()
 void HomeScene::AddParticleDraw()
 {
 	dummy->ParticleDraw();
-	rock->ParticleDraw();
 }
 
 void HomeScene::AddUIDraw()

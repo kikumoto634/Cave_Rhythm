@@ -1,5 +1,6 @@
 #pragma once
 #include "../3D/Plane/Planes.h"
+#include "../3D/Wall/Walls.h"
 
 #include "GameManager.h"
 
@@ -35,6 +36,8 @@ public:
 
 	void Finalize();
 
+	Vector3 GetExitPosition()	{return exitPosition;}
+
 private:
 	//ínñ 
 	void PlaneInitialize();
@@ -44,7 +47,7 @@ private:
 	void PlaneFinalize();
 
 	//ï«
-	void WallInitialize();
+	void WallsInitialize();
 	void WallUpdate();
 	void WallBeatEndUpdate();
 	void WallDraw();
@@ -65,12 +68,15 @@ private:
 	static const float Block_Size;
 
 	//Plane
-	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM];
+	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM] = {};
 	bool IsComboColorChange = false;
 
 	//Wall
 	bool IsAlive = false;
-	char WallMap[DIV_NUM][DIV_NUM];
-	std::unique_ptr<BaseObjObject> Wall[DIV_NUM][DIV_NUM];
+	char WallMap[DIV_NUM][DIV_NUM] = {};
+	Planes* Wall[DIV_NUM][DIV_NUM] = {nullptr};
+
+	//èoå˚
+	Vector3 exitPosition = {0,-5,0};
 };
 

@@ -225,14 +225,11 @@ void SampleScane::Object3DInitialize()
 	skydome = make_unique<SampleObjObject>();
 	skydome->Initialize("skydome", true);
 
-	rock = make_unique<AreaOutRock>();
-	rock->Initialize("AreaRock", true);
-
 	//出口
 	exit = make_unique<Exit>();
 	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
-	exit->SetPosition({0,-5,-10.0f});
+	exit->SetPosition(areaManager->GetExitPosition());
 }
 
 void SampleScane::Object2DInitialize()
@@ -273,14 +270,8 @@ void SampleScane::Object3DUpdate()
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
 	}
-	gameManager->PlayerCircleShadowSet(player->GetPosition());
-	//地面
-	areaManager->Update(this->camera, player->GetPosition());
 	//天球
 	skydome->Update(camera);
-	//岩
-	rock->Update(camera);
-
 	//出口
 	exit->Update(camera);
 	{
@@ -297,6 +288,9 @@ void SampleScane::Object2DUpdate()
 
 void SampleScane::CommonUpdate()
 {
+	gameManager->PlayerCircleShadowSet(player->GetPosition());
+	//地面
+	areaManager->Update(this->camera, player->GetPosition());
 	gameManager->LightUpdate(player->GetIsDead());
 
 	//出口
@@ -397,14 +391,11 @@ void SampleScane::Object3DDraw()
 	areaManager->Draw();
 	skydome->Draw();
 
-	rock->Draw();
-
 	exit->Draw();
 }
 
 void SampleScane::ParticleDraw()
 {
-	rock->ParticleDraw();
 }
 
 void SampleScane::UIDraw()
@@ -468,7 +459,6 @@ void SampleScane::ObjectFinaize()
 	player->Finalize();
 	areaManager->Finalize();
 	skydome->Finalize();
-	rock->Finalize();
 	exit->Finalize();
 #pragma endregion _3D解放
 

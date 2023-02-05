@@ -181,12 +181,6 @@
     <Filter Include="ソース ファイル\Game\3D\Enemy">
       <UniqueIdentifier>{08fa4670-8226-41f4-8dc8-d349c14dbec5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Game\3D\AreaOut">
-      <UniqueIdentifier>{f087101d-ae60-4d1c-b8f5-6e4b958a73da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Game\3D\AreaOut">
-      <UniqueIdentifier>{150922d6-8d1a-4552-be94-198985816c9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game\3D\Coins">
       <UniqueIdentifier>{dafdb6d6-5359-4863-84cf-a9c10cba1380}</UniqueIdentifier>
     </Filter>
@@ -210,6 +204,12 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\scene\Sample">
       <UniqueIdentifier>{abfadce0-77e3-473e-968a-d97f2c19617e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Wall">
+      <UniqueIdentifier>{99ecf705-09bf-48c2-9596-03c3211b664e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Wall">
+      <UniqueIdentifier>{caaf6471-13f0-4f3d-b99a-2524f3b8ee83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -345,9 +345,6 @@
     <ClCompile Include="Game\3D\ParticleObject.cpp">
       <Filter>ソース ファイル\Game\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3D\AreaOut\AreaOutRock.cpp">
-      <Filter>ソース ファイル\Game\3D\AreaOut</Filter>
-    </ClCompile>
     <ClCompile Include="Game\System\GameManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
@@ -386,6 +383,9 @@
     </ClCompile>
     <ClCompile Include="Game\System\AreaManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Wall\Walls.cpp">
+      <Filter>ソース ファイル\Game\3D\Wall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -548,9 +548,6 @@
     <ClInclude Include="Game\3D\ParticleObject.h">
       <Filter>ヘッダー ファイル\Game\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\AreaOut\AreaOutRock.h">
-      <Filter>ヘッダー ファイル\Game\3D\AreaOut</Filter>
-    </ClInclude>
     <ClInclude Include="Game\System\GameManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
@@ -589,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="Game\System\AreaManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Wall\Walls.h">
+      <Filter>ヘッダー ファイル\Game\3D\Wall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
