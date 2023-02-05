@@ -132,8 +132,12 @@ private:
 	//移動
 	Vector3 movePosition = {0,0,0};
 	Vector3 moveRotation = {0,0,0};
-	Vector3 moveCameraPosition = {0,0,0};
 	bool IsMove = false;
+
+	//カメラ移動
+	Vector3 CameraTarget = {};
+	Vector3 CameraEye = {};
+	Vector3 moveCameraPosition = {0,0,0};
 
 	//移動イージング
 	bool IsMoveEasing = false;
@@ -141,6 +145,10 @@ private:
 	float MoveEasingMaxTime = 0.05f;
 	Vector3 moveEasingPos;
 
+	bool IsMoveCameraEasing = false;
+	float moveEasingCameraFrame = 0;
+	float MoveEasingCameraMaxTime = 0.05f;
+	Vector3 CameraCurrentPosition = {0,0,0};
 
 	//HP
 	bool IsDead = false;

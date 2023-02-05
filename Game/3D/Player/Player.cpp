@@ -52,6 +52,9 @@ void Player::Update(Camera *camera)
 	IsInputOnce = false;
 	IsDamageSoundOnce = false;
 
+	CameraTarget= camera->GetTarget();
+	CameraEye = camera->GetEye();
+
 	//入力処理
 	if(MovementInput()){
 		//入力確認
@@ -79,6 +82,7 @@ void Player::Update(Camera *camera)
 			//移動
 			if(IsMove){
 				IsMoveEasing = true;
+				IsMoveCameraEasing = true;
 				IsMove = false;
 				world.rotation = moveRotation;
 				moveEasingPos = world.translation;
@@ -96,7 +100,7 @@ void Player::Update(Camera *camera)
 	//移動イージング
 	if(IsMoveEasing){
 		world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
-		camera->MoveVector({moveCameraPosition.x/5, 0, moveCameraPosition.z/5});
+		//camera->MoveVector({moveCameraPosition.x/5, 0, moveCameraPosition.z/5});
 
 		if(moveEasingFrame >= 1.f){
 			IsMoveEasing = false;
@@ -104,6 +108,17 @@ void Player::Update(Camera *camera)
 			moveEasingPos = {};
 			movePosition = {};
 			moveEasingFrame = 0;
+		}
+	}
+	if(IsMoveCameraEasing){
+		CameraCurrentPosition = Easing_Linear_Point2({0,0,0},moveCameraPosition/2, Time_OneWay(moveEasingCameraFrame, MoveEasingCameraMaxTime));
+		camera->MoveVector(CameraCurrentPosition);
+
+		if(moveEasingCameraFrame >= 1.f){
+			IsMoveCameraEasing = false;
+			moveCameraPosition = {};
+			CameraCurrentPosition = {};
+			moveEasingCameraFrame = 0;
 		}
 	}
 
@@ -128,13 +143,13 @@ void Player::Update(Camera *camera)
 
 	this->camera->view.target.x = min(this->camera->view.target.x, 24.f);
 	this->camera->view.target.x = max(this->camera->view.target.x, -24.f);
-	this->camera->view.target.z = min(this->camera->view.target.z, 12.f);
-	this->camera->view.target.z = max(this->camera->view.target.z, -36.f);
+	this->camera->view.target.z = min(this->camera->view.target.z, 19.f);
+	this->camera->view.target.z = max(this->camera->view.target.z, -29.f);
 
 	this->camera->view.eye.x = min(this->camera->view.eye.x, 24.f);
 	this->camera->view.eye.x = max(this->camera->view.eye.x, -24.f);
-	this->camera->view.eye.z = min(this->camera->view.eye.z, -5.f);
-	this->camera->view.eye.z = max(this->camera->view.eye.z, -53.f);
+	this->camera->view.eye.z = min(this->camera->view.eye.z, 10.f);
+	this->camera->view.eye.z = max(this->camera->view.eye.z, -38.f);
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
