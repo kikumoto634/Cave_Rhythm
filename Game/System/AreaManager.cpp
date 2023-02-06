@@ -113,7 +113,7 @@ void AreaManager::WallsInitialize()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			Wall[i][j] = new Planes();
+			Wall[i][j] = new Walls();
 			Wall[i][j]->Initialize("GroundBlock2");
 			if(WallMap[i][j] == '*') {
 				float startPos = float(-(DIV_NUM/2)*Block_Size);
@@ -133,6 +133,7 @@ void AreaManager::WallUpdate()
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j]->SetPlayerPos(PlayerPos);
+			if(Wall[i][j]->GetIsDigSound())	gameManager->AudioPlay(10);
 			Wall[i][j]->Update(camera);
 		}
 	}
@@ -303,6 +304,9 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 		}
 	}
 }
+#pragma endregion
+
+#pragma region ƒ‰ƒ“ƒ_ƒ€¶¬
 void AreaManager::ObjectRandomPop()
 {
 	int roomSize = (int)rooms.size();

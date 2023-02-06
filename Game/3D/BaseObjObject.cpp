@@ -21,7 +21,7 @@ void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
 	world.UpdateMatrix();
 
 	//ƒNƒ‰ƒX–¼‚Ì•¶Žš—ñ‚ðŽæ“¾
-	//name = typeid(*this).name();
+	name = typeid(*this).name();
 }
 
 void BaseObjObject::Update(Camera *camera)

@@ -122,6 +122,20 @@ void Player::Update(Camera *camera)
 		}
 	}
 
+	Ray ray;
+	ray.start = sphereCollider->center;
+	ray.start.m128_f32[1] += sphereCollider->GetRadius();
+	ray.dir = {RayDir.x, RayDir.y, RayDir.z, 0};
+	RaycastHit raycastHit;
+	if(IsMoveEasing){
+		//スムーズに坂を下る為の吸着距離
+		const float adsDistance = 0.2f;
+		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
+			movePosition = OldPosition;
+			moveCameraPosition = OldCameraPosition;
+		}
+	}
+
 	//死亡
 #ifdef _DEBUG
 	if(input->Trigger(DIK_SPACE)){
@@ -136,20 +150,20 @@ void Player::Update(Camera *camera)
 	}
 
 	//移動制限
-	world.translation.x = max(world.translation.x , 12 * -2.f);
-	world.translation.x = min(world.translation.x , 12 * 2.f);
-	world.translation.z = max(world.translation.z , 12 * -2.f);
-	world.translation.z = min(world.translation.z , 12 * 2.f);
+	world.translation.x = max(world.translation.x , 16 * -2.f);
+	world.translation.x = min(world.translation.x , 16 * 2.f);
+	world.translation.z = max(world.translation.z , 16 * -2.f);
+	world.translation.z = min(world.translation.z , 16 * 2.f);
 
-	this->camera->view.target.x = min(this->camera->view.target.x, 24.f);
-	this->camera->view.target.x = max(this->camera->view.target.x, -24.f);
-	this->camera->view.target.z = min(this->camera->view.target.z, 19.f);
-	this->camera->view.target.z = max(this->camera->view.target.z, -29.f);
+	this->camera->view.target.x = min(this->camera->view.target.x, 32.f);
+	this->camera->view.target.x = max(this->camera->view.target.x, -32.f);
+	this->camera->view.target.z = min(this->camera->view.target.z, 29.f);
+	this->camera->view.target.z = max(this->camera->view.target.z, -37.f);
 
-	this->camera->view.eye.x = min(this->camera->view.eye.x, 24.f);
-	this->camera->view.eye.x = max(this->camera->view.eye.x, -24.f);
-	this->camera->view.eye.z = min(this->camera->view.eye.z, 10.f);
-	this->camera->view.eye.z = max(this->camera->view.eye.z, -38.f);
+	this->camera->view.eye.x = min(this->camera->view.eye.x, 32.f);
+	this->camera->view.eye.x = max(this->camera->view.eye.x, -32.f);
+	this->camera->view.eye.z = min(this->camera->view.eye.z, 20.f);
+	this->camera->view.eye.z = max(this->camera->view.eye.z, -46.f);
 
 	//武器位置
 	weapon->SetPosition(world.translation + offSetWeaponPos);
@@ -239,30 +253,35 @@ bool Player::MovementInput()
 	if(IsDead) return false;
 	if(IsAttack) return false;
 	if(IsMoveEasing) return false;
+	if(IsMoveCameraEasing) return false;
 
 	//歩行
 	if(input->Trigger(DIK_UP)){
 		movePosition = Vector3{0.0f,0.0f,2.f};
 		moveRotation.y = 0;
 		offSetWeaponPos = {0,0,2.f};
+		RayDir = {0,0,1};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_DOWN)){
 		movePosition = Vector3{0.0f,0.0f,-2.f};
 		moveRotation.y = XMConvertToRadians(180);
 		offSetWeaponPos = {0,0,-2.f};
+		RayDir = {0,0,-1};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_RIGHT)){
 		movePosition = Vector3{2.f,0.0f,0.0f};
 		moveRotation.y = XMConvertToRadians(90);
 		offSetWeaponPos = {2.f,0,0};
+		RayDir = {1,0,0};
 		IsReturn = true;
 	}
 	else if(input->Trigger(DIK_LEFT)){
 		movePosition = Vector3{-2.f,0.0f,0.0f};
 		moveRotation.y = XMConvertToRadians(-90);
 		offSetWeaponPos = {-2.f,0,0};
+		RayDir = {-1,0,0};
 		IsReturn = true;
 	}
 	if(IsReturn) {
@@ -271,7 +290,9 @@ bool Player::MovementInput()
 		//行動
 		IsMove = true;
 		//移動後座標
+		OldCameraPosition = moveCameraPosition;
 		moveCameraPosition = movePosition;
+		OldPosition = world.translation;
 		movePosition += world.translation;
 	}
 

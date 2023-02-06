@@ -68,7 +68,7 @@ private:
 	GameManager* gameManager = nullptr;
 	Vector3 PlayerPos={};
 
-	static const int DIV_NUM = 25;
+	static const int DIV_NUM = 33;
 	static const float Block_Size;
 
 	//Plane
@@ -78,7 +78,7 @@ private:
 	//Wall
 	bool IsAlive = false;
 	char WallMap[DIV_NUM][DIV_NUM] = {};
-	Planes* Wall[DIV_NUM][DIV_NUM] = {nullptr};
+	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};
 
 	//•”‰®
 	std::vector<Room> rooms;

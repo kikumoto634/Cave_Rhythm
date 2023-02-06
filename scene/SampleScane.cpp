@@ -193,7 +193,7 @@ void SampleScane::NextSceneChange()
 void SampleScane::CommonInitialize()
 {
 	//衝突マネージャー
-	//collisionManager = CollisionManager::GetInstance();
+	collisionManager = CollisionManager::GetInstance();
 
 	//リズムマネージャー
 	rhythmManager = new RhythmManager();
@@ -316,7 +316,7 @@ void SampleScane::CommonUpdate()
 	}
 
 	//すべての衝突をチェック
-	//collisionManager->CheckAllCollisions();
+	collisionManager->CheckAllCollisions();
 }
 
 void SampleScane::RhythmMeasure()

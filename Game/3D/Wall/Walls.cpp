@@ -1,5 +1,7 @@
 #include "Walls.h"
 
+using namespace DirectX;
+
 Walls::~Walls()
 {
 	//Finalize();
@@ -21,6 +23,7 @@ void Walls::Initialize(std::string filePath, bool IsSmmothing)
 void Walls::Update(Camera *camera)
 {
 	this->camera = camera;
+	IsDigSound = false;
 
 	if(!IsAlive) return;
 	Vector3 pos = PlayerPos - world.translation;
@@ -32,6 +35,7 @@ void Walls::Update(Camera *camera)
 	else if(-20 > distance || distance > 20)	IsHide = false;
 	
 	if(!IsHide) return;
+
 
 	BaseObjObject::Update(this->camera);
 }
@@ -51,5 +55,14 @@ void Walls::Finalize()
 void Walls::OnCollision(const CollisionInfo &info)
 {
 	if(!IsAlive) return;
-	if(!IsHide) return;	
+	if(!IsHide) return;
+
+	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
+		IsDigSound = true;
+		
+		IsAlive = false;
+		world.translation = {0,0,0};
+		world.UpdateMatrix();
+		collider->Update();
+	}
 }

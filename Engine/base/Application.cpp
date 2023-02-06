@@ -102,6 +102,7 @@ void Application::Initialize()
 	Audio::Load(7,"coinGet.wav");
 	Audio::Load(8,"BPM120_Game.wav");
 	Audio::Load(9,"BPM120_Home.wav");
+	Audio::Load(10,"dig.wav");
 
 #pragma endregion
 

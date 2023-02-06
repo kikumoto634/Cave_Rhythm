@@ -89,7 +89,7 @@ private:
 private:
 	//共通
 	//衝突マネージャー
-	//CollisionManager* collisionManager = nullptr;
+	CollisionManager* collisionManager = nullptr;
 
 	//player
 	std::unique_ptr<Player> player;

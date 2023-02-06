@@ -135,6 +135,10 @@ private:
 	Vector3 moveRotation = {0,0,0};
 	bool IsMove = false;
 
+	//‰ß‹ˆÊ’u
+	Vector3 OldPosition = {};
+	Vector3 OldCameraPosition = {};
+
 	//ƒJƒƒ‰ˆÚ“®
 	bool IsCameraInit = false;
 	Vector3 moveCameraPosition = {0,0,0};
@@ -150,6 +154,9 @@ private:
 	float moveEasingCameraFrame = 0;
 	float MoveEasingCameraMaxTime = 0.05f;
 	Vector3 CameraCurrentPosition = {0,0,0};
+
+	//ƒŒƒC
+	Vector3 RayDir = {0,0,1};
 
 	//HP
 	bool IsDead = false;

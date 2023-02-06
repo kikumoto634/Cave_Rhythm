@@ -58,6 +58,7 @@ public:
 	inline const Vector3& GetScale()		{return world.scale;}
 	inline WorldTransform& GetmatWorld()	{return world;}
 	inline const ObjModelObject* GetObjObject()	{return object;}
+	inline const char* GetName()	{return name;}
 
 	//Setter
 	void SetPosition(const Vector3& position);
@@ -79,7 +80,7 @@ protected:
 
 protected:
 	//クラス名(デバック用)
-	//const char* name = nullptr;
+	const char* name = nullptr;
 
 	ObjModelManager* model;
 	ObjModelObject* object;

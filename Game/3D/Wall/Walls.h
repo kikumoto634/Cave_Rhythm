@@ -37,6 +37,9 @@ public:
 
 	void IsNotAlive()	{IsAlive = false;}
 
+	//Getter
+	inline bool GetIsAlive()	{return IsAlive;}
+	inline bool GetIsDigSound()	{return IsDigSound;}
 
 	//Setter
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
@@ -44,6 +47,8 @@ public:
 private:
 	Vector3 PlayerPos;
 	float distance = 0;
+
+	bool IsDigSound = false;
 
 	//エリアで使用しない
 	bool IsAlive = true;
