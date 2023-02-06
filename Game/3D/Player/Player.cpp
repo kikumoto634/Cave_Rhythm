@@ -132,7 +132,8 @@ void Player::Update(Camera *camera)
 		const float adsDistance = 0.2f;
 		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 			movePosition = OldPosition;
-			moveCameraPosition = OldCameraPosition;
+			this->camera->SetTarget(OldCameraTarget);
+			this->camera->SetEye(OldCameraEye);
 		}
 	}
 
@@ -158,12 +159,12 @@ void Player::Update(Camera *camera)
 	this->camera->view.target.x = min(this->camera->view.target.x, 32.f);
 	this->camera->view.target.x = max(this->camera->view.target.x, -32.f);
 	this->camera->view.target.z = min(this->camera->view.target.z, 29.f);
-	this->camera->view.target.z = max(this->camera->view.target.z, -37.f);
+	this->camera->view.target.z = max(this->camera->view.target.z, -35.f);
 
 	this->camera->view.eye.x = min(this->camera->view.eye.x, 32.f);
 	this->camera->view.eye.x = max(this->camera->view.eye.x, -32.f);
 	this->camera->view.eye.z = min(this->camera->view.eye.z, 20.f);
-	this->camera->view.eye.z = max(this->camera->view.eye.z, -46.f);
+	this->camera->view.eye.z = max(this->camera->view.eye.z, -44.f);
 
 	//•ŠíˆÊ’u
 	weapon->SetPosition(world.translation + offSetWeaponPos);
@@ -290,7 +291,8 @@ bool Player::MovementInput()
 		//s“®
 		IsMove = true;
 		//ˆÚ“®ŒãÀ•W
-		OldCameraPosition = moveCameraPosition;
+		OldCameraTarget = this->camera->GetTarget();
+		OldCameraEye = this->camera->GetEye();
 		moveCameraPosition = movePosition;
 		OldPosition = world.translation;
 		movePosition += world.translation;

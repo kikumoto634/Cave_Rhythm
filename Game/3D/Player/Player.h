@@ -137,7 +137,8 @@ private:
 
 	//‰ß‹ˆÊ’u
 	Vector3 OldPosition = {};
-	Vector3 OldCameraPosition = {};
+	Vector3 OldCameraTarget = {};
+	Vector3 OldCameraEye = {};
 
 	//ƒJƒƒ‰ˆÚ“®
 	bool IsCameraInit = false;

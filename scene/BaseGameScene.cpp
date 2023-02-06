@@ -241,7 +241,7 @@ void BaseGameScene::Object3DInitialize()
 	}
 
 	skydome = make_unique<SampleObjObject>();
-	skydome->Initialize("skydome", true);
+	skydome->Initialize("skydome");
 
 	//ПoМы
 	exit = make_unique<Exit>();
