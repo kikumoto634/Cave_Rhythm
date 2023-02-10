@@ -73,7 +73,7 @@ void TrainingDummy::Update(Camera *camera)
 			}
 		}
 	}
-	DeadParticle->Update(this->camera);
+	//DeadParticle->Update(this->camera);
 	buttonSp->Update();
 	//行列、カメラ更新
 	BaseObjObject::Update(this->camera);

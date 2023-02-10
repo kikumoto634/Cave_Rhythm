@@ -211,7 +211,7 @@ void Player::OnCollision(const CollisionInfo &info)
 	//“GÚG
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
 		Damage();
-		camera->ShakeStart();
+		camera->ShakeStart(3);
 	}
 }
 

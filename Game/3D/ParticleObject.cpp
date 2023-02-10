@@ -28,8 +28,8 @@ void ParticleObject::Initialize()
 
 void ParticleObject::Update(Camera *camera)
 {
-	particle->Update(world, camera);
 	world.UpdateMatrix();
+	particle->Update(world, camera);
 }
 
 void ParticleObject::Draw()

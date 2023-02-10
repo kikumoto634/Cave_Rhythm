@@ -61,11 +61,11 @@ void SampleScane::Update()
 		else if(IsCameraMovementChange)	camera->MoveVector({1.f, 0.f, 0.f});
 	}
 
-	if(input->Push(DIK_W)){
+	if(input->Trigger(DIK_W)){
 		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, 1.f});
 	}
-	else if(input->Push(DIK_S)){
+	else if(input->Trigger(DIK_S)){
 		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
 	}
@@ -207,7 +207,8 @@ void SampleScane::CommonInitialize()
 
 	//ƒJƒƒ‰
 	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
-	camera->SetEye(Vector3(0.f, 20.f, -12.f));
+	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
+	camera->Update();
 }
 
 void SampleScane::Object3DInitialize()
@@ -286,6 +287,9 @@ void SampleScane::Object3DUpdate()
 		exit->SetCoinSpPosition(pos);
 	}
 
+	if(slime->GetIsDeadAudio()){
+		gameManager->AudioPlay(2, 0.5f);
+	}
 	slime->Update(camera,player->GetPosition());
 }
 
@@ -388,7 +392,7 @@ void SampleScane::BeatEndUpdate()
 		gameManager->IsBeatEndOn();
 
 		slime->IsBeatEndOn();
-		if(!slime->GetIsAlive()){
+		if(!slime->GetIsNotApp()){
 			Vector3 lpos = areaManager->GetObjectPopPosition();
 			slime->Pop({lpos.x, -3.5f,lpos.z});
 		}

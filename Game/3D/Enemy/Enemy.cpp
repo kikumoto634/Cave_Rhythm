@@ -67,7 +67,7 @@ void Enemy::Update(Camera *camera)
 
 		PopParticleApp();
 	}
-	PopParticle->Update(this->camera);
+	//PopParticle->Update(this->camera);
 
 	//éÄñSéû
 	if(IsDead){
@@ -83,7 +83,7 @@ void Enemy::Update(Camera *camera)
 		}
 		appearanceResetFrame++;
 	}
-	DeadParticle->Update(this->camera);
+	//DeadParticle->Update(this->camera);
 
 	//ê∂ë∂éû
 	if(!IsDead && IsPop){

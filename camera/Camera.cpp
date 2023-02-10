@@ -36,6 +36,7 @@ void Camera::MoveEyeVeector(Vector3 move)
 	Vector3 eye_= GetEye();
 	eye_ += move;
 	SetEye(eye_);
+	view.UpdateViewMatrix();
 }
 
 void Camera::MoveVector(Vector3 move)
@@ -46,6 +47,7 @@ void Camera::MoveVector(Vector3 move)
 	target_ += move;
 	SetEye(eye_);
 	SetTarget(target_);
+	view.UpdateViewMatrix();
 }
 
 void Camera::RotVector(Vector3 rot)
@@ -74,6 +76,7 @@ void Camera::RotVector(Vector3 rot)
 		{target.x + vTargetEye.m128_f32[0], target.y + vTargetEye.m128_f32[1],
 		target.z + vTargetEye.m128_f32[2]});
 	SetUp({vUp.m128_f32[0], vUp.m128_f32[1], vUp.m128_f32[2]});
+	view.UpdateViewMatrix();
 }
 
 void Camera::ShakeStart(int MaxFrame)
@@ -107,6 +110,7 @@ void Camera::Shake()
 	MoveVector(temp);
 
 	frame++;
+	view.UpdateViewMatrix();
 }
 
 

@@ -4,6 +4,8 @@
 class BlueSlime : public BaseObjObject
 {
 //定数
+	//ビートx回数終了時にPOP
+	const int POP_COUNT = 6;
 	//死亡後のリセット時間
 	const int AppearanceResetFrame = 50;
 
@@ -19,22 +21,36 @@ public:
 	void Pop(Vector3 pos);
 
 	//Getter
-	inline bool GetIsAlive()	{return IsAlive;}
+	inline bool GetIsNotApp()	{return IsNotApp;}
+	inline bool GetIsDeadAudio()	{return IsDeadOnceAudio;}
 
 private:
+	void Reset();
+
+	//出現予定エフェクト
+	void PopParticleApp();
 	//死亡エフェクト
 	void DeadParticleApp();
 
 private:
-	//生存
-	bool IsAlive = false;
-	Vector3 IsNotAlivePos = {50,50,50};
 
+	//未出現
+	bool IsNotApp = false;
+
+	Vector3 NotAlivePos = {50,50,50};
 	//死亡
 	bool IsDead = false;
 	bool IsDeadOnceAudio = false;
 	bool IsDeadOnceParticle = false;
 	Vector3 DeadParticlePos = {};
+
+	//復活
+	int appearancePopFrame = 0;
+
+	//ポップ
+	bool IsPop = false;
+	int popCount = 0;
+	Vector3 PopParticlePos = {};
 
 	//距離に応じた非表示
 	bool IsInvisible = false;
@@ -44,6 +60,7 @@ private:
 	bool IsScaleEasing = false;
 
 	//パーティクル
+	ParticleObject* PopParticle = nullptr;
 	ParticleObject* DeadParticle = nullptr;
 };
 
