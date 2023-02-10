@@ -129,7 +129,7 @@ void Player::Update(Camera *camera)
 	RaycastHit raycastHit;
 	if(IsMoveEasing){
 		//ƒXƒ€[ƒY‚Éâ‚ğ‰º‚éˆ×‚Ì‹z’…‹——£
-		const float adsDistance = 0.2f;
+		const float adsDistance = 0.1f;
 		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 			movePosition = OldPosition;
 			this->camera->SetTarget(OldCameraTarget);

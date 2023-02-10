@@ -148,7 +148,7 @@ private:
 	//移動イージング
 	bool IsMoveEasing = false;
 	float moveEasingFrame = 0;
-	float MoveEasingMaxTime = 0.05f;
+	float MoveEasingMaxTime = 0.075f;
 	Vector3 moveEasingPos;
 
 	bool IsMoveCameraEasing = false;

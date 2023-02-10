@@ -84,6 +84,6 @@ void PlayerWeapon::OnCollision(const CollisionInfo &info)
 void PlayerWeapon::Attack()
 {
 	IsAppear = true;
-	world.translation = Vector3(0,1,2.5);
+	world.translation = Vector3(0,1,2);
 	SetScale({1,1,1});
 }

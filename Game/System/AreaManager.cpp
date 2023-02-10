@@ -310,13 +310,35 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 void AreaManager::ObjectRandomPop()
 {
 	int roomSize = (int)rooms.size();
+	Vector2 areaPos;
+	Vector2 areaWH;
 
 	//出口
 	int exitRoomsNum = rand()%roomSize;
-	exitPosition = {float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].Y*Block_Size)),-5.f,float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].X*Block_Size))};
+	areaPos = {float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].Y*Block_Size)),float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].X*Block_Size))};
+	areaWH = {float(rand()%(rooms[exitRoomsNum].Height-1))*Block_Size,float(rand()%(rooms[exitRoomsNum].Width-1))*Block_Size};
+	exitPosition = {areaPos.x+areaWH.x,-5.f,areaPos.y+areaWH.y};
 
 	//プレイヤー
 	int playerRoomsNum = rand()%roomSize;
-	PlayerPopPosition = {float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].Y*Block_Size)),-3.f,float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].X*Block_Size))};
+	areaPos = {float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].Y*Block_Size)),float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].X*Block_Size))};
+	areaWH = {float(rand()%(rooms[playerRoomsNum].Height-1))*Block_Size,float(rand()%(rooms[playerRoomsNum].Width-1))*Block_Size};
+
+	PlayerPopPosition = {areaPos.x+areaWH.x,-3.f,areaPos.y+areaWH.y};
+}
+
+Vector3 AreaManager::GetObjectPopPosition()
+{
+	int roomSize = (int)rooms.size();
+	Vector2 areaPos;
+	Vector2 areaWH;
+
+	
+	int RoomsNum = rand()%roomSize;
+	areaPos = {float(-((DIV_NUM/2)*Block_Size)+(rooms[RoomsNum].Y*Block_Size)),float(-((DIV_NUM/2)*Block_Size)+(rooms[RoomsNum].X*Block_Size))};
+	areaWH = {float(rand()%(rooms[RoomsNum].Height-1))*Block_Size,float(rand()%(rooms[RoomsNum].Width-1))*Block_Size};
+	ObjectPopPosition = {areaPos.x+areaWH.x,0.f,areaPos.y+areaWH.y};
+
+	return ObjectPopPosition;
 }
 #pragma endregion

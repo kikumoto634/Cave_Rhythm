@@ -8,6 +8,8 @@
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Exit/Exit.h"
 
+#include "../Game/3D/Enemy/BlueSlime.h"
+
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
 
@@ -87,6 +89,14 @@ private:
 	void CommonFinalize();
 
 private:
+	//Create関数
+	void InitializeCreateBlueSlime();
+	void InitializeCreateCoin();
+
+	//Pop関数
+	void BlueSlimePop();
+
+private:
 	//共通
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
@@ -108,6 +118,8 @@ private:
 	std::unique_ptr<Exit> exit;
 	//エリアマネージャー
 	std::unique_ptr<AreaManager> areaManager;
+
+	std::unique_ptr<BlueSlime> slime;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ

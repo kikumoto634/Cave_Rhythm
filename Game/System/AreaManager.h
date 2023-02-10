@@ -39,6 +39,8 @@ public:
 	Vector3 GetExitPosition()	{return exitPosition;}
 	Vector3 GetPlayerPosition()	{return PlayerPopPosition;}
 
+	Vector3 GetObjectPopPosition();
+
 private:
 	//地面
 	void PlaneInitialize();
@@ -60,7 +62,9 @@ private:
 	Room CreateRoom(Area area);
 	void ConnectRoom(Room parent, Room childRoom, int divline, bool hr);
 
+	//座標
 	void ObjectRandomPop();
+	
 
 private:
 	//借りもの
@@ -68,7 +72,8 @@ private:
 	GameManager* gameManager = nullptr;
 	Vector3 PlayerPos={};
 
-	static const int DIV_NUM = 33;
+	//static const int DIV_NUM = 33;
+	static const int DIV_NUM = 11;
 	static const float Block_Size;
 
 	//Plane
@@ -88,5 +93,8 @@ private:
 
 	//プレイヤー
 	Vector3 PlayerPopPosition = {0,-3,0};
+
+	//生成オブジェクト
+	Vector3 ObjectPopPosition = {0,0,0};
 };
 
