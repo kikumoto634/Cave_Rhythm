@@ -151,20 +151,20 @@ void Player::Update(Camera *camera)
 	}
 
 	//ˆÚ“®§ŒÀ
-	world.translation.x = max(world.translation.x , 16 * -2.f);
-	world.translation.x = min(world.translation.x , 16 * 2.f);
-	world.translation.z = max(world.translation.z , 16 * -2.f);
-	world.translation.z = min(world.translation.z , 16 * 2.f);
+	world.translation.x = max(world.translation.x , 15 * -2.f);
+	world.translation.x = min(world.translation.x , 15 * 2.f);
+	world.translation.z = max(world.translation.z , 15 * -2.f);
+	world.translation.z = min(world.translation.z , 15 * 2.f);
 
-	this->camera->view.target.x = min(this->camera->view.target.x, 32.f);
-	this->camera->view.target.x = max(this->camera->view.target.x, -32.f);
-	this->camera->view.target.z = min(this->camera->view.target.z, 29.f);
-	this->camera->view.target.z = max(this->camera->view.target.z, -35.f);
+	this->camera->view.target.x = min(this->camera->view.target.x, 30.f);
+	this->camera->view.target.x = max(this->camera->view.target.x, -30.f);
+	this->camera->view.target.z = min(this->camera->view.target.z, 27.f);
+	this->camera->view.target.z = max(this->camera->view.target.z, -33.f);
 
-	this->camera->view.eye.x = min(this->camera->view.eye.x, 32.f);
-	this->camera->view.eye.x = max(this->camera->view.eye.x, -32.f);
-	this->camera->view.eye.z = min(this->camera->view.eye.z, 20.f);
-	this->camera->view.eye.z = max(this->camera->view.eye.z, -44.f);
+	this->camera->view.eye.x = min(this->camera->view.eye.x, 30.f);
+	this->camera->view.eye.x = max(this->camera->view.eye.x, -30.f);
+	this->camera->view.eye.z = min(this->camera->view.eye.z, 16.f);
+	this->camera->view.eye.z = max(this->camera->view.eye.z, -42.f);
 
 	//•ŠíˆÊ’u
 	weapon->SetPosition(world.translation + offSetWeaponPos);

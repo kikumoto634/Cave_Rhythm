@@ -20,7 +20,7 @@ void Planes::Update(Camera *camera)
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
-	if(-15 <= distance && distance <= 15)		{
+	if(-13 <= distance && distance <= 13)		{
 		IsHide = true;
 
 		if(!IsCollision){
@@ -33,7 +33,7 @@ void Planes::Update(Camera *camera)
 			IsCollision = true;
 		}
 	}
-	else if(-15 > distance || distance > 15){
+	else if(-13 > distance || distance > 13){
 		IsHide = false;
 
 		if(IsCollision){

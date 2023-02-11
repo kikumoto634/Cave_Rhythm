@@ -191,7 +191,7 @@ void AreaManager::CreateMap()
 }
 AreaManager::Room AreaManager::DevideRoom(Area area, bool hr)
 {
-	if(area.Width < 3 || area.Height < 3) {
+	if(area.Width < 6 || area.Height < 6) {
 		return CreateRoom(area);
 	}
 
