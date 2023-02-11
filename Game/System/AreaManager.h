@@ -34,6 +34,8 @@ public:
 
 	void Draw();
 
+	void ParticleDraw();
+
 	void Finalize();
 
 	Vector3 GetExitPosition()	{return exitPosition;}
@@ -54,6 +56,7 @@ private:
 	void WallUpdate();
 	void WallBeatEndUpdate();
 	void WallDraw();
+	void WallParticleDraw();
 	void WallFinalize();
 
 	//É_ÉìÉWÉáÉìê∂ê¨
@@ -72,7 +75,7 @@ private:
 	GameManager* gameManager = nullptr;
 	Vector3 PlayerPos={};
 
-	static const int DIV_NUM = 33;
+	static const int DIV_NUM = 31;
 	//static const int DIV_NUM = 11;
 	static const float Block_Size;
 

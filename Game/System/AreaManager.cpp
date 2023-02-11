@@ -39,6 +39,11 @@ void AreaManager::Draw()
 	PlaneDraw();
 }
 
+void AreaManager::ParticleDraw()
+{
+	WallParticleDraw();
+}
+
 void AreaManager::Finalize()
 {
 	WallFinalize();
@@ -152,6 +157,15 @@ void AreaManager::WallDraw()
 	}
 }
 
+void AreaManager::WallParticleDraw()
+{
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			Wall[i][j]->ParticleDraw();
+		}
+	}
+}
+
 void AreaManager::WallFinalize()
 {
 	for(int i = 0; i < DIV_NUM; i++){
@@ -177,7 +191,7 @@ void AreaManager::CreateMap()
 }
 AreaManager::Room AreaManager::DevideRoom(Area area, bool hr)
 {
-	if(area.Width < 10 || area.Height < 10) {
+	if(area.Width < 3 || area.Height < 3) {
 		return CreateRoom(area);
 	}
 

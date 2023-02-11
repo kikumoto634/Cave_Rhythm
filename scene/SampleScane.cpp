@@ -234,9 +234,11 @@ void SampleScane::Object3DInitialize()
 	exit->SetPosition(areaManager->GetExitPosition());
 
 	//ƒXƒ‰ƒCƒ€
-	InitializeCreateBlueSlime();
 	slime =make_unique<BlueSlime>();
 	slime->Initialize("slime");
+
+	coin=make_unique<Coins>();
+	coin->Initialize("Coins");
 }
 
 void SampleScane::Object2DInitialize()
@@ -289,8 +291,17 @@ void SampleScane::Object3DUpdate()
 
 	if(slime->GetIsDeadAudio()){
 		gameManager->AudioPlay(2, 0.5f);
+		if(coin->PopPossible()){
+			coin->Pop({slime->GetDeadParticlepos().x, -5, slime->GetDeadParticlepos().z});
+		}
 	}
 	slime->Update(camera,player->GetPosition());
+
+	if(coin->GetCoin()){
+		gameManager->CoinIncrement();
+		gameManager->AudioPlay(7,0.5f);
+	}
+	coin->Update(this->camera);
 }
 
 void SampleScane::Object2DUpdate()
@@ -396,6 +407,10 @@ void SampleScane::BeatEndUpdate()
 			Vector3 lpos = areaManager->GetObjectPopPosition();
 			slime->Pop({lpos.x, -3.5f,lpos.z});
 		}
+
+		if(coin->GetIsAlive()){
+			coin->IsBeatEndOn();
+		}
 	}
 }
 #pragma endregion
@@ -411,10 +426,12 @@ void SampleScane::Object3DDraw()
 	exit->Draw();
 
 	slime->Draw();
+	coin->Draw();
 }
 
 void SampleScane::ParticleDraw()
 {
+	areaManager->ParticleDraw();
 	slime->ParticleDraw();
 }
 
@@ -481,6 +498,7 @@ void SampleScane::ObjectFinaize()
 	skydome->Finalize();
 	exit->Finalize();
 	slime->Finalize();
+	coin->Finalize();
 #pragma endregion _3D‰ð•ú
 
 #pragma region _2D‰ð•ú

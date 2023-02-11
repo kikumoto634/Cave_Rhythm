@@ -1,10 +1,13 @@
 #pragma once
 #include "../BaseObjObject.h"
+#include "../ParticleObject.h"
 #include "../../Collision/MeshCollider.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
 class Walls : public BaseObjObject
 {
+//死亡後のリセット時間
+	const int DigAppearanceFrame = 50;
 public:
 	~Walls();
 
@@ -24,6 +27,8 @@ public:
 	/// </summary>
 	void Draw() override;
 
+	void ParticleDraw();
+
 	/// <summary>
 	/// 後処理
 	/// </summary>
@@ -34,6 +39,8 @@ public:
 	/// </summary>
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
+
+	void DigParticlePop();
 
 	void IsNotAlive()	{IsAlive = false;}
 
@@ -57,5 +64,13 @@ private:
 
 	//メッシュコライダー用モデル
 	ObjModelManager* colliderModel = nullptr;
+	bool IsCollision = false;
+
+	//パーティクル
+	bool IsDig = false;
+	bool IsDigApp = false;
+	int paricleApperanceFrame = 0;
+	Vector3 DigParticlePos = {};
+	ParticleObject* DigParticle = nullptr;
 };
 

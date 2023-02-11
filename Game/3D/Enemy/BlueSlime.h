@@ -23,6 +23,7 @@ public:
 	//Getter
 	inline bool GetIsNotApp()	{return IsNotApp;}
 	inline bool GetIsDeadAudio()	{return IsDeadOnceAudio;}
+	inline Vector3 GetDeadParticlepos()	{return DeadParticlePos;}
 
 private:
 	void Reset();
@@ -37,7 +38,7 @@ private:
 	//ñ¢èoåª
 	bool IsNotApp = false;
 
-	Vector3 NotAlivePos = {50,-50,50};
+	Vector3 NotAlivePos = {50,50,50};
 	//éÄñS
 	bool IsDead = false;
 	bool IsDeadOnceAudio = false;

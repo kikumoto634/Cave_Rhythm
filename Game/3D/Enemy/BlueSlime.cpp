@@ -54,7 +54,7 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 
 			if(popCount >= POP_COUNT){
 				SetPosition(PopParticlePos);
-				PopParticlePos = {0,-50,0};
+				PopParticlePos = {0,50,0};
 				popCount = 0;
 				IsPop = false;
 				IsDead = false;

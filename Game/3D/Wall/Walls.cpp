@@ -1,5 +1,6 @@
 #include "Walls.h"
 #include "../../Collision/SphereCollider.h"
+#include "../../Collision/CollisionSystem/CollisionManager.h"
 
 using namespace DirectX;
 
@@ -15,12 +16,8 @@ void Walls::Initialize(std::string filePath, bool IsSmmothing)
 	colliderModel = new ObjModelManager();
 	colliderModel->CreateModel("GroundBlock2_Collider");
 
-	//コライダー追加
-	MeshCollider* collider = new MeshCollider;
-	SetCollider(collider);
-	//属性セット
-	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-	collider->ConstructTriangles(colliderModel);
+	DigParticle = new ParticleObject();
+	DigParticle->Initialize();
 }
 
 void Walls::Update(Camera *camera)
@@ -28,17 +25,50 @@ void Walls::Update(Camera *camera)
 	this->camera = camera;
 	IsDigSound = false;
 
+	if(IsDig && !IsAlive){
+		DigParticlePop();
+		IsDig = false;
+	}
+	else if(IsDigApp){
+		if(paricleApperanceFrame >= DigAppearanceFrame){
+			IsDigApp = false;
+			paricleApperanceFrame = 0;
+		}
+		paricleApperanceFrame++;
+		DigParticle->Update(this->camera);
+	}
+
 	if(!IsAlive) return;
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
-	if(-20 <= distance && distance <= 20)		{
+	if(-15 <= distance && distance <= 15)		{
 		IsHide = true;
-	}
-	else if(-20 > distance || distance > 20)	IsHide = false;
-	
-	if(!IsHide) return;
 
+		if(!IsCollision){
+			//コライダー追加
+			MeshCollider* collider = new MeshCollider;
+			SetCollider(collider);
+			//属性セット
+			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
+			collider->ConstructTriangles(colliderModel);
+			IsCollision = true;
+		}
+	}
+	else if(-15 > distance || distance > 15){
+		IsHide = false;
+
+		if(IsCollision){
+			if(collider){
+				//コリジョンマネージャーから登録を解除する
+				CollisionManager::GetInstance()->RemoveCollider(collider);
+			}
+			IsCollision = false;
+		}
+	}
+	
+
+	if(!IsHide) return;
 	BaseObjObject::Update(this->camera);
 }
 
@@ -49,8 +79,18 @@ void Walls::Draw()
 	BaseObjObject::Draw();
 }
 
+void Walls::ParticleDraw()
+{
+	if(IsDigApp){
+		DigParticle->Draw();
+	}
+}
+
 void Walls::Finalize()
 {
+	delete colliderModel;
+	DigParticle->Finalize();
+	delete DigParticle;
 	BaseObjObject::Finalize();
 }
 
@@ -63,8 +103,28 @@ void Walls::OnCollision(const CollisionInfo &info)
 		IsDigSound = true;
 		
 		IsAlive = false;
+		IsDig = true;
+		DigParticlePos = GetPosition();
 		world.translation = {0,0,0};
 		world.UpdateMatrix();
 		collider->Update();
+	}
+}
+
+void Walls::DigParticlePop()
+{
+	IsDigApp = true;
+	for (int i = 0; i < 3; i++) {
+		const float rnd_vel = 0.08f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.06f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		acc.y = -0.005f;
+
+		DigParticle->ParticleSet(DigAppearanceFrame,DigParticlePos,vel,acc,0.4f,0.0f,1,{0.5f,0.3f,0.2f,1.f});
+		DigParticle->ParticleAppearance();
 	}
 }

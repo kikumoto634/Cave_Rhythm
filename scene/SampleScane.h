@@ -9,6 +9,7 @@
 #include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/3D/Enemy/BlueSlime.h"
+#include "../Game/3D/Coins/Coins.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
@@ -120,6 +121,7 @@ private:
 	std::unique_ptr<AreaManager> areaManager;
 
 	std::unique_ptr<BlueSlime> slime;
+	std::unique_ptr<Coins> coin;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ

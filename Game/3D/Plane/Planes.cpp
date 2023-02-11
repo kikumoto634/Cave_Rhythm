@@ -1,4 +1,5 @@
 #include "Planes.h"
+#include "../../Collision/CollisionSystem/CollisionManager.h"
 
 Planes::~Planes()
 {
@@ -10,13 +11,6 @@ void Planes::Initialize(std::string filePath, bool IsSmmothing)
 	BaseObjObject::Initialize(filePath, IsSmmothing);
 
 	SetModel(model);
-
-	//コライダー追加
-	MeshCollider* collider = new MeshCollider;
-	SetCollider(collider);
-	//属性セット
-	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-	collider->ConstructTriangles(model);
 }
 
 void Planes::Update(Camera *camera)
@@ -26,10 +20,30 @@ void Planes::Update(Camera *camera)
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
-	if(-20 <= distance && distance <= 20)		{
+	if(-15 <= distance && distance <= 15)		{
 		IsHide = true;
+
+		if(!IsCollision){
+			//コライダー追加
+			MeshCollider* collider = new MeshCollider;
+			SetCollider(collider);
+			//属性セット
+			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
+			collider->ConstructTriangles(model);
+			IsCollision = true;
+		}
 	}
-	else if(-20 > distance || distance > 20)	IsHide = false;
+	else if(-15 > distance || distance > 15){
+		IsHide = false;
+
+		if(IsCollision){
+			if(collider){
+				//コリジョンマネージャーから登録を解除する
+				CollisionManager::GetInstance()->RemoveCollider(collider);
+			}
+			IsCollision = false;
+		}
+	}
 	
 	if(!IsHide) return;
 

@@ -60,5 +60,7 @@ private:
 	bool IsAlive = true;
 	//‹——£‚É‰ž‚¶‚½”ñ•\Ž¦
 	bool IsHide = false;
+
+	bool IsCollision = false;
 };
 
