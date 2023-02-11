@@ -46,8 +46,5 @@ private:
 	//生存時間(フレーム)
 	float aliveCurrentTime = 0;
 	const float AliveTime = 0.2f;
-
-	//コライダー
-	SphereCollider* sphereCollider = nullptr;
 };
 

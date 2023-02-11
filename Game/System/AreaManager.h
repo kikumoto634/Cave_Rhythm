@@ -72,8 +72,8 @@ private:
 	GameManager* gameManager = nullptr;
 	Vector3 PlayerPos={};
 
-	//static const int DIV_NUM = 33;
-	static const int DIV_NUM = 11;
+	static const int DIV_NUM = 33;
+	//static const int DIV_NUM = 11;
 	static const float Block_Size;
 
 	//Plane

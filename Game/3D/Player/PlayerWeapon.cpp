@@ -21,13 +21,8 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 	float radius = 0.6f;
 	//半径文だけ足元から浮いた座標を球の中心にする
 	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
-
 	//当たり判定属性
 	collider->SetAttribute(COLLISION_ATTR_WEAPONS);
-
-	//球コライダー取得
-	sphereCollider = dynamic_cast<SphereCollider*>(collider);
-	assert(sphereCollider);
 }
 
 void PlayerWeapon::Update(Camera *camera)
@@ -46,9 +41,6 @@ void PlayerWeapon::Update(Camera *camera)
 		return;
 	}
 	world.scale = Easing_Linear_Point2({1,1,1}, {0,0,0},Time_OneWay(aliveCurrentTime, AliveTime));
-
-	//コライダー更新
-	collider->Update();
 
 	//ベース更新
 	BaseObjObject::Update(this->camera);

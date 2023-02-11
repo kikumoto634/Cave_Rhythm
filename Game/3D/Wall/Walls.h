@@ -54,5 +54,8 @@ private:
 	bool IsAlive = true;
 	//距離に応じた非表示
 	bool IsHide = false;
+
+	//メッシュコライダー用モデル
+	ObjModelManager* colliderModel = nullptr;
 };
 
