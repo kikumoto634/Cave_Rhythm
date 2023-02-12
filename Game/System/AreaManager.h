@@ -26,7 +26,7 @@ struct Room{
 };
 
 public:
-	void Initialize();
+	void RandamAreaInitialize();
 
 	void Update(Camera* camera, Vector3 PlayerPos);
 
@@ -45,14 +45,14 @@ public:
 
 private:
 	//’n–Ê
-	void PlaneInitialize();
+	void RandamAreaPlaneInitialize();
 	void PlaneUpdate();
 	void PlaneBeatEndUpdate();
 	void PlaneDraw();
 	void PlaneFinalize();
 
 	//•Ç
-	void WallsInitialize();
+	void RandamAreaWallsInitialize();
 	void WallUpdate();
 	void WallBeatEndUpdate();
 	void WallDraw();
@@ -76,11 +76,11 @@ private:
 	Vector3 PlayerPos={};
 
 	static const int DIV_NUM = 31;
-	//static const int DIV_NUM = 11;
+	//static const int DIV_NUM = 6;
 	static const float Block_Size;
 
 	//Plane
-	std::unique_ptr<Planes> plane[DIV_NUM][DIV_NUM] = {};
+	Planes* plane[DIV_NUM][DIV_NUM] = {nullptr};
 	bool IsComboColorChange = false;
 
 	//Wall

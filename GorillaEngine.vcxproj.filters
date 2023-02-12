@@ -202,23 +202,8 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Wall">
       <UniqueIdentifier>{caaf6471-13f0-4f3d-b99a-2524f3b8ee83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\3D\Old">
-      <UniqueIdentifier>{4bbdea5f-7dd0-4cf2-8409-6a1bda87ee16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Game\3D\Old\Enemy">
-      <UniqueIdentifier>{08fa4670-8226-41f4-8dc8-d349c14dbec5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\scene\Old">
       <UniqueIdentifier>{fd2e9f98-d7f8-4555-a799-e18cb86729c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\3D\Old">
-      <UniqueIdentifier>{0885643f-023d-4bb4-aca5-dadb841a4260}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\3D\Old\Enemy">
-      <UniqueIdentifier>{eaf8d4d8-e4ef-431f-969a-9cbc92f6ce6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\3D\Old\Coins">
-      <UniqueIdentifier>{fa8ca85f-bb1b-4806-8d58-30f1e74e1b1c}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\scene\Old">
       <UniqueIdentifier>{ff344a59-3448-40d7-88bd-cfe53ea77aaa}</UniqueIdentifier>
@@ -351,9 +336,6 @@
     <ClCompile Include="Game\3D\Plane\Planes.cpp">
       <Filter>ソース ファイル\Game\3D\Plane</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3D\Enemy\Enemy.cpp">
-      <Filter>ソース ファイル\Game\3D\Old\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Player\PlayerWeapon.cpp">
       <Filter>ソース ファイル\Game\3D\Player</Filter>
     </ClCompile>
@@ -363,9 +345,6 @@
     <ClCompile Include="Game\System\GameManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3D\Enemy\TrainingDummy.cpp">
-      <Filter>ソース ファイル\Game\3D\Old\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="scene\SceneManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
@@ -374,9 +353,6 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Exit\Exit.cpp">
       <Filter>ソース ファイル\Game\3D\Exit</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3D\Enemy\Enemy2.cpp">
-      <Filter>ソース ファイル\Game\3D\Old\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="scene\BaseScene.cpp">
       <Filter>ソース ファイル\scene\Base</Filter>
@@ -389,15 +365,6 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Wall\Walls.cpp">
       <Filter>ソース ファイル\Game\3D\Wall</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\GameScene.cpp">
-      <Filter>ソース ファイル\scene\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\BaseGameScene.cpp">
-      <Filter>ソース ファイル\scene\Old</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\HomeScene.cpp">
-      <Filter>ソース ファイル\scene\Old</Filter>
     </ClCompile>
     <ClCompile Include="scene\TitleScene.cpp">
       <Filter>ソース ファイル\scene\Old</Filter>
@@ -554,9 +521,6 @@
     <ClInclude Include="Game\3D\Plane\Planes.h">
       <Filter>ヘッダー ファイル\Game\3D\Plane</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\Enemy\Enemy.h">
-      <Filter>ヘッダー ファイル\Game\3D\Old\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Player\PlayerWeapon.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
     </ClInclude>
@@ -566,20 +530,11 @@
     <ClInclude Include="Game\System\GameManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\Enemy\TrainingDummy.h">
-      <Filter>ヘッダー ファイル\Game\3D\Old\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="scene\SceneManager.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\Coins\Coins.h">
-      <Filter>ヘッダー ファイル\Game\3D\Old\Coins</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Exit\Exit.h">
       <Filter>ヘッダー ファイル\Game\3D\Exit</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3D\Enemy\Enemy2.h">
-      <Filter>ヘッダー ファイル\Game\3D\Old\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="scene\BaseScene.h">
       <Filter>ヘッダー ファイル\scene\Base</Filter>
@@ -594,15 +549,6 @@
       <Filter>ヘッダー ファイル\Game\3D\Wall</Filter>
     </ClInclude>
     <ClInclude Include="scene\TitleScene.h">
-      <Filter>ヘッダー ファイル\scene\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\HomeScene.h">
-      <Filter>ヘッダー ファイル\scene\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\GameScene.h">
-      <Filter>ヘッダー ファイル\scene\Old</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\BaseGameScene.h">
       <Filter>ヘッダー ファイル\scene\Old</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h">

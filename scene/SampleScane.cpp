@@ -10,7 +10,6 @@
 #include <iomanip>
 
 #include "SceneManager.h"
-#include "GameScene.h"
 #include "TitleScene.h"
 
 #include "../Engine/math/Easing/Easing.h"
@@ -203,7 +202,7 @@ void SampleScane::CommonInitialize()
 	gameManager->Initialize();
 
 	areaManager = make_unique<AreaManager>();
-	areaManager->Initialize();
+	areaManager->RandamAreaInitialize();
 
 	//カメラ
 	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
@@ -222,10 +221,6 @@ void SampleScane::Object3DInitialize()
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player->SetHp(saveHP);
 	gameManager->InitializeSetHp(player->GetHP());
-
-
-	skydome = make_unique<SampleObjObject>();
-	skydome->Initialize("skydome", true);
 
 	//出口
 	exit = make_unique<Exit>();
@@ -279,8 +274,6 @@ void SampleScane::Object3DUpdate()
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
 	}
-	//天球
-	skydome->Update(camera);
 	//出口
 	exit->Update(camera);
 	{
@@ -421,7 +414,6 @@ void SampleScane::Object3DDraw()
 	player->Draw();
 
 	areaManager->Draw();
-	skydome->Draw();
 
 	exit->Draw();
 
@@ -495,7 +487,6 @@ void SampleScane::ObjectFinaize()
 #pragma region _3D解放
 	player->Finalize();
 	areaManager->Finalize();
-	skydome->Finalize();
 	exit->Finalize();
 	slime->Finalize();
 	coin->Finalize();

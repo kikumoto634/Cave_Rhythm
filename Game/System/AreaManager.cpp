@@ -4,13 +4,13 @@ using namespace std;
 
 const float AreaManager::Block_Size = 2.f;
 
-void AreaManager::Initialize()
+void AreaManager::RandamAreaInitialize()
 {
 	CreateMap();
 	ObjectRandomPop();
 
-	WallsInitialize();
-	PlaneInitialize();
+	RandamAreaWallsInitialize();
+	RandamAreaPlaneInitialize();
 }
 
 void AreaManager::Update(Camera* camera, Vector3 PlayerPos)
@@ -51,11 +51,11 @@ void AreaManager::Finalize()
 }
 
 #pragma region ’n–Ê
-void AreaManager::PlaneInitialize()
+void AreaManager::RandamAreaPlaneInitialize()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j] = make_unique<Planes>();
+			plane[i][j] = new Planes();
 			plane[i][j]->Initialize("GroundBlock");
 			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
 		}
@@ -108,13 +108,15 @@ void AreaManager::PlaneFinalize()
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Finalize();
+			delete plane[i][j];
+			plane[i][j] = nullptr;
 		}
 	}
 }
 #pragma endregion
 
 #pragma region •Ç
-void AreaManager::WallsInitialize()
+void AreaManager::RandamAreaWallsInitialize()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){

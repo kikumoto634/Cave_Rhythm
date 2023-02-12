@@ -183,9 +183,6 @@
     <ClCompile Include="Game\3D\BaseObjObject.cpp" />
     <ClCompile Include="Game\3D\Coins\Coins.cpp" />
     <ClCompile Include="Game\3D\Enemy\BlueSlime.cpp" />
-    <ClCompile Include="Game\3D\Enemy\Enemy.cpp" />
-    <ClCompile Include="Game\3D\Enemy\Enemy2.cpp" />
-    <ClCompile Include="Game\3D\Enemy\TrainingDummy.cpp" />
     <ClCompile Include="Game\3D\Exit\Exit.cpp" />
     <ClCompile Include="Game\3D\ParticleObject.cpp" />
     <ClCompile Include="Game\3D\Plane\Planes.cpp" />
@@ -207,10 +204,7 @@
     <ClCompile Include="Game\System\GameManager.cpp" />
     <ClCompile Include="Game\System\RhythmManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="scene\BaseGameScene.cpp" />
     <ClCompile Include="scene\BaseScene.cpp" />
-    <ClCompile Include="scene\HomeScene.cpp" />
-    <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\SampleScane.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
@@ -249,11 +243,7 @@
     <ClInclude Include="Game\2D\SampleSprite\SampleSprite.h" />
     <ClInclude Include="Game\3D\BaseFbxObjects.h" />
     <ClInclude Include="Game\3D\BaseObjObject.h" />
-    <ClInclude Include="Game\3D\Coins\Coins.h" />
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h" />
-    <ClInclude Include="Game\3D\Enemy\Enemy.h" />
-    <ClInclude Include="Game\3D\Enemy\Enemy2.h" />
-    <ClInclude Include="Game\3D\Enemy\TrainingDummy.h" />
     <ClInclude Include="Game\3D\Exit\Exit.h" />
     <ClInclude Include="Game\3D\ParticleObject.h" />
     <ClInclude Include="Game\3D\Plane\Planes.h" />
@@ -276,10 +266,7 @@
     <ClInclude Include="Game\System\AreaManager.h" />
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
-    <ClInclude Include="scene\BaseGameScene.h" />
     <ClInclude Include="scene\BaseScene.h" />
-    <ClInclude Include="scene\HomeScene.h" />
-    <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\SampleScane.h" />
     <ClInclude Include="scene\SceneManager.h" />
     <ClInclude Include="scene\TitleScene.h" />

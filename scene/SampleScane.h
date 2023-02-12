@@ -106,9 +106,6 @@ private:
 	std::unique_ptr<Player> player;
 	//セーブ体力
 	int saveHP = 0;
-	
-	//skydome
-	std::unique_ptr<SampleObjObject> skydome;
 	//リズムカウント
 	RhythmManager* rhythmManager = nullptr;
 	//ゲームマネージャー

@@ -1,8 +1,6 @@
 #include "Application.h"
-#include "../../scene/GameScene.h"
 #include "../../scene/TitleScene.h"
 
-#include "../../scene/BaseGameScene.h"
 #include "../../scene/SampleScane.h"
 
 Application* Application::app = nullptr;
