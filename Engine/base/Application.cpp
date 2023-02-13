@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "../../scene/TitleScene.h"
 
-#include "../../scene/SampleScane.h"
+#include "../../scene/GameScene.h"
 
 Application* Application::app = nullptr;
 
@@ -130,7 +130,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new SampleScane(dxCommon, window);
+	BaseScene* scene = new GameScene(dxCommon, window);
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
 	scene->SetImGui(imgui);

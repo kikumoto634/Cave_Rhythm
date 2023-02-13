@@ -1,5 +1,4 @@
-#include "SampleScane.h"
-
+#include "BaseBattleScene.h"
 #include "../Engine/math//Easing/Easing.h"
 
 #include "../Game/Collision/CollisionSystem/Collision.h"
@@ -9,36 +8,36 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 
-#include "../Engine/math/Easing/Easing.h"
-
 using namespace std;
-using namespace DirectX;
 
-SampleScane::SampleScane(DirectXCommon *dxCommon, Window *window, int saveHP)
-		: BaseScene(
+BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int saveHP)
+	:BaseScene(
 		dxCommon,
 		window)
 {
 	this->saveHP = saveHP;
 }
 
-void SampleScane::Application()
+void BaseBattleScene::Application()
 {
 	BaseScene::Application();
 }
 
-void SampleScane::Initialize()
+void BaseBattleScene::Initialize()
 {
 	BaseScene::Initialize();
 
 	CommonInitialize();
+	AddCommonInitialize();
 
 	Object3DInitialize();
+	AddObject3DInitialize();
 
 	Object2DInitialize();
+	AddObject2DInitialize();
 }
 
-void SampleScane::Update()
+void BaseBattleScene::Update()
 {
 	//計測、BGM開始
 	RhythmMeasure();
@@ -87,11 +86,14 @@ void SampleScane::Update()
 
 	//更新
 	Object3DUpdate();
+	AddObject3DUpdate();
 
 	Object2DUpdate();
+	AddObject2DUpdate();
 
 	//シーン、カメラ、汎用
 	CommonUpdate();
+	AddCommonUpdate();
 
 #ifdef _DEBUG
 	{
@@ -135,15 +137,18 @@ void SampleScane::Update()
 	BaseScene::EndUpdate();
 }
 
-void SampleScane::Draw()
+void BaseBattleScene::Draw()
 {
 	BaseScene::Draw();
 
 	Object3DDraw();
+	AddObject3DDraw();
 	
 	ParticleDraw();
+	AddParticleDraw();
 
 	UIDraw();
+	AddUIDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
@@ -167,26 +172,18 @@ void SampleScane::Draw()
 	BaseScene::EndDraw();
 }
 
-void SampleScane::Finalize()
+void BaseBattleScene::Finalize()
 {
 	ObjectFinaize();
-
+	AddObjectFinalize();
 	CommonFinalize();
-
-#ifdef _DEBUG
-	
-#endif // _DEBUG
-
+	AddCommonFinalize();
 
 	BaseScene::Finalize();
 }
 
 
-#pragma region 初期化
-void SampleScane::NextSceneChange()
-{
-}
-void SampleScane::CommonInitialize()
+void BaseBattleScene::CommonInitialize()
 {
 	//衝突マネージャー
 	collisionManager = CollisionManager::GetInstance();
@@ -199,7 +196,7 @@ void SampleScane::CommonInitialize()
 	gameManager->Initialize();
 
 	areaManager = make_unique<AreaManager>();
-	areaManager->RandamAreaInitialize();
+	AreaManagerInitialize();
 
 	//カメラ
 	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
@@ -207,7 +204,7 @@ void SampleScane::CommonInitialize()
 	camera->Update();
 }
 
-void SampleScane::Object3DInitialize()
+void BaseBattleScene::Object3DInitialize()
 {
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player = make_unique<Player>();
@@ -224,16 +221,9 @@ void SampleScane::Object3DInitialize()
 	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
 	exit->SetPosition(areaManager->GetExitPosition());
-
-	//スライム
-	slime =make_unique<BlueSlime>();
-	slime->Initialize("slime");
-
-	coin=make_unique<Coins>();
-	coin->Initialize("Coins");
 }
 
-void SampleScane::Object2DInitialize()
+void BaseBattleScene::Object2DInitialize()
 {
 	//シーン遷移(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
@@ -242,10 +232,8 @@ void SampleScane::Object2DInitialize()
 	fade->SetColor(fadeColor);
 	fade->SetSize({fadeInSize});
 }
-#pragma endregion
 
-#pragma region 更新
-void SampleScane::InputUpdate()
+void BaseBattleScene::InputUpdate()
 {
 	if(IsPrevSceneChange)return;
 
@@ -258,7 +246,7 @@ void SampleScane::InputUpdate()
 	}
 }
 
-void SampleScane::Object3DUpdate()
+void BaseBattleScene::Object3DUpdate()
 {
 	//プレイヤー
 	if(player->DamageSound())	{
@@ -278,28 +266,14 @@ void SampleScane::Object3DUpdate()
 		Vector2 pos = exit->ChangeTransformation(target);
 		exit->SetCoinSpPosition(pos);
 	}
-
-	if(slime->GetIsDeadAudio()){
-		gameManager->AudioPlay(2, 0.5f);
-		if(coin->PopPossible()){
-			coin->Pop({slime->GetDeadParticlepos().x, -5, slime->GetDeadParticlepos().z});
-		}
-	}
-	slime->Update(camera,player->GetPosition());
-
-	if(coin->GetCoin()){
-		gameManager->CoinIncrement();
-		gameManager->AudioPlay(7,0.5f);
-	}
-	coin->Update(this->camera);
 }
 
-void SampleScane::Object2DUpdate()
+void BaseBattleScene::Object2DUpdate()
 {
 	gameManager->SpriteUpdate();
 }
 
-void SampleScane::CommonUpdate()
+void BaseBattleScene::CommonUpdate()
 {
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//地面
@@ -331,7 +305,7 @@ void SampleScane::CommonUpdate()
 	collisionManager->CheckAllCollisions();
 }
 
-void SampleScane::RhythmMeasure()
+void BaseBattleScene::RhythmMeasure()
 {
 	//計測開始
 	if(IsPrevSceneChange) return;
@@ -346,7 +320,7 @@ void SampleScane::RhythmMeasure()
 	rhythmManager->BeatMoveUp();
 }
 
-void SampleScane::RhythmJudgeUpdate()
+void BaseBattleScene::RhythmJudgeUpdate()
 {
 	if(IsPrevSceneChange) return;
 
@@ -374,7 +348,7 @@ void SampleScane::RhythmJudgeUpdate()
 	}
 }
 
-void SampleScane::BeatEndUpdate()
+void BaseBattleScene::BeatEndUpdate()
 {
 	if(IsPrevSceneChange) return;
 
@@ -392,39 +366,25 @@ void SampleScane::BeatEndUpdate()
 		exit->IsBeatEndOn();
 		gameManager->IsBeatEndOn();
 
-		slime->IsBeatEndOn();
-		if(!slime->GetIsNotApp()){
-			Vector3 lpos = areaManager->GetObjectPopPosition();
-			slime->Pop({lpos.x, -3.5f,lpos.z});
-		}
-
-		if(coin->GetIsAlive()){
-			coin->IsBeatEndOn();
-		}
+		AddBeatEndUpdate();
 	}
 }
-#pragma endregion
 
-#pragma region 描画
-void SampleScane::Object3DDraw()
+void BaseBattleScene::Object3DDraw()
 {
 	player->Draw();
 
 	areaManager->Draw();
 
 	exit->Draw();
-
-	slime->Draw();
-	coin->Draw();
 }
 
-void SampleScane::ParticleDraw()
+void BaseBattleScene::ParticleDraw()
 {
 	areaManager->ParticleDraw();
-	slime->ParticleDraw();
 }
 
-void SampleScane::UIDraw()
+void BaseBattleScene::UIDraw()
 {
 	Sprite::SetPipelineState();
 
@@ -437,15 +397,12 @@ void SampleScane::UIDraw()
 	fade->Draw();
 }
 
-#pragma endregion
-
-#pragma region シーン更新
-void SampleScane::SceneGameEnd()
+void BaseBattleScene::SceneGameEnd()
 {
 	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
 }
 
-void SampleScane::SceneChange()
+void BaseBattleScene::SceneChange()
 {
 	//PrevSceneからの移動後処理
 	if(IsPrevSceneChange){
@@ -476,17 +433,13 @@ void SampleScane::SceneChange()
 		fade->Update();
 	}
 }
-#pragma endregion
 
-#pragma region 後処理
-void SampleScane::ObjectFinaize()
+void BaseBattleScene::ObjectFinaize()
 {
-#pragma region _3D解放
+	#pragma region _3D解放
 	player->Finalize();
 	areaManager->Finalize();
 	exit->Finalize();
-	slime->Finalize();
-	coin->Finalize();
 #pragma endregion _3D解放
 
 #pragma region _2D解放
@@ -494,7 +447,7 @@ void SampleScane::ObjectFinaize()
 #pragma endregion _2D解放
 }
 
-void SampleScane::CommonFinalize()
+void BaseBattleScene::CommonFinalize()
 {
 	gameManager->Finalize();
 	delete gameManager;
@@ -503,18 +456,9 @@ void SampleScane::CommonFinalize()
 	delete rhythmManager;
 	rhythmManager = nullptr;
 }
-#pragma endregion
 
 
-
-void SampleScane::InitializeCreateBlueSlime()
+void BaseBattleScene::AreaManagerInitialize()
 {
-}
-
-void SampleScane::InitializeCreateCoin()
-{
-}
-
-void SampleScane::BlueSlimePop()
-{
+	areaManager->RandamAreaInitialize();
 }

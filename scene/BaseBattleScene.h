@@ -8,9 +8,6 @@
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Exit/Exit.h"
 
-#include "../Game/3D/Enemy/BlueSlime.h"
-#include "../Game/3D/Coins/Coins.h"
-
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
 
@@ -18,8 +15,7 @@
 #include "../Game/System/GameManager.h"
 #include "../Game/System/AreaManager.h"
 
-
-class SampleScane : public BaseScene
+class BaseBattleScene : public BaseScene
 {
 private:
 	//シーン遷移
@@ -28,7 +24,7 @@ private:
 public:
 	
 	//コンストラクタ
-	SampleScane(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+	BaseBattleScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 	/// <summary>
 	/// 起動時
@@ -56,9 +52,6 @@ public:
 	void Finalize() override;
 
 private:
-	//シーン遷移
-	void NextSceneChange();
-
 	//初期化
 	void CommonInitialize();
 	void Object3DInitialize();
@@ -88,15 +81,32 @@ private:
 	void ObjectFinaize();
 	void CommonFinalize();
 
-private:
-	//Create関数
-	void InitializeCreateBlueSlime();
-	void InitializeCreateCoin();
+protected:
+	//シーン遷移
+	virtual void NextSceneChange() = 0;
 
-	//Pop関数
-	void BlueSlimePop();
+	//初期化
+	virtual void AreaManagerInitialize();
+	virtual void AddCommonInitialize() = 0;
+	virtual void AddObject3DInitialize() = 0;
+	virtual void AddObject2DInitialize() = 0;
 
-private:
+	//更新
+	virtual void AddCommonUpdate() = 0;
+	virtual void AddObject3DUpdate() = 0;
+	virtual void AddObject2DUpdate() = 0;
+	virtual void AddBeatEndUpdate() = 0;
+
+	//描画
+	virtual void AddObject3DDraw() = 0;
+	virtual void AddParticleDraw() = 0;
+	virtual void AddUIDraw() = 0;
+
+	//後処理
+	virtual void AddObjectFinalize() = 0;
+	virtual void AddCommonFinalize() = 0;
+
+protected:
 	//共通
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
@@ -115,9 +125,6 @@ private:
 	std::unique_ptr<Exit> exit;
 	//エリアマネージャー
 	std::unique_ptr<AreaManager> areaManager;
-
-	std::unique_ptr<BlueSlime> slime;
-	std::unique_ptr<Coins> coin;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
@@ -140,4 +147,3 @@ private:
 	//BGM再生フラグ
 	bool IsBGMStart = true;
 };
-

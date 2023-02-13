@@ -372,6 +372,12 @@
     <ClCompile Include="Game\3D\Enemy\BlueSlime.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="scene\BaseBattleScene.cpp">
+      <Filter>ソース ファイル\scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\GameScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -553,6 +559,12 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\BaseBattleScene.h">
+      <Filter>ヘッダー ファイル\scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\GameScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
