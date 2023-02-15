@@ -15,7 +15,10 @@ void GameScene::NextSceneChange()
 
 void GameScene::AreaManagerInitialize()
 {
-	areaManager->RandamAreaInitialize();
+	//ƒ_ƒ“ƒWƒ‡ƒ“
+	//BaseBattleScene::AreaManagerInitialize();
+	//areaManager->RandamAreaInitialize();
+	areaManager->CSVAreaInitialize("Tutorial");
 }
 
 void GameScene::AddCommonInitialize()
@@ -65,8 +68,14 @@ void GameScene::AddBeatEndUpdate()
 {
 	slime->IsBeatEndOn();
 	if(!slime->GetIsNotApp()){
-		Vector3 lpos = areaManager->GetObjectPopPosition();
-		slime->Pop({lpos.x, -3.5f,lpos.z});
+		Vector3 lpos;
+		//lpos = areaManager->GetObjectPopPosition();
+
+		int index = 0;
+		if(areaManager->GetCSVObjectPopActive(index,false)) {
+			lpos = areaManager->GetCSVObjectPopPosition(index);
+			slime->Pop({lpos.x, -3.5f,lpos.z});
+		}
 	}
 
 	if(coin->GetIsAlive()){

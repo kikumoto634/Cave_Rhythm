@@ -86,7 +86,7 @@ protected:
 	virtual void NextSceneChange() = 0;
 
 	//èâä˙âª
-	virtual void AreaManagerInitialize();
+	virtual void AreaManagerInitialize() = 0;
 	virtual void AddCommonInitialize() = 0;
 	virtual void AddObject3DInitialize() = 0;
 	virtual void AddObject2DInitialize() = 0;

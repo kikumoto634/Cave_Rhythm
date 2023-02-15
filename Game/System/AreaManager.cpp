@@ -1,5 +1,8 @@
 #include "AreaManager.h"
 
+#include <fstream>
+#include <cassert>
+
 using namespace std;
 
 const float AreaManager::Block_Size = 2.f;
@@ -11,6 +14,14 @@ void AreaManager::RandamAreaInitialize()
 
 	RandamAreaWallsInitialize();
 	RandamAreaPlaneInitialize();
+}
+
+void AreaManager::CSVAreaInitialize(string name)
+{
+	CSVMapDataLoad(name);
+
+	CSVAreaPlaneInitialize();
+	CVSAreaWallsInitialize();
 }
 
 void AreaManager::Update(Camera* camera, Vector3 PlayerPos)
@@ -58,6 +69,25 @@ void AreaManager::RandamAreaPlaneInitialize()
 			plane[i][j] = new Planes();
 			plane[i][j]->Initialize("GroundBlock");
 			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+		}
+	}
+}
+
+void AreaManager::CSVAreaPlaneInitialize()
+{
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			plane[i][j] = new Planes();
+			plane[i][j]->Initialize("GroundBlock");
+
+			if(CSVMap[i][j] == 0){
+				plane[i][j]->IsNotAlive();
+			}
+			else if(CSVMap[i][j] == 1 || CSVMap[i][j] == 2){
+				float startPos = float(-(DIV_NUM/2)*Block_Size);
+				Vector3 pos = {startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)};
+				plane[i][j]->SetPosition(pos);
+			}
 		}
 	}
 }
@@ -128,6 +158,25 @@ void AreaManager::RandamAreaWallsInitialize()
 				Wall[i][j]->SetPosition(pos);
 			}
 			else{
+				Wall[i][j]->IsNotAlive();
+			}
+		}
+	}
+}
+
+void AreaManager::CVSAreaWallsInitialize()
+{
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			Wall[i][j] = new Walls();
+			Wall[i][j]->Initialize("GroundBlock2");
+
+			if(CSVMap[i][j] == 2){
+				float startPos = float(-(DIV_NUM/2)*Block_Size);
+				Vector3 pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
+				Wall[i][j]->SetPosition(pos);
+			}
+			else if(CSVMap[i][j] == 0 || CSVMap[i][j] == 1){
 				Wall[i][j]->IsNotAlive();
 			}
 		}
@@ -319,6 +368,99 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			WallMap[Y2][divline+i] = 'A';
 		}
 	}
+}
+#pragma endregion
+
+#pragma region CSVデータ ダンジョン生成
+void AreaManager::CSVMapDataLoad(string fullPath)
+{
+	string directoryPath = "Resources/CSVData/";
+	string csv = ".csv";
+	//file開く
+	ifstream file;
+	string Path = directoryPath + fullPath + csv;
+	file.open(Path);
+	assert(file.is_open());
+
+	//file培養を文字列ストリームにコピー
+	csvCommands << file.rdbuf();
+	file.close();
+
+	//一行分の文字列を入れる変数
+	string line;
+	int y = 0;
+	int x = 0;
+
+	//コマンドループ
+	while(getline(csvCommands, line)){
+		//一行分のっ文字列をストリームに変換して解析しやすく
+		istringstream line_stream(line);
+
+		string word;
+
+		//区切りで行の銭湯文字列取得
+		getline(line_stream, word, ',');
+
+		x = 0;
+		for(int i = 0; i < 31; i++){
+			if(word.find("0") == 0){
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("1") == 0){
+				CSVMap[y][x] = 1;
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("2") == 0){
+				CSVMap[y][x] = 2;
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("3") == 0){
+				CSVMap[y][x] = 1;
+
+				float startPos = float(-(DIV_NUM/2)*Block_Size);
+				Vector3 pos = {startPos + (y*Block_Size) ,-3 ,startPos + (x*Block_Size)};
+				PlayerPopPosition = pos;
+
+				pos.y = -5.f;
+				exitPosition = pos;
+
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("4") == 0){
+				CSVMap[y][x] = 1;
+
+				float startPos = float(-(DIV_NUM/2)*Block_Size);
+				Vector3 pos = {startPos + (y*Block_Size) ,0 ,startPos + (x*Block_Size)};
+				ObjectPos.push_back(pos);
+				ObjectPopActive.push_back(true);
+
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("//") == 0){
+				y++;
+				break;
+			}
+		}
+	}
+}
+
+Vector3 AreaManager::GetCSVObjectPopPosition(int index)
+{
+	return ObjectPos[index];
+}
+bool AreaManager::GetCSVObjectPopActive(int index, bool IsFlag)
+{
+	if(ObjectPopActive[index]){
+		ObjectPopActive[index] = IsFlag;
+		return true;
+	}
+
+	return false;
 }
 #pragma endregion
 

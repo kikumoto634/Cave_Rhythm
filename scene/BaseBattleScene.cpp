@@ -456,9 +456,3 @@ void BaseBattleScene::CommonFinalize()
 	delete rhythmManager;
 	rhythmManager = nullptr;
 }
-
-
-void BaseBattleScene::AreaManagerInitialize()
-{
-	areaManager->RandamAreaInitialize();
-}
