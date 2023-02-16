@@ -16,6 +16,7 @@ private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
+
 public:
 	//マテリアル
 	struct Material

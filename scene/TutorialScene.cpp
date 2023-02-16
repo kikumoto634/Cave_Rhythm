@@ -21,8 +21,6 @@ void TutorialScene::NextSceneChange()
 void TutorialScene::AreaManagerInitialize()
 {
 	//ƒ_ƒ“ƒWƒ‡ƒ“
-	//BaseBattleScene::AreaManagerInitialize();
-	//areaManager->RandamAreaInitialize();
 	areaManager->CSVAreaInitialize("Tutorial");
 }
 

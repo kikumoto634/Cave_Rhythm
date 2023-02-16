@@ -8,7 +8,19 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 
+#include <thread>
+
 using namespace std;
+
+bool IsLoadComplate = false;
+void ThreadLoad()
+{
+	while(!IsLoadComplate){
+		OutputDebugString(L"Load\n");
+	}
+
+	OutputDebugString(L"LoadäÆóπ\n");
+}
 
 BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	:BaseScene(
@@ -25,6 +37,10 @@ void BaseBattleScene::Application()
 
 void BaseBattleScene::Initialize()
 {
+	//ÉçÅ[Éh
+
+	//thread t(ThreadLoad);
+
 	BaseScene::Initialize();
 
 	CommonInitialize();
@@ -35,6 +51,9 @@ void BaseBattleScene::Initialize()
 
 	Object2DInitialize();
 	AddObject2DInitialize();
+
+	//IsLoadComplate = true;
+	//t.join();
 }
 
 void BaseBattleScene::Update()
