@@ -1,6 +1,8 @@
 #include "TitleScene.h"
 
 #include "SceneManager.h"
+#include "TutorialScene.h"
+#include "GameScene.h"
 #include "../Engine/math/Easing/Easing.h"
 
 using namespace std;
@@ -288,12 +290,12 @@ void TitleScene::Finalize()
 
 void TitleScene::NextSceneChange()
 {
-	//sceneManager->SetNextScene(new HomeScene(dxCommon,window, 5));
+	sceneManager->SetNextScene(new TutorialScene(dxCommon,window, 5));
 }
 
 void TitleScene::DebugSceneChange()
 {
-	//sceneManager->SetNextScene(new SampleGameScene(dxCommon,window));
+	sceneManager->SetNextScene(new GameScene(dxCommon,window));
 }
 
 void TitleScene::SceneChange()

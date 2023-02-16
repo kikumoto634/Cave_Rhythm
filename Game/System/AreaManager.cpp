@@ -424,9 +424,6 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				Vector3 pos = {startPos + (y*Block_Size) ,-3 ,startPos + (x*Block_Size)};
 				PlayerPopPosition = pos;
 
-				pos.y = -5.f;
-				exitPosition = pos;
-
 				getline(line_stream, word, ',');
 				x++;
 			}
@@ -437,6 +434,16 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				Vector3 pos = {startPos + (y*Block_Size) ,0 ,startPos + (x*Block_Size)};
 				ObjectPos.push_back(pos);
 				ObjectPopActive.push_back(true);
+
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("5") == 0){
+				CSVMap[y][x] = 1;
+
+				float startPos = float(-(DIV_NUM/2)*Block_Size);
+				Vector3 pos = {startPos + (y*Block_Size) ,-5 ,startPos + (x*Block_Size)};
+				exitPosition = pos;
 
 				getline(line_stream, word, ',');
 				x++;

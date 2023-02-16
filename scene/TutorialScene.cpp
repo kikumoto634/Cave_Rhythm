@@ -1,23 +1,24 @@
-#include "GameScene.h"
+#include "TutorialScene.h"
 
 #include "TitleScene.h"
+#include "GameScene.h"
 #include "SceneManager.h"
 
 using namespace std;
 
-GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP)
+TutorialScene::TutorialScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	:BaseBattleScene(
 		dxCommon,
 		window)
 {
 }
 
-void GameScene::NextSceneChange()
+void TutorialScene::NextSceneChange()
 {
 	sceneManager->SetNextScene(new GameScene(dxCommon,window));
 }
 
-void GameScene::AreaManagerInitialize()
+void TutorialScene::AreaManagerInitialize()
 {
 	//ƒ_ƒ“ƒWƒ‡ƒ“
 	//BaseBattleScene::AreaManagerInitialize();
@@ -25,26 +26,26 @@ void GameScene::AreaManagerInitialize()
 	areaManager->CSVAreaInitialize("Tutorial");
 }
 
-void GameScene::AddCommonInitialize()
+void TutorialScene::AddCommonInitialize()
 {
 }
 
-void GameScene::AddObject3DInitialize()
+void TutorialScene::AddObject3DInitialize()
 {
 	slimePopNumMax = 2;
 	coinPopNumMax = 2;
 	ActorCreateInitialize();
 }
 
-void GameScene::AddObject2DInitialize()
+void TutorialScene::AddObject2DInitialize()
 {
 }
 
-void GameScene::AddCommonUpdate()
+void TutorialScene::AddCommonUpdate()
 {
 }
 
-void GameScene::AddObject3DUpdate()
+void TutorialScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		if((*it)->GetIsDeadAudio()){
@@ -68,11 +69,11 @@ void GameScene::AddObject3DUpdate()
 	}
 }
 
-void GameScene::AddObject2DUpdate()
+void TutorialScene::AddObject2DUpdate()
 {
 }
 
-void GameScene::AddBeatEndUpdate()
+void TutorialScene::AddBeatEndUpdate()
 {
 	int index = 0;
 	for(auto it = slime.begin(); it != slime.end(); it++){
@@ -96,7 +97,7 @@ void GameScene::AddBeatEndUpdate()
 	}
 }
 
-void GameScene::AddObject3DDraw()
+void TutorialScene::AddObject3DDraw()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
@@ -106,18 +107,18 @@ void GameScene::AddObject3DDraw()
 	}
 }
 
-void GameScene::AddParticleDraw()
+void TutorialScene::AddParticleDraw()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->ParticleDraw();
 	}
 }
 
-void GameScene::AddUIDraw()
+void TutorialScene::AddUIDraw()
 {
 }
 
-void GameScene::AddObjectFinalize()
+void TutorialScene::AddObjectFinalize()
 {
 
 	for(auto it = slime.begin(); it != slime.end(); it++){
@@ -129,12 +130,12 @@ void GameScene::AddObjectFinalize()
 	}
 }
 
-void GameScene::AddCommonFinalize()
+void TutorialScene::AddCommonFinalize()
 {
 }
 
 
-void GameScene::ActorCreateInitialize()
+void TutorialScene::ActorCreateInitialize()
 {
 	for(int i = 0; i < slimePopNumMax; i++){
 		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();

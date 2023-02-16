@@ -50,7 +50,7 @@ public:
 	//CSV—p
 	Vector3 GetCSVObjectPopPosition(int index);
 	bool GetCSVObjectPopActive(int index, bool IsFlag = true);
-
+	int GetCSVObjectSize()	{return (int)ObjectPos.size();}
 
 private:
 	//’n–Ê
@@ -90,7 +90,6 @@ private:
 	Vector3 PlayerPos={};
 
 	static const int DIV_NUM = 31;
-	//static const int DIV_NUM = 6;
 	static const float Block_Size;
 
 	//Plane

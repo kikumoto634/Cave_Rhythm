@@ -366,9 +366,6 @@
     <ClCompile Include="Game\3D\Wall\Walls.cpp">
       <Filter>ソース ファイル\Game\3D\Wall</Filter>
     </ClCompile>
-    <ClCompile Include="scene\TitleScene.cpp">
-      <Filter>ソース ファイル\scene\Old</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Enemy\BlueSlime.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
@@ -376,6 +373,12 @@
       <Filter>ソース ファイル\scene\Base</Filter>
     </ClCompile>
     <ClCompile Include="scene\GameScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\TutorialScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\TitleScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -554,9 +557,6 @@
     <ClInclude Include="Game\3D\Wall\Walls.h">
       <Filter>ヘッダー ファイル\Game\3D\Wall</Filter>
     </ClInclude>
-    <ClInclude Include="scene\TitleScene.h">
-      <Filter>ヘッダー ファイル\scene\Old</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
@@ -564,6 +564,12 @@
       <Filter>ヘッダー ファイル\scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="scene\GameScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\TutorialScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\TitleScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>

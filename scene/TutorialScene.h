@@ -4,10 +4,10 @@
 #include "../Game/3D/Enemy/BlueSlime.h"
 #include "../Game/3D/Coins/Coins.h"
 
-class GameScene : public BaseBattleScene
+class TutorialScene : public BaseBattleScene
 {
 public:
-	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+	TutorialScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 private:
 //ÉVÅ[ÉìëJà⁄
