@@ -23,6 +23,7 @@ void AreaManager::CSVAreaInitialize(string name)
 	CSVAreaPlaneInitialize();
 
 	CVSAreaWallsInitialize();
+	CSVAreaIndestructibleWallInitialize();
 }
 
 void AreaManager::Update(Camera* camera, Vector3 PlayerPos)
@@ -33,6 +34,7 @@ void AreaManager::Update(Camera* camera, Vector3 PlayerPos)
 	this->PlayerPos = PlayerPos;
 
 	WallUpdate();
+	IndestructibleWallUpdate();
 	PlaneUpdate();
 }
 
@@ -48,6 +50,7 @@ void AreaManager::BeatEndUpdate(GameManager* gameManager)
 void AreaManager::Draw()
 {
 	WallDraw();
+	IndestructibleWallDraw();
 	PlaneDraw();
 }
 
@@ -59,6 +62,7 @@ void AreaManager::ParticleDraw()
 void AreaManager::Finalize()
 {
 	WallFinalize();
+	IndestructibleWallFinalize();
 	PlaneFinalize();
 }
 
@@ -89,12 +93,12 @@ void AreaManager::CSVAreaPlaneInitialize()
 
 			if(CSVMap[i][j] == 0){
 				plane[i][j]->IsNotAlive();
+				continue;
 			}
-			else if(CSVMap[i][j] == 1 || CSVMap[i][j] == 2){
-				float startPos = float(-(DIV_NUM/2)*Block_Size);
-				Vector3 pos = {startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)};
-				plane[i][j]->SetPosition(pos);
-			}
+
+			float startPos = float(-(DIV_NUM/2)*Block_Size);
+			Vector3 pos = {startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)};
+			plane[i][j]->SetPosition(pos);
 		}
 	}
 }
@@ -104,6 +108,7 @@ void AreaManager::PlaneUpdate()
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(plane[i][j] == nullptr) return;
 			plane[i][j]->SetPlayerPos(PlayerPos);
 			plane[i][j]->Update(camera);
 		}
@@ -115,6 +120,7 @@ void AreaManager::PlaneBeatEndUpdate()
 	IsComboColorChange = !IsComboColorChange;
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(plane[i][j] == nullptr) return;
 			//コンボ数に応じて色変化
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 						
@@ -135,6 +141,7 @@ void AreaManager::PlaneDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(plane[i][j] == nullptr) return;
 			plane[i][j]->Draw();
 		}
 	}
@@ -176,7 +183,7 @@ void AreaManager::RandamAreaWallsInitialize()
 				continue;
 			}
 			
-				Wall[i][j]->IsNotAlive();
+			Wall[i][j]->IsNotAlive();
 			
 		}
 	}
@@ -198,13 +205,13 @@ void AreaManager::CVSAreaWallsInitialize()
 			Wall[i][j] = new Walls();
 			Wall[i][j]->Initialize(WallModel,WallColliderModel);
 
-			if(CSVMap[i][j] == 0 || CSVMap[i][j] == 1){
-				Wall[i][j]->IsNotAlive();
+			if(CSVMap[i][j] == 3){
+				pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
+				Wall[i][j]->SetPosition(pos);
 				continue;
 			}
 
-			pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
-			Wall[i][j]->SetPosition(pos);
+			Wall[i][j]->IsNotAlive();
 		}
 	}
 }
@@ -214,6 +221,7 @@ void AreaManager::WallUpdate()
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(Wall[i][j] == nullptr) return;
 			Wall[i][j]->SetPlayerPos(PlayerPos);
 			if(Wall[i][j]->GetIsDigSound())	gameManager->AudioPlay(10);
 			Wall[i][j]->Update(camera);
@@ -229,6 +237,7 @@ void AreaManager::WallDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(Wall[i][j] == nullptr) return;
 			Wall[i][j]->Draw();
 		}
 	}
@@ -238,6 +247,7 @@ void AreaManager::WallParticleDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(Wall[i][j] == nullptr) return;
 			Wall[i][j]->ParticleDraw();
 		}
 	}
@@ -256,6 +266,60 @@ void AreaManager::WallFinalize()
 			Wall[i][j]->Finalize();
 			delete Wall[i][j];
 			Wall[i][j] = nullptr;
+		}
+	}
+}
+#pragma endregion
+
+#pragma region 破壊不可壁
+void AreaManager::CSVAreaIndestructibleWallInitialize()
+{
+	IndestructibleWallModel = new ObjModelManager();
+	IndestructibleWallModel->CreateModel("GroundBlock3");
+
+	float startPos = float(-(DIV_NUM/2)*Block_Size);
+	Vector3 pos = {startPos ,-3 ,startPos};
+
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			IndestructibleWalls[i][j] = new IndestructibleWall();
+			IndestructibleWalls[i][j]->Initialize(IndestructibleWallModel);
+
+			if(CSVMap[i][j] == 2){
+				pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
+				IndestructibleWalls[i][j]->SetPosition(pos);
+				continue;
+			}
+
+			IndestructibleWalls[i][j]->IsNotAlive();
+		}
+	}
+}
+void AreaManager::IndestructibleWallUpdate()
+{
+	//地面
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			if(IndestructibleWalls[i][j] == nullptr) return;
+			IndestructibleWalls[i][j]->SetPlayerPos(PlayerPos);
+			IndestructibleWalls[i][j]->Update(camera);
+		}
+	}
+}
+void AreaManager::IndestructibleWallDraw()
+{
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			if(IndestructibleWalls[i][j] == nullptr) return;
+			IndestructibleWalls[i][j]->Draw();
+		}
+	}
+}
+void AreaManager::IndestructibleWallFinalize()
+{
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			IndestructibleWalls[i][j]->Finalize();
 		}
 	}
 }
@@ -450,6 +514,11 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				x++;
 			}
 			if(word.find("3") == 0){
+				CSVMap[y][x] = 3;
+				getline(line_stream, word, ',');
+				x++;
+			}
+			if(word.find("4") == 0){
 				CSVMap[y][x] = 1;
 
 				float startPos = float(-(DIV_NUM/2)*Block_Size);
@@ -459,7 +528,7 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				getline(line_stream, word, ',');
 				x++;
 			}
-			if(word.find("4") == 0){
+			if(word.find("5") == 0){
 				CSVMap[y][x] = 1;
 
 				float startPos = float(-(DIV_NUM/2)*Block_Size);
@@ -470,7 +539,7 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				getline(line_stream, word, ',');
 				x++;
 			}
-			if(word.find("5") == 0){
+			if(word.find("6") == 0){
 				CSVMap[y][x] = 1;
 
 				float startPos = float(-(DIV_NUM/2)*Block_Size);

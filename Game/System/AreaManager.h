@@ -4,6 +4,7 @@
 
 #include "../3D/Plane/Planes.h"
 #include "../3D/Wall/Walls.h"
+#include "../3D/Wall/IndestructibleWall.h"
 
 #include "GameManager.h"
 
@@ -70,6 +71,12 @@ private:
 	void WallParticleDraw();
 	void WallFinalize();
 
+	//破壊不可
+	void CSVAreaIndestructibleWallInitialize();
+	void IndestructibleWallUpdate();
+	void IndestructibleWallDraw();
+	void IndestructibleWallFinalize();
+
 	//ダンジョン生成
 	void CreateMap();
 	Room DevideRoom(Area area, bool hr = false);
@@ -103,6 +110,10 @@ private:
 	bool IsAlive = false;
 	char WallMap[DIV_NUM][DIV_NUM] = {};
 	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};
+
+	//破壊不可能壁
+	ObjModelManager* IndestructibleWallModel = nullptr;
+	IndestructibleWall* IndestructibleWalls[DIV_NUM][DIV_NUM] = {nullptr};
 
 	//部屋
 	std::vector<Room> rooms;

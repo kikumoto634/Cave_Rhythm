@@ -190,6 +190,7 @@
     <ClCompile Include="Game\3D\Player\PlayerWeapon.cpp" />
     <ClCompile Include="Game\3D\SampleFbxObject\SampleFbxObject.cpp" />
     <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp" />
+    <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp" />
     <ClCompile Include="Game\3D\Wall\Walls.cpp" />
     <ClCompile Include="Game\Collision\CollisionSystem\Collision.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
@@ -254,6 +255,7 @@
     <ClInclude Include="Game\3D\Player\PlayerWeapon.h" />
     <ClInclude Include="Game\3D\SampleFbxObject\SampleFbxObject.h" />
     <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h" />
+    <ClInclude Include="Game\3D\Wall\IndestructibleWall.h" />
     <ClInclude Include="Game\3D\Wall\Walls.h" />
     <ClInclude Include="Game\Collision\CollisionSystem\BaseCollider.h" />
     <ClInclude Include="Game\Collision\CollisionSystem\Collision.h" />
