@@ -15,7 +15,7 @@ public:
 	/// ‰Šú‰»
 	/// </summary>
 	/// <returns></returns>
-	void Initialize(std::string filePath, bool IsSmmothing = false);
+	void Initialize(ObjModelManager* model) override;
 
 	/// <summary>
 	/// XV
@@ -50,6 +50,7 @@ public:
 
 	//Setter
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
+	inline void SetColliderModel(ObjModelManager* model)	{colliderModel = model;}
 
 private:
 	Vector3 PlayerPos;

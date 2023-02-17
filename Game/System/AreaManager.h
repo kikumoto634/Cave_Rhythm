@@ -93,10 +93,13 @@ private:
 	static const float Block_Size;
 
 	//Plane
+	ObjModelManager* PlaneModel = nullptr;
 	Planes* plane[DIV_NUM][DIV_NUM] = {nullptr};
 	bool IsComboColorChange = false;
 
 	//Wall
+	ObjModelManager* WallModel = nullptr;
+	ObjModelManager* WallColliderModel = nullptr;
 	bool IsAlive = false;
 	char WallMap[DIV_NUM][DIV_NUM] = {};
 	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};

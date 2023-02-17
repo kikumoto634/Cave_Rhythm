@@ -12,7 +12,7 @@ public:
 	/// ‰Šú‰»
 	/// </summary>
 	/// <returns></returns>
-	void Initialize(std::string filePath, bool IsSmmothing = false);
+	void Initialize(ObjModelManager* model);
 
 	/// <summary>
 	/// XV

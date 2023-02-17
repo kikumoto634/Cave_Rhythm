@@ -64,10 +64,13 @@ void AreaManager::Finalize()
 #pragma region ’n–Ê
 void AreaManager::RandamAreaPlaneInitialize()
 {
+	PlaneModel = new ObjModelManager();
+	PlaneModel->CreateModel("GroundBlock");
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = new Planes();
-			plane[i][j]->Initialize("GroundBlock");
+			plane[i][j]->Initialize(PlaneModel);
 			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
 		}
 	}
@@ -75,10 +78,13 @@ void AreaManager::RandamAreaPlaneInitialize()
 
 void AreaManager::CSVAreaPlaneInitialize()
 {
+	PlaneModel = new ObjModelManager();
+	PlaneModel->CreateModel("GroundBlock");
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = new Planes();
-			plane[i][j]->Initialize("GroundBlock");
+			plane[i][j]->Initialize(PlaneModel);
 
 			if(CSVMap[i][j] == 0){
 				plane[i][j]->IsNotAlive();
@@ -135,6 +141,7 @@ void AreaManager::PlaneDraw()
 
 void AreaManager::PlaneFinalize()
 {
+	delete PlaneModel;
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j]->Finalize();
@@ -148,10 +155,17 @@ void AreaManager::PlaneFinalize()
 #pragma region •Ç
 void AreaManager::RandamAreaWallsInitialize()
 {
+	WallModel = new ObjModelManager();
+	WallModel->CreateModel("GroundBlock2");
+
+	WallColliderModel = new ObjModelManager();
+	WallColliderModel->CreateModel("GroundBlock2_Collider");
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j] = new Walls();
-			Wall[i][j]->Initialize("GroundBlock2");
+			Wall[i][j]->Initialize(WallModel);
+			Wall[i][j]->SetColliderModel(WallColliderModel);
 			if(WallMap[i][j] == '*') {
 				float startPos = float(-(DIV_NUM/2)*Block_Size);
 				Vector3 pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
@@ -166,10 +180,17 @@ void AreaManager::RandamAreaWallsInitialize()
 
 void AreaManager::CVSAreaWallsInitialize()
 {
+	WallModel = new ObjModelManager();
+	WallModel->CreateModel("GroundBlock2");
+
+	WallColliderModel = new ObjModelManager();
+	WallColliderModel->CreateModel("GroundBlock2_Collider");
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j] = new Walls();
-			Wall[i][j]->Initialize("GroundBlock2");
+			Wall[i][j]->Initialize(WallModel);
+			Wall[i][j]->SetColliderModel(WallColliderModel);
 
 			if(CSVMap[i][j] == 2){
 				float startPos = float(-(DIV_NUM/2)*Block_Size);
@@ -219,6 +240,12 @@ void AreaManager::WallParticleDraw()
 
 void AreaManager::WallFinalize()
 {
+
+	delete WallModel;
+	WallModel = nullptr;
+	delete WallColliderModel;
+	WallColliderModel = nullptr;
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j]->Finalize();

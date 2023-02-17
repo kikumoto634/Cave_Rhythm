@@ -26,6 +26,7 @@ public:
 	/// 初期化
 	/// </summary>
 	virtual void Initialize(std::string filePath, bool IsSmmothing = false);
+	virtual void Initialize(ObjModelManager* model);
 
 	/// <summary>
 	/// 更新
@@ -82,6 +83,7 @@ protected:
 	//クラス名(デバック用)
 	const char* name = nullptr;
 
+	bool IsLendModel = false;
 	ObjModelManager* model;
 	ObjModelObject* object;
 	WorldTransform world;

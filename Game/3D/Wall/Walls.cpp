@@ -9,12 +9,9 @@ Walls::~Walls()
 	//Finalize();
 }
 
-void Walls::Initialize(std::string filePath, bool IsSmmothing)
+void Walls::Initialize(ObjModelManager* model)
 {
-	BaseObjObject::Initialize(filePath, IsSmmothing);
-
-	colliderModel = new ObjModelManager();
-	colliderModel->CreateModel("GroundBlock2_Collider");
+	BaseObjObject::Initialize(model);
 
 	DigParticle = new ParticleObject();
 	DigParticle->Initialize();
@@ -88,7 +85,6 @@ void Walls::ParticleDraw()
 
 void Walls::Finalize()
 {
-	delete colliderModel;
 	DigParticle->Finalize();
 	delete DigParticle;
 	BaseObjObject::Finalize();

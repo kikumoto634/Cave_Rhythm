@@ -24,6 +24,19 @@ void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
 	name = typeid(*this).name();
 }
 
+void BaseObjObject::Initialize(ObjModelManager *model)
+{
+	IsLendModel = true;
+	this->model = model;
+	object = ObjModelObject::Create(model);
+	world.Initialize();
+	world.UpdateMatrix();
+
+	//ƒNƒ‰ƒX–¼‚Ì•¶Žš—ñ‚ðŽæ“¾
+	name = typeid(*this).name();
+}
+
+
 void BaseObjObject::Update(Camera *camera)
 {
 	this->camera = camera;
@@ -49,8 +62,10 @@ void BaseObjObject::Finalize()
 		delete collider;
 	}
 
-	delete model;
-	model = nullptr;
+	if(!IsLendModel){
+		delete model;
+		model = nullptr;
+	}
 
 	delete object;
 	object = nullptr;

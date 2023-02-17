@@ -6,11 +6,9 @@ Planes::~Planes()
 	//Finalize();
 }
 
-void Planes::Initialize(std::string filePath, bool IsSmmothing)
+void Planes::Initialize(ObjModelManager *model)
 {
-	BaseObjObject::Initialize(filePath, IsSmmothing);
-
-	SetModel(model);
+	BaseObjObject::Initialize(model);
 }
 
 void Planes::Update(Camera *camera)
