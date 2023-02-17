@@ -9,9 +9,11 @@ Walls::~Walls()
 	//Finalize();
 }
 
-void Walls::Initialize(ObjModelManager* model)
+void Walls::Initialize(ObjModelManager* model, ObjModelManager* collider)
 {
 	BaseObjObject::Initialize(model);
+
+	colliderModel = collider;
 
 	DigParticle = new ParticleObject();
 	DigParticle->Initialize();

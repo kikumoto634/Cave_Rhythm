@@ -7,6 +7,7 @@ using namespace std;
 
 const float AreaManager::Block_Size = 2.f;
 
+
 void AreaManager::RandamAreaInitialize()
 {
 	CreateMap();
@@ -19,8 +20,8 @@ void AreaManager::RandamAreaInitialize()
 void AreaManager::CSVAreaInitialize(string name)
 {
 	CSVMapDataLoad(name);
-
 	CSVAreaPlaneInitialize();
+
 	CVSAreaWallsInitialize();
 }
 
@@ -161,19 +162,22 @@ void AreaManager::RandamAreaWallsInitialize()
 	WallColliderModel = new ObjModelManager();
 	WallColliderModel->CreateModel("GroundBlock2_Collider");
 
+	float startPos = float(-(DIV_NUM/2)*Block_Size);
+	Vector3 pos = {startPos ,-3 ,startPos};
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j] = new Walls();
-			Wall[i][j]->Initialize(WallModel);
-			Wall[i][j]->SetColliderModel(WallColliderModel);
+			Wall[i][j]->Initialize(WallModel,WallColliderModel);
+
 			if(WallMap[i][j] == '*') {
-				float startPos = float(-(DIV_NUM/2)*Block_Size);
-				Vector3 pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
+				pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
 				Wall[i][j]->SetPosition(pos);
+				continue;
 			}
-			else{
+			
 				Wall[i][j]->IsNotAlive();
-			}
+			
 		}
 	}
 }
@@ -186,20 +190,21 @@ void AreaManager::CVSAreaWallsInitialize()
 	WallColliderModel = new ObjModelManager();
 	WallColliderModel->CreateModel("GroundBlock2_Collider");
 
+	float startPos = float(-(DIV_NUM/2)*Block_Size);
+	Vector3 pos = {startPos ,-3 ,startPos};
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			Wall[i][j] = new Walls();
-			Wall[i][j]->Initialize(WallModel);
-			Wall[i][j]->SetColliderModel(WallColliderModel);
+			Wall[i][j]->Initialize(WallModel,WallColliderModel);
 
-			if(CSVMap[i][j] == 2){
-				float startPos = float(-(DIV_NUM/2)*Block_Size);
-				Vector3 pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
-				Wall[i][j]->SetPosition(pos);
-			}
-			else if(CSVMap[i][j] == 0 || CSVMap[i][j] == 1){
+			if(CSVMap[i][j] == 0 || CSVMap[i][j] == 1){
 				Wall[i][j]->IsNotAlive();
+				continue;
 			}
+
+			pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
+			Wall[i][j]->SetPosition(pos);
 		}
 	}
 }

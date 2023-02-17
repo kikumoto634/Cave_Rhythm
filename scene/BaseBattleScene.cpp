@@ -442,6 +442,7 @@ void BaseBattleScene::SceneChange()
 	else if(IsNextSceneChange || IsGameEnd){
 
 		if(fadeColor.w >= 1){
+			camera->Reset();
 			if(IsNextSceneChange)NextSceneChange();
 			else if(IsGameEnd)	SceneGameEnd();
 		}

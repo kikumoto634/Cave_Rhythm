@@ -63,8 +63,8 @@ public:
 
 	//Setter
 	void SetPosition(const Vector3& position);
-	void SetRotation(const Vector3& rotation)	{world.rotation = rotation, world.UpdateMatrix();}
-	void SetScale(const Vector3& scale)			{world.scale = scale, world.UpdateMatrix();}
+	inline void SetRotation(const Vector3& rotation)	{world.rotation = rotation, world.UpdateMatrix();}
+	inline void SetScale(const Vector3& scale)			{world.scale = scale, world.UpdateMatrix();}
 	void SetCollider(BaseCollider* collider);
 	inline void SetObject(ObjModelObject* object)	{this->object = object;}
 	inline void SetModel(ObjModelManager* model)	{this->model = model;}

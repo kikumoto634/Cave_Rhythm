@@ -15,7 +15,7 @@ public:
 	/// èâä˙âª
 	/// </summary>
 	/// <returns></returns>
-	void Initialize(ObjModelManager* model) override;
+	void Initialize(ObjModelManager* model, ObjModelManager* collider);
 
 	/// <summary>
 	/// çXêV
@@ -42,7 +42,7 @@ public:
 
 	void DigParticlePop();
 
-	void IsNotAlive()	{IsAlive = false;}
+	inline void IsNotAlive()	{IsAlive = false;}
 
 	//Getter
 	inline bool GetIsAlive()	{return IsAlive;}
@@ -50,7 +50,6 @@ public:
 
 	//Setter
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
-	inline void SetColliderModel(ObjModelManager* model)	{colliderModel = model;}
 
 private:
 	Vector3 PlayerPos;

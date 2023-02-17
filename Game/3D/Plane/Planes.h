@@ -39,9 +39,9 @@ public:
 	/// F•Ï‰»
 	/// </summary>
 	void PlaneColorChange(bool IsSwitch,  bool IsColorChange);
-	void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
+	inline void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
 
-	void IsNotAlive()	{IsAlive = false;}
+	inline void IsNotAlive()	{IsAlive = false;}
 
 	//Getter
 	inline bool GetIsPlayerContact()	{return IsPlayerContact;}

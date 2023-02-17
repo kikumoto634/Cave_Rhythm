@@ -91,6 +91,13 @@ void Camera::ShakeStart(int MaxFrame)
 	IsShake = true;
 }
 
+void Camera::Reset()
+{
+	//ƒJƒƒ‰
+	RotVector({XMConvertToRadians(60.f), 0.f, 0.f});
+	view.UpdateViewMatrix();
+}
+
 void Camera::Shake()
 {
 	if(!IsShake) return;

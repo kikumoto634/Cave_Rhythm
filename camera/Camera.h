@@ -47,6 +47,8 @@ public:
 
 	void ShakeStart(int MaxFrame = 5);
 
+	void Reset();
+
 	//getter
 	const XMMATRIX& GetMatProjection()	{return view.matProjection;}
 	const XMMATRIX& GetMatView()	{return view.matView;}
