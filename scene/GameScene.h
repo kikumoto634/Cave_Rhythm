@@ -39,10 +39,10 @@ private:
 	void ActorCreateInitialize();
 
 private:
-	int slimePopNumMax = 10;
+	int slimePopNumMax = 5;
 	std::vector<std::unique_ptr<BlueSlime>> slime;
 
-	int coinPopNumMax = 10;
+	int coinPopNumMax = 5;
 	std::vector<std::unique_ptr<Coins>> coin;
 };
 

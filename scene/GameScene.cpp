@@ -14,7 +14,7 @@ GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 
 void GameScene::NextSceneChange()
 {
-	sceneManager->SetNextScene(new GameScene(dxCommon,window));
+	sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHP()));
 }
 
 void GameScene::AreaManagerInitialize()
@@ -25,13 +25,17 @@ void GameScene::AreaManagerInitialize()
 
 void GameScene::AddCommonInitialize()
 {
+	srand( (unsigned int)time(NULL) );
 }
 
 void GameScene::AddObject3DInitialize()
 {
-	/*slimePopNumMax = 2;
-	coinPopNumMax = 2;
-	ActorCreateInitialize();*/
+	ActorCreateInitialize();
+
+	player->SetHp(saveHP);
+
+	exit->SetExitOpenNeedCoin(10);
+	exit->NeedCoinSpriteUpdate();
 }
 
 void GameScene::AddObject2DInitialize()
@@ -44,7 +48,7 @@ void GameScene::AddCommonUpdate()
 
 void GameScene::AddObject3DUpdate()
 {
-	/*for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); it++){
 		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
 			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
@@ -63,7 +67,7 @@ void GameScene::AddObject3DUpdate()
 			gameManager->AudioPlay(7,0.5f);
 		}
 		(*it)->Update(this->camera);
-	}*/
+	}
 }
 
 void GameScene::AddObject2DUpdate()
@@ -72,43 +76,37 @@ void GameScene::AddObject2DUpdate()
 
 void GameScene::AddBeatEndUpdate()
 {
-	//int index = 0;
-	//for(auto it = slime.begin(); it != slime.end(); it++){
-	//	(*it)->IsBeatEndOn();
-	//	if(!(*it)->GetIsNotApp()){
-	//		Vector3 lpos;
-	//		//lpos = areaManager->GetObjectPopPosition();
+	Vector3 lpos;
+	for(auto it = slime.begin(); it != slime.end(); it++){
+		(*it)->IsBeatEndOn();
+		if(!(*it)->GetIsNotApp()){
+			lpos = areaManager->GetObjectPopPosition();
+			(*it)->Pop({lpos.x, -3.5f,lpos.z});
+		}
+	}
 
-	//		if(areaManager->GetCSVObjectPopActive(index,false)) {
-	//			lpos = areaManager->GetCSVObjectPopPosition(index);
-	//			(*it)->Pop({lpos.x, -3.5f,lpos.z});
-	//		}
-	//		index++;
-	//	}
-	//}
-
-	//for(auto it = coin.begin(); it != coin.end(); it++){
-	//	if((*it)->GetIsAlive()){
-	//		(*it)->IsBeatEndOn();
-	//	}
-	//}
+	for(auto it = coin.begin(); it != coin.end(); it++){
+		if((*it)->GetIsAlive()){
+			(*it)->IsBeatEndOn();
+		}
+	}
 }
 
 void GameScene::AddObject3DDraw()
 {
-	/*for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
 	}
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		(*it)->Draw();
-	}*/
+	}
 }
 
 void GameScene::AddParticleDraw()
 {
-	/*for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->ParticleDraw();
-	}*/
+	}
 }
 
 void GameScene::AddUIDraw()
@@ -118,13 +116,13 @@ void GameScene::AddUIDraw()
 void GameScene::AddObjectFinalize()
 {
 
-	/*for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Finalize();
 	}
 
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		(*it)->Finalize();
-	}*/
+	}
 }
 
 void GameScene::AddCommonFinalize()
@@ -134,7 +132,7 @@ void GameScene::AddCommonFinalize()
 
 void GameScene::ActorCreateInitialize()
 {
-	/*for(int i = 0; i < slimePopNumMax; i++){
+	for(int i = 0; i < slimePopNumMax; i++){
 		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
 		newObj->Initialize("slime");
 		slime.push_back(move(newObj));
@@ -144,5 +142,5 @@ void GameScene::ActorCreateInitialize()
 		unique_ptr<Coins> newObj = make_unique<Coins>();
 		newObj->Initialize("Coins");
 		coin.push_back(move(newObj));
-	}*/
+	}
 }

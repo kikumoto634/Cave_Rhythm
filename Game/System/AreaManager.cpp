@@ -108,7 +108,7 @@ void AreaManager::PlaneUpdate()
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) return;
+			if(plane[i][j] == nullptr) break;
 			plane[i][j]->SetPlayerPos(PlayerPos);
 			plane[i][j]->Update(camera);
 		}
@@ -120,7 +120,7 @@ void AreaManager::PlaneBeatEndUpdate()
 	IsComboColorChange = !IsComboColorChange;
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) return;
+			if(plane[i][j] == nullptr) break;
 			//コンボ数に応じて色変化
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 						
@@ -141,7 +141,7 @@ void AreaManager::PlaneDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) return;
+			if(plane[i][j] == nullptr) break;
 			plane[i][j]->Draw();
 		}
 	}
@@ -221,7 +221,7 @@ void AreaManager::WallUpdate()
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) return;
+			if(Wall[i][j] == nullptr) break;
 			Wall[i][j]->SetPlayerPos(PlayerPos);
 			if(Wall[i][j]->GetIsDigSound())	gameManager->AudioPlay(10);
 			Wall[i][j]->Update(camera);
@@ -237,7 +237,7 @@ void AreaManager::WallDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) return;
+			if(Wall[i][j] == nullptr) break;
 			Wall[i][j]->Draw();
 		}
 	}
@@ -247,7 +247,7 @@ void AreaManager::WallParticleDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) return;
+			if(Wall[i][j] == nullptr) break;
 			Wall[i][j]->ParticleDraw();
 		}
 	}
@@ -300,7 +300,7 @@ void AreaManager::IndestructibleWallUpdate()
 	//地面
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(IndestructibleWalls[i][j] == nullptr) return;
+			if(IndestructibleWalls[i][j] == nullptr) break;
 			IndestructibleWalls[i][j]->SetPlayerPos(PlayerPos);
 			IndestructibleWalls[i][j]->Update(camera);
 		}
@@ -310,7 +310,7 @@ void AreaManager::IndestructibleWallDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(IndestructibleWalls[i][j] == nullptr) return;
+			if(IndestructibleWalls[i][j] == nullptr) break;
 			IndestructibleWalls[i][j]->Draw();
 		}
 	}
@@ -319,6 +319,7 @@ void AreaManager::IndestructibleWallFinalize()
 {
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
+			if(IndestructibleWalls[i][j] == nullptr) break;;
 			IndestructibleWalls[i][j]->Finalize();
 		}
 	}
