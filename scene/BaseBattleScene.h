@@ -54,6 +54,8 @@ public:
 	void Finalize() override;
 
 private:
+	void SceneGameEnd();
+
 	//初期化
 	void CommonInitialize();
 	void Object3DInitialize();
@@ -76,7 +78,6 @@ private:
 	void UIDraw();
 
 	//シーン遷移
-	void SceneGameEnd();
 	void SceneChange();
 
 	//後処理
@@ -84,6 +85,7 @@ private:
 	void CommonFinalize();
 
 protected:
+
 	//シーン遷移
 	virtual void NextSceneChange() = 0;
 

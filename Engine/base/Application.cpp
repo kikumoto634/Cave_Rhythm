@@ -134,10 +134,12 @@ void Application::Initialize()
 	sceneManager = SceneManager::GetInstance();
 	BaseScene* scene = new TitleScene(dxCommon, window);
 	//BaseScene* scene = new GameScene(dxCommon, window);
+
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
 	scene->SetImGui(imgui);
 #endif // _DEBUG
+
 	sceneManager->SetNextScene(scene);
 }
 
@@ -145,7 +147,6 @@ void Application::Update()
 {
 #ifdef _DEBUG
 	imgui->Begin();
-
 #endif // _DEBUG
 
 	sceneManager->Update();
@@ -163,6 +164,7 @@ void Application::Draw()
 	Sprite::SetPipelineState();
 	//scene->Draw();
 	sceneManager->Draw();
+
 #ifdef _DEBUG
 	debugText->DrawAll();
 	imgui->Draw();
@@ -181,6 +183,7 @@ void Application::Finalize()
 	delete debugText;
 	debugText = nullptr;
 #endif // _DEBUG
+
 	ObjModelObject::StaticFinalize();
 	FbxModelObject::StaticFinalize();
 	FbxLoader::GetInstance()->Finalize();

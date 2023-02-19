@@ -46,7 +46,6 @@ void TutorialScene::AddObject2DInitialize()
 		moveSp->SetPosition(lpos);
 		moveSp->SetSize({384,64});
 		moveSp->SetAnchorPoint({0.5f,0.5f});
-		//moveSp->Update();
 	}
 
 	{
@@ -57,7 +56,6 @@ void TutorialScene::AddObject2DInitialize()
 		attackSp->SetPosition(lpos);
 		attackSp->SetSize({384,64});
 		attackSp->SetAnchorPoint({0.5f,0.5f});
-		//attackSp->Update();
 	}
 }
 

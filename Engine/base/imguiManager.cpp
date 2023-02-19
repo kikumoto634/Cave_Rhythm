@@ -5,6 +5,7 @@
 #include <imgui_impl_dx12.h>
 #include <cassert>
 
+
 void imguiManager::Initialize(Window* winApp, DirectXCommon* dxCommon)
 {
 	assert(winApp);

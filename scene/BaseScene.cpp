@@ -46,10 +46,6 @@ void BaseScene::Update()
 
 void BaseScene::EndUpdate()
 {
-#ifdef _DEBUG
-
-#endif // _DEBUG
-
 #pragma region 汎用機能更新
 	//カメラ
 	camera->Update();

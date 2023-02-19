@@ -72,7 +72,6 @@ void SampleScane::Update()
 	else if(input->Push(DIK_E)){
 		camera->MoveVector({0.f, -1.f, 0.f});
 	}
-
 #endif // _DEBUG
 
 	//シーン更新

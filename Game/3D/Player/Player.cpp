@@ -143,6 +143,7 @@ void Player::Update(Camera *camera)
 		HP = 0;
 	}
 #endif // _DEBUG
+
 	if(HP <= 0 && !IsDead){
 		IsDead = true;
 		IsDeadAudioOnce = true;

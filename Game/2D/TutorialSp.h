@@ -9,7 +9,7 @@ public:
 	void Draw() override;
 	void Finalize() override;
 
-	void SpriteHide()	{IsHide = true;}
+	void SpriteHide()	{IsHide = true, Draw();}
 
 	//Setter
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}

@@ -12,16 +12,6 @@
 
 using namespace std;
 
-bool IsLoadComplate = false;
-void ThreadLoad()
-{
-	while(!IsLoadComplate){
-		OutputDebugString(L"Load\n");
-	}
-
-	OutputDebugString(L"LoadŠ®—¹\n");
-}
-
 BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	:BaseScene(
 		dxCommon,
@@ -42,10 +32,6 @@ void BaseBattleScene::Application()
 
 void BaseBattleScene::Initialize()
 {
-	//ƒ[ƒh
-
-	//thread t(ThreadLoad);
-
 	BaseScene::Initialize();
 
 	CommonInitialize();
@@ -56,9 +42,6 @@ void BaseBattleScene::Initialize()
 
 	Object2DInitialize();
 	AddObject2DInitialize();
-
-	//IsLoadComplate = true;
-	//t.join();
 }
 
 void BaseBattleScene::Update()
@@ -171,8 +154,9 @@ void BaseBattleScene::Draw()
 	ParticleDraw();
 	AddParticleDraw();
 
-	UIDraw();
+	Sprite::SetPipelineState();
 	AddUIDraw();
+	UIDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
@@ -406,8 +390,6 @@ void BaseBattleScene::ParticleDraw()
 
 void BaseBattleScene::UIDraw()
 {
-	Sprite::SetPipelineState();
-
 	//oŒû
 	exit->Draw2D();
 
