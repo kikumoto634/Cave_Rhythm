@@ -30,18 +30,23 @@ struct Room{
 };
 
 public:
+	~AreaManager();
+
 	void RandamAreaInitialize();
 	void CSVAreaInitialize(std::string name);
 
-	void Update(Camera* camera, Vector3 PlayerPos);
+	void RandamAreaUpdate(Camera* camera, Vector3 PlayerPos);
+	void CSVAreaUpdate(Camera* camera, Vector3 PlayerPos);
 
 	void BeatEndUpdate(GameManager* gameManager);
 
-	void Draw();
+	void RandamAreaDraw();
+	void CSVAreaDraw();
 
 	void ParticleDraw();
 
-	void Finalize();
+	void RandamAreaFinalize();
+	void CSVAreaFinalize();
 
 	//ƒ‰ƒ“ƒ_ƒ€—p
 	Vector3 GetExitPosition()	{return exitPosition;}

@@ -87,6 +87,8 @@ void Application::Initialize()
 	TextureManager::Load(21, "2DText/arrowLeft.png");
 	TextureManager::Load(22, "2DText/arrowUp.png");
 	TextureManager::Load(23, "2DText/arrowRight.png");
+	TextureManager::Load(24, "2DText/TutorialFont1.png");
+	TextureManager::Load(25, "2DText/TutorialFont2.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();

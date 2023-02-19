@@ -26,6 +26,8 @@ public:
 	//コンストラクタ
 	BaseBattleScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
+	~BaseBattleScene();
+
 	/// <summary>
 	/// 起動時
 	/// </summary>
@@ -86,7 +88,6 @@ protected:
 	virtual void NextSceneChange() = 0;
 
 	//初期化
-	virtual void AreaManagerInitialize() = 0;
 	virtual void AddCommonInitialize() = 0;
 	virtual void AddObject3DInitialize() = 0;
 	virtual void AddObject2DInitialize() = 0;
@@ -124,7 +125,7 @@ protected:
 	//出口
 	std::unique_ptr<Exit> exit;
 	//エリアマネージャー
-	std::unique_ptr<AreaManager> areaManager;
+	AreaManager* areaManager;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ

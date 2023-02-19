@@ -6,6 +6,11 @@
 
 using namespace std;
 
+TutorialScene::~TutorialScene()
+{
+	Finalize();
+}
+
 TutorialScene::TutorialScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	:BaseBattleScene(
 		dxCommon,
@@ -18,14 +23,10 @@ void TutorialScene::NextSceneChange()
 	sceneManager->SetNextScene(new GameScene(dxCommon,window));
 }
 
-void TutorialScene::AreaManagerInitialize()
+void TutorialScene::AddCommonInitialize()
 {
 	//ƒ_ƒ“ƒWƒ‡ƒ“
 	areaManager->CSVAreaInitialize("Tutorial");
-}
-
-void TutorialScene::AddCommonInitialize()
-{
 }
 
 void TutorialScene::AddObject3DInitialize()
@@ -37,10 +38,32 @@ void TutorialScene::AddObject3DInitialize()
 
 void TutorialScene::AddObject2DInitialize()
 {
+	{
+		moveSp = make_unique<TutorialSp>();
+		moveSp->Initialize(24);
+		Vector3 ltarget = moveSpPos;
+		Vector2 lpos = moveSp->ChangeTransformation(ltarget, this->camera);
+		moveSp->SetPosition(lpos);
+		moveSp->SetSize({384,64});
+		moveSp->SetAnchorPoint({0.5f,0.5f});
+		//moveSp->Update();
+	}
+
+	{
+		attackSp = make_unique<TutorialSp>();
+		attackSp->Initialize(25);
+		Vector3 ltarget = attackSpPos;
+		Vector2 lpos = attackSp->ChangeTransformation(ltarget, this->camera);
+		attackSp->SetPosition(lpos);
+		attackSp->SetSize({384,64});
+		attackSp->SetAnchorPoint({0.5f,0.5f});
+		//attackSp->Update();
+	}
 }
 
 void TutorialScene::AddCommonUpdate()
 {
+	areaManager->CSVAreaUpdate(camera, player->GetPosition());
 }
 
 void TutorialScene::AddObject3DUpdate()
@@ -69,6 +92,21 @@ void TutorialScene::AddObject3DUpdate()
 
 void TutorialScene::AddObject2DUpdate()
 {
+	{
+		Vector3 ltarget = moveSpPos;
+		Vector2 lpos = moveSp->ChangeTransformation(ltarget, this->camera);
+		moveSp->SetPosition(lpos);
+		moveSp->SetPlayerPos(player->GetPosition());
+		moveSp->Update();
+	}
+
+	{
+		Vector3 ltarget = attackSpPos;
+		Vector2 lpos = attackSp->ChangeTransformation(ltarget, this->camera);
+		attackSp->SetPosition(lpos);
+		attackSp->SetPlayerPos(player->GetPosition());
+		attackSp->Update();
+	}
 }
 
 void TutorialScene::AddBeatEndUpdate()
@@ -97,6 +135,8 @@ void TutorialScene::AddBeatEndUpdate()
 
 void TutorialScene::AddObject3DDraw()
 {
+	areaManager->CSVAreaDraw();
+
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
 	}
@@ -114,10 +154,14 @@ void TutorialScene::AddParticleDraw()
 
 void TutorialScene::AddUIDraw()
 {
+	moveSp->Draw();
+	attackSp->Draw();
 }
 
 void TutorialScene::AddObjectFinalize()
 {
+	attackSp->Finalize();
+	moveSp->Finalize();
 
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Finalize();
@@ -130,6 +174,7 @@ void TutorialScene::AddObjectFinalize()
 
 void TutorialScene::AddCommonFinalize()
 {
+	areaManager->CSVAreaFinalize();
 }
 
 

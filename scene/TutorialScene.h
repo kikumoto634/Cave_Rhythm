@@ -4,9 +4,13 @@
 #include "../Game/3D/Enemy/BlueSlime.h"
 #include "../Game/3D/Coins/Coins.h"
 
+#include "../Game/2D/TutorialSp.h"
+
 class TutorialScene : public BaseBattleScene
 {
 public:
+	~TutorialScene();
+
 	TutorialScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 private:
@@ -14,7 +18,6 @@ private:
 	void NextSceneChange() override;
 
 	//初期化
-	void AreaManagerInitialize() override;
 	void AddCommonInitialize() override;
 	void AddObject3DInitialize() override;
 	void AddObject2DInitialize() override;
@@ -44,5 +47,14 @@ private:
 
 	int coinPopNumMax = 10;
 	std::vector<std::unique_ptr<Coins>> coin;
+
+	//スプライト
+	//移動	(-25,-3,26)
+	//攻撃	(7,-3,16)
+	std::unique_ptr<TutorialSp> moveSp;
+	const Vector3 moveSpPos = {-25,-3,30};
+
+	std::unique_ptr<TutorialSp> attackSp;
+	const Vector3 attackSpPos = {7,-3,18};
 };
 

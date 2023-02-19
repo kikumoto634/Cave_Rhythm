@@ -5,6 +5,11 @@
 
 using namespace std;
 
+GameScene::~GameScene()
+{
+	Finalize();
+}
+
 GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	:BaseBattleScene(
 		dxCommon,
@@ -17,15 +22,12 @@ void GameScene::NextSceneChange()
 	sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHP()));
 }
 
-void GameScene::AreaManagerInitialize()
-{
-	//ダンジョン
-	areaManager->RandamAreaInitialize();
-}
-
 void GameScene::AddCommonInitialize()
 {
 	srand( (unsigned int)time(NULL) );
+
+	//ダンジョン
+	areaManager->RandamAreaInitialize();
 }
 
 void GameScene::AddObject3DInitialize()
@@ -44,6 +46,7 @@ void GameScene::AddObject2DInitialize()
 
 void GameScene::AddCommonUpdate()
 {
+	areaManager->RandamAreaUpdate(camera, player->GetPosition());
 }
 
 void GameScene::AddObject3DUpdate()
@@ -94,6 +97,8 @@ void GameScene::AddBeatEndUpdate()
 
 void GameScene::AddObject3DDraw()
 {
+	areaManager->RandamAreaDraw();
+
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
 	}
@@ -127,6 +132,7 @@ void GameScene::AddObjectFinalize()
 
 void GameScene::AddCommonFinalize()
 {
+	areaManager->RandamAreaFinalize();
 }
 
 

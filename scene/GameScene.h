@@ -7,6 +7,8 @@
 class GameScene : public BaseBattleScene
 {
 public:
+	~GameScene();
+
 	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 private:
@@ -14,7 +16,6 @@ private:
 	void NextSceneChange() override;
 
 	//èâä˙âª
-	void AreaManagerInitialize() override;
 	void AddCommonInitialize() override;
 	void AddObject3DInitialize() override;
 	void AddObject2DInitialize() override;

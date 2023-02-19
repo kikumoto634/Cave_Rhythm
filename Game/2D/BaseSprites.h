@@ -1,6 +1,7 @@
 #pragma once
 #include "../Engine/2D/Sprite.h"
 #include "../Engine/math/Vector/Vector2.h"
+#include "../../camera/Camera.h"
 
 class BaseSprites
 {
@@ -46,11 +47,23 @@ public:
 	/// <returns></returns>
 	bool ScaleChange(Vector2 sizeMax = {1.f,1.f}, Vector2 sizeMin = {0.7f,0.7f}, float EndTime = 0.25f);
 
+	//3D->2D変換
+	Vector2 ChangeTransformation(Vector3 target, Camera* camera);
+
+private:
+	//ベクトル*行列
+	Vector3 Vector3Transform( Vector3 &v,  DirectX::XMMATRIX &m);
+
+private:
+	Window* window = nullptr;
+
 protected:
 	Sprite* sprite;
 	Vector2 position = {0,0};
 	Vector2 size = {100,100};
 	DirectX::XMFLOAT4 color = {1,1,1,1};
+
+	Vector3 targetPos = {};
 
 	//リズム更新用
 	//拍終了フラグ

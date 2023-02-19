@@ -275,7 +275,7 @@ void SampleScane::Object3DUpdate()
 	exit->Update(camera);
 	{
 		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
-		Vector2 pos = exit->ChangeTransformation(target);
+		Vector2 pos = exit->GetCoinSp()->ChangeTransformation(target, this->camera);
 		exit->SetCoinSpPosition(pos);
 	}
 
@@ -303,7 +303,7 @@ void SampleScane::CommonUpdate()
 {
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//’n–Ê
-	areaManager->Update(this->camera, player->GetPosition());
+	areaManager->CSVAreaUpdate(this->camera, player->GetPosition());
 	gameManager->LightUpdate(player->GetIsDead());
 
 	//oŒû
@@ -410,7 +410,7 @@ void SampleScane::Object3DDraw()
 {
 	player->Draw();
 
-	areaManager->Draw();
+	areaManager->CSVAreaDraw();
 
 	exit->Draw();
 
@@ -483,7 +483,7 @@ void SampleScane::ObjectFinaize()
 {
 #pragma region _3D‰ð•ú
 	player->Finalize();
-	areaManager->Finalize();
+	areaManager->CSVAreaFinalize();
 	exit->Finalize();
 	slime->Finalize();
 	coin->Finalize();

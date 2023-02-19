@@ -30,6 +30,11 @@ BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int sa
 	this->saveHP = saveHP;
 }
 
+BaseBattleScene::~BaseBattleScene()
+{
+	Finalize();
+}
+
 void BaseBattleScene::Application()
 {
 	BaseScene::Application();
@@ -195,6 +200,7 @@ void BaseBattleScene::Finalize()
 {
 	ObjectFinaize();
 	AddObjectFinalize();
+
 	CommonFinalize();
 	AddCommonFinalize();
 
@@ -214,8 +220,7 @@ void BaseBattleScene::CommonInitialize()
 	gameManager = new GameManager();
 	gameManager->Initialize();
 
-	areaManager = make_unique<AreaManager>();
-	AreaManagerInitialize();
+	areaManager = new AreaManager();
 
 	//ƒJƒƒ‰
 	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
@@ -282,7 +287,7 @@ void BaseBattleScene::Object3DUpdate()
 	exit->Update(camera);
 	{
 		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
-		Vector2 pos = exit->ChangeTransformation(target);
+		Vector2 pos = exit->GetCoinSp()->ChangeTransformation(target, this->camera);
 		exit->SetCoinSpPosition(pos);
 	}
 }
@@ -296,7 +301,6 @@ void BaseBattleScene::CommonUpdate()
 {
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
 	//’n–Ê
-	areaManager->Update(this->camera, player->GetPosition());
 	gameManager->LightUpdate(player->GetIsDead());
 
 	//oŒû
@@ -392,9 +396,6 @@ void BaseBattleScene::BeatEndUpdate()
 void BaseBattleScene::Object3DDraw()
 {
 	player->Draw();
-
-	areaManager->Draw();
-
 	exit->Draw();
 }
 
@@ -468,8 +469,6 @@ void BaseBattleScene::ObjectFinaize()
 
 void BaseBattleScene::CommonFinalize()
 {
-	areaManager->Finalize();
-
 	gameManager->Finalize();
 	delete gameManager;
 	gameManager = nullptr;

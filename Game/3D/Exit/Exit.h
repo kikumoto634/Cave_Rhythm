@@ -39,9 +39,6 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-	//3D->2D変換
-	Vector2 ChangeTransformation(Vector3 targetpos);
-
 	/// <summary>
 	/// 出口解放
 	/// </summary>
@@ -62,17 +59,14 @@ public:
 	inline bool GetIsPlayerContact() {return IsPlayerContact;}
 	inline const int GetExitNeedCoinNum() {return ExitNeedCoinsNum;}
 	inline bool GetIsOpenAudioOnce()	{return IsOpenAudioOnce;}
+	inline BaseSprites* GetCoinSp()	{return coinSp.get();}
 
 	//Setter
 	inline void SetCoinSpPosition(Vector2 pos)	{coinSp->SetPosition(pos);}
 	inline void SetExitOpenNeedCoin(int num)	{ExitNeedCoinsNum = num;}
 
-private:
-	//ベクトル*行列
-	Vector3 Vector3Transform( Vector3 &v,  DirectX::XMMATRIX &m);
 
 private:
-	Window* window = nullptr;
 
 	//プレイヤー接触
 	bool IsPlayerContact = false;
