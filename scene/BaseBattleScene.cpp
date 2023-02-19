@@ -456,9 +456,8 @@ void BaseBattleScene::SceneChange()
 
 void BaseBattleScene::ObjectFinaize()
 {
-	#pragma region _3D‰ð•ú
+#pragma region _3D‰ð•ú
 	player->Finalize();
-	areaManager->Finalize();
 	exit->Finalize();
 #pragma endregion _3D‰ð•ú
 
@@ -469,6 +468,8 @@ void BaseBattleScene::ObjectFinaize()
 
 void BaseBattleScene::CommonFinalize()
 {
+	areaManager->Finalize();
+
 	gameManager->Finalize();
 	delete gameManager;
 	gameManager = nullptr;

@@ -317,10 +317,14 @@ void AreaManager::IndestructibleWallDraw()
 }
 void AreaManager::IndestructibleWallFinalize()
 {
+	delete IndestructibleWallModel;
+	IndestructibleWallModel = nullptr;
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(IndestructibleWalls[i][j] == nullptr) break;;
 			IndestructibleWalls[i][j]->Finalize();
+			delete IndestructibleWalls[i][j];
+			IndestructibleWalls[i][j] = nullptr;
 		}
 	}
 }
