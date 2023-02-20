@@ -8,12 +8,6 @@ using namespace std;
 const float AreaManager::Block_Size = 2.f;
 
 
-AreaManager::~AreaManager()
-{
-	WallFinalize();
-	PlaneFinalize();
-	IndestructibleWallFinalize();
-}
 
 void AreaManager::RandamAreaInitialize()
 {
@@ -102,11 +96,12 @@ void AreaManager::RandamAreaPlaneInitialize()
 	PlaneModel = new ObjModelManager();
 	PlaneModel->CreateModel("GroundBlock");
 
+	float startPos = float(-(DIV_NUM/2)*Block_Size);
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = new Planes();
 			plane[i][j]->Initialize(PlaneModel);
-			plane[i][j]->SetPosition({ float(-((DIV_NUM/2)*Block_Size) + (i*Block_Size)) ,-5 ,float(-((DIV_NUM/2)*Block_Size) + (j*Block_Size))});
+			plane[i][j]->SetPosition({ startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)});
 		}
 	}
 }
@@ -116,6 +111,7 @@ void AreaManager::CSVAreaPlaneInitialize()
 	PlaneModel = new ObjModelManager();
 	PlaneModel->CreateModel("GroundBlock");
 
+	float startPos = float(-(DIV_NUM/2)*Block_Size);
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = new Planes();
@@ -126,7 +122,6 @@ void AreaManager::CSVAreaPlaneInitialize()
 				continue;
 			}
 
-			float startPos = float(-(DIV_NUM/2)*Block_Size);
 			Vector3 pos = {startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)};
 			plane[i][j]->SetPosition(pos);
 		}
@@ -339,7 +334,6 @@ void AreaManager::IndestructibleWallDraw()
 }
 void AreaManager::IndestructibleWallFinalize()
 {
-	if(!IndestructibleWallModel) return;
 	delete IndestructibleWallModel;
 	IndestructibleWallModel = nullptr;
 

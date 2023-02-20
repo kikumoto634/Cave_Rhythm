@@ -26,6 +26,12 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 	coinSp->SetSize({40,40});
 	coinSp->SetAnchorPoint({0.5f,0.5f});
 
+	for(int i = 0; i < CoinSpNumSize; i++){
+		coinSpNum[i] = make_unique<BaseSprites>();
+		coinSpNum[i]->Initialize(16);
+		coinSpNum[i]->SetSize({40,40});
+		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
+	}
 	NeedCoinSpriteUpdate();
 
 	exitOpenSp = make_unique<BaseSprites>();
@@ -111,18 +117,13 @@ void Exit::OnCollision(const CollisionInfo &info)
 
 void Exit::NeedCoinSpriteUpdate()
 {
-	for(int i = 0; i < CoinSpNumSize; i++){
-		coinSpNum[i] = make_unique<BaseSprites>();
-		
+	for(int i = 0; i < CoinSpNumSize; i++){		
 		int value_Ten = ExitNeedCoinsNum/10;
 		int value_One = ExitNeedCoinsNum - value_Ten*10;
 
-		if(i == 0)coinSpNum[i]->Initialize(16);
-		else if(i == 1)coinSpNum[i]->Initialize(TexNumberBegin + value_Ten);
-		else if(i == 2)coinSpNum[i]->Initialize(TexNumberBegin + value_One);
-
-		coinSpNum[i]->SetSize({40,40});
-		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
+		if(i == 0)coinSpNum[i]->SetTexNumber(16);
+		else if(i == 1)coinSpNum[i]->SetTexNumber(TexNumberBegin + value_Ten);
+		else if(i == 2)coinSpNum[i]->SetTexNumber(TexNumberBegin + value_One);
 	}
 }
 

@@ -117,107 +117,6 @@ void TitleScene::Update()
 #pragma endregion
 
 #ifdef _DEBUG
-	//プレイヤー
-	{
-		//座標
-		ImGui::SetNextWindowPos(ImVec2{0,100});
-		//サイズ
-		ImGui::SetNextWindowSize(ImVec2{300,100});
-		ImGui::Begin("Player");
-		{
-			//座標
-			Vector3 lpos = playerobj->GetPosition();
-			float pos[3] = {lpos.x, lpos.y, lpos.z};
-			ImGui::DragFloat3("Position", pos, 0.05f);
-			lpos = {pos[0],pos[1],pos[2]};
-			playerobj->SetPosition(lpos);
-		}
-		{
-			//回転
-			Vector3 lrot = playerobj->GetRotation();
-			float rot[3] = {XMConvertToDegrees(lrot.x), XMConvertToDegrees(lrot.y), XMConvertToDegrees(lrot.z)};
-			ImGui::DragFloat3("Rotation", rot);
-			lrot = {XMConvertToRadians(rot[0]),XMConvertToRadians(rot[1]),XMConvertToRadians(rot[2])};
-			playerobj->SetRotation(lrot);
-		}
-		{
-			//スケール
-			Vector3 lscale = playerobj->GetScale();
-			float scale[3] = {lscale.x, lscale.y, lscale.z};
-			ImGui::InputFloat3("Scale", scale);
-			lscale = {scale[0],scale[1],scale[2]};
-			playerobj->SetScale(lscale);
-		}
-		ImGui::End();
-	}
-
-	//エネミー
-	{
-		//座標
-		ImGui::SetNextWindowPos(ImVec2{0,200});
-		//サイズ
-		ImGui::SetNextWindowSize(ImVec2{300,100});
-		ImGui::Begin("Enemy");
-		{
-			//座標
-			Vector3 lpos = enemyobj->GetPosition();
-			float pos[3] = {lpos.x, lpos.y, lpos.z};
-			ImGui::DragFloat3("Position", pos, 0.05f);
-			lpos = {pos[0],pos[1],pos[2]};
-			enemyobj->SetPosition(lpos);
-		}
-		{
-			//回転
-			Vector3 lrot = enemyobj->GetRotation();
-			float rot[3] = {XMConvertToDegrees(lrot.x), XMConvertToDegrees(lrot.y), XMConvertToDegrees(lrot.z)};
-			ImGui::DragFloat3("Rotation", rot);
-			lrot = {XMConvertToRadians(rot[0]),XMConvertToRadians(rot[1]),XMConvertToRadians(rot[2])};
-			enemyobj->SetRotation(lrot);
-		}
-		{
-			//スケール
-			Vector3 lscale = enemyobj->GetScale();
-			float scale[3] = {lscale.x, lscale.y, lscale.z};
-			ImGui::InputFloat3("Scale", scale);
-			lscale = {scale[0],scale[1],scale[2]};
-			enemyobj->SetScale(lscale);
-		}
-		ImGui::End();
-	}
-	//エネミー2
-	{
-		//座標
-		ImGui::SetNextWindowPos(ImVec2{0,300});
-		//サイズ
-		ImGui::SetNextWindowSize(ImVec2{300,100});
-		ImGui::Begin("Enemy2");
-		{
-			//座標
-			Vector3 lpos = enemyobj2->GetPosition();
-			float pos[3] = {lpos.x, lpos.y, lpos.z};
-			ImGui::DragFloat3("Position", pos, 0.05f);
-			lpos = {pos[0],pos[1],pos[2]};
-			enemyobj2->SetPosition(lpos);
-		}
-		{
-			//回転
-			Vector3 lrot = enemyobj2->GetRotation();
-			float rot[3] = {XMConvertToDegrees(lrot.x), XMConvertToDegrees(lrot.y), XMConvertToDegrees(lrot.z)};
-			ImGui::DragFloat3("Rotation", rot);
-			lrot = {XMConvertToRadians(rot[0]),XMConvertToRadians(rot[1]),XMConvertToRadians(rot[2])};
-			enemyobj2->SetRotation(lrot);
-		}
-		{
-			//スケール
-			Vector3 lscale = enemyobj2->GetScale();
-			float scale[3] = {lscale.x, lscale.y, lscale.z};
-			ImGui::InputFloat3("Scale", scale);
-			lscale = {scale[0],scale[1],scale[2]};
-			enemyobj2->SetScale(lscale);
-		}
-		ImGui::End();
-	}
-
 	//Scene
 	{
 		//座標
@@ -237,7 +136,6 @@ void TitleScene::Update()
 
 		ImGui::End();
 	}
-
 #endif // _DEBUG
 
 

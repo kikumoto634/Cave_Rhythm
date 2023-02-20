@@ -68,6 +68,7 @@ public:
 	DebugText* GetDebugText()	{return debugText;}
 	imguiManager* GetImGui()	{return imgui;}
 #endif // _DEBUG
+
 	//Setter
 	virtual void SetSceneManager(SceneManager* lsceneManager)	{sceneManager = lsceneManager;}
 

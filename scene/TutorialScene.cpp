@@ -114,7 +114,6 @@ void TutorialScene::AddBeatEndUpdate()
 		(*it)->IsBeatEndOn();
 		if(!(*it)->GetIsNotApp()){
 			Vector3 lpos;
-			//lpos = areaManager->GetObjectPopPosition();
 
 			if(areaManager->GetCSVObjectPopActive(index,false)) {
 				lpos = areaManager->GetCSVObjectPopPosition(index);
@@ -173,6 +172,8 @@ void TutorialScene::AddObjectFinalize()
 void TutorialScene::AddCommonFinalize()
 {
 	areaManager->CSVAreaFinalize();
+	delete areaManager;
+	areaManager = nullptr;
 }
 
 

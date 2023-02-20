@@ -226,9 +226,10 @@ void BaseBattleScene::Object3DInitialize()
 
 	//ПoМы
 	exit = make_unique<Exit>();
-	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
 	exit->SetPosition(areaManager->GetExitPosition());
+	exit->SetExitOpenNeedCoin(1);
+	exit->NeedCoinSpriteUpdate();
 }
 
 void BaseBattleScene::Object2DInitialize()

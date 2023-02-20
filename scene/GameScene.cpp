@@ -13,7 +13,8 @@ GameScene::~GameScene()
 GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP)
 	:BaseBattleScene(
 		dxCommon,
-		window)
+		window,
+		saveHP)
 {
 }
 
@@ -120,7 +121,6 @@ void GameScene::AddUIDraw()
 
 void GameScene::AddObjectFinalize()
 {
-
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Finalize();
 	}
@@ -133,6 +133,8 @@ void GameScene::AddObjectFinalize()
 void GameScene::AddCommonFinalize()
 {
 	areaManager->RandamAreaFinalize();
+	delete areaManager;
+	areaManager = nullptr;
 }
 
 

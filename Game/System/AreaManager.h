@@ -30,8 +30,6 @@ struct Room{
 };
 
 public:
-	~AreaManager();
-
 	void RandamAreaInitialize();
 	void CSVAreaInitialize(std::string name);
 
