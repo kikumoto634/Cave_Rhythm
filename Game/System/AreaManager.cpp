@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const float AreaManager::DIV_NUM_FLOAT = 31.f;
+const float AreaManager::DIV_NUM_HALF_FLOAT = 15.f;
 const float AreaManager::Block_Size = 2.f;
 
 
@@ -96,12 +98,16 @@ void AreaManager::RandamAreaPlaneInitialize()
 	PlaneModel = new ObjModelManager();
 	PlaneModel->CreateModel("GroundBlock");
 
-	float startPos = float(-(DIV_NUM/2)*Block_Size);
+	float startPos = -DIV_NUM_HALF_FLOAT;
+	Vector2 pos = {};
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = new Planes();
 			plane[i][j]->Initialize(PlaneModel);
-			plane[i][j]->SetPosition({ startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)});
+			pos = {startPos + i, startPos + j};
+			pos *= Block_Size;
+			plane[i][j]->SetPosition({pos.x,-5,pos.y});
 		}
 	}
 }
@@ -111,7 +117,9 @@ void AreaManager::CSVAreaPlaneInitialize()
 	PlaneModel = new ObjModelManager();
 	PlaneModel->CreateModel("GroundBlock");
 
-	float startPos = float(-(DIV_NUM/2)*Block_Size);
+	float startPos = -DIV_NUM_HALF_FLOAT;
+	Vector2 pos = {};
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			plane[i][j] = new Planes();
@@ -122,8 +130,9 @@ void AreaManager::CSVAreaPlaneInitialize()
 				continue;
 			}
 
-			Vector3 pos = {startPos + (i*Block_Size) ,-5 ,startPos + (j*Block_Size)};
-			plane[i][j]->SetPosition(pos);
+			pos = {startPos + i, startPos + j};
+			pos*= Block_Size;
+			plane[i][j]->SetPosition({pos.x,-5,pos.y});
 		}
 	}
 }
@@ -142,14 +151,15 @@ void AreaManager::PlaneUpdate()
 void AreaManager::PlaneBeatEndUpdate()
 {
 	IsComboColorChange = !IsComboColorChange;
+	bool IsChange = false;
+
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			//コンボ数に応じて色変化
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 						
-				int changePos = i%2+j%2;
-				if(changePos == 0 || changePos == 2)		{plane[i][j]->PlaneColorChange(true, IsComboColorChange);}
-				if(changePos == 1)							{plane[i][j]->PlaneColorChange(false, IsComboColorChange);}
+				plane[i][j]->PlaneColorChange(IsChange, IsComboColorChange);
+				IsChange = !IsChange;
 			}
 			else if(gameManager->GetComboNum() < 10){
 				plane[i][j]->PlaneColorReset();
@@ -191,8 +201,8 @@ void AreaManager::RandamAreaWallsInitialize()
 	WallColliderModel = new ObjModelManager();
 	WallColliderModel->CreateModel("GroundBlock2_Collider");
 
-	float startPos = float(-(DIV_NUM/2)*Block_Size);
-	Vector3 pos = {startPos ,-3 ,startPos};
+	float startPos = -DIV_NUM_HALF_FLOAT;
+	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -200,8 +210,9 @@ void AreaManager::RandamAreaWallsInitialize()
 			Wall[i][j]->Initialize(WallModel,WallColliderModel);
 
 			if(WallMap[i][j] == '*') {
-				pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
-				Wall[i][j]->SetPosition(pos);
+				pos = {startPos + i, startPos + j};
+				pos*= Block_Size;
+				Wall[i][j]->SetPosition({pos.x,-3,pos.y});
 				continue;
 			}
 			
@@ -219,8 +230,8 @@ void AreaManager::CVSAreaWallsInitialize()
 	WallColliderModel = new ObjModelManager();
 	WallColliderModel->CreateModel("GroundBlock2_Collider");
 
-	float startPos = float(-(DIV_NUM/2)*Block_Size);
-	Vector3 pos = {startPos ,-3 ,startPos};
+	float startPos = -DIV_NUM_HALF_FLOAT;
+	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -228,8 +239,9 @@ void AreaManager::CVSAreaWallsInitialize()
 			Wall[i][j]->Initialize(WallModel,WallColliderModel);
 
 			if(CSVMap[i][j] == 3){
-				pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
-				Wall[i][j]->SetPosition(pos);
+				pos = {startPos + i, startPos + j};
+				pos*= Block_Size;
+				Wall[i][j]->SetPosition({pos.x,-3,pos.y});
 				continue;
 			}
 
@@ -296,8 +308,8 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 	IndestructibleWallModel = new ObjModelManager();
 	IndestructibleWallModel->CreateModel("GroundBlock3");
 
-	float startPos = float(-(DIV_NUM/2)*Block_Size);
-	Vector3 pos = {startPos ,-3 ,startPos};
+	float startPos = -DIV_NUM_HALF_FLOAT;
+	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
@@ -305,8 +317,9 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 			IndestructibleWalls[i][j]->Initialize(IndestructibleWallModel);
 
 			if(CSVMap[i][j] == 2){
-				pos = {startPos + (i*Block_Size) ,-3 ,startPos + (j*Block_Size)};
-				IndestructibleWalls[i][j]->SetPosition(pos);
+				pos = {startPos + i ,startPos + j};
+				pos *= Block_Size;
+				IndestructibleWalls[i][j]->SetPosition({pos.x,-3,pos.y});
 				continue;
 			}
 
@@ -509,6 +522,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 	int y = 0;
 	int x = 0;
 
+	float start = -DIV_NUM_HALF_FLOAT;
+	Vector2 pos = {};
+
 	//コマンドループ
 	while(getline(csvCommands, line)){
 		//一行分のっ文字列をストリームに変換して解析しやすく
@@ -543,9 +559,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 			if(word.find("4") == 0){
 				CSVMap[y][x] = 1;
 
-				float startPos = float(-(DIV_NUM/2)*Block_Size);
-				Vector3 pos = {startPos + (y*Block_Size) ,-3 ,startPos + (x*Block_Size)};
-				PlayerPopPosition = pos;
+				pos = {start + y, start + x};
+				pos *= Block_Size;
+				PlayerPopPosition = {pos.x, -3, pos.y};
 
 				getline(line_stream, word, ',');
 				x++;
@@ -553,9 +569,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 			if(word.find("5") == 0){
 				CSVMap[y][x] = 1;
 
-				float startPos = float(-(DIV_NUM/2)*Block_Size);
-				Vector3 pos = {startPos + (y*Block_Size) ,0 ,startPos + (x*Block_Size)};
-				ObjectPos.push_back(pos);
+				pos = {start + y, start + x};
+				pos *= Block_Size;
+				ObjectPos.push_back({pos.x,0,pos.y});
 				ObjectPopActive.push_back(true);
 
 				getline(line_stream, word, ',');
@@ -564,9 +580,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 			if(word.find("6") == 0){
 				CSVMap[y][x] = 1;
 
-				float startPos = float(-(DIV_NUM/2)*Block_Size);
-				Vector3 pos = {startPos + (y*Block_Size) ,-5 ,startPos + (x*Block_Size)};
-				exitPosition = pos;
+				pos = {start + y, start + x};
+				pos *= Block_Size;
+				exitPosition = {pos.x,-5,pos.y};
 
 				getline(line_stream, word, ',');
 				x++;
@@ -601,17 +617,24 @@ void AreaManager::ObjectRandomPop()
 	Vector2 areaPos;
 	Vector2 areaWH;
 
+	float start = -DIV_NUM_HALF_FLOAT;
 	//出口
 	int exitRoomsNum = rand()%roomSize;
-	areaPos = {float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].Y*Block_Size)),float(-((DIV_NUM/2)*Block_Size)+(rooms[exitRoomsNum].X*Block_Size))};
-	areaWH = {float(rand()%(rooms[exitRoomsNum].Height-1))*Block_Size,float(rand()%(rooms[exitRoomsNum].Width-1))*Block_Size};
-	exitPosition = {areaPos.x+areaWH.x,-5.f,areaPos.y+areaWH.y};
-
 	//プレイヤー
 	int playerRoomsNum = rand()%roomSize;
-	areaPos = {float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].Y*Block_Size)),float(-((DIV_NUM/2)*Block_Size)+(rooms[playerRoomsNum].X*Block_Size))};
-	areaWH = {float(rand()%(rooms[playerRoomsNum].Height-1))*Block_Size,float(rand()%(rooms[playerRoomsNum].Width-1))*Block_Size};
 
+	//exit
+	areaPos = {(start+rooms[exitRoomsNum].Y), (start+rooms[exitRoomsNum].X)};
+	areaPos *= Block_Size;
+	areaWH = {float(rand()%(rooms[exitRoomsNum].Height-1)),float(rand()%(rooms[exitRoomsNum].Width-1))};
+	areaWH *= Block_Size;
+	exitPosition = {areaPos.x+areaWH.x,-5.f,areaPos.y+areaWH.y};
+
+	//player
+	areaPos = {(start+rooms[playerRoomsNum].Y),(start+rooms[playerRoomsNum].X)};
+	areaPos*= Block_Size;
+	areaWH = {float(rand()%(rooms[playerRoomsNum].Height-1)),float(rand()%(rooms[playerRoomsNum].Width-1))};
+	areaWH *= Block_Size;
 	PlayerPopPosition = {areaPos.x+areaWH.x,-3.f,areaPos.y+areaWH.y};
 }
 
@@ -621,10 +644,13 @@ Vector3 AreaManager::GetObjectPopPosition()
 	Vector2 areaPos;
 	Vector2 areaWH;
 
-	
+	float start = -DIV_NUM_HALF_FLOAT;
 	int RoomsNum = rand()%roomSize;
-	areaPos = {float(-((DIV_NUM/2)*Block_Size)+(rooms[RoomsNum].Y*Block_Size)),float(-((DIV_NUM/2)*Block_Size)+(rooms[RoomsNum].X*Block_Size))};
-	areaWH = {float(rand()%(rooms[RoomsNum].Height-1))*Block_Size,float(rand()%(rooms[RoomsNum].Width-1))*Block_Size};
+
+	areaPos = {(start+rooms[RoomsNum].Y),(start+rooms[RoomsNum].X)};
+	areaPos *= Block_Size;
+	areaWH = {float(rand()%(rooms[RoomsNum].Height-1)),float(rand()%(rooms[RoomsNum].Width-1))};
+	areaWH *= Block_Size;
 	ObjectPopPosition = {areaPos.x+areaWH.x,0.f,areaPos.y+areaWH.y};
 
 	return ObjectPopPosition;

@@ -38,14 +38,16 @@ void TutorialScene::AddObject3DInitialize()
 
 void TutorialScene::AddObject2DInitialize()
 {
+	Vector2 lsize = {384,64};
+	Vector2 lancher = {0.5f,0.5f};
 	{
 		moveSp = make_unique<TutorialSp>();
 		moveSp->Initialize(24);
 		Vector3 ltarget = moveSpPos;
 		Vector2 lpos = moveSp->ChangeTransformation(ltarget, this->camera);
 		moveSp->SetPosition(lpos);
-		moveSp->SetSize({384,64});
-		moveSp->SetAnchorPoint({0.5f,0.5f});
+		moveSp->SetSize(lsize);
+		moveSp->SetAnchorPoint(lancher);
 	}
 
 	{
@@ -54,8 +56,8 @@ void TutorialScene::AddObject2DInitialize()
 		Vector3 ltarget = attackSpPos;
 		Vector2 lpos = attackSp->ChangeTransformation(ltarget, this->camera);
 		attackSp->SetPosition(lpos);
-		attackSp->SetSize({384,64});
-		attackSp->SetAnchorPoint({0.5f,0.5f});
+		attackSp->SetSize(lsize);
+		attackSp->SetAnchorPoint(lancher);
 	}
 }
 

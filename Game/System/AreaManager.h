@@ -11,6 +11,13 @@
 class AreaManager
 {
 private:
+	static const int DIV_NUM = 31;
+	static const float DIV_NUM_FLOAT;
+	static const int DIV_NUM_HALF = 15;
+	static const float DIV_NUM_HALF_FLOAT;
+	static const float Block_Size;
+
+private:
 	//—Ìˆæ
 struct Area{
 	int X;
@@ -98,9 +105,6 @@ private:
 	Camera* camera = nullptr;
 	GameManager* gameManager = nullptr;
 	Vector3 PlayerPos={};
-
-	static const int DIV_NUM = 31;
-	static const float Block_Size;
 
 	//Plane
 	ObjModelManager* PlaneModel = nullptr;
