@@ -184,6 +184,7 @@
     <ClCompile Include="Game\3D\BaseObjObject.cpp" />
     <ClCompile Include="Game\3D\Coins\Coins.cpp" />
     <ClCompile Include="Game\3D\Enemy\BlueSlime.cpp" />
+    <ClCompile Include="Game\3D\Enemy\Skelton.cpp" />
     <ClCompile Include="Game\3D\Exit\Exit.cpp" />
     <ClCompile Include="Game\3D\ParticleObject.cpp" />
     <ClCompile Include="Game\3D\Plane\Planes.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="Game\3D\BaseFbxObjects.h" />
     <ClInclude Include="Game\3D\BaseObjObject.h" />
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h" />
+    <ClInclude Include="Game\3D\Enemy\Skelton.h" />
     <ClInclude Include="Game\3D\Exit\Exit.h" />
     <ClInclude Include="Game\3D\ParticleObject.h" />
     <ClInclude Include="Game\3D\Plane\Planes.h" />
