@@ -49,12 +49,10 @@ private:
 	std::vector<std::unique_ptr<Coins>> coin;
 
 	//スプライト
-	//移動	(-25,-3,26)
-	//攻撃	(7,-3,16)
 	std::unique_ptr<TutorialSp> moveSp;
 	const Vector3 moveSpPos = {-25,-3,30};
 
 	std::unique_ptr<TutorialSp> attackSp;
-	const Vector3 attackSpPos = {7,-3,18};
+	const Vector3 attackSpPos = {7,-3,20};
 };
 

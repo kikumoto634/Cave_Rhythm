@@ -387,6 +387,9 @@
     <ClCompile Include="Game\2D\TutorialSp.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
     </ClCompile>
+    <ClCompile Include="scene\HomeScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -583,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="Game\2D\TutorialSp.h">
       <Filter>ヘッダー ファイル\Game\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\HomeScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

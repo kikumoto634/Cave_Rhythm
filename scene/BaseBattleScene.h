@@ -54,8 +54,6 @@ public:
 	void Finalize() override;
 
 private:
-	void SceneGameEnd();
-
 	//‰Šú‰»
 	void CommonInitialize();
 	void Object3DInitialize();
@@ -87,6 +85,7 @@ private:
 protected:
 
 	//ƒV[ƒ“‘JˆÚ
+	virtual void SceneGameEnd();
 	virtual void NextSceneChange() = 0;
 
 	//‰Šú‰»

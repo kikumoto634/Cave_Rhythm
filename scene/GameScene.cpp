@@ -1,6 +1,6 @@
 #include "GameScene.h"
 
-#include "TitleScene.h"
+#include "HomeScene.h"
 #include "SceneManager.h"
 
 using namespace std;
@@ -22,6 +22,12 @@ void GameScene::NextSceneChange()
 {
 	sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHP()));
 }
+
+void GameScene::SceneGameEnd()
+{
+	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
+}
+
 
 void GameScene::AddCommonInitialize()
 {

@@ -1,7 +1,7 @@
 #include "TutorialScene.h"
 
 #include "TitleScene.h"
-#include "GameScene.h"
+#include "HomeScene.h"
 #include "SceneManager.h"
 
 using namespace std;
@@ -20,7 +20,7 @@ TutorialScene::TutorialScene(DirectXCommon *dxCommon, Window *window, int saveHP
 
 void TutorialScene::NextSceneChange()
 {
-	sceneManager->SetNextScene(new GameScene(dxCommon,window));
+	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
 }
 
 void TutorialScene::AddCommonInitialize()

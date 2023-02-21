@@ -4,17 +4,18 @@
 #include "../Game/3D/Enemy/BlueSlime.h"
 #include "../Game/3D/Coins/Coins.h"
 
-class GameScene : public BaseBattleScene
+#include "../Game/2D/TutorialSp.h"
+
+class HomeScene : public BaseBattleScene
 {
 public:
-	~GameScene();
+	~HomeScene();
 
-	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+	HomeScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 private:
 //シーン遷移
 	void NextSceneChange() override;
-	void SceneGameEnd() override;
 
 	//初期化
 	void AddCommonInitialize() override;
@@ -41,10 +42,11 @@ private:
 	void ActorCreateInitialize();
 
 private:
-	int slimePopNumMax = 5;
-	std::vector<std::unique_ptr<BlueSlime>> slime;
+	//ダンジョンテキスト
+	std::unique_ptr<TutorialSp> exitText;
+	const Vector3 exitTextPos = {-2,-3,-9};
 
-	int coinPopNumMax = 5;
-	std::vector<std::unique_ptr<Coins>> coin;
+	int slimePopNumMax = 1;
+	std::vector<std::unique_ptr<BlueSlime>> slime;
 };
 
