@@ -46,6 +46,9 @@ private:
 	std::unique_ptr<TutorialSp> exitText;
 	const Vector3 exitTextPos = {-2,-3,-9};
 
+	std::unique_ptr<TutorialSp> trainingText;
+	const Vector3 trainingTextPos = {-10,-3,-2};
+
 	int slimePopNumMax = 1;
 	std::vector<std::unique_ptr<BlueSlime>> slime;
 };

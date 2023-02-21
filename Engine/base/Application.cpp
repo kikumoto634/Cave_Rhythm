@@ -90,6 +90,7 @@ void Application::Initialize()
 	TextureManager::Load(24, "2DText/TutorialFont1.png");
 	TextureManager::Load(25, "2DText/TutorialFont2.png");
 	TextureManager::Load(25, "2DText/GOText.png");
+	TextureManager::Load(26, "2DText/Training.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();

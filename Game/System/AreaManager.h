@@ -35,7 +35,6 @@ struct Room{
 	int Width;
 	int Height;
 };
-
 public:
 	void RandamAreaInitialize();
 	void CSVAreaInitialize(std::string name);
@@ -82,6 +81,7 @@ private:
 	void WallFinalize();
 
 	//”j‰ó•s‰Â
+	void RandamAreaIndestructibleWallInitialize();
 	void CSVAreaIndestructibleWallInitialize();
 	void IndestructibleWallUpdate();
 	void IndestructibleWallDraw();

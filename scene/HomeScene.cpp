@@ -45,8 +45,18 @@ void HomeScene::AddObject2DInitialize()
 		Vector3 ltarget = exitTextPos;
 		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
 		exitText->SetPosition(lpos);
-		exitText->SetSize({80,40});
+		exitText->SetSize({200,40});
 		exitText->SetAnchorPoint({0.5f,0.5f});
+	}
+	
+	{
+		trainingText = make_unique<TutorialSp>();
+		trainingText->Initialize(26);
+		Vector3 ltarget = trainingTextPos;
+		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
+		trainingText->SetPosition(lpos);
+		trainingText->SetSize({200,40});
+		trainingText->SetAnchorPoint({0.5f,0.5f});
 	}
 }
 
@@ -73,6 +83,13 @@ void HomeScene::AddObject2DUpdate()
 		exitText->SetPosition(lpos);
 		exitText->SetPlayerPos(player->GetPosition());
 		exitText->Update();
+	}
+	{
+		Vector3 ltarget = trainingTextPos;
+		Vector2 lpos = trainingText->ChangeTransformation(ltarget, this->camera);
+		trainingText->SetPosition(lpos);
+		trainingText->SetPlayerPos(player->GetPosition());
+		trainingText->Update();
 	}
 }
 
@@ -112,11 +129,13 @@ void HomeScene::AddParticleDraw()
 void HomeScene::AddUIDraw()
 {
 	exitText->Draw();
+	trainingText->Draw();
 }
 
 void HomeScene::AddObjectFinalize()
 {
 	exitText->Finalize();
+	trainingText->Finalize();
 
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Finalize();
