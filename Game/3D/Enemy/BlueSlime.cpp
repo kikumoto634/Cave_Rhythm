@@ -41,10 +41,10 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 	//ãóó£åvë™
 	Vector3 pos = playerPos - world.translation;
 	distance = pos.length();
-	if(-20 <= distance && distance <= 20)		{
+	if(-13 <= distance && distance <= 13)		{
 		IsInvisible = false;
 	}
-	else if(-20 > distance || distance > 20)	IsInvisible = true;
+	else if(-13 > distance || distance > 13)	IsInvisible = true;
 
 	//èoåª
 	if(IsPop){

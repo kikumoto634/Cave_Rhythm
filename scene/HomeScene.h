@@ -51,6 +51,6 @@ private:
 	const Vector3 trainingTextPos = {-10,-3,-2};
 
 	int slimePopNumMax = 1;
-	std::vector<std::unique_ptr<Skelton>> slime;
+	std::vector<std::unique_ptr<BlueSlime>> slime;
 };
 
