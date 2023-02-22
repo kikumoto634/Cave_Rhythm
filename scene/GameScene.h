@@ -2,14 +2,35 @@
 #include "BaseBattleScene.h"
 
 #include "../Game/3D/Enemy/BlueSlime.h"
+#include "../Game/3D/Enemy/Skelton.h"
 #include "../Game/3D/Coins/Coins.h"
 
 class GameScene : public BaseBattleScene
 {
 public:
+	struct FloorInfo{
+		int needCoin;
+
+		//エネミー生成数
+		int slimne;
+		int skelton;
+	};
+
+//定数
+private:
+	FloorInfo one	= {3,  10,5};
+	FloorInfo two	= {5,  8, 7};
+	FloorInfo three = {7,  5,10};
+	FloorInfo four	= {10, 2,13};
+
+
+	//ポップカウント
+	const int PopCount = 3;
+
+public:
 	~GameScene();
 
-	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5, int floorValue = 1);
 
 private:
 //シーン遷移
@@ -41,10 +62,24 @@ private:
 	void ActorCreateInitialize();
 
 private:
+	//必要コイン
+	int needCoin = 10;
+
+	//ポップカウント
+	int popCount = 0;
+
 	int slimePopNumMax = 5;
 	std::vector<std::unique_ptr<BlueSlime>> slime;
 
+	int skeltonPopNumMax = 5;
+	std::vector<std::unique_ptr<Skelton>> skelton;
+
 	int coinPopNumMax = 5;
 	std::vector<std::unique_ptr<Coins>> coin;
+
+
+	std::unique_ptr<BaseSprites> floorDepth;
+	int numberTextBase = 3;
+	std::unique_ptr<BaseSprites> floorValueTex;
 };
 

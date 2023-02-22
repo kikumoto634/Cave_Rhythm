@@ -24,6 +24,7 @@ public:
 	inline bool GetIsNotApp()	{return IsNotApp;}
 	inline bool GetIsDeadAudio()	{return IsDeadOnceAudio;}
 	inline Vector3 GetDeadParticlepos()	{return DeadParticlePos;}
+	inline bool GetIsInvisible() {return IsInvisible;}
 
 private:
 	void Reset();
@@ -44,6 +45,9 @@ private:
 	bool IsDeadOnceAudio = false;
 	bool IsDeadOnceParticle = false;
 	Vector3 DeadParticlePos = {};
+
+	//コライダー
+	bool IsCollision = false;
 
 	//復活
 	int appearancePopFrame = 0;

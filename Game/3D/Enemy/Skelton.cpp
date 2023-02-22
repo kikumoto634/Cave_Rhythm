@@ -22,12 +22,13 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 
 	//コライダー
 	float radius = 0.6f;
-	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0,0}, radius));
+	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
 	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 	//球コライダー取得
 	sphereCollider = dynamic_cast<SphereCollider*>(collider);
 	assert(sphereCollider);
 	collider->Update();
+	sphereCollider->Update();
 
 	//パーティクル
 	DeadParticle = new ParticleObject();
@@ -47,7 +48,9 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 	if(-13 <= distance && distance <= 13)		{
 		IsInvisible = false;
 	}
-	else if(-13 > distance || distance > 13)	IsInvisible = true;
+	else if(-13 > distance || distance > 13)	{
+		IsInvisible = true;
+	}
 
 	//出現
 	if(IsPop){
@@ -188,6 +191,7 @@ void Skelton::OnCollision(const CollisionInfo &info)
 		SetPosition(NotAlivePos);
 		world.UpdateMatrix();
 		collider->Update();
+		sphereCollider->Update();
 
 		DeadParticlePos = info.objObject->GetPosition();
 	}
@@ -195,6 +199,7 @@ void Skelton::OnCollision(const CollisionInfo &info)
 		SetPosition(NotAlivePos);
 		world.UpdateMatrix();
 		collider->Update();
+		sphereCollider->Update();
 		IsDead = true;
 	}
 }

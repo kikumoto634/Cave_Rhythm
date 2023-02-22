@@ -91,6 +91,8 @@ void AreaManager::RandamAreaFinalize()
 
 void AreaManager::CSVAreaFinalize()
 {
+	PlayerPos = {};
+
 	WallFinalize();
 	IndestructibleWallFinalize();
 	PlaneFinalize();
@@ -261,6 +263,7 @@ void AreaManager::WallUpdate()
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			if(Wall[i][j] == nullptr) continue;
+
 			Wall[i][j]->SetPlayerPos(PlayerPos);
 			if(Wall[i][j]->GetIsDigSound())	gameManager->AudioPlay(10);
 			Wall[i][j]->Update(camera);
@@ -417,7 +420,7 @@ void AreaManager::CreateMap()
 }
 AreaManager::Room AreaManager::DevideRoom(Area area, bool hr)
 {
-	if(area.Width < 6 || area.Height < 6) {
+	if(area.Width < 8 || area.Height < 8) {
 		return CreateRoom(area);
 	}
 

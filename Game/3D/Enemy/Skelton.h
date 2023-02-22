@@ -28,6 +28,7 @@ public:
 	inline bool GetIsNotApp()	{return IsNotApp;}
 	inline bool GetIsDeadAudio()	{return IsDeadOnceAudio;}
 	inline Vector3 GetDeadParticlepos()	{return DeadParticlePos;}
+	inline bool GetIsInvisible() {return IsInvisible;}
 
 private:
 	void Reset();
@@ -49,6 +50,7 @@ private:
 	Vector3 OldPosition = {};
 	//コライダー
 	SphereCollider* sphereCollider = nullptr;
+	bool IsCollision = true;
 
 	//未出現
 	bool IsNotApp = false;

@@ -2,6 +2,7 @@
 #include "../../scene/TitleScene.h"
 
 #include "../../scene/HomeScene.h"
+#include "../../scene/GameScene.h"
 
 Application* Application::app = nullptr;
 
@@ -87,6 +88,7 @@ void Application::Initialize()
 	TextureManager::Load(25, "2DText/TutorialFont2.png");
 	TextureManager::Load(25, "2DText/GOText.png");
 	TextureManager::Load(26, "2DText/Training.png");
+	TextureManager::Load(27, "2DText/DepthValue.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();
@@ -131,7 +133,7 @@ void Application::Initialize()
 
 	sceneManager = SceneManager::GetInstance();
 	//BaseScene* scene = new TitleScene(dxCommon, window);
-	BaseScene* scene = new HomeScene(dxCommon, window);
+	BaseScene* scene = new GameScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);

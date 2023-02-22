@@ -20,12 +20,6 @@ void BlueSlime::Initialize(std::string filePath, bool IsSmoothing)
 	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 	world.UpdateMatrix();
 
-	//コライダー
-	float radius = 0.6f;
-	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0,0}, radius));
-	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
-	collider->Update();
-
 	//パーティクル
 	DeadParticle = new ParticleObject();
 	DeadParticle->Initialize();
@@ -43,8 +37,27 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 	distance = pos.length();
 	if(-13 <= distance && distance <= 13)		{
 		IsInvisible = false;
+
+		if(!IsCollision){
+			//コライダー
+			float radius = 0.6f;
+			SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
+			collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+			collider->Update();
+			IsCollision = true;
+		}
 	}
-	else if(-13 > distance || distance > 13)	IsInvisible = true;
+	else if(-13 > distance || distance > 13)	{
+		IsInvisible = true;
+
+		if(IsCollision){
+			if(collider){
+				//コリジョンマネージャーから登録を解除する
+				CollisionManager::GetInstance()->RemoveCollider(collider);
+			}
+			IsCollision = false;
+		}
+	}
 
 	//出現
 	if(IsPop){

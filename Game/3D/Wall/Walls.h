@@ -49,7 +49,7 @@ public:
 	inline bool GetIsDigSound()	{return IsDigSound;}
 
 	//Setter
-	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
+	void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
 
 private:
 	Vector3 PlayerPos;

@@ -24,7 +24,7 @@ private:
 public:
 	
 	//コンストラクタ
-	BaseBattleScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+	BaseBattleScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5, int floorVaule = 1);
 
 	~BaseBattleScene();
 
@@ -113,10 +113,14 @@ protected:
 	//衝突マネージャー
 	CollisionManager* collisionManager = nullptr;
 
-	//player
-	std::unique_ptr<Player> player;
+	//持ち越し
 	//セーブ体力
 	int saveHP = 0;
+	//階層
+	int floorValue = 1;
+
+	//player
+	std::unique_ptr<Player> player;
 	//リズムカウント
 	RhythmManager* rhythmManager = nullptr;
 	//ゲームマネージャー
@@ -126,7 +130,7 @@ protected:
 	//出口
 	std::unique_ptr<Exit> exit;
 	//エリアマネージャー
-	AreaManager* areaManager;
+	AreaManager* areaManager = nullptr;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ

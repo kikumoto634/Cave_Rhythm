@@ -12,12 +12,13 @@
 
 using namespace std;
 
-BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int saveHP)
+BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int saveHP, int floorVaule)
 	:BaseScene(
 		dxCommon,
 		window)
 {
 	this->saveHP = saveHP;
+	this->floorValue = floorValue;
 }
 
 BaseBattleScene::~BaseBattleScene()
@@ -409,18 +410,22 @@ void BaseBattleScene::SceneChange()
 {
 	//PrevScene‚©‚ç‚ÌˆÚ“®Œãˆ—
 	if(IsPrevSceneChange){
-		if(fadeColor.w <= 0){
-			IsPrevSceneChange = false;
-			fadeCurrentFrame = 0;
-			//ƒŠƒYƒ€
-			rhythmManager->InitializeMeasurement(clock());
-			return;
-		}
 
-		fadeColor.w = 
-			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
-		fade->SetColor(fadeColor);
-		fade->Update();
+		//‰æ–Ê‚ªŠJ‚­
+		{
+			if(fadeColor.w <= 0){
+				IsPrevSceneChange = false;
+				fadeCurrentFrame = 0;
+				//ƒŠƒYƒ€
+				rhythmManager->InitializeMeasurement(clock());
+				return;
+			}
+
+			fadeColor.w = 
+				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
+			fade->SetColor(fadeColor);
+			fade->Update();
+		}
 	}
 	//NextScene‚Ö‚ÌˆÚ“®
 	else if(IsNextSceneChange || IsGameEnd){
