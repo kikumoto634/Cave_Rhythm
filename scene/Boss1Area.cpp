@@ -44,7 +44,7 @@ void Boss1Area::SceneChange()
 			}
 
 			fadeColor.w = 
-				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
+				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond));
 			fade->SetColor(fadeColor);
 			fade->Update();
 		}
@@ -73,10 +73,31 @@ void Boss1Area::AddCommonInitialize()
 
 void Boss1Area::AddObject3DInitialize()
 {
+	//ボス
 	boss = make_unique<Boss1>();
 	boss->Initialize("Skeleton");
 	Vector3 lpos = areaManager->GetCSVObjectPopPosition(0);
 	boss->Pop({lpos.x, -2.f,lpos.z});
+
+
+	IndestructibleWallModel = new ObjModelManager();
+	IndestructibleWallModel->CreateModel("GroundBlock3");
+	IndestructibleWallColliderModel = new ObjModelManager();
+	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
+	
+	//入口
+	for(int i = 0; i < 3; i++){
+		enterWall[i] = make_unique<IndestructibleWall>();
+		enterWall[i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
+		enterWall[i]->SetPosition({enterWallBasePos.x + Block_Size*i, enterWallBasePos.y, enterWallBasePos.z});
+	}
+
+	//出口
+	for(int i = 0; i < 3; i++){
+		exitWall[i] = make_unique<IndestructibleWall>();
+		exitWall[i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
+		exitWall[i]->SetPosition({exitWallBasePos.x + Block_Size*i, exitWallBasePos.y, exitWallBasePos.z});
+	}
 }
 
 void Boss1Area::AddObject2DInitialize()
@@ -90,10 +111,54 @@ void Boss1Area::AddCommonUpdate()
 
 void Boss1Area::AddObject3DUpdate()
 {
-	if(boss->GetIsDeadAudio()){
-		gameManager->AudioPlay(2, 0.5f);
+	//ボス
+	if(IsEnterClose){
+		if(boss->GetIsDeadAudio()){
+			gameManager->AudioPlay(2, 1.5f);
+			
+			IsExitOpen = true;
+			gameManager->AudioPlay(11, 0.5f);
+		}
+		boss->Update(camera,player->GetPosition());
 	}
-	boss->Update(camera,player->GetPosition());
+
+	//入口
+	{
+		if(IsEnterClose){
+			for(int i = 0; i < 3; i++){
+				enterWall[i]->Update(this->camera);
+				enterWall[i]->SetPlayerPos(player->GetPosition());
+			}
+		}
+		else if(!IsEnterClose){
+			for(int i = 0; i < 3; i++){
+				enterWall[i]->ColliderRemove();
+			}
+			//場所に応じて閉じる
+			if(player->GetPosition().z >= enterBorderLineZ){
+				IsEnterClose = true;
+				camera->ShakeStart();
+				gameManager->AudioPlay(11);
+			}
+		}
+	}
+
+	//出口
+	{
+		if(IsExitOpen){
+			for(int i = 0; i < 3; i++){
+				exitWall[i]->ColliderRemove();
+			}
+		}
+		else if(!IsExitOpen){
+			for(int i = 0; i < 3; i++){
+				exitWall[i]->Update(this->camera);
+				exitWall[i]->SetPlayerPos(player->GetPosition());
+			}
+		}
+	}
+	exit->SetExitOpenNeedCoin(0);
+	exit->NeedCoinSpriteUpdate();
 }
 
 void Boss1Area::AddObject2DUpdate()
@@ -102,6 +167,7 @@ void Boss1Area::AddObject2DUpdate()
 
 void Boss1Area::AddBeatEndUpdate()
 {
+	if(!IsEnterClose) return;
 	boss->IsBeatEndOn();
 }
 
@@ -109,11 +175,24 @@ void Boss1Area::AddObject3DDraw()
 {
 	areaManager->CSVAreaDraw();
 
+	if(!IsExitOpen){
+		for(int i = 0; i < 3; i++){
+			exitWall[i]->Draw();
+		}
+	}
+
+	if(!IsEnterClose) return;
+	//ボス
 	boss->Draw();
+	//入口
+	for(int i = 0; i < 3; i++){
+		enterWall[i]->Draw();
+	}
 }
 
 void Boss1Area::AddParticleDraw()
 {
+	if(!IsEnterClose) return;
 	boss->ParticleDraw();
 }
 
@@ -123,7 +202,20 @@ void Boss1Area::AddUIDraw()
 
 void Boss1Area::AddObjectFinalize()
 {
+	//ボス
 	boss->Finalize();
+
+	delete IndestructibleWallModel;
+	delete IndestructibleWallColliderModel;
+	//入口
+	for(int i = 0; i < 3; i++){
+		enterWall[i]->Finalize();
+	}
+
+	//出口
+	for(int i = 0; i < 3; i++){
+		exitWall[i]->Finalize();
+	}
 }
 
 void Boss1Area::AddCommonFinalize()

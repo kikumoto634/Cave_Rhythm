@@ -72,3 +72,12 @@ void IndestructibleWall::OnCollision(const CollisionInfo &info)
 	if(!IsAlive) return;
 	if(!IsHide) return;
 }
+
+void IndestructibleWall::ColliderRemove()
+{
+	if(!IsCollision) return;
+
+	//コリジョンマネージャーから登録を解除する
+	CollisionManager::GetInstance()->RemoveCollider(collider);
+	IsCollision = false;
+}

@@ -104,6 +104,7 @@ void Application::Initialize()
 	Audio::Load(8,"BPM120_Game.wav");
 	Audio::Load(9,"BPM120_Home.wav");
 	Audio::Load(10,"dig.wav");
+	Audio::Load(11,"Enter.wav");
 
 #pragma endregion
 

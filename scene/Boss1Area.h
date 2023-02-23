@@ -40,5 +40,21 @@ private:
 
 private:
 	std::unique_ptr<Boss1> boss;
+
+	float Block_Size = 2.0f;
+	//“üŒûŠJ•Â
+	bool IsEnterClose = false;
+	int enterBorderLineZ = 0;
+	//-2~2, -3, -2
+	std::unique_ptr<IndestructibleWall> enterWall[3];
+	Vector3 enterWallBasePos = {-2,-3,-2};
+
+	//oŒûŠJ•Â
+	bool IsExitOpen = false;
+	std::unique_ptr<IndestructibleWall> exitWall[3];
+	Vector3 exitWallBasePos = {-2,-3,24};
+
+	ObjModelManager* IndestructibleWallModel = nullptr;
+	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 };
 

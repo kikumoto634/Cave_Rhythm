@@ -37,6 +37,8 @@ public:
 	/// <param name="info">Õ“Ëî•ñ</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	void ColliderRemove();
+
 	inline void IsNotAlive()	{IsAlive = false;}
 
 	//Getter
