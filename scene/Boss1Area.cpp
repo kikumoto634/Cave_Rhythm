@@ -102,11 +102,19 @@ void Boss1Area::AddObject3DInitialize()
 
 void Boss1Area::AddObject2DInitialize()
 {
+	cutinInitialize();
 }
 
 void Boss1Area::AddCommonUpdate()
 {
 	areaManager->CSVAreaUpdate(camera, player->GetPosition());
+
+	if(IsBossStart && !IsCutInHide){
+		if(input->Trigger(DIK_Z) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_UP) || input->Trigger(DIK_LEFT) || input->Trigger(DIK_RIGHT)){
+			IsCutInMoveEnd = true;
+			IsBossStart = false;
+		}
+	}
 }
 
 void Boss1Area::AddObject3DUpdate()
@@ -163,6 +171,7 @@ void Boss1Area::AddObject3DUpdate()
 
 void Boss1Area::AddObject2DUpdate()
 {
+	cutinUpdate();
 }
 
 void Boss1Area::AddBeatEndUpdate()
@@ -198,6 +207,7 @@ void Boss1Area::AddParticleDraw()
 
 void Boss1Area::AddUIDraw()
 {
+	cutinDraw();
 }
 
 void Boss1Area::AddObjectFinalize()
@@ -216,6 +226,9 @@ void Boss1Area::AddObjectFinalize()
 	for(int i = 0; i < 3; i++){
 		exitWall[i]->Finalize();
 	}
+
+	//カットインSp
+	cutinFinalize();
 }
 
 void Boss1Area::AddCommonFinalize()
@@ -224,3 +237,90 @@ void Boss1Area::AddCommonFinalize()
 	delete areaManager;
 	areaManager = nullptr;
 }
+
+#pragma region カットイン
+void Boss1Area::cutinInitialize()
+{
+	{
+		cutInSpMain = make_unique<BaseSprites>();
+		cutInSpMain->Initialize(28);
+		cutInSpMain->SetPosition(cutInPos);
+		cutInSpMain->SetAnchorPoint({0.5,0.5});
+		cutInSpMain->SetSize({1280, 360});
+	}
+	{
+		cutInSpPart1 = make_unique<BaseSprites>();
+		cutInSpPart1->Initialize(29);
+		cutInSpPart1->SetPosition(cutInPartPos1);
+		cutInSpPart1->SetAnchorPoint({0.5,0.5});
+		cutInSpPart1->SetSize({800, 180});
+	}
+	{
+		cutInSpPart2 = make_unique<BaseSprites>();
+		cutInSpPart2->Initialize(30);
+		cutInSpPart2->SetPosition(cutInPartPos2);
+		cutInSpPart2->SetAnchorPoint({0.5,0.5});
+		cutInSpPart2->SetSize({800, 180});
+	}
+}
+
+void Boss1Area::cutinUpdate()
+{
+	if(!IsCutInHide)
+	{
+		if(IsCutInMoveStart){
+			cutInPos = Easing_Linear_Point2({1920,360},{640,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos1 = Easing_Linear_Point2({1680,600},{880,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos2 = Easing_Linear_Point2({-400,120},{380,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+	
+			if(cutInMoveFrameCur >= 1.0f){
+				cutInPos = {640,360};
+				cutInPartPos1 = {880, 600};
+				cutInPartPos2 = {380, 120};
+				cutInMoveFrameCur = 0.f;
+				IsCutInMoveStart = false;
+				IsBossStart = true;
+			}
+			cutInSpMain->SetPosition(cutInPos);
+			cutInSpPart1->SetPosition(cutInPartPos1);
+			cutInSpPart2->SetPosition(cutInPartPos2);
+		}
+		else if(IsCutInMoveEnd){
+			cutInPos = Easing_Linear_Point2({640,360},{1920,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos1 = Easing_Linear_Point2({800,600},{1680,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos2 = Easing_Linear_Point2({380,120},{-400,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+
+			if(cutInMoveFrameCur >= 1.0f){
+				cutInPos = {1920,360};
+				cutInPartPos1 = {1680, 600};
+				cutInPartPos2 = {-400, 120};
+				cutInMoveFrameCur = 0.f;
+				IsCutInMoveEnd = false;
+				IsCutInHide = true;
+			}
+			cutInSpMain->SetPosition(cutInPos);
+			cutInSpPart1->SetPosition(cutInPartPos1);
+			cutInSpPart2->SetPosition(cutInPartPos2);
+		}
+
+		cutInSpMain->Update();
+		cutInSpPart1->Update();
+		cutInSpPart2->Update();
+	}
+}
+
+void Boss1Area::cutinDraw()
+{
+	if(IsCutInHide) return;
+	cutInSpMain->Draw();
+	cutInSpPart1->Draw();
+	cutInSpPart2->Draw();
+}
+
+void Boss1Area::cutinFinalize()
+{
+	cutInSpMain->Finalize();
+	cutInSpPart1->Finalize();
+	cutInSpPart2->Finalize();
+}
+#pragma endregion

@@ -90,6 +90,9 @@ void Application::Initialize()
 	TextureManager::Load(25, "2DText/GOText.png");
 	TextureManager::Load(26, "2DText/Training.png");
 	TextureManager::Load(27, "2DText/DepthValue.png");
+	TextureManager::Load(28, "2DText/CutIN_Boss.png");
+	TextureManager::Load(29, "2DText/CutIN_Part1_Boss.png");
+	TextureManager::Load(30, "2DText/CutIN_Part2_Boss.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();

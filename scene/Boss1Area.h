@@ -39,13 +39,18 @@ private:
 	void AddCommonFinalize() override;
 
 private:
+	void cutinInitialize();
+	void cutinUpdate();
+	void cutinDraw();
+	void cutinFinalize();
+
+private:
 	std::unique_ptr<Boss1> boss;
 
 	float Block_Size = 2.0f;
 	//入口開閉
 	bool IsEnterClose = false;
 	int enterBorderLineZ = 0;
-	//-2~2, -3, -2
 	std::unique_ptr<IndestructibleWall> enterWall[3];
 	Vector3 enterWallBasePos = {-2,-3,-2};
 
@@ -54,7 +59,30 @@ private:
 	std::unique_ptr<IndestructibleWall> exitWall[3];
 	Vector3 exitWallBasePos = {-2,-3,24};
 
+	//モデル
 	ObjModelManager* IndestructibleWallModel = nullptr;
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
+
+
+	//ゲーム開始
+	bool IsBossStart = false;
+
+
+	//カットインSp
+	bool IsCutInHide = false;
+	bool IsCutInMoveStart = true;
+	bool IsCutInMoveEnd = false;
+
+	const float cutinSecond = 0.5f;
+
+	std::unique_ptr<BaseSprites> cutInSpMain;
+	Vector2 cutInPos = {1920,360};
+	float cutInMoveFrameCur = 0;
+
+	std::unique_ptr<BaseSprites> cutInSpPart1;
+	Vector2 cutInPartPos1 = {1680,600};
+
+	std::unique_ptr<BaseSprites> cutInSpPart2;
+	Vector2 cutInPartPos2 = {-400,120};
 };
 
