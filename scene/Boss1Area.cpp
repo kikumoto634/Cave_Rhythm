@@ -77,7 +77,7 @@ void Boss1Area::AddObject3DInitialize()
 	boss = make_unique<Boss1>();
 	boss->Initialize("Skeleton");
 	Vector3 lpos = areaManager->GetCSVObjectPopPosition(0);
-	boss->Pop({lpos.x, -2.f,lpos.z});
+	boss->Pop({lpos.x, -3.f,lpos.z});
 
 
 	IndestructibleWallModel = new ObjModelManager();
@@ -262,6 +262,15 @@ void Boss1Area::cutinInitialize()
 		cutInSpPart2->SetAnchorPoint({0.5,0.5});
 		cutInSpPart2->SetSize({800, 180});
 	}
+	{
+		bossName = make_unique<BaseSprites>();
+		bossName->Initialize(20);
+		bossName->SetPosition(bossNamePos);
+		bossName->SetAnchorPoint({0.5f,0.5f});
+		bossName->SetSize({650, 150});
+	}
+
+	gameManager->AudioPlay(12, 1.5f);
 }
 
 void Boss1Area::cutinUpdate()
@@ -272,11 +281,13 @@ void Boss1Area::cutinUpdate()
 			cutInPos = Easing_Linear_Point2({1920,360},{640,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 			cutInPartPos1 = Easing_Linear_Point2({1680,600},{880,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 			cutInPartPos2 = Easing_Linear_Point2({-400,120},{380,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			bossNamePos = Easing_Linear_Point2({1605,610},{950,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 	
 			if(cutInMoveFrameCur >= 1.0f){
 				cutInPos = {640,360};
 				cutInPartPos1 = {880, 600};
 				cutInPartPos2 = {380, 120};
+				bossNamePos = {950,610};
 				cutInMoveFrameCur = 0.f;
 				IsCutInMoveStart = false;
 				IsBossStart = true;
@@ -284,16 +295,19 @@ void Boss1Area::cutinUpdate()
 			cutInSpMain->SetPosition(cutInPos);
 			cutInSpPart1->SetPosition(cutInPartPos1);
 			cutInSpPart2->SetPosition(cutInPartPos2);
+			bossName->SetPosition(bossNamePos);
 		}
 		else if(IsCutInMoveEnd){
 			cutInPos = Easing_Linear_Point2({640,360},{1920,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 			cutInPartPos1 = Easing_Linear_Point2({800,600},{1680,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 			cutInPartPos2 = Easing_Linear_Point2({380,120},{-400,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			bossNamePos = Easing_Linear_Point2({950,610},{1605,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 
 			if(cutInMoveFrameCur >= 1.0f){
 				cutInPos = {1920,360};
 				cutInPartPos1 = {1680, 600};
 				cutInPartPos2 = {-400, 120};
+				bossNamePos = {1605,610};
 				cutInMoveFrameCur = 0.f;
 				IsCutInMoveEnd = false;
 				IsCutInHide = true;
@@ -301,11 +315,13 @@ void Boss1Area::cutinUpdate()
 			cutInSpMain->SetPosition(cutInPos);
 			cutInSpPart1->SetPosition(cutInPartPos1);
 			cutInSpPart2->SetPosition(cutInPartPos2);
+			bossName->SetPosition(bossNamePos);
 		}
 
 		cutInSpMain->Update();
 		cutInSpPart1->Update();
 		cutInSpPart2->Update();
+		bossName->Update();
 	}
 }
 
@@ -315,6 +331,7 @@ void Boss1Area::cutinDraw()
 	cutInSpMain->Draw();
 	cutInSpPart1->Draw();
 	cutInSpPart2->Draw();
+	bossName->Draw();
 }
 
 void Boss1Area::cutinFinalize()
@@ -322,5 +339,6 @@ void Boss1Area::cutinFinalize()
 	cutInSpMain->Finalize();
 	cutInSpPart1->Finalize();
 	cutInSpPart2->Finalize();
+	bossName->Finalize();
 }
 #pragma endregion

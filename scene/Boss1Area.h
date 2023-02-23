@@ -84,5 +84,8 @@ private:
 
 	std::unique_ptr<BaseSprites> cutInSpPart2;
 	Vector2 cutInPartPos2 = {-400,120};
+
+	std::unique_ptr<BaseSprites> bossName;
+	Vector2 bossNamePos = {1605,610};
 };
 

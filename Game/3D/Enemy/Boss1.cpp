@@ -14,7 +14,7 @@ Boss1::~Boss1()
 void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
-	ScaleMax = {1.5f,1.5f,1.5f};
+	ScaleMax = {1.3f,1.3f,1.3f};
 	ScaleMin = {1.f,1.f,1.f};
 
 	SetPosition(NotAlivePos);

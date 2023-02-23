@@ -85,6 +85,7 @@ void Application::Initialize()
 	TextureManager::Load(17, "2DText/buttonZ.png");
 	TextureManager::Load(18, "2DText/TitleLog.png");
 	TextureManager::Load(19, "2DText/pushText.png");
+	TextureManager::Load(20, "2DText/Boss1Name.png");
 	TextureManager::Load(24, "2DText/TutorialFont1.png");
 	TextureManager::Load(25, "2DText/TutorialFont2.png");
 	TextureManager::Load(25, "2DText/GOText.png");
@@ -108,6 +109,7 @@ void Application::Initialize()
 	Audio::Load(9,"BPM120_Home.wav");
 	Audio::Load(10,"dig.wav");
 	Audio::Load(11,"Enter.wav");
+	Audio::Load(12,"cutin.wav");
 
 #pragma endregion
 
