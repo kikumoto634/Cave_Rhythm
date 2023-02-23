@@ -17,7 +17,7 @@
 
 class BaseBattleScene : public BaseScene
 {
-private:
+protected:
 	//シーン遷移
 	const float FadeSecond = 1.f;
 
@@ -75,9 +75,6 @@ private:
 	void ParticleDraw();
 	void UIDraw();
 
-	//シーン遷移
-	void SceneChange();
-
 	//後処理
 	void ObjectFinaize();
 	void CommonFinalize();
@@ -87,6 +84,7 @@ protected:
 	//シーン遷移
 	virtual void SceneGameEnd();
 	virtual void NextSceneChange() = 0;
+	virtual void SceneChange();
 
 	//初期化
 	virtual void AddCommonInitialize() = 0;

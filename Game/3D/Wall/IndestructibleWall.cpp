@@ -9,9 +9,11 @@ IndestructibleWall::~IndestructibleWall()
 	//Finalize();
 }
 
-void IndestructibleWall::Initialize(ObjModelManager* model)
+void IndestructibleWall::Initialize(ObjModelManager* model, ObjModelManager* collider)
 {
 	BaseObjObject::Initialize(model);
+
+	colliderModel = collider;
 }
 
 void IndestructibleWall::Update(Camera *camera)
@@ -31,7 +33,7 @@ void IndestructibleWall::Update(Camera *camera)
 			SetCollider(collider);
 			//‘®«ƒZƒbƒg
 			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-			collider->ConstructTriangles(model);
+			collider->ConstructTriangles(colliderModel);
 			IsCollision = true;
 		}
 	}

@@ -14,7 +14,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <returns></returns>
-	void Initialize(ObjModelManager* model);
+	void Initialize(ObjModelManager* model, ObjModelManager* collider);
 
 	/// <summary>
 	/// 更新
@@ -54,6 +54,8 @@ private:
 	//距離に応じた非表示
 	bool IsHide = false;
 
+	//メッシュコライダー用モデル
+	ObjModelManager* colliderModel = nullptr;
 	bool IsCollision = false;
 };
 

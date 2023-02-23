@@ -120,6 +120,7 @@ private:
 
 	//”j‰ó•s‰Â”\•Ç
 	ObjModelManager* IndestructibleWallModel = nullptr;
+	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 	IndestructibleWall* IndestructibleWalls[DIV_NUM][DIV_NUM] = {nullptr};
 
 	//•”‰®

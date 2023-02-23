@@ -161,7 +161,10 @@ void AreaManager::PlaneBeatEndUpdate()
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) continue;
+			if(plane[i][j] == nullptr){
+				IsChange = !IsChange; 
+				continue;
+			}
 			//コンボ数に応じて色変化
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 				plane[i][j]->PlaneColorChange(IsChange, IsComboColorChange);
@@ -320,30 +323,33 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 	IndestructibleWallModel = new ObjModelManager();
 	IndestructibleWallModel->CreateModel("GroundBlock3");
 
+	IndestructibleWallColliderModel = new ObjModelManager();
+	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
+
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 	for(int i = 0; i <DIV_NUM; i++){
 		//上
 		IndestructibleWalls[0][i] = new IndestructibleWall();
-		IndestructibleWalls[0][i]->Initialize(IndestructibleWallModel);
+		IndestructibleWalls[0][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos + i, startPos - 1};
 		pos*=Block_Size;
 		IndestructibleWalls[0][i]->SetPosition({pos.x, -3,pos.y});
 		//下
 		IndestructibleWalls[1][i] = new IndestructibleWall();
-		IndestructibleWalls[1][i]->Initialize(IndestructibleWallModel);
+		IndestructibleWalls[1][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos + i, DIV_NUM_HALF_FLOAT+1};
 		pos*=Block_Size;
 		IndestructibleWalls[1][i]->SetPosition({pos.x, -3,pos.y});
 		////左
 		IndestructibleWalls[2][i] = new IndestructibleWall();
-		IndestructibleWalls[2][i]->Initialize(IndestructibleWallModel);
+		IndestructibleWalls[2][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos - 1, startPos + i};
 		pos*=Block_Size;
 		IndestructibleWalls[2][i]->SetPosition({pos.x, -3,pos.y});
 		////右
 		IndestructibleWalls[3][i] = new IndestructibleWall();
-		IndestructibleWalls[3][i]->Initialize(IndestructibleWallModel);
+		IndestructibleWalls[3][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {DIV_NUM_HALF_FLOAT+1, startPos + i};
 		pos*=Block_Size;
 		IndestructibleWalls[3][i]->SetPosition({pos.x, -3,pos.y});
@@ -353,6 +359,9 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 {
 	IndestructibleWallModel = new ObjModelManager();
 	IndestructibleWallModel->CreateModel("GroundBlock3");
+
+	IndestructibleWallColliderModel = new ObjModelManager();
+	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
 
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
@@ -364,7 +373,7 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 			}
 
 			IndestructibleWalls[i][j] = new IndestructibleWall();
-			IndestructibleWalls[i][j]->Initialize(IndestructibleWallModel);
+			IndestructibleWalls[i][j]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 			pos = {startPos + i ,startPos + j};
 			pos *= Block_Size;
 			IndestructibleWalls[i][j]->SetPosition({pos.x,-3,pos.y});
@@ -395,6 +404,9 @@ void AreaManager::IndestructibleWallFinalize()
 {
 	delete IndestructibleWallModel;
 	IndestructibleWallModel = nullptr;
+
+	delete IndestructibleWallColliderModel;
+	IndestructibleWallColliderModel = nullptr;
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
