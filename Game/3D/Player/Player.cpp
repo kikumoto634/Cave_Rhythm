@@ -135,6 +135,11 @@ void Player::Update(Camera *camera)
 			this->camera->SetTarget(OldCameraTarget);
 			this->camera->SetEye(OldCameraEye);
 		}
+		else if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_ENEMYS, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
+			movePosition = OldPosition;
+			this->camera->SetTarget(OldCameraTarget);
+			this->camera->SetEye(OldCameraEye);
+		}
 	}
 
 	//Ž€–S
@@ -212,7 +217,6 @@ void Player::OnCollision(const CollisionInfo &info)
 	//“GÚG
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
 		Damage();
-		camera->ShakeStart(3);
 	}
 }
 
@@ -345,6 +349,7 @@ void Player::Damage()
 	if(IsDamage) return;
 	IsDamage = true;
 	IsDamageSoundOnce = true;
+	camera->ShakeStart(3);
 	HP -= 1;
 }
 

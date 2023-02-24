@@ -53,7 +53,7 @@ class Player : public BaseObjObject
 {
 //’è”
 //–³“GŠÔ
-const int DamageFrame = 120;
+const int DamageFrame = 150;
 
 //ƒƒ“ƒoŠÖ”
 public:

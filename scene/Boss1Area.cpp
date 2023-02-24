@@ -8,7 +8,6 @@ using namespace std;
 
 Boss1Area::~Boss1Area()
 {
-	Finalize();
 }
 
 Boss1Area::Boss1Area(DirectXCommon *dxCommon, Window *window, int saveHP)
@@ -123,7 +122,8 @@ void Boss1Area::AddObject3DUpdate()
 	if(IsEnterClose){
 		if(boss->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 1.5f);
-			
+		}
+		else if(boss->GetIsDead()){
 			IsExitOpen = true;
 			gameManager->AudioPlay(11, 0.5f);
 		}

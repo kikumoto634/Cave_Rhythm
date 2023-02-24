@@ -7,9 +7,7 @@
 
 #include "../../../Engine/math/Easing/Easing.h"
 
-Boss1::~Boss1()
-{
-}
+using namespace std;
 
 void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 {
@@ -21,9 +19,16 @@ void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 	world.UpdateMatrix();
 
+	hp = FullHP;
+
 	//パーティクル
-	DeadParticle = new ParticleObject();
+	DeadParticle = make_unique<ParticleObject>();
 	DeadParticle->Initialize();
+
+	//コライダー
+	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
+	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+	collider->Update();
 }
 
 void Boss1::Update(Camera *camera, Vector3 playerPos)
@@ -36,26 +41,9 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 	distance = pos.length();
 	if(-13 <= distance && distance <= 13)		{
 		IsInvisible = false;
-
-		if(!IsCollision){
-			//コライダー
-			float radius = 0.6f;
-			SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
-			collider->SetAttribute(COLLISION_ATTR_ENEMYS);
-			collider->Update();
-			IsCollision = true;
-		}
 	}
 	else if(-13 > distance || distance > 13)	{
 		IsInvisible = true;
-
-		if(IsCollision){
-			if(collider){
-				//コリジョンマネージャーから登録を解除する
-				CollisionManager::GetInstance()->RemoveCollider(collider);
-			}
-			IsCollision = false;
-		}
 	}
 
 	//死亡
@@ -64,15 +52,41 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			IsDeadOnceAudio = false;
 			appearancePopFrame = 0;
 		}
-		DeadParticleApp();
 
-		if(appearancePopFrame >= AppearanceResetFrame){
-			Reset();
-			return;
+		if(appearancePopFrame < AppearanceResetFrame){
+			DeadParticleApp();
+			appearancePopFrame++;
+			DeadParticle->Update(this->camera);
 		}
-		appearancePopFrame++;
+		else{
+			appearancePopFrame = AppearanceResetFrame;
+		}
 	}
-	DeadParticle->Update(this->camera);
+
+	//ダメージ
+	if(IsDamage){
+		damageResetCurFrame++;
+
+		if(hp <= 0){
+			IsDead = true;
+			IsDeadOnceAudio = true;
+			IsDeadOnceParticle = true;
+			SetPosition(NotAlivePos);
+			world.UpdateMatrix();
+			collider->Update();
+			DeadParticlePos = GetPosition();
+		}
+
+		if(IsDeadOnceAudio){
+			IsDeadOnceAudio = false;
+		}
+
+		//無敵時間
+		if(damageResetCurFrame >= DamageResetFrame){
+			damageResetCurFrame = 0;
+			IsDamage = false;
+		}
+	}
 
 	if(IsInvisible) return;
 	//生存
@@ -83,11 +97,35 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			IsScaleEasing  = true;
 			//拍終了
 			IsBeatEnd = false;
+			moveWaitCurCount++;
+
+			if(moveWaitCurCount >= MoveWaitCount){
+				//移動
+				IsMoveEasing = true;
+				if(!IsComeBack)	targetPos = playerPos;
+				else if(IsComeBack) targetPos = originpos;
+				Movement();
+				currentPos = GetPosition();
+				moveWaitCurCount = 0;
+			}
 		}
 		//スケール遷移
 		if(IsScaleEasing){
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsScaleEasing = false;
+			}
+		}
+
+		//移動
+		if(IsMoveEasing){
+			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+		
+			if(moveEasingFrame >= 1.f){
+				IsMoveEasing = false;
+				world.translation = movePosition;
+				currentPos = {};
+				movePosition = {};
+				moveEasingFrame = 0;
 			}
 		}
 	}
@@ -112,7 +150,6 @@ void Boss1::ParticleDraw()
 void Boss1::Finalize()
 {
 	DeadParticle->Finalize();
-	delete DeadParticle;
 
 	BaseObjObject::Finalize();
 }
@@ -123,21 +160,12 @@ void Boss1::OnCollision(const CollisionInfo &info)
 	if(IsInvisible) return;
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		IsDead = true;
-		IsDeadOnceAudio = true;
-		IsDeadOnceParticle = true;
-
-		SetPosition(NotAlivePos);
-		world.UpdateMatrix();
-		collider->Update();
-
-		DeadParticlePos = info.objObject->GetPosition();
-	}
-	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-		SetPosition(NotAlivePos);
-		world.UpdateMatrix();
-		collider->Update();
-		IsDead = true;
+		
+		if(!IsDamage){
+			hp = hp - 1;
+			IsDeadOnceAudio = true;
+			IsDamage = true;
+		}
 	}
 }
 
@@ -145,13 +173,61 @@ void Boss1::Pop(Vector3 pos)
 {
 	world.translation = pos;
 	world.UpdateMatrix();
+	originpos = pos;
 	IsNotApp = true;
 }
 
-void Boss1::Reset()
+void Boss1::Movement()
 {
-	IsNotApp = false;
-	IsDead = false;
+	Vector2 baseVector = {1,0};
+	Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
+	if(subVector.length() <= 2.f){
+		movePosition = world.translation;
+
+		//戻り終わった
+		if(IsComeBack){
+			IsComeBack = false;
+		}
+		//戻る
+		else if(!IsComeBack){
+			IsComeBack = true;
+		}
+
+		return;
+	}
+
+	float lengthBase = baseVector.length();
+	float lengthSub = subVector.length();
+
+	float cos = baseVector.dot(subVector)/(lengthBase*lengthSub);
+
+	float sita = acosf(cos);
+	sita = sita*(180/3.14159265f);
+	
+	//右
+	if(sita >= 135){
+		movePosition = world.translation + Vector3{2.f,0,0};
+		SetRotation({0,XMConvertToRadians(90),0});
+	}
+	//左
+	else if(45 >= sita){
+		movePosition = world.translation + Vector3{-2.f,0,0};
+		SetRotation({0,XMConvertToRadians(-90),0});
+	}
+	//下
+	else if(sita > 45 && 135 > sita){
+
+		//下
+		if(subVector.y > 0){
+			movePosition = world.translation + Vector3{0,0,-2.f};
+			SetRotation({0,XMConvertToRadians(180),0});
+		}
+		//上
+		else if(subVector.y < 0){
+			movePosition = world.translation + Vector3{0,0,2.f};
+			SetRotation({0,0,0});
+		}
+	}
 }
 
 void Boss1::DeadParticleApp()
