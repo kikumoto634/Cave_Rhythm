@@ -102,6 +102,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			if(moveWaitCurCount >= MoveWaitCount){
 				//ˆÚ“®
 				IsMoveEasing = true;
+				OldPosition = GetPosition();
 				if(!IsComeBack)	targetPos = playerPos;
 				else if(IsComeBack) targetPos = originpos;
 				Movement();
@@ -120,6 +121,21 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 		if(IsMoveEasing){
 			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 		
+			Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
+			if(subVector.length() <= 1.f){
+			
+				//–ß‚èI‚í‚Á‚½
+				if(IsComeBack){
+					IsComeBack = false;
+				}
+				//–ß‚é
+				else if(!IsComeBack){
+					IsComeBack = true;
+				}
+
+				movePosition = OldPosition;
+			}
+
 			if(moveEasingFrame >= 1.f){
 				IsMoveEasing = false;
 				world.translation = movePosition;
@@ -181,20 +197,6 @@ void Boss1::Movement()
 {
 	Vector2 baseVector = {1,0};
 	Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
-	if(subVector.length() <= 2.f){
-		movePosition = world.translation;
-
-		//–ß‚èI‚í‚Á‚½
-		if(IsComeBack){
-			IsComeBack = false;
-		}
-		//–ß‚é
-		else if(!IsComeBack){
-			IsComeBack = true;
-		}
-
-		return;
-	}
 
 	float lengthBase = baseVector.length();
 	float lengthSub = subVector.length();
@@ -203,7 +205,7 @@ void Boss1::Movement()
 
 	float sita = acosf(cos);
 	sita = sita*(180/3.14159265f);
-	
+
 	//‰E
 	if(sita >= 135){
 		movePosition = world.translation + Vector3{2.f,0,0};

@@ -68,6 +68,7 @@ private:
 	int moveWaitCurCount = 0;
 	Vector3 currentPos;
 	Vector3 movePosition;
+	Vector3 OldPosition = {};
 	const float MoveEasingMaxTime = 0.05f;
 	float moveEasingFrame = 0;
 
