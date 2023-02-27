@@ -98,7 +98,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			//カウント
 			patternCount++;
 
-			if(patternCount >= 5 && patternCount <= 15){
+			if(patternCount == 2){
 				IsSummon = true;
 				IsMove = false;
 			}
@@ -140,13 +140,15 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
 			if(subVector.length() <= 1.f){
 			
+				if(IsMove){
+					IsMove = false;
+					patternCount = 0;
+				}
+
 				//戻り終わった
 				if(IsComeBack){
 					IsComeBack = false;
 					SetRotation({0,XMConvertToRadians(180),0});
-
-					IsMove = false;
-					patternCount = 0;
 				}
 				//戻る
 				else if(!IsComeBack){

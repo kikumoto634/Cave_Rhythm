@@ -29,11 +29,6 @@ class Boss1 : public BaseObjObject
 	* 3Ú‹ß 2‘Ò‹@I—¹Œã Reset
 	* 4–ß‚é 3¬Œ÷->Œã‚ë‚É–ß‚é
 	*/
-	enum Pattern{
-		WAIT,
-		MOVE,
-		SUMMON,
-	};
 
 public:
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
