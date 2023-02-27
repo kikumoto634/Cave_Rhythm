@@ -2,7 +2,7 @@
 #include "BaseBattleScene.h"
 
 #include "../Game/3D/Enemy/Boss1.h"
-
+#include "../Game/3D/Enemy/Skelton.h"
 #include "../Game/2D/TutorialSp.h"
 
 class Boss1Area : public BaseBattleScene
@@ -44,8 +44,16 @@ private:
 	void cutinDraw();
 	void cutinFinalize();
 
+
+	void ActorCreateInitialize();
+	void ActorSummon();
+
 private:
+	//エネミー
 	std::unique_ptr<Boss1> boss;
+
+	int skeltonPopNumMax = 10;
+	std::vector<std::unique_ptr<Skelton>> skelton;
 
 	float Block_Size = 2.0f;
 	//入口開閉

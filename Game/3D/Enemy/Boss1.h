@@ -7,10 +7,14 @@ class Boss1 : public BaseObjObject
 	//ビートx回数終了時にPOP
 	const int POP_COUNT = 6;
 	//死亡後のリセット時間
-	const int AppearanceResetFrame = 50;
+	const int AppDeadParMaxFrame = 150;
+
+	//召喚エフェクト
+	const int AppSummonParMaxFrame = 50;
+	const int SummonEnemyPosNumMax = 10;
 
 	//体力
-	const int FullHP = 5;
+	const int FullHP = 10;
 	//無敵時間
 	const int DamageResetFrame = 10;
 
@@ -25,16 +29,23 @@ class Boss1 : public BaseObjObject
 	* 3接近 2待機終了後 Reset
 	* 4戻る 3成功->後ろに戻る
 	*/
+	enum Pattern{
+		WAIT,
+		MOVE,
+		SUMMON,
+	};
 
 public:
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
 	void Update(Camera* camera, Vector3 playerPos);
+	void ParticleUpdate();
 	void Draw() override;
 	void ParticleDraw();
 	void Finalize() override;
 	void OnCollision(const CollisionInfo& info) override;
 
 	void Pop(Vector3 pos);
+	void IsSummonEnemyPopNot()	{IsSummonEnemyPop = false;}
 
 	//Getter
 	inline bool GetIsNotApp()	{return IsNotApp;}
@@ -42,18 +53,25 @@ public:
 	inline bool GetIsDead()	{return IsDead;}
 	inline Vector3 GetDeadParticlepos()	{return DeadParticlePos;}
 	inline bool GetIsInvisible() {return IsInvisible;}
+	inline bool GetIsSummonEnemyPop()	{return IsSummonEnemyPop;}
 
 private:
 
 	void Movement();
+	void Summon();
 
 	//死亡エフェクト
 	void DeadParticleApp();
+	//召喚エフェクト
+	void SummonParticleApp();
 
 private:
 
 	//未出現
 	bool IsNotApp = false;
+
+	//パターンカウント
+	int patternCount = 0;
 
 	//HP
 	int hp = 0;
@@ -63,6 +81,7 @@ private:
 	int damageResetCurFrame = 0;
 
 	//追跡
+	bool IsMove = true;
 	Vector3 targetPos;
 	bool IsMoveEasing = false;
 	int moveWaitCurCount = 0;
@@ -72,9 +91,14 @@ private:
 	const float MoveEasingMaxTime = 0.05f;
 	float moveEasingFrame = 0;
 
+	//召喚
+	bool IsSummon = false;
+	bool IsSummonEnemyPop = false;
+	int summonEnemyPosNum = 0;
+
 	//退却
 	bool IsComeBack= false;
-	Vector3 originpos = {};
+	Vector3 homePos = {};
 
 	//コライダー
 	float radius = 1.0f;
@@ -83,8 +107,6 @@ private:
 	//死亡
 	bool IsDead = false;
 	bool IsDeadOnceAudio = false;
-	bool IsDeadOnceParticle = false;
-	Vector3 DeadParticlePos = {};
 
 	//距離に応じた非表示
 	bool IsInvisible = false;
@@ -95,6 +117,12 @@ private:
 
 	//パーティクル
 	std::unique_ptr<ParticleObject> DeadParticle;
-	int appearancePopFrame = 0;
+	int appDeadParFrame = 0;
+	bool IsDeadOnceParticle = false;
+	Vector3 DeadParticlePos = {};
+
+	std::unique_ptr<ParticleObject> SummonParticle;
+	int appSummonParFrame = 0;
+	Vector3 SummonParticlePos ={};
 };
 

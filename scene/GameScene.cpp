@@ -233,9 +233,7 @@ void GameScene::AddObjectFinalize()
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Finalize();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
-		(*it)->Finalize();
-	}
+	
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		(*it)->Finalize();
 	}

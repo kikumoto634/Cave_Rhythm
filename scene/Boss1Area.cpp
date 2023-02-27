@@ -78,6 +78,7 @@ void Boss1Area::AddObject3DInitialize()
 	Vector3 lpos = areaManager->GetCSVObjectPopPosition(0);
 	boss->Pop({lpos.x, -3.f,lpos.z});
 
+	ActorCreateInitialize();
 
 	IndestructibleWallModel = new ObjModelManager();
 	IndestructibleWallModel->CreateModel("GroundBlock3");
@@ -123,11 +124,20 @@ void Boss1Area::AddObject3DUpdate()
 		if(boss->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 1.5f);
 		}
-		else if(boss->GetIsDead()){
+		else if(boss->GetIsDead() && !IsExitOpen){
 			IsExitOpen = true;
 			gameManager->AudioPlay(11, 0.5f);
 		}
 		boss->Update(camera,player->GetPosition());
+		ActorSummon();
+		boss->ParticleUpdate();
+	}
+
+	for(auto it = skelton.begin(); it != skelton.end(); it++){
+		if((*it)->GetIsDeadAudio()){
+			gameManager->AudioPlay(2, 0.5f);
+		}
+		(*it)->Update(camera,player->GetPosition());
 	}
 
 	//入口
@@ -178,6 +188,10 @@ void Boss1Area::AddBeatEndUpdate()
 {
 	if(!IsEnterClose) return;
 	boss->IsBeatEndOn();
+
+	for(auto it = skelton.begin(); it != skelton.end(); it++){
+		(*it)->IsBeatEndOn();
+	}
 }
 
 void Boss1Area::AddObject3DDraw()
@@ -193,6 +207,9 @@ void Boss1Area::AddObject3DDraw()
 	if(!IsEnterClose) return;
 	//ボス
 	boss->Draw();
+	for(auto it = skelton.begin(); it != skelton.end(); it++){
+		(*it)->Draw();
+	}
 	//入口
 	for(int i = 0; i < 3; i++){
 		enterWall[i]->Draw();
@@ -201,8 +218,10 @@ void Boss1Area::AddObject3DDraw()
 
 void Boss1Area::AddParticleDraw()
 {
-	if(!IsEnterClose) return;
 	boss->ParticleDraw();
+	for(auto it = skelton.begin(); it != skelton.end(); it++){
+		(*it)->ParticleDraw();
+	}
 }
 
 void Boss1Area::AddUIDraw()
@@ -214,6 +233,10 @@ void Boss1Area::AddObjectFinalize()
 {
 	//ボス
 	boss->Finalize();
+
+	for(auto it = skelton.begin(); it != skelton.end(); it++){
+		(*it)->Finalize();
+	}
 
 	delete IndestructibleWallModel;
 	delete IndestructibleWallColliderModel;
@@ -342,3 +365,28 @@ void Boss1Area::cutinFinalize()
 	bossName->Finalize();
 }
 #pragma endregion
+
+void Boss1Area::ActorCreateInitialize()
+{
+	for(int i = 0; i < skeltonPopNumMax; i++){
+		unique_ptr<Skelton> newObj = make_unique<Skelton>();
+		newObj->Initialize("Skeleton");
+		skelton.push_back(move(newObj));
+	}
+}
+
+void Boss1Area::ActorSummon()
+{
+	if(!boss->GetIsSummonEnemyPop()) return;
+	for(auto it = skelton.begin(); it != skelton.end(); it++){
+		if(!(*it)->GetIsNotApp()){
+			int lx = rand()%7 + -3;
+			int lz = rand()%4;
+			Vector3 pos = {lx*Block_Size, 0.f,(-lz)*Block_Size};
+			pos += boss->GetPosition();
+			(*it)->Pop(pos);
+			boss->IsSummonEnemyPopNot();
+			break;
+		}
+	}
+}

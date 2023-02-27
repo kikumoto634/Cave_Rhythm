@@ -24,6 +24,8 @@ void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 	//パーティクル
 	DeadParticle = make_unique<ParticleObject>();
 	DeadParticle->Initialize();
+	SummonParticle = make_unique<ParticleObject>();
+	SummonParticle->Initialize();
 
 	//コライダー
 	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
@@ -46,23 +48,6 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 		IsInvisible = true;
 	}
 
-	//死亡
-	if(IsDead){
-		if(IsDeadOnceAudio){
-			IsDeadOnceAudio = false;
-			appearancePopFrame = 0;
-		}
-
-		if(appearancePopFrame < AppearanceResetFrame){
-			DeadParticleApp();
-			appearancePopFrame++;
-			DeadParticle->Update(this->camera);
-		}
-		else{
-			appearancePopFrame = AppearanceResetFrame;
-		}
-	}
-
 	//ダメージ
 	if(IsDamage){
 		damageResetCurFrame++;
@@ -71,19 +56,32 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			IsDead = true;
 			IsDeadOnceAudio = true;
 			IsDeadOnceParticle = true;
+			DeadParticlePos = GetPosition();
 			SetPosition(NotAlivePos);
 			world.UpdateMatrix();
 			collider->Update();
-			DeadParticlePos = GetPosition();
+			return;
 		}
 
 		if(IsDeadOnceAudio){
 			IsDeadOnceAudio = false;
 		}
 
+		//無敵時間内
+		Vector4 color;
+		if(damageResetCurFrame / 6 == 0){
+			color = {0.0f, 0.0f, 0.0f, 1.0f};
+		}
+		else{
+			color = {1.0f, 0.0f, 0.0f, 1.0f};
+		}
+		object->SetColor(color);
+
 		//無敵時間
 		if(damageResetCurFrame >= DamageResetFrame){
 			damageResetCurFrame = 0;
+			color = {1.0f,1.0f,1.0f,1.0f};
+			object->SetColor(color);
 			IsDamage = false;
 		}
 	}
@@ -97,17 +95,35 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			IsScaleEasing  = true;
 			//拍終了
 			IsBeatEnd = false;
-			moveWaitCurCount++;
+			//カウント
+			patternCount++;
 
-			if(moveWaitCurCount >= MoveWaitCount){
-				//移動
-				IsMoveEasing = true;
-				OldPosition = GetPosition();
-				if(!IsComeBack)	targetPos = playerPos;
-				else if(IsComeBack) targetPos = originpos;
-				Movement();
-				currentPos = GetPosition();
-				moveWaitCurCount = 0;
+			if(patternCount >= 5 && patternCount <= 15){
+				IsSummon = true;
+				IsMove = false;
+			}
+			else if(patternCount == 25){
+				IsSummon = false;
+				IsMove = true;
+			}
+
+			//追撃
+			if(IsMove){
+				moveWaitCurCount++;
+					if(moveWaitCurCount >= MoveWaitCount){
+					//移動
+					IsMoveEasing = true;
+					OldPosition = GetPosition();
+					if(!IsComeBack)	targetPos = playerPos;
+					else if(IsComeBack) targetPos = homePos;
+					Movement();
+					currentPos = GetPosition();
+					moveWaitCurCount = 0;
+				}
+			}
+			//召喚
+			if(IsSummon){
+				Summon();
 			}
 		}
 		//スケール遷移
@@ -127,6 +143,10 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 				//戻り終わった
 				if(IsComeBack){
 					IsComeBack = false;
+					SetRotation({0,XMConvertToRadians(180),0});
+
+					IsMove = false;
+					patternCount = 0;
 				}
 				//戻る
 				else if(!IsComeBack){
@@ -148,6 +168,43 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 	BaseObjObject::Update(this->camera);
 }
 
+void Boss1::ParticleUpdate()
+{
+	//死亡
+	if(IsDead){
+		if(IsDeadOnceAudio){
+			IsDeadOnceAudio = false;
+			appDeadParFrame = 0;
+		}
+
+		if(appDeadParFrame >= AppDeadParMaxFrame){
+			appDeadParFrame = AppDeadParMaxFrame;
+			return;
+		}
+
+		appDeadParFrame++;
+
+		DeadParticleApp();
+		DeadParticle->Update(this->camera);
+	}
+
+	//召喚
+	if(IsSummon){
+		/// <summary>
+		SummonParticlePos = GetPosition();
+		/// </summary>
+
+		if(appSummonParFrame >= AppSummonParMaxFrame){
+			appSummonParFrame = 0;
+		}
+
+		appSummonParFrame++;
+
+		SummonParticleApp();
+		SummonParticle->Update(this->camera);
+	}
+}
+
 void Boss1::Draw()
 {
 	if(IsDead) return;
@@ -161,11 +218,15 @@ void Boss1::ParticleDraw()
 	if(IsDead){
 		DeadParticle->Draw();
 	}
+	if(IsSummon){
+		SummonParticle->Draw();
+	}
 }
 
 void Boss1::Finalize()
 {
 	DeadParticle->Finalize();
+	SummonParticle->Finalize();
 
 	BaseObjObject::Finalize();
 }
@@ -182,6 +243,8 @@ void Boss1::OnCollision(const CollisionInfo &info)
 			IsDeadOnceAudio = true;
 			IsDamage = true;
 		}
+
+		IsComeBack = true;
 	}
 }
 
@@ -189,7 +252,7 @@ void Boss1::Pop(Vector3 pos)
 {
 	world.translation = pos;
 	world.UpdateMatrix();
-	originpos = pos;
+	homePos = pos;
 	IsNotApp = true;
 }
 
@@ -232,6 +295,19 @@ void Boss1::Movement()
 	}
 }
 
+void Boss1::Summon()
+{
+	if(!IsSummon) return;
+	if(summonEnemyPosNum >= SummonEnemyPosNumMax) {
+		IsSummon = false;
+		summonEnemyPosNum = 0;
+		return;
+	}
+
+	summonEnemyPosNum++;
+	IsSummonEnemyPop = true;
+}
+
 void Boss1::DeadParticleApp()
 {
 	if(!IsDeadOnceParticle) return;
@@ -245,9 +321,32 @@ void Boss1::DeadParticleApp()
 		Vector3 acc{};
 		acc.y = -0.005f;
 
-		DeadParticle->ParticleSet(AppearanceResetFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
+		DeadParticle->ParticleSet(AppDeadParMaxFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
 		DeadParticle->ParticleAppearance();
 	}
 
 	IsDeadOnceParticle = false;
+}
+
+void Boss1::SummonParticleApp()
+{
+	if(!IsSummon) return;
+	const float rnd_pos = 3.f;
+	Vector3 pos;
+	pos.x = (float)rand()/RAND_MAX * rnd_pos - rnd_pos/2.0f;
+	pos.y = -1.f;
+	pos.z = (float)rand()/RAND_MAX * rnd_pos - rnd_pos/2.0f;
+	pos += SummonParticlePos;
+
+	const float rnd_vel = 0.08f;
+	Vector3 vel{};
+	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+	vel.y = 0.06f;
+	vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+	Vector3 acc{};
+	acc.y = 0.001f;
+
+	SummonParticle->ParticleSet(AppSummonParMaxFrame,pos,vel,acc,0.4f,0.0f,1,{0.0f,0.4f,0.0f,0.4f});
+	SummonParticle->ParticleAppearance();
 }
