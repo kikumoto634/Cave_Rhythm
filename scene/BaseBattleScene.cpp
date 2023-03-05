@@ -120,6 +120,26 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
+	{
+		//座標
+		ImGui::SetNextWindowPos(ImVec2{0,250});
+		//サイズ
+		ImGui::SetNextWindowSize(ImVec2{300,150});
+		ImGui::Begin("BeatSp");
+		//BeatSp PosSize
+		float lpos[2] = {beatPos.x, beatPos.y};
+		ImGui::DragFloat2("Position", lpos, 0.1f);
+		beatPos = {lpos[0],lpos[1]};
+
+		float lsize[2] = {beatSize.x, beatSize.y};
+		ImGui::DragFloat2("Size", lsize, 0.1f);
+		beatSize = {lsize[0], lsize[1]};
+
+		beatSp->SetPosition(beatPos);
+		beatSp->SetSize(beatSize);
+		ImGui::End();
+	}
+
 	//Scene
 	{
 		//座標
@@ -199,13 +219,13 @@ void BaseBattleScene::CommonInitialize()
 	collisionManager = CollisionManager::GetInstance();
 
 	//リズムマネージャー
-	rhythmManager = new RhythmManager();
+	rhythmManager = make_unique<RhythmManager>();
 
 	//ゲームマネージャー
-	gameManager = new GameManager();
+	gameManager = make_unique<GameManager>();
 	gameManager->Initialize();
 
-	areaManager = new AreaManager();
+	areaManager = make_unique<AreaManager>();
 
 	//カメラ
 	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
@@ -241,6 +261,18 @@ void BaseBattleScene::Object2DInitialize()
 	fade->Initialize(1);
 	fade->SetColor(fadeColor);
 	fade->SetSize({fadeInSize});
+
+	beatSp = make_unique<BaseSprites>();
+	beatSp->Initialize(14);
+	beatSp->SetAnchorPoint({0.5f,0.5f});
+	beatSp->SetPosition(beatPos);
+	beatSp->SetSize(beatSize);
+
+	noteSp = make_unique<BaseSprites>();
+	noteSp->Initialize(1);
+	noteSp->SetAnchorPoint({0.5f,0.5f});
+	noteSp->SetPosition(notePos);
+	noteSp->SetSize(noteSize);
 }
 
 void BaseBattleScene::InputUpdate()
@@ -281,6 +313,24 @@ void BaseBattleScene::Object3DUpdate()
 void BaseBattleScene::Object2DUpdate()
 {
 	gameManager->SpriteUpdate();
+
+	if(IsBeatScale){
+		if(beatSp->ScaleChange({128,128}, {100,100})){
+			IsBeatScale = false;
+		}
+	}
+	beatSp->Update();
+
+	if(IsNoteAlive){
+		if(notePos.x <= 640.f) {
+			IsNoteAlive = false;
+			curBeatTime = 0;
+		}
+		notePos = Easing_Linear_Point2({1288,600}, {640,600}, Time_OneWay(curBeatTime, (float)rhythmManager->GetBPMTime()/2));
+		
+		noteSp->SetPosition(notePos);
+		noteSp->Update();
+	}
 }
 
 void BaseBattleScene::CommonUpdate()
@@ -370,10 +420,19 @@ void BaseBattleScene::BeatEndUpdate()
 		//各オブジェクト処理
 		if(!player->GetIsDead())player->IsBeatEndOn();
 
-		areaManager->BeatEndUpdate(gameManager);
+		areaManager->BeatEndUpdate(gameManager.get());
 
 		exit->IsBeatEndOn();
 		gameManager->IsBeatEndOn();
+		
+		//ビート目視用
+		IsBeatScale = true;
+		if(!IsNoteAlive){
+			notePos = {1288,600};
+			noteSp->SetPosition(notePos);
+			noteSp->Update();
+			IsNoteAlive = true;
+		}
 
 		AddBeatEndUpdate();
 	}
@@ -394,6 +453,9 @@ void BaseBattleScene::UIDraw()
 {
 	//出口
 	exit->Draw2D();
+
+	beatSp->Draw();
+	if(IsNoteAlive)noteSp->Draw();
 
 	gameManager->SpriteDraw();
 
@@ -451,6 +513,8 @@ void BaseBattleScene::ObjectFinaize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
+	noteSp->Finalize();
+	beatSp->Finalize();
 	fade->Finalize();
 #pragma endregion _2D解放
 }
@@ -458,9 +522,6 @@ void BaseBattleScene::ObjectFinaize()
 void BaseBattleScene::CommonFinalize()
 {
 	gameManager->Finalize();
-	delete gameManager;
-	gameManager = nullptr;
 
-	delete rhythmManager;
 	rhythmManager = nullptr;
 }

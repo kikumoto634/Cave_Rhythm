@@ -43,6 +43,8 @@ public:
 	inline bool GetIsRhythmEnd()	{return IsRhythmEnd;}
 	//ƒŠƒYƒ€”»•Ê‚Ìâ‘Î’l·•ª
 	inline double GetBPMTimeSub()	{return BPMTimeSub;}
+	//1BPM‚Ì•b”
+	inline double GetBPMTime()	{return BPMTime;}
 
 	//ƒƒ“ƒo•Ï”
 private:

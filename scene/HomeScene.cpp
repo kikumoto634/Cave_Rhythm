@@ -145,8 +145,6 @@ void HomeScene::AddObjectFinalize()
 void HomeScene::AddCommonFinalize()
 {
 	areaManager->CSVAreaFinalize();
-	delete areaManager;
-	areaManager = nullptr;
 }
 
 void HomeScene::ActorCreateInitialize()

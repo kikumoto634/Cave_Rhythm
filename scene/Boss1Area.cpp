@@ -257,8 +257,6 @@ void Boss1Area::AddObjectFinalize()
 void Boss1Area::AddCommonFinalize()
 {
 	areaManager->CSVAreaFinalize();
-	delete areaManager;
-	areaManager = nullptr;
 }
 
 #pragma region カットイン

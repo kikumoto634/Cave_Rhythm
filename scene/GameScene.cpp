@@ -242,8 +242,6 @@ void GameScene::AddObjectFinalize()
 void GameScene::AddCommonFinalize()
 {
 	areaManager->RandamAreaFinalize();
-	delete areaManager;
-	areaManager = nullptr;
 }
 
 

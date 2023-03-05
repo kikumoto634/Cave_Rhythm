@@ -120,15 +120,15 @@ protected:
 	//player
 	std::unique_ptr<Player> player;
 	//リズムカウント
-	RhythmManager* rhythmManager = nullptr;
+	std::unique_ptr<RhythmManager> rhythmManager;
 	//ゲームマネージャー
-	GameManager* gameManager = nullptr;
+	std::unique_ptr<GameManager> gameManager;
 	//リズム入力
 	bool IsRhythmInput = false;
 	//出口
 	std::unique_ptr<Exit> exit;
 	//エリアマネージャー
-	AreaManager* areaManager = nullptr;
+	std::unique_ptr<AreaManager> areaManager;
 
 #ifdef _DEBUG
 	//カメラ移動、回転変更フラグ
@@ -150,4 +150,16 @@ protected:
 
 	//BGM再生フラグ
 	bool IsBGMStart = true;
+
+	//リズム目視確認用SP
+	std::unique_ptr<BaseSprites> beatSp;
+	Vector2 beatPos = {640,600};
+	Vector2 beatSize = {128,128};
+	bool IsBeatScale = false;
+
+	std::unique_ptr<BaseSprites> noteSp;
+	Vector2 notePos = {1288,600};
+	Vector2 noteSize = {16, 80};
+	bool IsNoteAlive = false;
+	float curBeatTime = 0;
 };

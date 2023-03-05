@@ -42,7 +42,7 @@ void TutorialScene::AddObject2DInitialize()
 	Vector2 lancher = {0.5f,0.5f};
 	{
 		moveSp = make_unique<TutorialSp>();
-		moveSp->Initialize(24);
+		moveSp->Initialize(23);
 		Vector3 ltarget = moveSpPos;
 		Vector2 lpos = moveSp->ChangeTransformation(ltarget, this->camera);
 		moveSp->SetPosition(lpos);
@@ -52,7 +52,7 @@ void TutorialScene::AddObject2DInitialize()
 
 	{
 		attackSp = make_unique<TutorialSp>();
-		attackSp->Initialize(25);
+		attackSp->Initialize(24);
 		Vector3 ltarget = attackSpPos;
 		Vector2 lpos = attackSp->ChangeTransformation(ltarget, this->camera);
 		attackSp->SetPosition(lpos);
@@ -174,8 +174,6 @@ void TutorialScene::AddObjectFinalize()
 void TutorialScene::AddCommonFinalize()
 {
 	areaManager->CSVAreaFinalize();
-	delete areaManager;
-	areaManager = nullptr;
 }
 
 

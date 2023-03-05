@@ -232,10 +232,8 @@ void GameManager::SpriteUpdate()
 	}
 
 	if(IsHpScaleChange){
-		for(int i = 0; i <= DamageHpSpriteIndex; i++){
-			if(hpSp[i]->ScaleChange({75,75}, {50,50})){
-				IsHpScaleChange = false;
-			}
+		if(hpSp[DamageHpSpriteIndex]->ScaleChange({75,75}, {50,50})){
+			IsHpScaleChange = false;
 		}
 	}
 	for(int i = 0; i < HpSpSize; i++){

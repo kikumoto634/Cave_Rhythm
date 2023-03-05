@@ -86,8 +86,8 @@ void Application::Initialize()
 	TextureManager::Load(18, "2DText/TitleLog.png");
 	TextureManager::Load(19, "2DText/pushText.png");
 	TextureManager::Load(20, "2DText/Boss1Name.png");
-	TextureManager::Load(24, "2DText/TutorialFont1.png");
-	TextureManager::Load(25, "2DText/TutorialFont2.png");
+	TextureManager::Load(23, "2DText/TutorialFont1.png");
+	TextureManager::Load(24, "2DText/TutorialFont2.png");
 	TextureManager::Load(25, "2DText/GOText.png");
 	TextureManager::Load(26, "2DText/Training.png");
 	TextureManager::Load(27, "2DText/DepthValue.png");
@@ -139,8 +139,12 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	//BaseScene* scene = new TitleScene(dxCommon, window);
-	BaseScene* scene = new Boss1Area(dxCommon, window);
+	BaseScene* scene = new TitleScene(dxCommon, window);
+
+#ifdef _DEBUG
+	delete scene;
+	scene = new HomeScene(dxCommon, window);
+#endif // _DEBUG
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
