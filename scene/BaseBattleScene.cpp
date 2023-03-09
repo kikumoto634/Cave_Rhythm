@@ -268,11 +268,13 @@ void BaseBattleScene::Object2DInitialize()
 	beatSp->SetPosition(beatPos);
 	beatSp->SetSize(beatSize);
 
-	noteSp = make_unique<BaseSprites>();
-	noteSp->Initialize(1);
-	noteSp->SetAnchorPoint({0.5f,0.5f});
-	noteSp->SetPosition(notePos);
-	noteSp->SetSize(noteSize);
+	for(int i = 0; i < notesNum; i++){
+		noteSp[i] = make_unique<BaseSprites>();
+		noteSp[i]->Initialize(1);
+		noteSp[i]->SetAnchorPoint({0.5f,0.5f});
+		noteSp[i]->SetPosition(notePos[i]);
+		noteSp[i]->SetSize(noteSize);
+	}
 }
 
 void BaseBattleScene::InputUpdate()
@@ -321,15 +323,17 @@ void BaseBattleScene::Object2DUpdate()
 	}
 	beatSp->Update();
 
-	if(IsNoteAlive){
-		if(notePos.x <= 640.f) {
-			IsNoteAlive = false;
-			curBeatTime = 0;
-		}
-		notePos = Easing_Linear_Point2({1288,600}, {640,600}, Time_OneWay(curBeatTime, (float)rhythmManager->GetBPMTime()/2));
+	for(int i = 0; i < notesNum;i++){
+		if(IsNoteAlive[i]){
+			if(notePos[i].x <= 640.f) {
+				IsNoteAlive[i] = false;
+				curBeatTime[i] = 0;
+			}
+			notePos[i] = Easing_Linear_Point2({1288,600}, {640,600}, Time_OneWay(curBeatTime[i], (float)rhythmManager->GetBPMTime()*2));
 		
-		noteSp->SetPosition(notePos);
-		noteSp->Update();
+			noteSp[i]->SetPosition(notePos[i]);
+			noteSp[i]->Update();
+		}
 	}
 }
 
@@ -427,11 +431,14 @@ void BaseBattleScene::BeatEndUpdate()
 		
 		//ビート目視用
 		IsBeatScale = true;
-		if(!IsNoteAlive){
-			notePos = {1288,600};
-			noteSp->SetPosition(notePos);
-			noteSp->Update();
-			IsNoteAlive = true;
+		for(int i = 0; i < notesNum;i++){
+			if(!IsNoteAlive[i]){
+				notePos[i] = {1288,600};
+				noteSp[i]->SetPosition(notePos[i]);
+				noteSp[i]->Update();
+				IsNoteAlive[i] = true;
+				break;
+			}
 		}
 
 		AddBeatEndUpdate();
@@ -455,7 +462,9 @@ void BaseBattleScene::UIDraw()
 	exit->Draw2D();
 
 	beatSp->Draw();
-	if(IsNoteAlive)noteSp->Draw();
+	for(int i = 0; i < notesNum;i++){
+		if(IsNoteAlive[i])noteSp[i]->Draw();
+	}
 
 	gameManager->SpriteDraw();
 
@@ -513,7 +522,9 @@ void BaseBattleScene::ObjectFinaize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-	noteSp->Finalize();
+	for(int i = 0; i < notesNum;i++){
+		noteSp[i]->Finalize();
+	}
 	beatSp->Finalize();
 	fade->Finalize();
 #pragma endregion _2D解放

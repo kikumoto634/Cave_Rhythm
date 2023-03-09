@@ -139,7 +139,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new TitleScene(dxCommon, window);
+	BaseScene* scene = new HomeScene(dxCommon, window);
 
 #ifdef _DEBUG
 	delete scene;

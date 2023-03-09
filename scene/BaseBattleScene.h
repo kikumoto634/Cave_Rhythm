@@ -157,9 +157,10 @@ protected:
 	Vector2 beatSize = {128,128};
 	bool IsBeatScale = false;
 
-	std::unique_ptr<BaseSprites> noteSp;
-	Vector2 notePos = {1288,600};
+	const int notesNum= 3;
+	std::unique_ptr<BaseSprites> noteSp[3];
+	Vector2 notePos[3] = {{1288,600}};
 	Vector2 noteSize = {16, 80};
-	bool IsNoteAlive = false;
-	float curBeatTime = 0;
+	bool IsNoteAlive[3] = {false};
+	float curBeatTime[3] = {0};
 };
