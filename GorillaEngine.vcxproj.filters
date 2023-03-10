@@ -214,11 +214,17 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Enemy">
       <UniqueIdentifier>{f5b86dad-2879-4169-a2a1-c525864c836a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\2D\Beat">
+    <Filter Include="ソース ファイル\Game\2D\Notes">
       <UniqueIdentifier>{8b987a54-2d2c-434b-80d2-e6be314459be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Game\2D\Beat">
+    <Filter Include="ヘッダー ファイル\Game\2D\Notes">
       <UniqueIdentifier>{033bd725-094b-455b-9a85-0f6be593c23d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\2D\JudgeLocation">
+      <UniqueIdentifier>{0bcae4fd-ea46-429c-be4c-d60d85dbb6d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\2D\JudgeLocation">
+      <UniqueIdentifier>{d5ddf0ac-e577-465f-9b88-40454a57b16d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -405,8 +411,11 @@
     <ClCompile Include="Game\3D\Enemy\Boss1.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Game\2D\Notes.cpp">
-      <Filter>ソース ファイル\Game\2D\Beat</Filter>
+    <ClCompile Include="Game\2D\Notes\Notes.cpp">
+      <Filter>ソース ファイル\Game\2D\Notes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\2D\JudgeLocation\JudgeLocation.cpp">
+      <Filter>ソース ファイル\Game\2D\JudgeLocation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -617,8 +626,11 @@
     <ClInclude Include="scene\Boss1Area.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\2D\Notes.h">
-      <Filter>ヘッダー ファイル\Game\2D\Beat</Filter>
+    <ClInclude Include="Game\2D\Notes\Notes.h">
+      <Filter>ヘッダー ファイル\Game\2D\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\2D\JudgeLocation\JudgeLocation.h">
+      <Filter>ヘッダー ファイル\Game\2D\JudgeLocation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

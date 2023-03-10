@@ -1,5 +1,5 @@
 #include "Notes.h"
-#include "../../Engine/math/Easing/Easing.h"
+#include "../../../Engine/math/Easing/Easing.h"
 
 void Notes::Initialize(UINT textureNumber)
 {

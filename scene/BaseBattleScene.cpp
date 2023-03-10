@@ -262,11 +262,8 @@ void BaseBattleScene::Object2DInitialize()
 	fade->SetColor(fadeColor);
 	fade->SetSize({fadeInSize});
 
-	beatSp = make_unique<BaseSprites>();
-	beatSp->Initialize(14);
-	beatSp->SetAnchorPoint({0.5f,0.5f});
-	beatSp->SetPosition(beatPos);
-	beatSp->SetSize(beatSize);
+	judgeLoca = make_unique<JudgeLocation>();
+	judgeLoca->Initialize(14);
 
 	VectorObjIni();
 }
@@ -292,8 +289,8 @@ void BaseBattleScene::InputUpdate()
 			if(!(*it)->GetIsNoteAlive()) continue;
 			
 			//ハートとノーツの当たり判定
-			if(beatPos.x <= (*it)->GetPosition().x+(*it)->GetSize().x && 
-				(*it)->GetPosition().x <= beatPos.x+beatSize.x/2){
+			if(judgeLoca->GetPosition().x <= (*it)->GetPosition().x+(*it)->GetSize().x && 
+				(*it)->GetPosition().x <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
 				(*it)->InputUpdate();
 			}
 		}
@@ -326,13 +323,7 @@ void BaseBattleScene::Object2DUpdate()
 {
 	gameManager->SpriteUpdate();
 
-	if(IsNoteInput){
-		if(beatSp->ScaleChange({128,128}, {100,100})){
-			IsBeatScale = false;
-			IsNoteInput = false;
-		}
-	}
-	beatSp->Update();
+	judgeLoca->Update(IsNoteInput);
 
 	for(auto it = Lnotes.begin(); it != Lnotes.end();it++){
 		if((*it)->GetIsNoteAlive()){
@@ -434,7 +425,6 @@ void BaseBattleScene::BeatEndUpdate()
 		gameManager->IsBeatEndOn();
 		
 		//ビート目視用
-		//IsBeatScale = true;
 		for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
 			if(!(*it)->GetIsNoteAlive()){
 				(*it)->BeatUpdate();
@@ -462,7 +452,7 @@ void BaseBattleScene::UIDraw()
 	//出口
 	exit->Draw2D();
 
-	beatSp->Draw();
+	judgeLoca->Draw();
 	for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
 		(*it)->Draw();
 	}
@@ -526,7 +516,7 @@ void BaseBattleScene::ObjectFinaize()
 	for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
 		(*it)->Finalize();
 	}
-	beatSp->Finalize();
+	judgeLoca->Finalize();
 	fade->Finalize();
 #pragma endregion _2D解放
 }

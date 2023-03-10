@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseSprites.h"
+#include "../BaseSprites.h"
 
 class Notes : public BaseSprites
 {
