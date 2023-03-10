@@ -268,13 +268,7 @@ void BaseBattleScene::Object2DInitialize()
 	beatSp->SetPosition(beatPos);
 	beatSp->SetSize(beatSize);
 
-	for(int i = 0; i < notesNum; i++){
-		noteSp[i] = make_unique<BaseSprites>();
-		noteSp[i]->Initialize(1);
-		noteSp[i]->SetAnchorPoint({0.5f,0.5f});
-		noteSp[i]->SetPosition(notePos[i]);
-		noteSp[i]->SetSize(noteSize);
-	}
+	VectorObjIni();
 }
 
 void BaseBattleScene::InputUpdate()
@@ -287,6 +281,22 @@ void BaseBattleScene::InputUpdate()
 	if(player->GetIsInputOnce()){
 		rhythmManager->InputRhythm();
 		IsRhythmInput = true;
+		IsNoteInput = true;
+	}
+
+	//入力を確認
+	if(IsNoteInput){
+		for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+
+			//前提条件
+			if(!(*it)->GetIsNoteAlive()) continue;
+			
+			//ハートとノーツの当たり判定
+			if(beatPos.x <= (*it)->GetPosition().x+(*it)->GetSize().x && 
+				(*it)->GetPosition().x <= beatPos.x+beatSize.x/2){
+				(*it)->InputUpdate();
+			}
+		}
 	}
 }
 
@@ -316,23 +326,17 @@ void BaseBattleScene::Object2DUpdate()
 {
 	gameManager->SpriteUpdate();
 
-	if(IsBeatScale){
+	if(IsNoteInput){
 		if(beatSp->ScaleChange({128,128}, {100,100})){
 			IsBeatScale = false;
+			IsNoteInput = false;
 		}
 	}
 	beatSp->Update();
 
-	for(int i = 0; i < notesNum;i++){
-		if(IsNoteAlive[i]){
-			if(notePos[i].x <= 640.f) {
-				IsNoteAlive[i] = false;
-				curBeatTime[i] = 0;
-			}
-			notePos[i] = Easing_Linear_Point2({1288,600}, {640,600}, Time_OneWay(curBeatTime[i], (float)rhythmManager->GetBPMTime()*2));
-		
-			noteSp[i]->SetPosition(notePos[i]);
-			noteSp[i]->Update();
+	for(auto it = Lnotes.begin(); it != Lnotes.end();it++){
+		if((*it)->GetIsNoteAlive()){
+			(*it)->Update((float)rhythmManager->GetBPMTime());
 		}
 	}
 }
@@ -430,13 +434,10 @@ void BaseBattleScene::BeatEndUpdate()
 		gameManager->IsBeatEndOn();
 		
 		//ビート目視用
-		IsBeatScale = true;
-		for(int i = 0; i < notesNum;i++){
-			if(!IsNoteAlive[i]){
-				notePos[i] = {1288,600};
-				noteSp[i]->SetPosition(notePos[i]);
-				noteSp[i]->Update();
-				IsNoteAlive[i] = true;
+		//IsBeatScale = true;
+		for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+			if(!(*it)->GetIsNoteAlive()){
+				(*it)->BeatUpdate();
 				break;
 			}
 		}
@@ -462,8 +463,8 @@ void BaseBattleScene::UIDraw()
 	exit->Draw2D();
 
 	beatSp->Draw();
-	for(int i = 0; i < notesNum;i++){
-		if(IsNoteAlive[i])noteSp[i]->Draw();
+	for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+		(*it)->Draw();
 	}
 
 	gameManager->SpriteDraw();
@@ -522,8 +523,8 @@ void BaseBattleScene::ObjectFinaize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-	for(int i = 0; i < notesNum;i++){
-		noteSp[i]->Finalize();
+	for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+		(*it)->Finalize();
 	}
 	beatSp->Finalize();
 	fade->Finalize();
@@ -535,4 +536,13 @@ void BaseBattleScene::CommonFinalize()
 	gameManager->Finalize();
 
 	rhythmManager = nullptr;
+}
+
+void BaseBattleScene::VectorObjIni()
+{
+	for(int i = 0; i < notesNum; i++){
+		unique_ptr<Notes> newsp = make_unique<Notes>();
+		newsp->Initialize(1);
+		Lnotes.push_back(move(newsp));
+	}
 }

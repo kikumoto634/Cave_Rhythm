@@ -8,6 +8,8 @@
 #include "../Game/3D/Player/Player.h"
 #include "../Game/3D/Exit/Exit.h"
 
+#include "../Game/2D/Notes.h"
+
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
 
@@ -20,6 +22,9 @@ class BaseBattleScene : public BaseScene
 protected:
 	//シーン遷移
 	const float FadeSecond = 1.f;
+
+	//ノーツ数
+	const int notesNum= 4;
 
 public:
 	
@@ -106,6 +111,10 @@ protected:
 	virtual void AddObjectFinalize() = 0;
 	virtual void AddCommonFinalize() = 0;
 
+
+private:
+	void VectorObjIni();
+
 protected:
 	//共通
 	//衝突マネージャー
@@ -157,10 +166,7 @@ protected:
 	Vector2 beatSize = {128,128};
 	bool IsBeatScale = false;
 
-	const int notesNum= 3;
-	std::unique_ptr<BaseSprites> noteSp[3];
-	Vector2 notePos[3] = {{1288,600}};
-	Vector2 noteSize = {16, 80};
-	bool IsNoteAlive[3] = {false};
-	float curBeatTime[3] = {0};
+	std::vector<std::unique_ptr<Notes>> Lnotes;
+	Notes* LNotes_InputTarget;
+	bool IsNoteInput = false;
 };

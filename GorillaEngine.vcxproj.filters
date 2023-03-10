@@ -214,6 +214,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Enemy">
       <UniqueIdentifier>{f5b86dad-2879-4169-a2a1-c525864c836a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\2D\Beat">
+      <UniqueIdentifier>{8b987a54-2d2c-434b-80d2-e6be314459be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\2D\Beat">
+      <UniqueIdentifier>{033bd725-094b-455b-9a85-0f6be593c23d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera\Camera.cpp">
@@ -398,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Enemy\Boss1.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\2D\Notes.cpp">
+      <Filter>ソース ファイル\Game\2D\Beat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -607,6 +616,9 @@
     </ClInclude>
     <ClInclude Include="scene\Boss1Area.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\2D\Notes.h">
+      <Filter>ヘッダー ファイル\Game\2D\Beat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
