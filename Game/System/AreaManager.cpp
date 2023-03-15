@@ -16,6 +16,32 @@ void AreaManager::RandamAreaInitialize()
 	CreateMap();
 	ObjectRandomPop();
 
+	if(!PlaneModel){
+		PlaneModel = new ObjModelManager();
+		PlaneModel->CreateModel("GroundBlock");
+	}
+
+	if(!WallModel){
+		WallModel = new ObjModelManager();
+		WallModel->CreateModel("GroundBlock2");
+	}
+	if(!WallColliderModel){
+		WallColliderModel = new ObjModelManager();
+		WallColliderModel->CreateModel("GroundBlock2_Collider");
+	}
+
+	if(!IndestructibleWallModel){
+		IndestructibleWallModel = new ObjModelManager();
+		IndestructibleWallModel->CreateModel("GroundBlock3");
+	}
+	if(!IndestructibleWallColliderModel){
+		IndestructibleWallColliderModel = new ObjModelManager();
+		IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
+	}
+
+	DigParticle = new ParticleObject();
+	DigParticle->Initialize();
+
 	RandamAreaWallsInitialize();
 	RandamAreaPlaneInitialize();
 	RandamAreaIndestructibleWallInitialize();
@@ -24,6 +50,32 @@ void AreaManager::RandamAreaInitialize()
 void AreaManager::CSVAreaInitialize(string name)
 {
 	CSVMapDataLoad(name);
+
+	if(!PlaneModel){
+		PlaneModel = new ObjModelManager();
+		PlaneModel->CreateModel("GroundBlock");
+	}
+
+	if(!WallModel){
+		WallModel = new ObjModelManager();
+		WallModel->CreateModel("GroundBlock2");
+	}
+	if(!WallColliderModel){
+		WallColliderModel = new ObjModelManager();
+		WallColliderModel->CreateModel("GroundBlock2_Collider");
+	}
+
+	if(!IndestructibleWallModel){
+		IndestructibleWallModel = new ObjModelManager();
+		IndestructibleWallModel->CreateModel("GroundBlock3");
+	}
+	if(!IndestructibleWallColliderModel){
+		IndestructibleWallColliderModel = new ObjModelManager();
+		IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
+	}
+
+	DigParticle = new ParticleObject();
+	DigParticle->Initialize();
 
 	CSVAreaPlaneInitialize();
 	CVSAreaWallsInitialize();
@@ -37,14 +89,31 @@ void AreaManager::RandamAreaUpdate(Camera *camera, Vector3 PlayerPos)
 	this->camera = camera;
 	this->PlayerPos = PlayerPos;
 
+	IsDigSound = false;
+
 	WallUpdate();
 	IndestructibleWallUpdate();
 	PlaneUpdate();
+
+	if(IsDig && !IsAlive){
+		DigParticlePop();
+		IsDig = false;
+	}
+	else if(IsDigApp){
+		if(paricleApperanceFrame >= DigAppearanceFrame){
+			IsDigApp = false;
+			paricleApperanceFrame = 0;
+		}
+		paricleApperanceFrame++;
+		DigParticle->Update(this->camera);
+	}
 }
 
 void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 {
 	assert(camera);
+
+	IsDigSound = false;
 
 	this->camera = camera;
 	this->PlayerPos = PlayerPos;
@@ -52,6 +121,19 @@ void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 	WallUpdate();
 	IndestructibleWallUpdate();
 	PlaneUpdate();
+
+	if(IsDig && !IsAlive){
+		DigParticlePop();
+		IsDig = false;
+	}
+	else if(IsDigApp){
+		if(paricleApperanceFrame >= DigAppearanceFrame){
+			IsDigApp = false;
+			paricleApperanceFrame = 0;
+		}
+		paricleApperanceFrame++;
+		DigParticle->Update(this->camera);
+	}
 }
 
 void AreaManager::BeatEndUpdate(GameManager* gameManager)
@@ -79,11 +161,16 @@ void AreaManager::CSVAreaDraw()
 
 void AreaManager::ParticleDraw()
 {
-	WallParticleDraw();
+	if(IsDigApp){
+		DigParticle->Draw();
+	}
 }
 
 void AreaManager::RandamAreaFinalize()
 {
+	DigParticle->Finalize();
+	delete DigParticle;
+
 	WallFinalize();
 	IndestructibleWallFinalize();
 	PlaneFinalize();
@@ -93,6 +180,9 @@ void AreaManager::CSVAreaFinalize()
 {
 	PlayerPos = {};
 
+	DigParticle->Finalize();
+	delete DigParticle;
+
 	WallFinalize();
 	IndestructibleWallFinalize();
 	PlaneFinalize();
@@ -101,9 +191,6 @@ void AreaManager::CSVAreaFinalize()
 #pragma region ’n–Ê
 void AreaManager::RandamAreaPlaneInitialize()
 {
-	PlaneModel = new ObjModelManager();
-	PlaneModel->CreateModel("GroundBlock");
-
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 
@@ -120,9 +207,6 @@ void AreaManager::RandamAreaPlaneInitialize()
 
 void AreaManager::CSVAreaPlaneInitialize()
 {
-	PlaneModel = new ObjModelManager();
-	PlaneModel->CreateModel("GroundBlock");
-
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 
@@ -206,12 +290,6 @@ void AreaManager::PlaneFinalize()
 #pragma region •Ç
 void AreaManager::RandamAreaWallsInitialize()
 {
-	WallModel = new ObjModelManager();
-	WallModel->CreateModel("GroundBlock2");
-
-	WallColliderModel = new ObjModelManager();
-	WallColliderModel->CreateModel("GroundBlock2_Collider");
-
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 
@@ -234,12 +312,6 @@ void AreaManager::RandamAreaWallsInitialize()
 
 void AreaManager::CVSAreaWallsInitialize()
 {
-	WallModel = new ObjModelManager();
-	WallModel->CreateModel("GroundBlock2");
-
-	WallColliderModel = new ObjModelManager();
-	WallColliderModel->CreateModel("GroundBlock2_Collider");
-
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 
@@ -268,7 +340,12 @@ void AreaManager::WallUpdate()
 			if(Wall[i][j] == nullptr) continue;
 
 			Wall[i][j]->SetPlayerPos(PlayerPos);
-			if(Wall[i][j]->GetIsDigSound())	gameManager->AudioPlay(10);
+			if(Wall[i][j]->GetIsDIg()){
+				IsDigSound = true;
+				IsDig =true;
+				DigParticlePos = Wall[i][j]->GetPosition();
+				gameManager->AudioPlay(10);
+			}
 			Wall[i][j]->Update(camera);
 		}
 	}
@@ -284,16 +361,6 @@ void AreaManager::WallDraw()
 		for(int j = 0; j < DIV_NUM; j++){
 			if(Wall[i][j] == nullptr) continue;
 			Wall[i][j]->Draw();
-		}
-	}
-}
-
-void AreaManager::WallParticleDraw()
-{
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) continue;
-			Wall[i][j]->ParticleDraw();
 		}
 	}
 }
@@ -320,12 +387,6 @@ void AreaManager::WallFinalize()
 #pragma region ”j‰ó•s‰Â•Ç
 void AreaManager::RandamAreaIndestructibleWallInitialize()
 {
-	IndestructibleWallModel = new ObjModelManager();
-	IndestructibleWallModel->CreateModel("GroundBlock3");
-
-	IndestructibleWallColliderModel = new ObjModelManager();
-	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
-
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 	for(int i = 0; i <DIV_NUM; i++){
@@ -357,12 +418,6 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 }
 void AreaManager::CSVAreaIndestructibleWallInitialize()
 {
-	IndestructibleWallModel = new ObjModelManager();
-	IndestructibleWallModel->CreateModel("GroundBlock3");
-
-	IndestructibleWallColliderModel = new ObjModelManager();
-	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
-
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 
@@ -716,4 +771,22 @@ Vector3 AreaManager::GetObjectPopPosition()
 
 	return ObjectPopPosition;
 }
-#pragma endregion;
+#pragma endregion
+
+void AreaManager::DigParticlePop()
+{
+	IsDigApp = true;
+	for (int i = 0; i < 3; i++) {
+		const float rnd_vel = 0.08f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.06f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		acc.y = -0.005f;
+
+		DigParticle->ParticleSet(DigAppearanceFrame,DigParticlePos,vel,acc,0.4f,0.0f,1,{0.5f,0.3f,0.2f,1.f});
+		DigParticle->ParticleAppearance();
+	}
+}

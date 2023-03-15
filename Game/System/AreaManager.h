@@ -17,6 +17,9 @@ private:
 	static const float DIV_NUM_HALF_FLOAT;
 	static const float Block_Size;
 
+	//壁破壊パーティクルのリセット時間
+	const int DigAppearanceFrame = 50;
+
 private:
 	//領域
 struct Area{
@@ -77,7 +80,6 @@ private:
 	void WallUpdate();
 	void WallBeatEndUpdate();
 	void WallDraw();
-	void WallParticleDraw();
 	void WallFinalize();
 
 	//破壊不可
@@ -98,6 +100,9 @@ private:
 
 	//座標
 	void ObjectRandomPop();
+
+	//壁破壊パーティクル発生
+	void DigParticlePop();
 	
 
 private:
@@ -140,6 +145,14 @@ private:
 	int CSVMap[DIV_NUM][DIV_NUM] = {0};
 	std::vector<Vector3> ObjectPos;
 	std::vector<bool> ObjectPopActive;
+
+	//壁破壊パーティクル
+	bool IsDig = false;
+	bool IsDigApp = false;
+	int paricleApperanceFrame = 0;
+	Vector3 DigParticlePos = {};
+	ParticleObject* DigParticle = nullptr;
+	bool IsDigSound = false;
 
 };
 
