@@ -16,31 +16,7 @@ void AreaManager::RandamAreaInitialize()
 	CreateMap();
 	ObjectRandomPop();
 
-	if(!PlaneModel){
-		PlaneModel = new ObjModelManager();
-		PlaneModel->CreateModel("GroundBlock");
-	}
-
-	if(!WallModel){
-		WallModel = new ObjModelManager();
-		WallModel->CreateModel("GroundBlock2");
-	}
-	if(!WallColliderModel){
-		WallColliderModel = new ObjModelManager();
-		WallColliderModel->CreateModel("GroundBlock2_Collider");
-	}
-
-	if(!IndestructibleWallModel){
-		IndestructibleWallModel = new ObjModelManager();
-		IndestructibleWallModel->CreateModel("GroundBlock3");
-	}
-	if(!IndestructibleWallColliderModel){
-		IndestructibleWallColliderModel = new ObjModelManager();
-		IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
-	}
-
-	DigParticle = new ParticleObject();
-	DigParticle->Initialize();
+	CommonInitialize();
 
 	RandamAreaWallsInitialize();
 	RandamAreaPlaneInitialize();
@@ -51,6 +27,15 @@ void AreaManager::CSVAreaInitialize(string name)
 {
 	CSVMapDataLoad(name);
 
+	CommonInitialize();
+
+	CSVAreaPlaneInitialize();
+	CVSAreaWallsInitialize();
+	CSVAreaIndestructibleWallInitialize();
+}
+
+void AreaManager::CommonInitialize()
+{
 	if(!PlaneModel){
 		PlaneModel = new ObjModelManager();
 		PlaneModel->CreateModel("GroundBlock");
@@ -76,10 +61,6 @@ void AreaManager::CSVAreaInitialize(string name)
 
 	DigParticle = new ParticleObject();
 	DigParticle->Initialize();
-
-	CSVAreaPlaneInitialize();
-	CVSAreaWallsInitialize();
-	CSVAreaIndestructibleWallInitialize();
 }
 
 void AreaManager::RandamAreaUpdate(Camera *camera, Vector3 PlayerPos)
@@ -95,18 +76,7 @@ void AreaManager::RandamAreaUpdate(Camera *camera, Vector3 PlayerPos)
 	IndestructibleWallUpdate();
 	PlaneUpdate();
 
-	if(IsDig && !IsAlive){
-		DigParticlePop();
-		IsDig = false;
-	}
-	else if(IsDigApp){
-		if(paricleApperanceFrame >= DigAppearanceFrame){
-			IsDigApp = false;
-			paricleApperanceFrame = 0;
-		}
-		paricleApperanceFrame++;
-		DigParticle->Update(this->camera);
-	}
+	CommonUpdate();
 }
 
 void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
@@ -122,6 +92,11 @@ void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 	IndestructibleWallUpdate();
 	PlaneUpdate();
 
+	CommonUpdate();
+}
+
+void AreaManager::CommonUpdate()
+{
 	if(IsDig && !IsAlive){
 		DigParticlePop();
 		IsDig = false;
@@ -168,8 +143,7 @@ void AreaManager::ParticleDraw()
 
 void AreaManager::RandamAreaFinalize()
 {
-	DigParticle->Finalize();
-	delete DigParticle;
+	CommonFinalize();
 
 	WallFinalize();
 	IndestructibleWallFinalize();
@@ -180,12 +154,17 @@ void AreaManager::CSVAreaFinalize()
 {
 	PlayerPos = {};
 
-	DigParticle->Finalize();
-	delete DigParticle;
+	CommonFinalize();
 
 	WallFinalize();
 	IndestructibleWallFinalize();
 	PlaneFinalize();
+}
+
+void AreaManager::CommonFinalize()
+{
+	DigParticle->Finalize();
+	delete DigParticle;
 }
 
 #pragma region ’n–Ê
@@ -343,7 +322,7 @@ void AreaManager::WallUpdate()
 			if(Wall[i][j]->GetIsDIg()){
 				IsDigSound = true;
 				IsDig =true;
-				DigParticlePos = Wall[i][j]->GetPosition();
+				DigParticlePos = Wall[i][j]->GetDigPosition();
 				gameManager->AudioPlay(10);
 			}
 			Wall[i][j]->Update(camera);

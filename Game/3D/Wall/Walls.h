@@ -41,6 +41,7 @@ public:
 	//Getter
 	inline bool GetIsAlive()	{return IsAlive;}
 	inline bool GetIsDIg()	{return IsDig;}
+	inline Vector3 GetDigPosition()	{return digPosition;}
 
 	//Setter
 	void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
@@ -50,6 +51,7 @@ private:
 	float distance = 0;
 
 	bool IsDig = false;
+	Vector3 digPosition = {};
 
 	//エリアで使用しない
 	bool IsAlive = true;

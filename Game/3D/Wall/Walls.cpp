@@ -75,6 +75,7 @@ void Walls::OnCollision(const CollisionInfo &info)
 	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
 		IsAlive = false;
 		IsDig = true;
+		digPosition = GetPosition();
 		world.translation = {0,0,0};
 		world.UpdateMatrix();
 		collider->Update();

@@ -42,8 +42,12 @@ public:
 	void RandamAreaInitialize();
 	void CSVAreaInitialize(std::string name);
 
+	void CommonInitialize();
+
 	void RandamAreaUpdate(Camera* camera, Vector3 PlayerPos);
 	void CSVAreaUpdate(Camera* camera, Vector3 PlayerPos);
+
+	void CommonUpdate();
 
 	void BeatEndUpdate(GameManager* gameManager);
 
@@ -54,6 +58,8 @@ public:
 
 	void RandamAreaFinalize();
 	void CSVAreaFinalize();
+
+	void CommonFinalize();
 
 	//ƒ‰ƒ“ƒ_ƒ€—p
 	Vector3 GetExitPosition()	{return exitPosition;}
