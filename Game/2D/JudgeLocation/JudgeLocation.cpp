@@ -15,7 +15,6 @@ void JudgeLocation::Update(bool &IsInput)
 			IsInput = false;
 		}
 	}
-
 	BaseSprites::Update();
 }
 
