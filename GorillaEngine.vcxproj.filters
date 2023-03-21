@@ -423,6 +423,9 @@
     <ClCompile Include="Game\2D\Notes\RNotes.cpp">
       <Filter>ソース ファイル\Game\2D\Notes</Filter>
     </ClCompile>
+    <ClCompile Include="Game\2D\Combo.cpp">
+      <Filter>ソース ファイル\Game\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -643,6 +646,9 @@
     </ClInclude>
     <ClInclude Include="Game\2D\Notes\RNotes.h">
       <Filter>ヘッダー ファイル\Game\2D\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\2D\Combo.h">
+      <Filter>ヘッダー ファイル\Game\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

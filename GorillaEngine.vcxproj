@@ -178,6 +178,7 @@
     <ClCompile Include="Engine\math\Vector\Vector3.cpp" />
     <ClCompile Include="Engine\math\Vector\Vector4.cpp" />
     <ClCompile Include="Game\2D\BaseSprites.cpp" />
+    <ClCompile Include="Game\2D\Combo.cpp" />
     <ClCompile Include="Game\2D\JudgeLocation\JudgeLocation.cpp" />
     <ClCompile Include="Game\2D\Notes\LNotes.cpp" />
     <ClCompile Include="Game\2D\Notes\Notes.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="Engine\math\Vector\Vector3.h" />
     <ClInclude Include="Engine\math\Vector\Vector4.h" />
     <ClInclude Include="Game\2D\BaseSprites.h" />
+    <ClInclude Include="Game\2D\Combo.h" />
     <ClInclude Include="Game\2D\JudgeLocation\JudgeLocation.h" />
     <ClInclude Include="Game\2D\Notes\LNotes.h" />
     <ClInclude Include="Game\2D\Notes\Notes.h" />

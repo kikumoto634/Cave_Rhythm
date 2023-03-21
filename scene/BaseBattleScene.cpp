@@ -263,7 +263,7 @@ void BaseBattleScene::Object2DInitialize()
 	fade->SetSize({fadeInSize});
 
 	judgeLoca = make_unique<JudgeLocation>();
-	judgeLoca->Initialize(14);
+	judgeLoca->Initialize(22);
 
 	VectorObjIni();
 }
@@ -562,11 +562,11 @@ void BaseBattleScene::VectorObjIni()
 {
 	for(int i = 0; i < notesNum; i++){
 		unique_ptr<LNotes> newsp_L = make_unique<LNotes>();
-		newsp_L->Initialize(1);
+		newsp_L->Initialize(21);
 		lNotes.push_back(move(newsp_L));
 
 		unique_ptr<RNotes> newsp_R = make_unique<RNotes>();
-		newsp_R->Initialize(1);
+		newsp_R->Initialize(21);
 		rNotes.push_back(move(newsp_R));
 	}
 }

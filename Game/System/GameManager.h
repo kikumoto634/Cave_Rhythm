@@ -3,12 +3,26 @@
 #include "../../Engine/light/LightGroup.h"
 
 #include "../Game/2D/BaseSprites.h"
+#include "../2D/combo.h"
 
 #include <string>
 #include <vector>
 
 class GameManager
 {
+private:
+	const int PlaneColorChangeConboNum = 10;
+
+	//XビートでPOPターン
+	const int EnemyPopBeatTurn = 6;
+
+	//1ビートでの敵POP数
+	const int EnemyPopCreateNum = 1;
+
+	//2Dテキスト
+	const int NumberSpSize = 3;
+	const int TexNumberBegin = 3;
+
 public:
 	//初期化
 	void Initialize();
@@ -20,14 +34,14 @@ public:
 	//コンボリセット
 	void ComboReset();
 	//コンボ数取得
-	int GetComboNum()	{return comboNum;}
+	inline int GetComboNum()	{return combo->GetComboNum();}
 	//地面色変化コンボ数
-	int GetPlaneColorChangeCombo()	{return PlaneColorChangeConboNum;}
+	inline int GetPlaneColorChangeCombo()	{return PlaneColorChangeConboNum;}
 
 	//コイン加算
 	void CoinIncrement();
 	//コイン数取得
-	int GetCoinNum()	{return coinNum;}
+	inline int GetCoinNum()	{return coinNum;}
 
 	//体力初期設定
 	void InitializeSetHp(int _hp);
@@ -66,10 +80,7 @@ private:
 	void SpriteInitialize();
 
 private:
-	//コンボ
-	int comboNum = 0;
-	const int PlaneColorChangeConboNum = 10;
-
+	
 	//コイン
 	int coinNum = 0;
 
@@ -90,20 +101,10 @@ private:
 
 	//敵のランダム生成
 	//XビートでPOPターン
-	const int EnemyPopBeatTurn = 6;
 	int currentEnemyPopBeatTurn = 0;
-	//1ビートでの敵POP数
-	const int EnemyPopCreateNum = 1;
 
-
-	//2Dテキスト
-	const int NumberSpSize = 3;
-	const int TexNumberBegin = 3;
-	
-	//コンボテキスト
-	std::unique_ptr<BaseSprites> comboSp;
-	//数字(TexNumber 3~12)
-	std::unique_ptr<BaseSprites> numberSp_combo[3];
+	//コンボ
+	std::unique_ptr<Combo> combo;
 
 	//獲得コイン
 	std::unique_ptr<BaseSprites> coinSp;

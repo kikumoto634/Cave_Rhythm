@@ -8,12 +8,12 @@ protected:
 	const Vector2 R_Start_Pos = {-8,600};
 
 	//イージング目標地
-	const Vector2 L_End_Pos = {670,600};
-	const Vector2 R_End_Pos = {610,600};
+	const Vector2 L_End_Pos = {650,600};
+	const Vector2 R_End_Pos = {630,600};
 	//ノーツ削除位置
 	const Vector2 Delete_Pos = {640,600};
 
-	const Vector2 Notes_Size = {16,80};
+	const Vector2 Notes_Size = {32,80};
 	const Vector2 Notes_Anc = {0.5,0.5};
 
 	//透過率変化時間

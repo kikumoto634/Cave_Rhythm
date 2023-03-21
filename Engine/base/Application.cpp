@@ -86,6 +86,8 @@ void Application::Initialize()
 	TextureManager::Load(18, "2DText/TitleLog.png");
 	TextureManager::Load(19, "2DText/pushText.png");
 	TextureManager::Load(20, "2DText/Boss1Name.png");
+	TextureManager::Load(21, "2DText/note.png");
+	TextureManager::Load(22, "2DText/RhythmHeart.png");
 	TextureManager::Load(23, "2DText/TutorialFont1.png");
 	TextureManager::Load(24, "2DText/TutorialFont2.png");
 	TextureManager::Load(25, "2DText/GOText.png");
