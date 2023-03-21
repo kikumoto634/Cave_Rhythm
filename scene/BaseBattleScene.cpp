@@ -283,14 +283,27 @@ void BaseBattleScene::InputUpdate()
 
 	//入力を確認
 	if(IsNoteInput){
-		for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+		//左
+		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 
 			//前提条件
 			if(!(*it)->GetIsNoteAlive()) continue;
 			
 			//ハートとノーツの当たり判定
-			if(judgeLoca->GetPosition().x <= (*it)->GetPosition().x+(*it)->GetSize().x && 
-				(*it)->GetPosition().x <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
+			if(judgeLoca->GetPosition().x-judgeLoca->GetSize().x/2 <= (*it)->GetPosition().x+(*it)->GetSize().x/2 && 
+				(*it)->GetPosition().x-(*it)->GetSize().x/2 <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
+				(*it)->InputUpdate();
+			}
+		}
+		//右
+		for(auto it = rNotes.begin(); it != rNotes.end(); it++){
+
+			//前提条件
+			if(!(*it)->GetIsNoteAlive()) continue;
+			
+			//ハートとノーツの当たり判定
+			if(judgeLoca->GetPosition().x-judgeLoca->GetSize().x/2 <= (*it)->GetPosition().x+(*it)->GetSize().x/2 && 
+				(*it)->GetPosition().x-(*it)->GetSize().x/2 <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
 				(*it)->InputUpdate();
 			}
 		}
@@ -325,7 +338,12 @@ void BaseBattleScene::Object2DUpdate()
 
 	judgeLoca->Update(IsNoteInput);
 
-	for(auto it = Lnotes.begin(); it != Lnotes.end();it++){
+	for(auto it = lNotes.begin(); it != lNotes.end();it++){
+		if((*it)->GetIsNoteAlive()){
+			(*it)->Update((float)rhythmManager->GetBPMTime());
+		}
+	}
+	for(auto it = rNotes.begin(); it != rNotes.end();it++){
 		if((*it)->GetIsNoteAlive()){
 			(*it)->Update((float)rhythmManager->GetBPMTime());
 		}
@@ -425,7 +443,13 @@ void BaseBattleScene::BeatEndUpdate()
 		gameManager->IsBeatEndOn();
 		
 		//ビート目視用
-		for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
+			if(!(*it)->GetIsNoteAlive()){
+				(*it)->BeatUpdate();
+				break;
+			}
+		}
+		for(auto it = rNotes.begin(); it != rNotes.end(); it++){
 			if(!(*it)->GetIsNoteAlive()){
 				(*it)->BeatUpdate();
 				break;
@@ -452,10 +476,13 @@ void BaseBattleScene::UIDraw()
 	//出口
 	exit->Draw2D();
 
-	judgeLoca->Draw();
-	for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 		(*it)->Draw();
 	}
+	for(auto it = rNotes.begin(); it != rNotes.end(); it++){
+		(*it)->Draw();
+	}
+	judgeLoca->Draw();
 
 	gameManager->SpriteDraw();
 
@@ -513,7 +540,10 @@ void BaseBattleScene::ObjectFinaize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-	for(auto it = Lnotes.begin(); it != Lnotes.end(); it++){
+	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
+		(*it)->Finalize();
+	}
+	for(auto it = rNotes.begin(); it != rNotes.end(); it++){
 		(*it)->Finalize();
 	}
 	judgeLoca->Finalize();
@@ -531,8 +561,12 @@ void BaseBattleScene::CommonFinalize()
 void BaseBattleScene::VectorObjIni()
 {
 	for(int i = 0; i < notesNum; i++){
-		unique_ptr<Notes> newsp = make_unique<Notes>();
-		newsp->Initialize(1);
-		Lnotes.push_back(move(newsp));
+		unique_ptr<LNotes> newsp_L = make_unique<LNotes>();
+		newsp_L->Initialize(1);
+		lNotes.push_back(move(newsp_L));
+
+		unique_ptr<RNotes> newsp_R = make_unique<RNotes>();
+		newsp_R->Initialize(1);
+		rNotes.push_back(move(newsp_R));
 	}
 }

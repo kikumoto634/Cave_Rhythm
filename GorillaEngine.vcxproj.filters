@@ -417,6 +417,12 @@
     <ClCompile Include="Game\2D\JudgeLocation\JudgeLocation.cpp">
       <Filter>ソース ファイル\Game\2D\JudgeLocation</Filter>
     </ClCompile>
+    <ClCompile Include="Game\2D\Notes\LNotes.cpp">
+      <Filter>ソース ファイル\Game\2D\Notes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\2D\Notes\RNotes.cpp">
+      <Filter>ソース ファイル\Game\2D\Notes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\Camera.h">
@@ -631,6 +637,12 @@
     </ClInclude>
     <ClInclude Include="Game\2D\JudgeLocation\JudgeLocation.h">
       <Filter>ヘッダー ファイル\Game\2D\JudgeLocation</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\2D\Notes\LNotes.h">
+      <Filter>ヘッダー ファイル\Game\2D\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\2D\Notes\RNotes.h">
+      <Filter>ヘッダー ファイル\Game\2D\Notes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,24 +3,29 @@
 
 class Notes : public BaseSprites
 {
-private:
-	const Vector2 Start_Pos = {1288,600};
+protected:
+	const Vector2 L_Start_Pos = {1288,600};
+	const Vector2 R_Start_Pos = {-8,600};
 
 	//イージング目標地
-	const Vector2 End_Pos = {670,600};
+	const Vector2 L_End_Pos = {670,600};
+	const Vector2 R_End_Pos = {610,600};
 	//ノーツ削除位置
 	const Vector2 Delete_Pos = {640,600};
 
 	const Vector2 Notes_Size = {16,80};
 	const Vector2 Notes_Anc = {0.5,0.5};
 
+	//透過率変化時間
+	const float AlphaMaxTime = 0.5f;
+
 public:
-	void Initialize(UINT textureNumber) override;
+	virtual void Initialize(UINT textureNumber);
 	
 	void InputUpdate();
 
-	void Update(float goalTime);
-	void BeatUpdate();
+	virtual void Update(float goalTime);
+	virtual void BeatUpdate();
 
 	void Draw() override;
 	
@@ -29,9 +34,15 @@ public:
 	//Getter
 	inline bool GetIsNoteAlive()	{return IsNoteAlive;}
 
-private:
+protected:
 	//生存
 	bool IsNoteAlive = false;
+	//停止
+	bool IsMoveStop = false;
+
+	//透過率変化時間
+	float curAlphaFrame = 0.f;
+
 
 	//移動用タイム
 	float curBeatTime = 0;

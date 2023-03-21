@@ -5,46 +5,37 @@ void Notes::Initialize(UINT textureNumber)
 {
 	BaseSprites::Initialize(textureNumber);
 	SetAnchorPoint(Notes_Anc);
-	SetPosition(Start_Pos);
 	SetSize(Notes_Size);
 }
 
 void Notes::InputUpdate()
 {
-	IsNoteAlive = false;
-	curBeatTime = 0;
-	SetPosition(Start_Pos);
-	BaseSprites::Update();
+	IsMoveStop = true;
 }
 
 void Notes::Update(float goalTime)
 {
-	if(!IsNoteAlive) return;
-	easingSp = goalTime*3;
-	easingTime = (easingSp*60.f);
+	//’âŽ~
+	if(IsMoveStop){
+		this->color.w = Easing_Linear_Point2(1,0,Time_OneWay(curAlphaFrame, AlphaMaxTime));
 
-	//–ß‚µ
-	if(GetPosition().x <= Delete_Pos.x){
-		IsNoteAlive = false;
-		curBeatTime = 0;
-		return;
+		if(this->color.w <= 0){
+			IsNoteAlive = false;
+			curBeatTime = 0;
+			curAlphaFrame = 0;
+			this->color.w = 1;
+			SetPosition(L_Start_Pos);
+		}
 	}
 
-	//ˆÚ“®
-	curBeatTime += 1.f/easingTime;
-	easingPos = Easing_Linear_Point2(Start_Pos,End_Pos,curBeatTime);
-
-	SetPosition(easingPos);
 	BaseSprites::Update();
 }
 
 void Notes::BeatUpdate()
 {
-	if(IsNoteAlive) return;
-
-	SetPosition(Start_Pos);
 	BaseSprites::Update();
 	IsNoteAlive = true;
+	IsMoveStop = false;
 }
 
 void Notes::Draw()

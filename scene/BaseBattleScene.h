@@ -9,7 +9,8 @@
 #include "../Game/3D/Exit/Exit.h"
 
 #include "../Game/2D/JudgeLocation/JudgeLocation.h"
-#include "../Game/2D/Notes/Notes.h"
+#include "../Game/2D/Notes/RNotes.h"
+#include "../Game/2D/Notes/LNotes.h"
 
 #include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
 #include "../Game/Collision/CollisionSystem/CollisionManager.h"
@@ -25,7 +26,7 @@ protected:
 	const float FadeSecond = 1.f;
 
 	//ノーツ数
-	const int notesNum= 4;
+	const int notesNum= 5;
 
 public:
 	
@@ -164,7 +165,8 @@ protected:
 	//リズム目視確認用SP
 	std::unique_ptr<JudgeLocation> judgeLoca;
 
-	std::vector<std::unique_ptr<Notes>> Lnotes;
-	Notes* LNotes_InputTarget;
+	std::vector<std::unique_ptr<Notes>> lNotes;
+	std::vector<std::unique_ptr<Notes>> rNotes;
+
 	bool IsNoteInput = false;
 };
