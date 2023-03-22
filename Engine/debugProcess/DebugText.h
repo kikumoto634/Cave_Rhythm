@@ -26,12 +26,12 @@ public:
 	void DrawAll();
 
 private:
-	Sprite* sprites[maxCharCount];
+	Sprite* sprites[maxCharCount] {};
 	int spriteIndex = 0;
 	float posX;
 	float posY;
 	float scale;
-	const char* text;
+	const char* text = {};
 	// 書式付き文字列展開用バッファ
-	char buffer[kBufferSize];
+	char buffer[kBufferSize] = {};
 };

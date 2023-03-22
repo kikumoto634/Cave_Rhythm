@@ -1,6 +1,7 @@
 #include "GameScene.h"
 
 #include "HomeScene.h"
+#include "Boss1Area.h"
 #include "SceneManager.h"
 
 using namespace std;
@@ -24,7 +25,7 @@ GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP,int flo
 void GameScene::NextSceneChange()
 {
 	if(floorValue >= 5){
-		sceneManager->SetNextScene(new HomeScene(dxCommon,window));
+		sceneManager->SetNextScene(new Boss1Area(dxCommon,window,player->GetHP()));
 	}
 	else{
 		sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHP(), floorValue));
@@ -219,10 +220,14 @@ void GameScene::AddParticleDraw()
 	}
 }
 
-void GameScene::AddUIDraw()
+void GameScene::AddFrontUIDraw()
 {
 	floorDepth->Draw();
 	floorValueTex->Draw();
+}
+
+void GameScene::AddBackUIDraw()
+{
 }
 
 void GameScene::AddObjectFinalize()

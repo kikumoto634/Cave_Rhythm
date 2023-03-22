@@ -64,12 +64,12 @@ public:
 	WorldTransform world = {};
 
 	//äeëÆê´
-	int life;
-	Vector3 position;
-	Vector3 velocity;
-	Vector3 accel;
-	float start_scale;
-	float end_scale;
-	UINT texNumber;
+	int life = 0;
+	Vector3 position = {};
+	Vector3 velocity = {};
+	Vector3 accel = {};
+	float start_scale = 0.f;
+	float end_scale = 0.f;
+	UINT texNumber = 0;
 };
 

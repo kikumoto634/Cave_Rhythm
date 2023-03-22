@@ -126,10 +126,14 @@ void HomeScene::AddParticleDraw()
 	}
 }
 
-void HomeScene::AddUIDraw()
+void HomeScene::AddFrontUIDraw()
 {
 	exitText->Draw();
 	trainingText->Draw();
+}
+
+void HomeScene::AddBackUIDraw()
+{
 }
 
 void HomeScene::AddObjectFinalize()

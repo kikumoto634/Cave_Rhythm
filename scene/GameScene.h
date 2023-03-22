@@ -51,7 +51,8 @@ private:
 	//•`‰æ
 	void AddObject3DDraw() override;
 	void AddParticleDraw() override;
-	void AddUIDraw() override;
+	void AddFrontUIDraw() override;
+	void AddBackUIDraw() override;
 
 	//Œãˆ—
 	void AddObjectFinalize() override;

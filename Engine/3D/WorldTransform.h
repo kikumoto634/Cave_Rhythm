@@ -29,7 +29,7 @@ struct WorldTransform{
 	//ローカル座標
 	Vector3 translation = {0,0,0};
 	//ローカル -> ワールド変換行列
-	DirectX::XMMATRIX matWorld;
+	DirectX::XMMATRIX matWorld = {};
 	//親
 	WorldTransform* parent = nullptr;
 

@@ -74,9 +74,9 @@ public://メンバ関数
 
 private://メンバ変数
 	//XAudio2のインスタンス
-	IXAudio2* xAudio2;
+	IXAudio2* xAudio2 = nullptr;
 	//マスターボイス
-	IXAudio2MasteringVoice* masterVoice;
+	IXAudio2MasteringVoice* masterVoice = nullptr;
 	//波形データの連想配列
 	map<int, SoundData> soundDatas;
 };

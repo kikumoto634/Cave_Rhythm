@@ -145,11 +145,6 @@ void Application::Initialize()
 	BaseScene* scene = new HomeScene(dxCommon, window);
 
 #ifdef _DEBUG
-	delete scene;
-	scene = new HomeScene(dxCommon, window);
-#endif // _DEBUG
-
-#ifdef _DEBUG
 	scene->SetDebugText(debugText);
 	scene->SetImGui(imgui);
 #endif // _DEBUG

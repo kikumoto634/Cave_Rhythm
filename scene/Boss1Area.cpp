@@ -224,7 +224,11 @@ void Boss1Area::AddParticleDraw()
 	}
 }
 
-void Boss1Area::AddUIDraw()
+void Boss1Area::AddFrontUIDraw()
+{
+}
+
+void Boss1Area::AddBackUIDraw()
 {
 	cutinDraw();
 }
@@ -290,14 +294,18 @@ void Boss1Area::cutinInitialize()
 		bossName->SetAnchorPoint({0.5f,0.5f});
 		bossName->SetSize({650, 150});
 	}
-
-	gameManager->AudioPlay(12, 1.5f);
 }
 
 void Boss1Area::cutinUpdate()
 {
 	if(!IsCutInHide)
 	{
+		//‰¹º
+		if(!IsCutInAudio){
+			gameManager->AudioPlay(12, 0.5f);
+			IsCutInAudio = true;
+		}
+
 		if(IsCutInMoveStart){
 			cutInPos = Easing_Linear_Point2({1920,360},{640,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 			cutInPartPos1 = Easing_Linear_Point2({1680,600},{880,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));

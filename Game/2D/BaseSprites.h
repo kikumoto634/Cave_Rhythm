@@ -59,7 +59,7 @@ private:
 	Window* window = nullptr;
 
 protected:
-	Sprite* sprite;
+	Sprite* sprite = nullptr;
 	Vector2 position = {0,0};
 	Vector2 size = {100,100};
 	DirectX::XMFLOAT4 color = {1,1,1,1};

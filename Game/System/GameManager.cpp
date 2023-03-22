@@ -59,13 +59,18 @@ void GameManager::InitializeSetHp(int _hp)
 	hp = _hp;
 
 	//‘Ì—Í
-	HpSpSize = hp;
 	DamageHpSpriteIndex = hp-1;
 	for(int i = 0; i < HpSpSize; i++){
 		std::unique_ptr<BaseSprites> Sp = make_unique<BaseSprites>();
-		Sp->Initialize(14);
+		if(i <= DamageHpSpriteIndex){
+			Sp->Initialize(14);
+			Sp->SetSize({75,75});
+		}
+		else if(i > DamageHpSpriteIndex){
+			Sp->Initialize(15);
+			Sp->SetSize({50,50});
+		}
 		Sp->SetPosition({float(900 + (i*80)), 55});
-		Sp->SetSize({75,75});
 		Sp->SetAnchorPoint({0.5f,0.5f});
 		hpSp.push_back(move(Sp));
 	}

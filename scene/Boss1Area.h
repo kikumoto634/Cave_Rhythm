@@ -32,7 +32,8 @@ private:
 	//ï`âÊ
 	void AddObject3DDraw() override;
 	void AddParticleDraw() override;
-	void AddUIDraw() override;
+	void AddFrontUIDraw() override;
+	void AddBackUIDraw() override;
 
 	//å„èàóù
 	void AddObjectFinalize() override;
@@ -80,6 +81,7 @@ private:
 	bool IsCutInHide = false;
 	bool IsCutInMoveStart = true;
 	bool IsCutInMoveEnd = false;
+	bool IsCutInAudio = false;
 
 	const float cutinSecond = 0.5f;
 

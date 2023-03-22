@@ -151,10 +151,14 @@ void TutorialScene::AddParticleDraw()
 	}
 }
 
-void TutorialScene::AddUIDraw()
+void TutorialScene::AddFrontUIDraw()
 {
 	moveSp->Draw();
 	attackSp->Draw();
+}
+
+void TutorialScene::AddBackUIDraw()
+{
 }
 
 void TutorialScene::AddObjectFinalize()

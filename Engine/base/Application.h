@@ -58,9 +58,9 @@ private:
 	SceneManager* sceneManager = nullptr;
 
 #ifdef _DEBUG
-	DebugText* debugText;
+	DebugText* debugText = nullptr;
 
-	imguiManager* imgui;
+	imguiManager* imgui = nullptr;
 	bool IsSceneChange_ImGui = false;
 #endif // _DEBUG
 

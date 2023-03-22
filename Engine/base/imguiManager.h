@@ -24,8 +24,8 @@ public:
 	void Finalize();
 
 private:
-	Window* winApp;
-	DirectXCommon* dxCommon;
+	Window* winApp = nullptr;
+	DirectXCommon* dxCommon = nullptr;
 
 	//SRV用デスクリプタヒープ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap;

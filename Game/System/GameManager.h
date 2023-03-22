@@ -111,7 +111,7 @@ private:
 	std::unique_ptr<BaseSprites> numberSp_coin[3];
 
 	//‘Ì—Í
-	int HpSpSize = 0;
+	const int HpSpSize = 5;
 	int DamageHpSpriteIndex = 0;
 	std::vector<std::unique_ptr<BaseSprites>> hpSp;
 	bool IsHpScaleChange = false;

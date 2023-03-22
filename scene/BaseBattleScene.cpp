@@ -176,8 +176,9 @@ void BaseBattleScene::Draw()
 	AddParticleDraw();
 
 	Sprite::SetPipelineState();
-	AddUIDraw();
+	AddFrontUIDraw();
 	UIDraw();
+	AddBackUIDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);

@@ -107,7 +107,8 @@ protected:
 	//ï`âÊ
 	virtual void AddObject3DDraw() = 0;
 	virtual void AddParticleDraw() = 0;
-	virtual void AddUIDraw() = 0;
+	virtual void AddFrontUIDraw() = 0;
+	virtual void AddBackUIDraw() = 0;
 
 	//å„èàóù
 	virtual void AddObjectFinalize() = 0;

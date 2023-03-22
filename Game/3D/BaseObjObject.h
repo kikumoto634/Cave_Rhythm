@@ -84,9 +84,9 @@ protected:
 	const char* name = nullptr;
 
 	bool IsLendModel = false;
-	ObjModelManager* model;
-	ObjModelObject* object;
-	WorldTransform world;
+	ObjModelManager* model = nullptr;
+	ObjModelObject* object = nullptr;
+	WorldTransform world = {};
 
 	//コライダー
 	BaseCollider* collider = nullptr;
@@ -101,7 +101,7 @@ protected:
 
 	//サイズ変更用
 	//スケール
-	Vector3 scale = ScaleMax;
+	Vector3 scale = {ScaleMax};
 	Vector3 ScaleMax = {1, 1, 1};
 	Vector3 ScaleMin = {0.7f, 1, 0.7f};
 	//現在時間
