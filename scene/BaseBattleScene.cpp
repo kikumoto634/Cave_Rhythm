@@ -263,7 +263,7 @@ void BaseBattleScene::Object2DInitialize()
 	fade->SetSize({fadeInSize});
 
 	judgeLoca = make_unique<JudgeLocation>();
-	judgeLoca->Initialize(22);
+	judgeLoca->Initialize();
 
 	VectorObjIni();
 }

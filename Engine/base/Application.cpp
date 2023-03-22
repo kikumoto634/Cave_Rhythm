@@ -96,6 +96,7 @@ void Application::Initialize()
 	TextureManager::Load(28, "2DText/CutIN_Boss.png");
 	TextureManager::Load(29, "2DText/CutIN_Part1_Boss.png");
 	TextureManager::Load(30, "2DText/CutIN_Part2_Boss.png");
+	TextureManager::Load(31, "2DText/RhythmHeart2.png");
 
 	//‰¹º
 	Audio::GetInstance()->Initialize();

@@ -1,18 +1,20 @@
 #include "JudgeLocation.h"
 
-void JudgeLocation::Initialize(UINT textureNumber)
+void JudgeLocation::Initialize()
 {
-	BaseSprites::Initialize(textureNumber);
+	BaseSprites::Initialize(SizeMinTextureNumber);
 	SetAnchorPoint(AnchorPoint);
 	SetPosition(Position);
-	SetSize(Size_Max);
+	SetSize(Size_Min);
 }
 
 void JudgeLocation::Update(bool &IsInput)
 {
 	if(IsInput){
-		if(ScaleChange(Size_Max, Size_Min)){
+		SetTexNumber(SizeMaxTextureNumber);
+		if(ScaleChange(Size_Min, Size_Max)){
 			IsInput = false;
+			SetTexNumber(SizeMinTextureNumber);
 		}
 	}
 	BaseSprites::Update();
