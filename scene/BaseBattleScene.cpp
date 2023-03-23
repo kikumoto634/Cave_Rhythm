@@ -120,26 +120,6 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
-	{
-		////座標
-		//ImGui::SetNextWindowPos(ImVec2{0,250});
-		////サイズ
-		//ImGui::SetNextWindowSize(ImVec2{300,150});
-		//ImGui::Begin("BeatSp");
-		////BeatSp PosSize
-		//float lpos[2] = {beatPos.x, beatPos.y};
-		//ImGui::DragFloat2("Position", lpos, 0.1f);
-		//beatPos = {lpos[0],lpos[1]};
-
-		//float lsize[2] = {beatSize.x, beatSize.y};
-		//ImGui::DragFloat2("Size", lsize, 0.1f);
-		//beatSize = {lsize[0], lsize[1]};
-
-		//beatSp->SetPosition(beatPos);
-		//beatSp->SetSize(beatSize);
-		//ImGui::End();
-	}
-
 	//Scene
 	{
 		//座標
