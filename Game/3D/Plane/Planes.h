@@ -5,6 +5,10 @@
 
 class Planes : public BaseObjObject
 {
+private:
+	//•`‰æ”ÍˆÍ
+	const int DrawingRange = 15;
+
 public:
 	~Planes();
 

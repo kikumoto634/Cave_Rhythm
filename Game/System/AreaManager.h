@@ -137,6 +137,7 @@ private:
 	//•”‰®
 	std::vector<Room> rooms;
 
+
 	//oŒû
 	Vector3 exitPosition = {0,-5,0};
 

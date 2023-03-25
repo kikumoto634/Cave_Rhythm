@@ -4,6 +4,7 @@ cbuffer cbuff0 : register(b0)
 	matrix world;
 	float3 cameraPos;
 	float4 color;
+	float lightLayer;
 };
 
 cbuffer cbuff1 : register(b1)

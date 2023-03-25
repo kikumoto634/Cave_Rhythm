@@ -9,6 +9,8 @@ Planes::~Planes()
 void Planes::Initialize(ObjModelManager *model)
 {
 	BaseObjObject::Initialize(model);
+
+	//object->OffLighting();
 }
 
 void Planes::Update(Camera *camera)
@@ -18,7 +20,7 @@ void Planes::Update(Camera *camera)
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
-	if(-13 <= distance && distance <= 13)		{
+	if(-DrawingRange <= distance && distance <= DrawingRange)		{
 		IsHide = true;
 
 		if(!IsCollision){
@@ -31,7 +33,7 @@ void Planes::Update(Camera *camera)
 			IsCollision = true;
 		}
 	}
-	else if(-13 > distance || distance > 13){
+	else if(-DrawingRange > distance || distance > DrawingRange){
 		IsHide = false;
 
 		if(IsCollision){

@@ -7,6 +7,9 @@ class IndestructibleWall : public BaseObjObject
 {
 //€–SŒã‚ÌƒŠƒZƒbƒgŠÔ
 	const int DigAppearanceFrame = 50;
+
+	//•`‰æ”ÍˆÍ
+	const int DrawingRange = 15;
 public:
 	~IndestructibleWall();
 

@@ -96,6 +96,7 @@ void ObjModelObject::Update(WorldTransform world, Camera* camera)
 	constMapB0->world = world.matWorld;
 	constMapB0->cameraPos = cameraPos;
 	constMapB0->color = color;
+	constMapB0->lightLayer = lightLayer;
 	constBuffB0->Unmap(0, nullptr);
 
 	ConstBufferDataB1* constMapB1 = nullptr;

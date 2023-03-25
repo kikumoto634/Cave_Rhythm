@@ -16,6 +16,8 @@ float4 main(VSOutput input) : SV_TARGET
 	// シェーディングによる色
 	float4 shadecolor = float4(ambientColor * ambient, m_alpha);
 
+	if(lightLayer) return (shadecolor * texcolor) * color; 
+
 	// 平行光源
 	for (int i = 0; i < DIRECTIONALLIGHT_NUM; i++) {
 		if (dirLights[i].active) {

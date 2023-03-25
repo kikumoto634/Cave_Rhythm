@@ -14,6 +14,8 @@ void IndestructibleWall::Initialize(ObjModelManager* model, ObjModelManager* col
 	BaseObjObject::Initialize(model);
 
 	colliderModel = collider;
+
+	//object->OffLighting();
 }
 
 void IndestructibleWall::Update(Camera *camera)
@@ -24,7 +26,7 @@ void IndestructibleWall::Update(Camera *camera)
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
-	if(-13 <= distance && distance <= 13)		{
+	if(-DrawingRange <= distance && distance <= DrawingRange)		{
 		IsHide = true;
 
 		if(!IsCollision){
@@ -37,7 +39,7 @@ void IndestructibleWall::Update(Camera *camera)
 			IsCollision = true;
 		}
 	}
-	else if(-13 > distance || distance > 13){
+	else if(-DrawingRange > distance || distance > DrawingRange){
 		IsHide = false;
 
 		if(IsCollision){

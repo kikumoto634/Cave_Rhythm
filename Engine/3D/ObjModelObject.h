@@ -46,6 +46,7 @@ public: // サブクラス
 		Vector3 cameraPos;		//カメラ座標
 		float pad1;
 		Vector4 color;
+		float lightLayer;
 	};
 	struct ConstBufferDataB1
 	{
@@ -76,6 +77,9 @@ public: // 静的メンバ関数
 	/// </summary>
 	/// <returns>モデル</returns>
 	inline ObjModelManager* GetModel()	{return model;}
+
+	inline void OffLighting()	{lightLayer = 1.0f;}
+	inline void OnLighting()	{lightLayer = 0.0f;}
 
 	//Setter
 	static void SetLight(LightGroup* light)	{common->light = light;}
@@ -114,5 +118,8 @@ private: // メンバ変数
 
 	//色
 	Vector4 color = {1.0f,1.0f,1.0f, 1.0f};
+
+	//光レイヤー
+	float lightLayer = 0.0f;
 };
 

@@ -6,6 +6,10 @@
 
 class Walls : public BaseObjObject
 {
+private:
+	//•`‰æ”ÍˆÍ
+	const int DrawingRange = 15;
+
 public:
 	~Walls();
 

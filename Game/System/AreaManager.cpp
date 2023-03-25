@@ -192,7 +192,6 @@ void AreaManager::CSVAreaPlaneInitialize()
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			if(CSVMap[i][j] == 0){
-				//plane[i][j]->IsNotAlive();
 				continue;
 			}
 
