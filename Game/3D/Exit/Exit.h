@@ -7,6 +7,10 @@
 
 class Exit : public BaseObjObject
 {
+private:
+	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\Ž¦)
+	const int DrawingRange_Half = 8;
+
 public:
 	~Exit();
 

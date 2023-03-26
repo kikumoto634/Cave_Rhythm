@@ -226,6 +226,9 @@
     <Filter Include="ヘッダー ファイル\Game\2D\JudgeLocation">
       <UniqueIdentifier>{d5ddf0ac-e577-465f-9b88-40454a57b16d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Coins">
+      <UniqueIdentifier>{88bd1333-2db8-444f-bada-4c190826bc99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera\Camera.cpp">

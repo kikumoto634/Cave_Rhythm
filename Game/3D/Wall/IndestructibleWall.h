@@ -10,6 +10,8 @@ class IndestructibleWall : public BaseObjObject
 
 	//描画範囲
 	const int DrawingRange = 15;
+	//描画範囲(暗めの表示)
+	const int DrawingRange_Half = 8;
 public:
 	~IndestructibleWall();
 
@@ -44,6 +46,9 @@ public:
 
 	inline void IsNotAlive()	{IsAlive = false;}
 
+	inline void CaveLightOn()	{IsCaveLight = true;}
+	inline void CaveLightOff()	{IsCaveLight = false;}
+
 	//Getter
 	inline bool GetIsAlive()	{return IsAlive;}
 
@@ -62,5 +67,8 @@ private:
 	//メッシュコライダー用モデル
 	ObjModelManager* colliderModel = nullptr;
 	bool IsCollision = false;
+
+	//ライティング
+	bool IsCaveLight = false;
 };
 

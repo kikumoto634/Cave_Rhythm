@@ -25,6 +25,18 @@ void Walls::Update(Camera *camera)
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
+	if(IsCaveLight){
+		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
+			object->OnLighting();
+		}
+		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
+			object->OffLighting();
+		}
+	}
+	else if(!IsCaveLight){
+		object->OnLighting();
+	}
+
 	if(-DrawingRange <= distance && distance <= DrawingRange)		{
 		IsHide = true;
 

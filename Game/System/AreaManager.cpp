@@ -180,10 +180,10 @@ void AreaManager::RandamAreaPlaneInitialize()
 			pos = {startPos + i, startPos + j};
 			pos *= Block_Size;
 			plane[i][j]->SetPosition({pos.x,-5,pos.y});
+			plane[i][j]->CaveLightOn();
 		}
 	}
 }
-
 void AreaManager::CSVAreaPlaneInitialize()
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
@@ -203,7 +203,6 @@ void AreaManager::CSVAreaPlaneInitialize()
 		}
 	}
 }
-
 void AreaManager::PlaneUpdate()
 {
 	//’n–Ê
@@ -215,7 +214,6 @@ void AreaManager::PlaneUpdate()
 		}
 	}
 }
-
 void AreaManager::PlaneBeatEndUpdate()
 {
 	IsComboColorChange = !IsComboColorChange;
@@ -240,7 +238,6 @@ void AreaManager::PlaneBeatEndUpdate()
 		}
 	}
 }
-
 void AreaManager::PlaneDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
@@ -250,7 +247,6 @@ void AreaManager::PlaneDraw()
 		}
 	}
 }
-
 void AreaManager::PlaneFinalize()
 {
 	delete PlaneModel;
@@ -283,11 +279,10 @@ void AreaManager::RandamAreaWallsInitialize()
 			pos = {startPos + i, startPos + j};
 			pos*= Block_Size;
 			Wall[i][j]->SetPosition({pos.x,-3,pos.y});
-			
+			Wall[i][j]->CaveLightOn();
 		}
 	}
 }
-
 void AreaManager::CVSAreaWallsInitialize()
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
@@ -309,7 +304,6 @@ void AreaManager::CVSAreaWallsInitialize()
 		}
 	}
 }
-
 void AreaManager::WallUpdate()
 {
 	//’n–Ê
@@ -328,11 +322,9 @@ void AreaManager::WallUpdate()
 		}
 	}
 }
-
 void AreaManager::WallBeatEndUpdate()
 {
 }
-
 void AreaManager::WallDraw()
 {
 	for(int i = 0; i < DIV_NUM; i++){
@@ -342,7 +334,6 @@ void AreaManager::WallDraw()
 		}
 	}
 }
-
 void AreaManager::WallFinalize()
 {
 
@@ -374,24 +365,28 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 		pos = {startPos + i, startPos - 1};
 		pos*=Block_Size;
 		IndestructibleWalls[0][i]->SetPosition({pos.x, -3,pos.y});
+		IndestructibleWalls[0][i]->CaveLightOn();
 		//‰º
 		IndestructibleWalls[1][i] = new IndestructibleWall();
 		IndestructibleWalls[1][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos + i, DIV_NUM_HALF_FLOAT+1};
 		pos*=Block_Size;
 		IndestructibleWalls[1][i]->SetPosition({pos.x, -3,pos.y});
+		IndestructibleWalls[1][i]->CaveLightOn();
 		////¶
 		IndestructibleWalls[2][i] = new IndestructibleWall();
 		IndestructibleWalls[2][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos - 1, startPos + i};
 		pos*=Block_Size;
 		IndestructibleWalls[2][i]->SetPosition({pos.x, -3,pos.y});
+		IndestructibleWalls[2][i]->CaveLightOn();
 		////‰E
 		IndestructibleWalls[3][i] = new IndestructibleWall();
 		IndestructibleWalls[3][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {DIV_NUM_HALF_FLOAT+1, startPos + i};
 		pos*=Block_Size;
 		IndestructibleWalls[3][i]->SetPosition({pos.x, -3,pos.y});
+		IndestructibleWalls[3][i]->CaveLightOn();
 	}
 }
 void AreaManager::CSVAreaIndestructibleWallInitialize()

@@ -110,6 +110,7 @@ void GameScene::AddObject2DInitialize()
 
 void GameScene::AddCommonUpdate()
 {
+	if(player == nullptr) return;
 	areaManager->RandamAreaUpdate(camera, player->GetPosition());
 }
 
@@ -163,6 +164,7 @@ void GameScene::AddBeatEndUpdate()
 			if(!(*it)->GetIsNotApp()){
 				Vector3 lpos = areaManager->GetObjectPopPosition();
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
+				(*it)->CaveLightOn();
 				break;
 			}
 		}
@@ -170,6 +172,7 @@ void GameScene::AddBeatEndUpdate()
 			if(!(*it)->GetIsNotApp()){
 				Vector3 lpos = areaManager->GetObjectPopPosition();
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
+				(*it)->CaveLightOn();
 				break;
 			}
 		}

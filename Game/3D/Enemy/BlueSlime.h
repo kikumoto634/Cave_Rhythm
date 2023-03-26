@@ -9,6 +9,11 @@ class BlueSlime : public BaseObjObject
 	//死亡後のリセット時間
 	const int AppearanceResetFrame = 50;
 
+	//描画範囲(非表示)
+	const int DrawingRange_Not = 15;
+	//描画範囲(暗めの表示)
+	const int DrawingRange_Half = 8;
+
 public:
 	~BlueSlime();
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
@@ -19,6 +24,9 @@ public:
 	void OnCollision(const CollisionInfo& info) override;
 
 	void Pop(Vector3 pos);
+
+	inline void CaveLightOn()	{IsCaveLight = true;}
+	inline void CaveLightOff()	{IsCaveLight = false;}
 
 	//Getter
 	inline bool GetIsNotApp()	{return IsNotApp;}
@@ -67,5 +75,8 @@ private:
 	//パーティクル
 	ParticleObject* PopParticle = nullptr;
 	ParticleObject* DeadParticle = nullptr;
+
+	//ライティング
+	bool IsCaveLight = false;
 };
 

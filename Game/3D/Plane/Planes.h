@@ -6,8 +6,10 @@
 class Planes : public BaseObjObject
 {
 private:
-	//描画範囲
-	const int DrawingRange = 15;
+	//描画範囲(非表示)
+	const int DrawingRange_Not = 15;
+	//描画範囲(暗めの表示)
+	const int DrawingRange_Half = 8;
 
 public:
 	~Planes();
@@ -47,6 +49,9 @@ public:
 
 	inline void IsNotAlive()	{IsAlive = false;}
 
+	inline void CaveLightOn()	{IsCaveLight = true;}
+	inline void CaveLightOff()	{IsCaveLight = false;}
+
 	//Getter
 	inline bool GetIsPlayerContact()	{return IsPlayerContact;}
 
@@ -66,5 +71,8 @@ private:
 	bool IsHide = false;
 
 	bool IsCollision = false;
+
+	//ライティング
+	bool IsCaveLight = false;
 };
 

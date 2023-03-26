@@ -45,10 +45,22 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 	//‹——£Œv‘ª
 	Vector3 pos = playerPos - world.translation;
 	distance = pos.length();
-	if(-13 <= distance && distance <= 13)		{
+	if(IsCaveLight){
+		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
+			object->OnLighting();
+		}
+		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
+			object->OffLighting();
+		}
+	}
+	else if(!IsCaveLight){
+		object->OnLighting();
+	}
+
+	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not)		{
 		IsInvisible = false;
 	}
-	else if(-13 > distance || distance > 13)	{
+	else if(-DrawingRange_Not > distance || distance > DrawingRange_Not)	{
 		IsInvisible = true;
 	}
 

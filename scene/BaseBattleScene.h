@@ -26,7 +26,7 @@ protected:
 	const float FadeSecond = 1.f;
 
 	//ƒm[ƒc”
-	const int notesNum= 5;
+	const int notesNum= 7;
 
 public:
 	
