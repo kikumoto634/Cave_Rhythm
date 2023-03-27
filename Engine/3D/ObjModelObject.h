@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <DirectXMath.h>
 #include <string>
@@ -11,17 +11,17 @@
 
 
 /// <summary>
-/// 3DƒIƒuƒWƒFƒNƒg
+/// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 /// </summary>
 class ObjModelObject
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: // ƒTƒuƒNƒ‰ƒX
+public: // ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 
 	class CommonObj{
 		friend class ObjModelObject;
@@ -30,42 +30,42 @@ public: // ƒTƒuƒNƒ‰ƒX
 
 	private:
 		DirectXCommon* dxCommon;
-		// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+		// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 		ComPtr<ID3D12RootSignature> rootsignature;
-		// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+		// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		ComPtr<ID3D12PipelineState> pipelinestate;
-		//ƒ‰ƒCƒg
+		//ãƒ©ã‚¤ãƒˆ
 		LightGroup* light;
 	};
 
-	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferDataB0
 	{
-		XMMATRIX viewproj;		//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-		XMMATRIX world;			//ƒ[ƒ‹ƒh
-		Vector3 cameraPos;		//ƒJƒƒ‰À•W
+		XMMATRIX viewproj;		//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+		XMMATRIX world;			//ãƒ¯ãƒ¼ãƒ«ãƒ‰
+		Vector3 cameraPos;		//ã‚«ãƒ¡ãƒ©åº§æ¨™
 		float pad1;
 		Vector4 color;
 		float lightLayer;
 	};
 	struct ConstBufferDataB1
 	{
-		Vector3 ambient;	//ƒAƒ“ƒrƒGƒ“ƒgŒW”
-		float pad1;	//ƒpƒfƒBƒ“ƒO
-		Vector3 diffuse;	//ƒfƒBƒqƒ…[ƒYŒW”
-		float pad2;	//ƒpƒfƒBƒ“ƒO
-		Vector3 specular;	//ƒXƒyƒLƒ…ƒ‰ŒW”
-		float alpha;	//ƒAƒ‹ƒtƒ@
+		Vector3 ambient;	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+		float pad1;	//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+		Vector3 diffuse;	//ãƒ‡ã‚£ãƒ’ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+		float pad2;	//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+		Vector3 specular;	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ä¿‚æ•°
+		float alpha;	//ã‚¢ãƒ«ãƒ•ã‚¡
 	};
 
 
-public: // Ã“Iƒƒ“ƒoŠÖ”
+public: // é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	static void StaticInitialize( DirectXCommon* dxCommon);
 	static void StaticFinalize();
 
 
 	/// <summary>
-	/// 3DƒIƒuƒWƒFƒNƒg¶¬
+	/// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	/// </summary>
 	/// <returns></returns>
 	static ObjModelObject* Create(ObjModelManager* model);
@@ -73,9 +73,9 @@ public: // Ã“Iƒƒ“ƒoŠÖ”
 	//Getter
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹æ“¾
+	/// ãƒ¢ãƒ‡ãƒ«å–å¾—
 	/// </summary>
-	/// <returns>ƒ‚ƒfƒ‹</returns>
+	/// <returns>ãƒ¢ãƒ‡ãƒ«</returns>
 	inline ObjModelManager* GetModel()	{return model;}
 
 	inline void OffLighting()	{lightLayer = 1.0f;}
@@ -89,37 +89,37 @@ public: // Ã“Iƒƒ“ƒoŠÖ”
 	inline void SetColor(Vector4 _color)	{this->color = _color;}
 
 
-private: // Ã“Iƒƒ“ƒo•Ï”
+private: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 	static CommonObj* common;
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	ObjModelObject(ObjModelManager* model);
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update(WorldTransform world, Camera* camera);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
-private: // ƒƒ“ƒo•Ï”
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	ObjModelManager* model = nullptr;
 
-	ComPtr<ID3D12Resource> constBuffB0; // ’è”ƒoƒbƒtƒ@
-	ComPtr<ID3D12Resource> constBuffB1; // ’è”ƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> constBuffB0; // å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	ComPtr<ID3D12Resource> constBuffB1; // å®šæ•°ãƒãƒƒãƒ•ã‚¡
 
-	//F
+	//è‰²
 	Vector4 color = {1.0f,1.0f,1.0f, 1.0f};
 
-	//ŒõƒŒƒCƒ„[
+	//å…‰ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	float lightLayer = 0.0f;
 };
 
