@@ -8,9 +8,9 @@ class Walls : public BaseObjObject
 {
 private:
 	//•`‰æ”ÍˆÍ
-	const int DrawingRange = 15;
+	const int DrawingRange = 11;
 	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\Ž¦)
-	const int DrawingRange_Half = 8;
+	const int DrawingRange_Half = 7;
 
 public:
 	~Walls();

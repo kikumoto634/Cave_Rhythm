@@ -10,9 +10,9 @@ class BlueSlime : public BaseObjObject
 	const int AppearanceResetFrame = 50;
 
 	//•`‰æ”ÍˆÍ(”ñ•\Ž¦)
-	const int DrawingRange_Not = 15;
+	const int DrawingRange_Not = 11;
 	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\Ž¦)
-	const int DrawingRange_Half = 8;
+	const int DrawingRange_Half = 7;
 
 public:
 	~BlueSlime();

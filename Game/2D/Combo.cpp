@@ -28,6 +28,7 @@ void Combo::Update()
 	comboSp->Update();
 	//”š
 	for(int i = 0;i < NumberSpSize; i++){
+		numberSp_combo[i]->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
 		numberSp_combo[i]->Update();
 	}
 
