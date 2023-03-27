@@ -1,4 +1,4 @@
-#include "Combo.h"
+ï»¿#include "Combo.h"
 
 #include "../../Engine/math/Easing/Easing.h"
 
@@ -6,14 +6,14 @@ using namespace std;
 
 void Combo::Initialize()
 {
-	//ƒRƒ“ƒ{ƒeƒLƒXƒg
+	//ã‚³ãƒ³ãƒœãƒ†ã‚­ã‚¹ãƒˆ
 	comboSp = make_unique<BaseSprites>();
 	comboSp->Initialize(2);
 	comboSp->SetPosition({50,300});
 	comboSp->SetSize({150,75});
 	comboSp->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
 
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_combo[i] = make_unique<BaseSprites>();
 		numberSp_combo[i]->Initialize(TexNumberBegin + 0);
@@ -26,13 +26,13 @@ void Combo::Update()
 {
 	comboSp->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
 	comboSp->Update();
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_combo[i]->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
 		numberSp_combo[i]->Update();
 	}
 
-	//ƒŠƒZƒbƒgF•Ï‰»
+	//ãƒªã‚»ãƒƒãƒˆè‰²å¤‰åŒ–
 	if(IsReset){
 		comboSpColor.x = Easing_Linear_Point2(0,1,Time_OneWay(curColorChangeFrame,ComboResetColorSecond));
 		comboSpColor.y = comboSpColor.x;
@@ -47,7 +47,7 @@ void Combo::Update()
 void Combo::Draw()
 {
 	comboSp->Draw();
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_combo[i]->Draw();
 	}
@@ -55,7 +55,7 @@ void Combo::Draw()
 
 void Combo::Finalize()
 {
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_combo[i]->Finalize();
 	}
@@ -66,7 +66,7 @@ void Combo::Increment()
 {
 	comboNum += 1;
 
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	int hundred = comboNum/100;
 	int ten = (comboNum - (hundred*100))/10;
 	int one = (comboNum - (hundred*100) - (ten*10))/1;
@@ -78,12 +78,12 @@ void Combo::Increment()
 void Combo::Reset()
 {
 	comboNum = 0;
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	for(int i = 0; i <NumberSpSize; i++){
 		numberSp_combo[i]->SetTexNumber(TexNumberBegin);
 	}
 
-	//F•ÏX
+	//è‰²å¤‰æ›´
 	if(IsReset) return;
 	IsReset = true;
 	comboSpColor = {0,0,1};

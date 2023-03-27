@@ -1,4 +1,4 @@
-#include "Application.h"
+ï»¿#include "Application.h"
 #include "../../scene/TitleScene.h"
 
 #include "../../scene/HomeScene.h"
@@ -38,12 +38,12 @@ Application::~Application()
 
 void Application::Run()
 {
-	MSG msg{};//ƒƒbƒZ[ƒW
+	MSG msg{};//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 	while (true)
 	{
 		if(PeekMessage(&msg, nullptr,0, 0,PM_REMOVE)){
-			TranslateMessage(&msg);	//ƒL[“ü—ÍƒƒbƒZ[ƒW‚Ìˆ—
-			DispatchMessage(&msg);	//ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ð‘—‚é
+			TranslateMessage(&msg);	//ã‚­ãƒ¼å…¥åŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
+			DispatchMessage(&msg);	//ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
 		}
 		if(msg.message == WM_QUIT) {
 			break;
@@ -56,14 +56,14 @@ void Application::Run()
 
 void Application::Initialize()
 {
-#pragma region ”Ä—p‹@”\‰Šú‰»
-	//Window¶¬
+#pragma region æ±Žç”¨æ©Ÿèƒ½åˆæœŸåŒ–
+	//Windowç”Ÿæˆ
 	window->Create("GiliraEngine", 1280, 720);
 
 	//DirectXCommon
 	dxCommon->Initialize(window);
 
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	TextureManager::GetInstance()->Initialize(dxCommon);
 	TextureManager::Load(0, "texfont.png");
 	TextureManager::Load(1, "white1x1.png");
@@ -98,7 +98,7 @@ void Application::Initialize()
 	TextureManager::Load(30, "2DText/CutIN_Part2_Boss.png");
 	TextureManager::Load(31, "2DText/RhythmHeart2.png");
 
-	//‰¹º
+	//éŸ³å£°
 	Audio::GetInstance()->Initialize();
 	Audio::Load(0,"rhythm.wav");
 	Audio::Load(1,"miss.wav");
@@ -116,7 +116,7 @@ void Application::Initialize()
 
 #pragma endregion
 
-	//ƒXƒvƒ‰ƒCƒgÃ“I‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆé™çš„åˆæœŸåŒ–
 	Sprite::StaticInitialize(dxCommon, window->GetWindowWidth(), window->GetWindowHeight());
 	
 	//FBX
@@ -130,7 +130,7 @@ void Application::Initialize()
 	//Light
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
-	// ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ‰Šú‰»
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒžãƒãƒ¼ã‚¸ãƒ£åˆæœŸåŒ–
 	ParticleManager::GetInstance()->Initialize(dxCommon);
 
 #ifdef _DEBUG
@@ -142,7 +142,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new HomeScene(dxCommon, window);
+	BaseScene* scene = new TitleScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
@@ -167,7 +167,7 @@ void Application::Update()
 
 void Application::Draw()
 {
-	//•`‰æ‘Oˆ—
+	//æç”»å‰å‡¦ç†
 	dxCommon->BeginDraw();
 
 	Sprite::SetPipelineState();
@@ -179,7 +179,7 @@ void Application::Draw()
 	imgui->Draw();
 #endif // _DEBUG
 
-	//•`‰æŒãˆ—
+	//æç”»å¾Œå‡¦ç†
 	dxCommon->EndDraw();
 }
 
