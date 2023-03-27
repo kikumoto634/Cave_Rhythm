@@ -24,14 +24,14 @@ void TitleScene::Initialize()
 {
 	BaseScene::Initialize();
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	playerobj = make_unique<BaseObjObject>();
 	playerobj->Initialize("human2");
 	playerobj->SetPosition({-5.5f, -2.f, 0.f});
 	playerobj->SetRotation({0.f, XMConvertToRadians(121), 0.f});
 	playerobj->SetScale({5,5,5});
 
-	//ƒGƒlƒ~[
+	//ã‚¨ãƒãƒŸãƒ¼
 	enemyobj = make_unique<BaseObjObject>();
 	enemyobj->Initialize("slime");
 	enemyobj->SetPosition({9.f, -3.f, -1.f});
@@ -68,18 +68,18 @@ void TitleScene::Initialize()
 
 	audio = Audio::GetInstance();
 
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	lightGroup = LightGroup::Create();
-	//Fİ’è
+	//è‰²è¨­å®š
 	lightGroup->SetAmbientColor({0.15f, 0.15f, 0.15f});
-	//3DƒIƒuƒWƒFƒNƒg(.obj)‚ÉƒZƒbƒg
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(.obj)ã«ã‚»ãƒƒãƒˆ
 	ObjModelObject::SetLight(lightGroup);
 
 	lightGroup->SetDirLightActive(0, true);
 	lightGroup->SetDirLightActive(1, false);
 	lightGroup->SetDirLightActive(2, false);
 
-	//ƒV[ƒ“‘JˆÚ(FadeOut)
+	//ã‚·ãƒ¼ãƒ³é·ç§»(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
 	fade = make_unique<BaseSprites>();
 	fade->Initialize(1);
@@ -119,9 +119,9 @@ void TitleScene::Update()
 #ifdef _DEBUG
 	//Scene
 	{
-		//À•W
+		//åº§æ¨™
 		ImGui::SetNextWindowPos(ImVec2{1000,40});
-		//ƒTƒCƒY
+		//ã‚µã‚¤ã‚º
 		ImGui::SetNextWindowSize(ImVec2{280,100});
 		ImGui::Begin("SCENE");
 
@@ -198,7 +198,7 @@ void TitleScene::DebugSceneChange()
 
 void TitleScene::SceneChange()
 {
-	//PrevScene‚©‚ç‚ÌˆÚ“®Œãˆ—
+	//PrevSceneã‹ã‚‰ã®ç§»å‹•å¾Œå‡¦ç†
 	if(IsPrevSceneChange){
 		if(fadeColor.w <= 0){
 			IsPrevSceneChange = false;
@@ -210,7 +210,7 @@ void TitleScene::SceneChange()
 			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond));
 		fade->SetColor(fadeColor);
 	}
-	//NextScene‚Ö‚ÌˆÚ“®
+	//NextSceneã¸ã®ç§»å‹•
 	else if(IsNextSceneChange || IsDebugScene){
 
 		if(fadeColor.w >= 1){
