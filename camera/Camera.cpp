@@ -1,4 +1,4 @@
-#include "Camera.h"
+ï»¿#include "Camera.h"
 
 using namespace DirectX;
 
@@ -12,7 +12,7 @@ void Camera::Initialize(Window* window)
 {
 	this->window = window;
 
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	view.eye = {0, 0, -distance};
 	view.target = {0, 0, 0};
 	view.up = {0, 1, 0};
@@ -31,11 +31,19 @@ void Camera::Update()
 	view.UpdateProjectionMatrix(window->GetWindowWidth(),window->GetWindowHeight());
 }
 
-void Camera::MoveEyeVeector(Vector3 move)
+void Camera::MoveEyeVector(Vector3 move)
 {
 	Vector3 eye_= GetEye();
 	eye_ += move;
 	SetEye(eye_);
+	view.UpdateViewMatrix();
+}
+
+void Camera::MoveTargetVector(Vector3 move)
+{
+	Vector3 target_= GetTarget();
+	target_ += move;
+	SetTarget(target_);
 	view.UpdateViewMatrix();
 }
 
@@ -52,30 +60,57 @@ void Camera::MoveVector(Vector3 move)
 
 void Camera::RotVector(Vector3 rot)
 {
-	// ’Ç‰Á‰ñ“]•ª‚Ì‰ñ“]s—ñ‚ğ¶¬
+	// è¿½åŠ å›è»¢åˆ†ã®å›è»¢è¡Œåˆ—ã‚’ç”Ÿæˆ
 	XMMATRIX matRotNew = XMMatrixIdentity();
 	matRotNew *= XMMatrixRotationZ(-rot.z);
 	matRotNew *= XMMatrixRotationX(-rot.x);
 	matRotNew *= XMMatrixRotationY(-rot.y);
-	// —İÏ‚Ì‰ñ“]s—ñ‚ğ‡¬
-	// ¦‰ñ“]s—ñ‚ğ—İÏ‚µ‚Ä‚¢‚­‚ÆAŒë·‚ÅƒXƒP[ƒŠƒ“ƒO‚ª‚©‚©‚éŠëŒ¯‚ª‚ ‚éˆ×
-	// ƒNƒH[ƒ^ƒjƒIƒ“‚ğg—p‚·‚é•û‚ª–]‚Ü‚µ‚¢
+	// ç´¯ç©ã®å›è»¢è¡Œåˆ—ã‚’åˆæˆ
+	// â€»å›è»¢è¡Œåˆ—ã‚’ç´¯ç©ã—ã¦ã„ãã¨ã€èª¤å·®ã§ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ãŒã‹ã‹ã‚‹å±é™ºãŒã‚ã‚‹ç‚º
+	// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ä½¿ç”¨ã™ã‚‹æ–¹ãŒæœ›ã¾ã—ã„
 	matRot = matRotNew * matRot;
 
-	// ’‹“_‚©‚ç‹“_‚Ö‚ÌƒxƒNƒgƒ‹‚ÆAã•ûŒüƒxƒNƒgƒ‹
+	// æ³¨è¦–ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã€ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	XMVECTOR vTargetEye = {0.0f, 0.0f, -distance, 1.0f};
 	XMVECTOR vUp = {0.0f, 1.0f, 0.0f, 0.0f};
 
-	// ƒxƒNƒgƒ‹‚ğ‰ñ“]
+	// ãƒ™ã‚¯ãƒˆãƒ«ã‚’å›è»¢
 	vTargetEye = XMVector3Transform(vTargetEye, matRot);
 	vUp = XMVector3Transform(vUp, matRot);
 
-	// ’‹“_‚©‚ç‚¸‚ç‚µ‚½ˆÊ’u‚É‹“_À•W‚ğŒˆ’è
+	// æ³¨è¦–ç‚¹ã‹ã‚‰ãšã‚‰ã—ãŸä½ç½®ã«è¦–ç‚¹åº§æ¨™ã‚’æ±ºå®š
 	const Vector3& target = GetTarget();
 	SetEye(
 		{target.x + vTargetEye.m128_f32[0], target.y + vTargetEye.m128_f32[1],
 		target.z + vTargetEye.m128_f32[2]});
 	SetUp({vUp.m128_f32[0], vUp.m128_f32[1], vUp.m128_f32[2]});
+	view.UpdateViewMatrix();
+}
+
+void Camera::Tracking(Vector3 target)
+{
+	Vector3 cameraPosXZ = GetEye() - GetTarget();
+	float height = cameraPosXZ.y;
+	cameraPosXZ.y = 0.0f;
+	float cameraPosXZLen = cameraPosXZ.length();
+	cameraPosXZ.normalize();
+
+	Vector3 ltarget = target;
+	ltarget.y += 0.0f;
+
+	Vector3 newCameraPos = GetTarget() - ltarget;
+	newCameraPos.y = 50.0f;
+	newCameraPos.normalize();
+
+	float weight = 0.0f;
+	newCameraPos = newCameraPos * weight + cameraPosXZ * (1.0f - weight);
+	newCameraPos.normalize();
+	newCameraPos *= cameraPosXZLen;
+	newCameraPos.y = height;
+	Vector3 pos = ltarget + newCameraPos;
+
+	SetTarget(ltarget);
+	SetEye(pos);
 	view.UpdateViewMatrix();
 }
 
@@ -93,7 +128,7 @@ void Camera::ShakeStart(int MaxFrame)
 
 void Camera::Reset()
 {
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	RotVector({XMConvertToRadians(60.f), 0.f, 0.f});
 	view.UpdateViewMatrix();
 }

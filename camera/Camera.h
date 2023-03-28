@@ -31,7 +31,13 @@ public:
 	/// 注視点移動
 	/// </summary>
 	/// <param name="move">移動量(radianを設定)</param>
-	void MoveEyeVeector(Vector3 move);
+	void MoveEyeVector(Vector3 move);
+
+	/// <summary>
+	/// 視点移動
+	/// </summary>
+	/// <param name="move">移動量(radianを設定)</param>
+	void MoveTargetVector(Vector3 move);
 
 	/// <summary>
 	/// カメラ移動
@@ -45,8 +51,15 @@ public:
 	/// <param name="rot">回転量</param>
 	void RotVector(Vector3 rot);
 
-	void ShakeStart(int MaxFrame = 5);
+	/// <summary>
+	/// カメラ追従
+	/// </summary>
+	/// <param name="target">ターゲット</param>
+	void Tracking(Vector3 target);
 
+	//シェイク
+	void ShakeStart(int MaxFrame = 5);
+	//シェイク停止
 	void Reset();
 
 	//getter
