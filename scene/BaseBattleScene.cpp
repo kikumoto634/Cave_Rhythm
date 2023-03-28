@@ -210,7 +210,7 @@ void BaseBattleScene::CommonInitialize()
 	areaManager = make_unique<AreaManager>();
 
 	//カメラ
-	//camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
+	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
 }
 
 void BaseBattleScene::Object3DInitialize()
@@ -318,13 +318,13 @@ void BaseBattleScene::Object3DUpdate()
 	cameraPosXZ.normalize();
 
 	Vector3 target = player->GetPosition();
-	target.y += 5.0f;
+	target.y += 0.0f;
 
 	Vector3 newCameraPos = camera->GetTarget() - target;
-	newCameraPos.y = 0.0f;
+	newCameraPos.y = 50.0f;
 	newCameraPos.normalize();
 
-	float weight = 0.99f;
+	float weight = 0.0f;
 	newCameraPos = newCameraPos * weight + cameraPosXZ * (1.0f - weight);
 	newCameraPos.normalize();
 	newCameraPos *= cameraPosXZLen;
