@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 
-//ƒL[ƒ{[ƒh“ü—Í
-#define DIRECTINPUT_VERSION 0x0800	//DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›
+#define DIRECTINPUT_VERSION 0x0800	//DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 #include <dinput.h>
 const int KeyNum = 256;
 
@@ -13,24 +13,24 @@ public:
 
 	static Input* GetInstance();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize(HWND hwnd);
 
-	//XV
+	//æ›´æ–°
 	void Update();
 
-#pragma region ƒL[ƒ{[ƒh“ü—Í
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›
 	bool Push(int keyNumber);
 	bool Trigger(int keyNumber);
 #pragma endregion
 
 private:
-#pragma region ƒL[ƒ{[ƒh
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹
 	IDirectInputDevice8* keyboard = nullptr;
-	//ƒL[î•ñ
+	//ã‚­ãƒ¼æƒ…å ±
 	BYTE key[KeyNum] = {};
-	//‘OƒtƒŒ[ƒ€ƒL[î•ñ
+	//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã‚­ãƒ¼æƒ…å ±
 	BYTE prekey[KeyNum] = {};
 #pragma endregion
 };

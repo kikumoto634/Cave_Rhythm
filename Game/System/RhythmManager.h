@@ -1,76 +1,76 @@
-#pragma once
+ï»¿#pragma once
 
 #include <time.h>
 
 class RhythmManager
 {
-//’è”
+//å®šæ•°
 private:
 	//BPM
 	const double bpm = 120;
-	//ˆê•b(frame)
+	//ä¸€ç§’(frame)
 	const double secondFrame = 60;
-	//”»’èŠÔ‚Ì·•ªâ‘Î’l BPMƒ^ƒCƒ€‚Ì‰½•ªŠ„•ª
+	//åˆ¤å®šæ™‚é–“ã®å·®åˆ†çµ¶å¯¾å€¤ BPMã‚¿ã‚¤ãƒ ã®ä½•åˆ†å‰²åˆ†
 	const double RhythmSubTime_Split = 4;
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
-	//‰Šú‰»‚ÌŒvZŠÔ·•ª—p
+	//åˆæœŸåŒ–æ™‚ã®è¨ˆç®—æ™‚é–“å·®åˆ†ç”¨
 	void InitializeMeasurement(clock_t _clock);
 
-	//Œv‘ªŠJn
+	//è¨ˆæ¸¬é–‹å§‹
 	void StartMeasurement(clock_t _clock);
 
-	//“ü—Í
+	//å…¥åŠ›
 	void InputRhythm();
 
-	//ƒr[ƒg‚­‚è•Ô‚µ
+	//ãƒ“ãƒ¼ãƒˆãã‚Šè¿”ã—
 	void BeatMoveUp();
 
 	bool HighJudgeRhythm();
 	bool LowJudgeRhythm();
 
 	//Getter
-	//Œv‘ªŠÔ
+	//è¨ˆæ¸¬æ™‚é–“
 	inline double GetTimer()	{return timer;}
-	//”»•ÊŠÔ‚Ìƒx[ƒX
+	//åˆ¤åˆ¥æ™‚é–“ã®ãƒ™ãƒ¼ã‚¹
 	inline double GetJudgeTimeBase()	{return judgeTimeBase;}
-	//”»•Ê—p“ü—ÍŠÔ
+	//åˆ¤åˆ¥ç”¨å…¥åŠ›æ™‚é–“
 	inline double GetInputJudgeTime()	{return inputJudgeTime;}
-	//ŒJ‚èã‚ª‚è—p
+	//ç¹°ã‚Šä¸ŠãŒã‚Šç”¨
 	inline double GetMoveUpNumber()	{return moveUpNumber;}
-	//ƒr[ƒgƒ^ƒCƒ~ƒ“ƒO
+	//ãƒ“ãƒ¼ãƒˆã‚¿ã‚¤ãƒŸãƒ³ã‚°
 	inline bool GetIsRhythmEnd()	{return IsRhythmEnd;}
-	//ƒŠƒYƒ€”»•Ê‚Ìâ‘Î’l·•ª
+	//ãƒªã‚ºãƒ åˆ¤åˆ¥æ™‚ã®çµ¶å¯¾å€¤å·®åˆ†
 	inline double GetBPMTimeSub()	{return BPMTimeSub;}
-	//1BPM‚Ì•b”
+	//1BPMã®ç§’æ•°
 	inline double GetBPMTime()	{return BPMTime;}
 
-	//ƒƒ“ƒo•Ï”
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°
 private:
-	//include "clock.h"g—p
+	//include "clock.h"ä½¿ç”¨
 	clock_t clock;
 
-	//‰Šú‰»‚ÌŠÔŒvZ·•ª
+	//åˆæœŸåŒ–æ™‚ã®æ™‚é–“è¨ˆç®—å·®åˆ†
 	double InitTimer = 0;
-	//XV‚ÌŠÔ(Main)
+	//æ›´æ–°æ™‚ã®æ™‚é–“(Main)
 	double timer = 0;
 
-	//ŒJ‚èã‚ª‚è(ƒŠƒYƒ€ƒ^ƒCƒ~ƒ“ƒOI—¹)
+	//ç¹°ã‚Šä¸ŠãŒã‚Š(ãƒªã‚ºãƒ ã‚¿ã‚¤ãƒŸãƒ³ã‚°çµ‚äº†)
 	bool IsRhythmEnd = false;
-	//ŒJ‚èã‚ª‚è”»•Ê—p®”
+	//ç¹°ã‚Šä¸ŠãŒã‚Šåˆ¤åˆ¥ç”¨æ•´æ•°
 	double moveUpNumber = 0;
-	//”»•ÊŠÔ‚Ìƒx[ƒX
+	//åˆ¤åˆ¥æ™‚é–“ã®ãƒ™ãƒ¼ã‚¹
 	double judgeTimeBase = 0;
-	//‘O‰ñ‚Ì”»’èŠÔ
+	//å‰å›ã®åˆ¤å®šæ™‚é–“
 	double oldJudgeTimeBase = 0;
-	//”»•Ê—pA“ü—ÍŠÔ
+	//åˆ¤åˆ¥ç”¨ã€å…¥åŠ›æ™‚é–“
 	double inputJudgeTime = 0;
 
-	//BPMŒvZ®
+	//BPMè¨ˆç®—å¼
 	double BPMTime = (1*secondFrame/bpm);
 
-	//ƒŠƒYƒ€”»•Ê‚Ìâ‘Î’l·•ª
+	//ãƒªã‚ºãƒ åˆ¤åˆ¥æ™‚ã®çµ¶å¯¾å€¤å·®åˆ†
 	double BPMTimeSub;
 };
 

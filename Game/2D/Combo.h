@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseSprites.h"
 
 class Combo
 {
 private:
-	//2DƒeƒLƒXƒg
+	//2Dãƒ†ã‚­ã‚¹ãƒˆ
 	const int NumberSpSize = 3;
 	const int TexNumberBegin = 3;
 
-	//F•Ï‰»ŠÔ
+	//è‰²å¤‰åŒ–æ™‚é–“
 	const float ComboResetColorSecond = 0.5f;
 
 public:
@@ -27,17 +27,17 @@ public:
 	inline int GetComboNum()	{return comboNum;}
 
 private:
-	//ƒRƒ“ƒ{
+	//ã‚³ãƒ³ãƒœ
 	int comboNum = 0;
 
-	//ƒRƒ“ƒ{ƒŠƒZƒbƒgŠÖ˜A
+	//ã‚³ãƒ³ãƒœãƒªã‚»ãƒƒãƒˆé–¢é€£
 	bool IsReset = false;
 	Vector3 comboSpColor = {1,1,1};
 	float curColorChangeFrame = 0;
 
-	//ƒRƒ“ƒ{ƒeƒLƒXƒg
+	//ã‚³ãƒ³ãƒœãƒ†ã‚­ã‚¹ãƒˆ
 	std::unique_ptr<BaseSprites> comboSp;
-	//”š(TexNumber 3~12)
+	//æ•°å­—(TexNumber 3~12)
 	std::unique_ptr<BaseSprites> numberSp_combo[3];
 };
 

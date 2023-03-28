@@ -1,4 +1,4 @@
-#include "Boss1.h"
+ï»¿#include "Boss1.h"
 #include "../../Collision/SphereCollider.h"
 #include "../../../Engine/base/ParticleManager.h"
 
@@ -21,13 +21,13 @@ void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 
 	hp = FullHP;
 
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	DeadParticle = make_unique<ParticleObject>();
 	DeadParticle->Initialize();
 	SummonParticle = make_unique<ParticleObject>();
 	SummonParticle->Initialize();
 
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
 	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 	collider->Update();
@@ -38,7 +38,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 	this->camera = camera;
 	if(!IsNotApp) return;
 
-	//‹——£Œv‘ª
+	//è·é›¢è¨ˆæ¸¬
 	Vector3 pos = playerPos - world.translation;
 	distance = pos.length();
 	if(-13 <= distance && distance <= 13)		{
@@ -48,7 +48,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 		IsInvisible = true;
 	}
 
-	//ƒ_ƒ[ƒW
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸
 	if(IsDamage){
 		damageResetCurFrame++;
 
@@ -67,7 +67,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			IsDeadOnceAudio = false;
 		}
 
-		//–³“GŠÔ“à
+		//ç„¡æ•µæ™‚é–“å†…
 		Vector4 color;
 		if(damageResetCurFrame / 6 == 0){
 			color = {0.0f, 0.0f, 0.0f, 1.0f};
@@ -77,7 +77,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 		}
 		object->SetColor(color);
 
-		//–³“GŠÔ
+		//ç„¡æ•µæ™‚é–“
 		if(damageResetCurFrame >= DamageResetFrame){
 			damageResetCurFrame = 0;
 			color = {1.0f,1.0f,1.0f,1.0f};
@@ -87,15 +87,15 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 	}
 
 	if(IsInvisible) return;
-	//¶‘¶
+	//ç”Ÿå­˜
 	if(!IsDead){
-		//”I—¹
+		//æ‹çµ‚äº†
 		if(IsBeatEnd){
-			//ƒXƒP[ƒ‹
+			//ã‚¹ã‚±ãƒ¼ãƒ«
 			IsScaleEasing  = true;
-			//”I—¹
+			//æ‹çµ‚äº†
 			IsBeatEnd = false;
-			//ƒJƒEƒ“ƒg
+			//ã‚«ã‚¦ãƒ³ãƒˆ
 			patternCount++;
 
 			if(patternCount == 2){
@@ -107,11 +107,11 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 				IsMove = true;
 			}
 
-			//’ÇŒ‚
+			//è¿½æ’ƒ
 			if(IsMove){
 				moveWaitCurCount++;
 					if(moveWaitCurCount >= MoveWaitCount){
-					//ˆÚ“®
+					//ç§»å‹•
 					IsMoveEasing = true;
 					OldPosition = GetPosition();
 					if(!IsComeBack)	targetPos = playerPos;
@@ -121,19 +121,19 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 					moveWaitCurCount = 0;
 				}
 			}
-			//¢Š«
+			//å¬å–š
 			if(IsSummon){
 				Summon();
 			}
 		}
-		//ƒXƒP[ƒ‹‘JˆÚ
+		//ã‚¹ã‚±ãƒ¼ãƒ«é·ç§»
 		if(IsScaleEasing){
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsScaleEasing = false;
 			}
 		}
 
-		//ˆÚ“®
+		//ç§»å‹•
 		if(IsMoveEasing){
 			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 		
@@ -145,12 +145,12 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 					patternCount = 0;
 				}
 
-				//–ß‚èI‚í‚Á‚½
+				//æˆ»ã‚Šçµ‚ã‚ã£ãŸ
 				if(IsComeBack){
 					IsComeBack = false;
 					SetRotation({0,XMConvertToRadians(180),0});
 				}
-				//–ß‚é
+				//æˆ»ã‚‹
 				else if(!IsComeBack){
 					IsComeBack = true;
 				}
@@ -172,7 +172,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 
 void Boss1::ParticleUpdate()
 {
-	//€–S
+	//æ­»äº¡
 	if(IsDead){
 		if(IsDeadOnceAudio){
 			IsDeadOnceAudio = false;
@@ -190,7 +190,7 @@ void Boss1::ParticleUpdate()
 		DeadParticle->Update(this->camera);
 	}
 
-	//¢Š«
+	//å¬å–š
 	if(IsSummon){
 		/// <summary>
 		SummonParticlePos = GetPosition();
@@ -271,25 +271,25 @@ void Boss1::Movement()
 	float sita = acosf(cos);
 	sita = sita*(180/3.14159265f);
 
-	//‰E
+	//å³
 	if(sita >= 135){
 		movePosition = world.translation + Vector3{2.f,0,0};
 		SetRotation({0,XMConvertToRadians(90),0});
 	}
-	//¶
+	//å·¦
 	else if(45 >= sita){
 		movePosition = world.translation + Vector3{-2.f,0,0};
 		SetRotation({0,XMConvertToRadians(-90),0});
 	}
-	//‰º
+	//ä¸‹
 	else if(sita > 45 && 135 > sita){
 
-		//‰º
+		//ä¸‹
 		if(subVector.y > 0){
 			movePosition = world.translation + Vector3{0,0,-2.f};
 			SetRotation({0,XMConvertToRadians(180),0});
 		}
-		//ã
+		//ä¸Š
 		else if(subVector.y < 0){
 			movePosition = world.translation + Vector3{0,0,2.f};
 			SetRotation({0,0,0});

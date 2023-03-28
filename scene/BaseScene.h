@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/base/DirectXCommon.h"
 #include "../Engine/base/Window.h"
 #include "../Engine/input/Input.h"
@@ -14,50 +14,50 @@
 #endif // _DEBUG
 
 
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 class SceneManager;
 
 class BaseScene
 {
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	BaseScene(DirectXCommon* dxCommon, Window* window);
 
 	/// <summary>
-	/// ‹N“®
+	/// èµ·å‹•æ™‚
 	/// </summary>
 	virtual void Application();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// ŒãXV
+	/// å¾Œæ›´æ–°
 	/// </summary>
 	void EndUpdate();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// Œã•`‰æ
+	/// å¾Œæç”»
 	/// </summary>
 	void EndDraw();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	virtual void Finalize();
 
@@ -72,24 +72,24 @@ public:
 	//Setter
 	virtual void SetSceneManager(SceneManager* lsceneManager)	{sceneManager = lsceneManager;}
 
-//ƒƒ“ƒo•Ï”
+//ãƒ¡ãƒ³ãƒå¤‰æ•°
 protected:
 
-#pragma region ”Ä—p‹@”\
-	//Ø‚è‚à‚Ì
+#pragma region æ±ç”¨æ©Ÿèƒ½
+	//å€Ÿã‚Šã‚‚ã®
 	DirectXCommon* dxCommon = nullptr;
 	Window* window = nullptr;
 	
-	//ì¬
+	//ä½œæˆ
 	Input* input = nullptr;
 	Camera* camera = nullptr;
 
-	//Ø‚è•¨
-	//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[
+	//å€Ÿã‚Šç‰©
+	//ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	SceneManager* sceneManager = nullptr;
 
 #ifdef _DEBUG
-	//Ø‚è•¨
+	//å€Ÿã‚Šç‰©
 	DebugText* debugText = nullptr;
 	imguiManager* imgui = nullptr;
 	bool show_demo_window = false;

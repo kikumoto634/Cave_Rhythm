@@ -1,4 +1,4 @@
-#include "LNotes.h"
+ï»¿#include "LNotes.h"
 #include "../../../Engine/math/Easing/Easing.h"
 
 void LNotes::Initialize(UINT textureNumber)
@@ -11,20 +11,20 @@ void LNotes::Update(float goalTime)
 {
 	if(!IsNoteAlive) return;
 
-	//ˆÚ“®
+	//ç§»å‹•
 	if(!IsMoveStop){
 
 		easingSp = goalTime*3;
 		easingTime = (easingSp*60.f);
 
-		//–ß‚µ
+		//æˆ»ã—
 		if(GetPosition().x <= Delete_Pos.x){
 			IsNoteAlive = false;
 			curBeatTime = 0;
 			return;
 		}
 
-		//ˆÚ“®
+		//ç§»å‹•
 		curBeatTime += 1.f/easingTime;
 		easingPos = Easing_Linear_Point2(L_Start_Pos,L_End_Pos,curBeatTime);
 

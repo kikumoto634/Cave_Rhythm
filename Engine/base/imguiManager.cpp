@@ -1,4 +1,4 @@
-#include "imguiManager.h"
+ï»¿#include "imguiManager.h"
 
 #include <imgui.h>
 #include <imgui_impl_win32.h>
@@ -12,19 +12,19 @@ void imguiManager::Initialize(Window* winApp, DirectXCommon* dxCommon)
 	this->winApp = winApp;
 	this->dxCommon = dxCommon;
 
-	//ImGui‚ÌƒRƒ“ƒeƒLƒXƒg‚ğ¶¬
+	//ImGuiã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆ
 	ImGui::CreateContext();
-	//ImGui‚ÌƒXƒ^ƒCƒ‹‚ğİ’è
+	//ImGuiã®ã‚¹ã‚¿ã‚¤ãƒ«ã‚’è¨­å®š
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplWin32_Init(this->winApp->GetHwnd());
 
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	desc.NumDescriptors = 1;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv¶¬
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ç”Ÿæˆ
 	HRESULT result = this->dxCommon->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap));
 	assert(SUCCEEDED(result));
 
@@ -37,13 +37,13 @@ void imguiManager::Initialize(Window* winApp, DirectXCommon* dxCommon)
     );
 
 	ImGuiIO& io = ImGui::GetIO();
-	// •W€ƒtƒHƒ“ƒg‚ğ’Ç‰Á‚·‚é
+	// æ¨™æº–ãƒ•ã‚©ãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹
 	io.Fonts->AddFontDefault();
 }
 
 void imguiManager::Begin()
 {
-	//ImGuiƒtƒŒ[ƒ€ŠJn
+	//ImGuiãƒ•ãƒ¬ãƒ¼ãƒ é–‹å§‹
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -51,17 +51,17 @@ void imguiManager::Begin()
 
 void imguiManager::End()
 {
-	//•`‰æ‘O€”õ
+	//æç”»å‰æº–å‚™
 	ImGui::Render();
 }
 
 void imguiManager::Draw()
 {
 	ID3D12GraphicsCommandList* commandList = dxCommon->GetCommandList();
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì”z—ñ‚ğƒZƒbƒg‚·‚éƒRƒ}ƒ“ƒh
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®é…åˆ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
 	ID3D12DescriptorHeap* ppHeaps[] = {srvHeap.Get()};
 	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	 ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }
 

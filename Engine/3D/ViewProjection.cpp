@@ -1,4 +1,4 @@
-#include "ViewProjection.h"
+ï»¿#include "ViewProjection.h"
 
 using namespace DirectX;
 
@@ -11,76 +11,76 @@ void ViewProjection::UpdateViewMatrix()
 	XMFLOAT3 ltarget = {target.x,target.y,target.z};
 	XMFLOAT3 lup = {up.x,up.y,up.z};
 
-	//‹“_À•W
+	//è¦–ç‚¹åº§æ¨™
 	XMVECTOR eyePosition = XMLoadFloat3(&leye);
 	XMVECTOR targetPosition = XMLoadFloat3(&ltarget);
 	XMVECTOR upVector = XMLoadFloat3(&lup);
 
-	//ƒJƒƒ‰Z²
+	//ã‚«ãƒ¡ãƒ©Zè»¸
 	XMVECTOR cameraAxisZ = XMVectorSubtract(targetPosition, eyePosition);
-	//0ƒxƒNƒgƒ‹‚¾‚ÆŒü‚«‚ª’è‚Ü‚ç‚È‚¢‚Ì‚ÅœŠO
+	//0ãƒ™ã‚¯ãƒˆãƒ«ã ã¨å‘ããŒå®šã¾ã‚‰ãªã„ã®ã§é™¤å¤–
 	assert(!XMVector3Equal(cameraAxisZ, XMVectorZero()));
 	assert(!XMVector3IsInfinite(cameraAxisZ));
 	assert(!XMVector3Equal(upVector, XMVectorZero()));
 	assert(!XMVector3IsInfinite(upVector));
-	//ƒxƒNƒgƒ‹‚ğ³‹K‰»
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 	cameraAxisZ = XMVector3Normalize(cameraAxisZ);
-	//ƒJƒƒ‰‚ÌX²
+	//ã‚«ãƒ¡ãƒ©ã®Xè»¸
 	XMVECTOR cameraAxisX;
-	//X²‚Íã•ûŒü->Z²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Xè»¸ã¯ä¸Šæ–¹å‘->Zè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	cameraAxisX = XMVector3Cross(upVector, cameraAxisZ);
-	//ƒxƒNƒgƒ‹‚ğ³‹K‰»
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 	cameraAxisX = XMVector3Normalize(cameraAxisX);
-	//ƒJƒƒ‰‚ÌY²
+	//ã‚«ãƒ¡ãƒ©ã®Yè»¸
 	XMVECTOR cameraAxisY;
 	cameraAxisY = XMVector3Cross(cameraAxisZ, cameraAxisX);
-	//ƒJƒƒ‰s—ñ
+	//ã‚«ãƒ¡ãƒ©è¡Œåˆ—
 	XMMATRIX matCameraRot;
-	//ƒJƒƒ‰À•WŒn->ƒ[ƒ‹ƒhÀ•WŒn‚Ì•ÏŠ·s—ñ
+	//ã‚«ãƒ¡ãƒ©åº§æ¨™ç³»->ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®å¤‰æ›è¡Œåˆ—
 	matCameraRot.r[0] = cameraAxisX;
 	matCameraRot.r[1] = cameraAxisY;
 	matCameraRot.r[2] = cameraAxisZ;
 	matCameraRot.r[3] = XMVectorSet(0,0,0,1);
 
-	//ƒrƒ…[•ÏŠ·s—ñ
+	//ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—
 	matView = XMMatrixTranspose(matCameraRot);
 
-	//‹“_À•W‚É-1‚ğŠ|‚¯‚½À•W
+	//è¦–ç‚¹åº§æ¨™ã«-1ã‚’æ›ã‘ãŸåº§æ¨™
 	XMVECTOR reverseEyePosition = XMVectorNegate(eyePosition);
-	//ƒJƒƒ‰‚ÌˆÊ’u‚©‚çƒ[ƒ‹ƒhŒ´“_‚Ö‚ÌƒxƒNƒgƒ‹(ƒJƒƒ‰À•WŒn)
-	XMVECTOR tX = XMVector3Dot(cameraAxisX, reverseEyePosition);//X¬•ª
-	XMVECTOR tY = XMVector3Dot(cameraAxisY, reverseEyePosition);//Y¬•ª
-	XMVECTOR tZ = XMVector3Dot(cameraAxisZ, reverseEyePosition);//Z¬•ª
-	//ˆê‚Â‚ÌƒxƒNƒgƒ‹‚É‚Ü‚Æ‚ß‚é
+	//ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‹ã‚‰ãƒ¯ãƒ¼ãƒ«ãƒ‰åŸç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«(ã‚«ãƒ¡ãƒ©åº§æ¨™ç³»)
+	XMVECTOR tX = XMVector3Dot(cameraAxisX, reverseEyePosition);//Xæˆåˆ†
+	XMVECTOR tY = XMVector3Dot(cameraAxisY, reverseEyePosition);//Yæˆåˆ†
+	XMVECTOR tZ = XMVector3Dot(cameraAxisZ, reverseEyePosition);//Zæˆåˆ†
+	//ä¸€ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã«ã¾ã¨ã‚ã‚‹
 	XMVECTOR translation = XMVectorSet(tX.m128_f32[0], tY.m128_f32[1], tZ.m128_f32[2], 1.0f);
 
-	//ƒrƒ…[s—ñ‚É•½sˆÚ“®¬•ª‚ğİ’è
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã«å¹³è¡Œç§»å‹•æˆåˆ†ã‚’è¨­å®š
 	matView.r[3] = translation;
 
-#pragma region ƒrƒ‹ƒ{[ƒhŒvZ
-	//ƒJƒƒ‰X²AY²AZ²
+#pragma region ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¨ˆç®—
+	//ã‚«ãƒ¡ãƒ©Xè»¸ã€Yè»¸ã€Zè»¸
 	XMVECTOR ybillCameraAxisX, ybillCameraAxisY, ybillCameraAxisZ;
-	//X²‚Í‹¤’Ê
+	//Xè»¸ã¯å…±é€š
 	ybillCameraAxisX = cameraAxisX;
-	//Y²‚Íƒ[ƒ‹ƒhÀ•WŒn‚ÌY²
+	//Yè»¸ã¯ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®Yè»¸
 	ybillCameraAxisY = XMVector3Normalize(upVector);
-	//Z²‚ÍX²->Y²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Zè»¸ã¯Xè»¸->Yè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	ybillCameraAxisZ = XMVector3Cross(cameraAxisX, cameraAxisY);
 
-	//ƒrƒ‹ƒ{[ƒhs—ñŒvZ
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—è¨ˆç®—
 	matBillboard.r[0] = ybillCameraAxisX;
 	matBillboard.r[1] = ybillCameraAxisY;
 	matBillboard.r[2] = ybillCameraAxisZ;
 	matBillboard.r[3] = XMVectorSet(0,0,0,1);
-#pragma endregion ƒrƒ‹ƒ{[ƒhŒvZ
+#pragma endregion ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¨ˆç®—
 }
 
 void ViewProjection::UpdateProjectionMatrix(int width, int height)
 {
-	//“§‹“Š‰e
+	//é€è¦–æŠ•å½±
 	matProjection = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(45.0f),	//ã‰º‰æŠp45‹
-		(float)width / height,			//aspect”ä(‰æ–Ê‰¡•/‰æ–Êc•)
-		0.1f, 1000.0f				//‘O’[A‰œ’[
+		XMConvertToRadians(45.0f),	//ä¸Šä¸‹ç”»è§’45Â°
+		(float)width / height,			//aspectæ¯”(ç”»é¢æ¨ªå¹…/ç”»é¢ç¸¦å¹…)
+		0.1f, 1000.0f				//å‰ç«¯ã€å¥¥ç«¯
 	);
 }

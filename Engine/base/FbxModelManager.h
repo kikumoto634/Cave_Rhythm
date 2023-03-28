@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <DirectXMath.h>
@@ -16,33 +16,33 @@
 
 struct Node
 {
-	//–¼‘O
+	//åå‰
 	std::string name;
-	//ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	//ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	DirectX::XMVECTOR scaling = {1, 1, 1, 0};
-	//ƒ[ƒJƒ‹‰ñ“]Šp
+	//ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	DirectX::XMVECTOR rotation = {0,0, 0, 0};
-	//ƒ[ƒJƒ‹ˆÚ“®
+	//ãƒ­ãƒ¼ã‚«ãƒ«ç§»å‹•
 	DirectX::XMVECTOR translation = {0, 0, 0, 1};
-	//ƒ[ƒJƒ‹•ÏŒ`s—ñ
+	//ãƒ­ãƒ¼ã‚«ãƒ«å¤‰å½¢è¡Œåˆ—
 	DirectX::XMMATRIX transform;
-	//ƒOƒ[ƒoƒ‹•ÏŒ`s—ñ
+	//ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰å½¢è¡Œåˆ—
 	DirectX::XMMATRIX globalTransform;
-	//eƒm[ƒh
+	//è¦ªãƒãƒ¼ãƒ‰
 	Node* parent = nullptr;
 };
 
 
-//ƒ{[ƒ“\‘¢‘Ì
+//ãƒœãƒ¼ãƒ³æ§‹é€ ä½“
 struct Bone
 {
-	//–¼‘O
+	//åå‰
 	std::string name;
-	//‰Šúp¨‚Ì‹ts—ñ
+	//åˆæœŸå§¿å‹¢ã®é€†è¡Œåˆ—
 	DirectX::XMMATRIX invInitialPose;
-	//ƒNƒ‰ƒXƒ^[(FBX‘¤‚Ìƒ{[ƒ“î•ñ)
+	//ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼(FBXå´ã®ãƒœãƒ¼ãƒ³æƒ…å ±)
 	FbxCluster* fbxCluster;
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Bone(const std::string& name)
 	{
 		this->name = name;
@@ -66,7 +66,7 @@ public:
 public:
 	friend class FbxLoader;
 public:
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	struct VertexPosNormalUvSkin{
 		Vector3 pos;
 		Vector3 normal;
@@ -79,10 +79,10 @@ public:
 
 	~FbxModelManager();
 
-	//ƒoƒbƒtƒ@¶¬
+	//ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	void CreateBuffer(ID3D12Device* device);
 
-	//•`‰æ
+	//æç”»
 	void Draw(ID3D12GraphicsCommandList* commandList);
 
 	const XMMATRIX& GetModelTransform() {return meshNode->globalTransform;}
@@ -98,11 +98,11 @@ private:
 
 	FbxScene* fbxScene = nullptr;
 
-	//ƒƒbƒVƒ…‚ğ‚Âƒm[ƒh
+	//ãƒ¡ãƒƒã‚·ãƒ¥ã‚’æŒã¤ãƒãƒ¼ãƒ‰
 	Node* meshNode = nullptr;
-	//’¸“_ƒf[ƒ^”z—ñ
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	vector<VertexPosNormalUvSkin> vertices;
-	//’¸“_ƒCƒ“ƒfƒbƒNƒX
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	vector<unsigned short> indices;
 
 	ComPtr<ID3D12Resource> vertBuffer;

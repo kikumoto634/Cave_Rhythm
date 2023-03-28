@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseSprites.h"
 
 class SampleSprite : public BaseSprites
@@ -7,22 +7,22 @@ public:
 	~SampleSprite();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(UINT textureNumber) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 };

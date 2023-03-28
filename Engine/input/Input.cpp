@@ -1,4 +1,4 @@
-#include "Input.h"
+ï»¿#include "Input.h"
 #include <cassert>
 
 #pragma comment(lib, "dinput8.lib")
@@ -18,7 +18,7 @@ void Input::Initialize(HWND hwnd)
 	HRESULT result;
 
 	///DirectInPut
-	//‰Šú‰» (‘¼“ü—Í•û–@’Ç‰Á‚Å‚à‚±‚ÌƒIƒuƒWƒFƒNƒg‚Íˆê‚Â‚Ì‚İ)
+	//åˆæœŸåŒ– (ä»–å…¥åŠ›æ–¹æ³•è¿½åŠ ã§ã‚‚ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ä¸€ã¤ã®ã¿)
 	IDirectInput8* directInput = nullptr;
 	HINSTANCE hInstance = GetModuleHandle(nullptr);
 	result = DirectInput8Create(
@@ -30,7 +30,7 @@ void Input::Initialize(HWND hwnd)
 	);
 	assert(SUCCEEDED(result));
 
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬ (GUID_Joystick (ƒWƒ‡ƒCƒXƒeƒbƒN)A GUID_SysMouse (ƒ}ƒEƒX))
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ (GUID_Joystick (ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ãƒƒã‚¯)ã€ GUID_SysMouse (ãƒã‚¦ã‚¹))
 	result = directInput->CreateDevice(
 		GUID_SysKeyboard,
 		&keyboard,
@@ -38,14 +38,14 @@ void Input::Initialize(HWND hwnd)
 	);
 	assert(SUCCEEDED(result));
 
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg (“ü—ÍƒfƒoƒCƒX‚Ìí—Ş‚É‚æ‚Á‚ÄA‚ ‚ç‚©‚¶‚ß‰½í—Ş‚©—pˆÓ‚·‚é)
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//•W€Œ`®
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ (å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®ç¨®é¡ã«ã‚ˆã£ã¦ã€ã‚ã‚‰ã‹ã˜ã‚ä½•ç¨®é¡ã‹ç”¨æ„ã™ã‚‹)
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
 
-	//”r‘¼“I§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
-	//DISCL_FOREGROUND		‰æ–Ê‚ªè‘O‚É‚ ‚éê‡‚Ì‚İ“ü—Í‚ğó‚¯•t‚¯‚é
-	//DISCL_NONEXCLUSIVE	ƒfƒoƒCƒX‚ğ‚±‚ÌƒAƒvƒŠ‚¾‚¯‚Åê—L‚µ‚È‚¢
-	//DISCL_NOWINKEY		WindowsƒL[‚ğ–³Œø‚É‚·‚é
+	//æ’ä»–çš„åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
+	//DISCL_FOREGROUND		ç”»é¢ãŒæ‰‹å‰ã«ã‚ã‚‹å ´åˆã®ã¿å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹
+	//DISCL_NONEXCLUSIVE	ãƒ‡ãƒã‚¤ã‚¹ã‚’ã“ã®ã‚¢ãƒ—ãƒªã ã‘ã§å°‚æœ‰ã—ãªã„
+	//DISCL_NOWINKEY		Windowsã‚­ãƒ¼ã‚’ç„¡åŠ¹ã«ã™ã‚‹
 	result = keyboard->SetCooperativeLevel(
 		hwnd,
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY
@@ -57,16 +57,16 @@ void Input::Update()
 {
 	HRESULT result;
 
-	//“®ìŠJn
+	//å‹•ä½œé–‹å§‹
 	result = keyboard->Acquire();
 	//assert(SUCCEEDED(result));
 
-	//‘O‰ñ‚ÌƒL[“ü—Íî•ñƒRƒs[
+	//å‰å›ã®ã‚­ãƒ¼å…¥åŠ›æƒ…å ±ã‚³ãƒ”ãƒ¼
 	for(int i = 0; i <KeyNum; i++){
 		prekey[i] = key[i];
 	}
 
-	//ƒL[“ü—Í
+	//ã‚­ãƒ¼å…¥åŠ›
 	result = keyboard->GetDeviceState(sizeof(key), key); 
 	//assert(SUCCEEDED(result));
 }

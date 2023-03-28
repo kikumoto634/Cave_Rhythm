@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <DirectXMath.h>
 
@@ -6,23 +6,23 @@ class BaseObjObject;
 class BaseCollider;
 
 /// <summary>
-///	ƒNƒGƒŠ[‚¢‚æ‚éî•ñ‚ğ“¾‚éˆ×‚Ì\‘¢‘Ì
+///	ã‚¯ã‚¨ãƒªãƒ¼ã„ã‚ˆã‚‹æƒ…å ±ã‚’å¾—ã‚‹ç‚ºã®æ§‹é€ ä½“
 /// </summary>
 struct QueryHit
 {
-	//Õ“Ë‘Šè‚ÌƒIƒuƒWƒFƒNƒg
+	//è¡çªç›¸æ‰‹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	BaseObjObject* object = nullptr;
-	//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	BaseCollider* collider = nullptr;
-	//Õ“Ë“_
+	//è¡çªç‚¹
 	DirectX::XMVECTOR inter;
-	//”rËƒxƒNƒgƒ‹
+	//æ’æ–¥ãƒ™ã‚¯ãƒˆãƒ«
 	DirectX::XMVECTOR reject;
 };
 
 
 /// <summary>
-/// ƒNƒGƒŠ\‚ÅŒğ·‚ğŒŸo‚µ‚½‚Ì“®ì‚ğ‘z’è‚·‚éƒNƒ‰ƒX
+/// ã‚¯ã‚¨ãƒªâ€•ã§äº¤å·®ã‚’æ¤œå‡ºã—ãŸæ™‚ã®å‹•ä½œã‚’æƒ³å®šã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 class QueryCallback
 {
@@ -31,9 +31,9 @@ public:
 	virtual ~QueryCallback() = default;
 
 	/// <summary>
-	/// Œğ·ƒR[ƒ‹ƒoƒbƒN
+	/// äº¤å·®æ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	/// </summary>
-	/// <param name="info">Œğ·î•ñ</param>
-	/// <returns>ƒNƒGƒŠ\‚ğ‘±‚¯‚é‚È‚çtrue, ‘Å‚¿Ø‚é‚È‚çfalse‚ğ•Ô‚·</returns>
+	/// <param name="info">äº¤å·®æƒ…å ±</param>
+	/// <returns>ã‚¯ã‚¨ãƒªâ€•ã‚’ç¶šã‘ã‚‹ãªã‚‰true, æ‰“ã¡åˆ‡ã‚‹ãªã‚‰falseã‚’è¿”ã™</returns>
 	virtual bool OnQueryHit(const QueryHit& info) = 0;
 };

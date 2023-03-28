@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <wrl.h>
 #include <DirectXMath.h>
 #include <d3d12.h>
@@ -14,17 +14,17 @@ class DirectionalLight
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-//ƒTƒuƒNƒ‰ƒX
+//ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 public:
 	struct ConstBufferData
 	{
-		DirectX::XMVECTOR lightv;	//ƒ‰ƒCƒgŒü‚«
-		Vector3 lightcolor;			//ƒ‰ƒCƒgF
+		DirectX::XMVECTOR lightv;	//ãƒ©ã‚¤ãƒˆå‘ã
+		Vector3 lightcolor;			//ãƒ©ã‚¤ãƒˆè‰²
 		unsigned int active;
 	};
 
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 
 	//Getter
@@ -37,17 +37,17 @@ public:
 	inline void SetLightColor(const Vector3 lightcolor)	{this->lightcolor = lightcolor;}
 	inline void SetIsActive(const bool IsActive)	{this->IsActive = IsActive;}
 
-//Ã“Iƒƒ“ƒo•Ï”
+//é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 private:
 	static DirectXCommon* dxCommon;
 
-//ƒƒ“ƒo•Ï”
+//ãƒ¡ãƒ³ãƒå¤‰æ•°
 private:
-	//ƒ‰ƒCƒgŒõü•ûŒü
+	//ãƒ©ã‚¤ãƒˆå…‰ç·šæ–¹å‘
 	DirectX::XMVECTOR lightdir = {1,0,0,0};
-	//ƒ‰ƒCƒgF
+	//ãƒ©ã‚¤ãƒˆè‰²
 	Vector3 lightcolor = {1,1,1};
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool IsActive = false;
 };
 

@@ -1,71 +1,71 @@
-#include "MeshCollider.h"
+ï»¿#include "MeshCollider.h"
 #include "CollisionSystem/Collision.h"
 
 using namespace DirectX;
 
 void MeshCollider::ConstructTriangles(ObjModelManager *model)
 {
-	//OŠpŒ`ƒŠƒXƒg‚ğƒNƒŠƒA
+	//ä¸‰è§’å½¢ãƒªã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢
 	triangle.clear();
-	//ƒ‚ƒfƒ‹‚Ì‚ÂƒƒbƒVƒ…ƒŠƒXƒg‚ğæ“¾
+	//ãƒ¢ãƒ‡ãƒ«ã®æŒã¤ãƒ¡ãƒƒã‚·ãƒ¥ãƒªã‚¹ãƒˆã‚’å–å¾—
 	const std::vector<ObjModelMesh*>& meshes = model->GetMeshes();
-	//Œ»İ‚ÌƒƒbƒVƒ…‚ÌŠJnOŠpŒ`”Ô†‚ğ“ü‚ê‚Ä‚¨‚­•Ï”(0‚Å‰Šú‰»)
+	//ç¾åœ¨ã®ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹å§‹ä¸‰è§’å½¢ç•ªå·ã‚’å…¥ã‚Œã¦ãŠãå¤‰æ•°(0ã§åˆæœŸåŒ–)
 	int start = 0;
-	//‘SƒƒbƒVƒ…‚É‚Â‚¢‚Ä‡‚Éˆ—‚·‚é
+	//å…¨ãƒ¡ãƒƒã‚·ãƒ¥ã«ã¤ã„ã¦é †ã«å‡¦ç†ã™ã‚‹
 	std::vector<ObjModelMesh*>::const_iterator it = meshes.cbegin();
 	for(; it != meshes.cend(); ++it){
-		//ƒCƒ“ƒfƒbƒNƒX‚ÍAOŠpŒ`‚Ì”*3ŒÂ‚ ‚é‚Ì‚ÅA‚»‚±‚©‚çƒƒbƒVƒ…“à‚ÌOŠpŒ`‚Ì”‚ğ‹tZ‚·‚é
+		//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¯ã€ä¸‰è§’å½¢ã®æ•°*3å€‹ã‚ã‚‹ã®ã§ã€ãã“ã‹ã‚‰ãƒ¡ãƒƒã‚·ãƒ¥å†…ã®ä¸‰è§’å½¢ã®æ•°ã‚’é€†ç®—ã™ã‚‹
 		size_t triangleNum = (*it)->GetIndices().size()/3;
 		triangle.resize(triangle.size() + triangleNum);
-		//‘SOŠpŒ`‚É‚Â‚¢‚Ä‡‚Éˆ—
+		//å…¨ä¸‰è§’å½¢ã«ã¤ã„ã¦é †ã«å‡¦ç†
 		for(int i = 0; i < triangleNum; i++){
-			//¡‚©‚çŒvZ‚·‚éOŠpŒ`‚ÌQÆ
+			//ä»Šã‹ã‚‰è¨ˆç®—ã™ã‚‹ä¸‰è§’å½¢ã®å‚ç…§
 			Triangle& tri = triangle[start+i];
 			int idx0 = (*it)->GetIndices()[i*3+0];
 			int idx1 = (*it)->GetIndices()[i*3+1];
 			int idx2 = (*it)->GetIndices()[i*3+2];
-			//OŠpŒ`‚Ì3’¸“_‚ÌÀ•W‚ğ‘ã“ü
+			//ä¸‰è§’å½¢ã®3é ‚ç‚¹ã®åº§æ¨™ã‚’ä»£å…¥
 			tri.p0 = {(*it)->GetVertices()[idx0].pos.x, (*it)->GetVertices()[idx0].pos.y, (*it)->GetVertices()[idx0].pos.z, 1};
 			tri.p1 = {(*it)->GetVertices()[idx1].pos.x, (*it)->GetVertices()[idx1].pos.y, (*it)->GetVertices()[idx1].pos.z, 1};
 			tri.p2 = {(*it)->GetVertices()[idx2].pos.x, (*it)->GetVertices()[idx2].pos.y, (*it)->GetVertices()[idx2].pos.z, 1};
-			//3’¸“_‚©‚ç–@ü‚ğŒvZ
+			//3é ‚ç‚¹ã‹ã‚‰æ³•ç·šã‚’è¨ˆç®—
 			tri.ComputeNormal();
 		}
 
-		//Ÿ‚ÌƒƒbƒVƒ…‚Í¡‚Ü‚ÅOŠpŒ`”Ô†‚ÌŸ‚©‚çg‚¤
+		//æ¬¡ã®ãƒ¡ãƒƒã‚·ãƒ¥ã¯ä»Šã¾ã§ä¸‰è§’å½¢ç•ªå·ã®æ¬¡ã‹ã‚‰ä½¿ã†
 		start += (int)triangleNum;
 	}
 }
 
 void MeshCollider::Update()
 {
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‹ts—ñ‚ğŒvZ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®é€†è¡Œåˆ—ã‚’è¨ˆç®—
 	invMatWorld = XMMatrixInverse(nullptr, GetObjObject()->GetmatWorld().matWorld);
 }
 
 bool MeshCollider::CheckCollisionSphere(const Sphere &sphere, DirectX::XMVECTOR *inter, DirectX::XMVECTOR* reject)
 {
-	//ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒJƒ‹À•WŒn‚Å‚Ì‹…‚ğ“¾‚é(”¼Œa‚ÍXƒXƒP[ƒ‹‚ğQÆ)
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ç³»ã§ã®çƒã‚’å¾—ã‚‹(åŠå¾„ã¯Xã‚¹ã‚±ãƒ¼ãƒ«ã‚’å‚ç…§)
 	Sphere localSphere;
 	localSphere.center = XMVector3Transform(sphere.center, invMatWorld);
 	localSphere.radius *= XMVector3Length(invMatWorld.r[0]).m128_f32[0];
 
-	//ƒ[ƒJƒ‹À•WŒn‚Å‚ÌŒğ·‚ğƒ`ƒFƒbƒN
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ç³»ã§ã®äº¤å·®ã‚’ãƒã‚§ãƒƒã‚¯
 	std::vector<Triangle>::const_iterator it = triangle.cbegin();
 
 	for(; it != triangle.cend(); ++it){
 		const Triangle& triangle = *it;
 
-		//‹…‚ÆOŠpŒ`‚Æ‚Ì“–‚½‚è”»’è
+		//çƒã¨ä¸‰è§’å½¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 		if(Collision::CheckSphere2Triangle(localSphere, triangle, inter, reject)){
 			if(inter){
 				const XMMATRIX& matWorld = GetObjObject()->GetmatWorld().matWorld;
-				//ƒ[ƒ‹ƒhÀ•WŒn‚Å‚ÌŒğ“_‚ğ“¾‚é
+				//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã§ã®äº¤ç‚¹ã‚’å¾—ã‚‹
 				*inter = XMVector3Transform(*inter, matWorld);
 			}
 			if(reject){
 				const XMMATRIX& matWorld = GetObjObject()->GetmatWorld().matWorld;
-				//ƒ[ƒ‹ƒhÀ•WŒn‚Å‚Ì”rËƒxƒNƒgƒ‹‚É•ÏŠ·
+				//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã§ã®æ’æ–¥ãƒ™ã‚¯ãƒˆãƒ«ã«å¤‰æ›
 				*reject = XMVector3TransformNormal(*reject, matWorld);
 			}
 			return true;
@@ -77,27 +77,27 @@ bool MeshCollider::CheckCollisionSphere(const Sphere &sphere, DirectX::XMVECTOR 
 
 bool MeshCollider::CheckCollisionRay(const Ray &ray, float *distance, DirectX::XMVECTOR *inter)
 {
-	//ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒJƒ‹À•WŒn‚Å‚ÌƒŒƒC‚ğ“¾‚é
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ç³»ã§ã®ãƒ¬ã‚¤ã‚’å¾—ã‚‹
 	Ray localRay;
 	localRay.start = XMVector3Transform(ray.start, invMatWorld);
 	localRay.dir = XMVector3TransformNormal(ray.dir, invMatWorld);
 
-	//ƒ[ƒJƒ‹À•WŒn‚ÅŒğ·‚ğƒ`ƒFƒbƒN
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ç³»ã§äº¤å·®ã‚’ãƒã‚§ãƒƒã‚¯
 	std::vector<Triangle>::const_iterator it = triangle.cbegin();
 
 	for(; it != triangle.cend(); ++it){
 		const Triangle& triangle = *it;
 
 		XMVECTOR tempInter;
-		//ƒŒƒC‚ÆOŠpŒ`‚Ì“–‚½‚è”»’è
+		//ãƒ¬ã‚¤ã¨ä¸‰è§’å½¢ã®å½“ãŸã‚Šåˆ¤å®š
 		if(Collision::CheckRay2Triangle(localRay, triangle, nullptr, &tempInter)){
 			const XMMATRIX& matWorld = GetObjObject()->GetmatWorld().matWorld;
 
-			//ƒ[ƒ‹ƒhÀ•WŒn‚Å‚ÌŒğ“_‚ğ“¾‚é
+			//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã§ã®äº¤ç‚¹ã‚’å¾—ã‚‹
 			tempInter = XMVector3Transform(tempInter, matWorld);
 
 			if(distance){
-				//Œğ“_‚ÆƒŒƒCn“_‚Ì‹——£‚ğŒvZ
+				//äº¤ç‚¹ã¨ãƒ¬ã‚¤å§‹ç‚¹ã®è·é›¢ã‚’è¨ˆç®—
 				XMVECTOR sub = tempInter - ray.start;
 				*distance = XMVector3Dot(sub, ray.dir).m128_f32[0];
 			}

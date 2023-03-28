@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseSprites.h"
 
 class JudgeLocation : public BaseSprites
@@ -9,9 +9,9 @@ private:
 	const Vector2 Size_Min = {128,128};
 	const Vector2 AnchorPoint = {0.5f,0.5f};
 
-	//Å‘åƒTƒCƒYƒeƒNƒXƒ`ƒƒ”Ô†
+	//æœ€å¤§ã‚µã‚¤ã‚ºãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	const int SizeMaxTextureNumber = 31;
-	//Å¬ƒTƒCƒYƒeƒNƒXƒ`ƒƒ”Ô†
+	//æœ€å°ã‚µã‚¤ã‚ºãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	const int SizeMinTextureNumber = 22;
 
 public:

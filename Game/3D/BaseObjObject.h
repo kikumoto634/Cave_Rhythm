@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "../../Engine/3D/ObjModelObject.h"
 #include "../../Engine/base/ObjModelManager.h"
@@ -12,43 +12,43 @@ class BaseObjObject
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	BaseObjObject() = default;
 
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~BaseObjObject();
 
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Initialize(std::string filePath, bool IsSmmothing = false);
 	virtual void Initialize(ObjModelManager* model);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	/// <param name="camera"></param>
-	/// <param name="matBillboard">ƒrƒ‹ƒ{[ƒhŠJn</param>
+	/// <param name="matBillboard">ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰é–‹å§‹</param>
 	virtual void Update(Camera* camera);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	virtual void Finalize();
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	virtual void OnCollision(const CollisionInfo& info){};
 
 	inline void IsBeatEndOn()	{IsBeatEnd = true;}
@@ -71,16 +71,16 @@ public:
 
 protected:
 	/// <summary>
-	/// ƒŠƒYƒ€‚É‚ ‚í‚¹‚ÄƒTƒCƒY•ÏX 
+	/// ãƒªã‚ºãƒ ã«ã‚ã‚ã›ã¦ã‚µã‚¤ã‚ºå¤‰æ›´ 
 	/// </summary>
-	/// <param name="sizeMax">Å‘åƒTƒCƒY</param>
-	/// <param name="sizeMin">Å¬ƒTƒCƒY</param>
-	/// <param name="EndTime">I—¹ŠÔ (x:•b)</param>
+	/// <param name="sizeMax">æœ€å¤§ã‚µã‚¤ã‚º</param>
+	/// <param name="sizeMin">æœ€å°ã‚µã‚¤ã‚º</param>
+	/// <param name="EndTime">çµ‚äº†æ™‚é–“ (x:ç§’)</param>
 	/// <returns></returns>
 	bool ScaleChange(Vector3& sizeMax, Vector3& sizeMin, float& EndTime);
 
 protected:
-	//ƒNƒ‰ƒX–¼(ƒfƒoƒbƒN—p)
+	//ã‚¯ãƒ©ã‚¹å(ãƒ‡ãƒãƒƒã‚¯ç”¨)
 	const char* name = nullptr;
 
 	bool IsLendModel = false;
@@ -88,25 +88,25 @@ protected:
 	ObjModelObject* object = nullptr;
 	WorldTransform world = {};
 
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	BaseCollider* collider = nullptr;
 
-	//ƒJƒƒ‰(Ø‚è•¨)
+	//ã‚«ãƒ¡ãƒ©(å€Ÿã‚Šç‰©)
 	Camera* camera = nullptr;
 
 
-	//ƒŠƒYƒ€XV—p
-	//”I—¹ƒtƒ‰ƒO
+	//ãƒªã‚ºãƒ æ›´æ–°ç”¨
+	//æ‹çµ‚äº†ãƒ•ãƒ©ã‚°
 	bool IsBeatEnd = false;
 
-	//ƒTƒCƒY•ÏX—p
-	//ƒXƒP[ƒ‹
+	//ã‚µã‚¤ã‚ºå¤‰æ›´ç”¨
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector3 scale = {ScaleMax};
 	Vector3 ScaleMax = {1, 1, 1};
 	Vector3 ScaleMin = {0.7f, 1, 0.7f};
-	//Œ»İŠÔ
+	//ç¾åœ¨æ™‚é–“
 	float scaleCurrentTime = 0.f;
-	//I—¹ŠÔ(x(s/•b))
+	//çµ‚äº†æ™‚é–“(x(s/ç§’))
 	float scaleEndTime = 0.25f;
 };
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseScene.h"
 
 #include "../Engine/light/LightGroup.h"
@@ -11,68 +11,68 @@
 class TitleScene : public BaseScene
 {
 private:
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	const float FadeSecond = 1.f;
 
 public:
 	
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	TitleScene(DirectXCommon* dxCommon, Window* window);
 
 	/// <summary>
-	/// ‹N“®
+	/// èµ·å‹•æ™‚
 	/// </summary>
 	void Application() override;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 private:
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	void NextSceneChange();
 	void DebugSceneChange();
 	void SceneChange();
 
 private:
-	//ƒvƒŒƒCƒ„[Obj
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼Obj
 	std::unique_ptr<BaseObjObject> playerobj;
 
-	//ƒGƒlƒ~[
+	//ã‚¨ãƒãƒŸãƒ¼
 	std::unique_ptr<BaseObjObject> enemyobj;
 	std::unique_ptr<BaseObjObject> enemyobj2;
 
-	//ƒ^ƒCƒgƒ‹
+	//ã‚¿ã‚¤ãƒˆãƒ«
 	std::unique_ptr<BaseSprites> title;
 	std::unique_ptr<BaseSprites> push;
 	std::unique_ptr<BaseSprites> button;
 
-	//”wŒi
+	//èƒŒæ™¯
 	std::unique_ptr<BaseObjObject> back;
 
-	//‰¹º
+	//éŸ³å£°
 	Audio* audio = nullptr;
 
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	LightGroup* lightGroup = nullptr;
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	std::unique_ptr<BaseSprites> fade;
 	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
 	Vector2 fadeInSize = {};

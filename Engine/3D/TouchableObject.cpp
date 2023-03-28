@@ -1,4 +1,4 @@
-#include "TouchableObject.h"
+ï»¿#include "TouchableObject.h"
 #include "../../Game/Collision/MeshCollider.h"
 #include "../../Game/Collision/CollisionSystem/CollisionAttribute.h"
 
@@ -8,10 +8,10 @@ void TouchableObject::Initialize(std::string filePath, bool IsSmmothing)
 
 	SetModel(model);
 
-	//ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	MeshCollider* collider = new MeshCollider;
 	SetCollider(collider);
-	//‘®«ƒZƒbƒg(Ž©“®“I’nŒ`)
+	//å±žæ€§ã‚»ãƒƒãƒˆ(è‡ªå‹•çš„åœ°å½¢)
 	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
 	collider->ConstructTriangles(model);
 }

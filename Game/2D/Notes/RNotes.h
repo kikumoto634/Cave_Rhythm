@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Notes.h"
 class RNotes : public Notes
 {

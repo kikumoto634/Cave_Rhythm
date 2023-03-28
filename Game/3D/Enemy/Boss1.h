@@ -1,33 +1,33 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../ParticleObject.h"
 class Boss1 : public BaseObjObject
 {
-//’è”
-	//ƒr[ƒgx‰ñ”I—¹‚ÉPOP
+//å®šæ•°
+	//ãƒ“ãƒ¼ãƒˆxå›æ•°çµ‚äº†æ™‚ã«POP
 	const int POP_COUNT = 6;
-	//€–SŒã‚ÌƒŠƒZƒbƒgŠÔ
+	//æ­»äº¡å¾Œã®ãƒªã‚»ãƒƒãƒˆæ™‚é–“
 	const int AppDeadParMaxFrame = 150;
 
-	//¢Š«ƒGƒtƒFƒNƒg
+	//å¬å–šã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	const int AppSummonParMaxFrame = 50;
 	const int SummonEnemyPosNumMax = 10;
 
-	//‘Ì—Í
+	//ä½“åŠ›
 	const int FullHP = 10;
-	//–³“GŠÔ
+	//ç„¡æ•µæ™‚é–“
 	const int DamageResetFrame = 10;
 
-	//ˆÚ“®‘Ò‹@
+	//ç§»å‹•å¾…æ©Ÿ
 	const int MoveWaitCount = 2;
 
-	//“Gs“®
+	//æ•µè¡Œå‹•
 	/*
-	* ƒr[ƒg”‚É‰‚¶‚Ä‘JˆÚ
-	* 1¢Š« 5beat–Ú		”­¶
-	* 2‘Ò‹@ 8beat		‘Ò‹@
-	* 3Ú‹ß 2‘Ò‹@I—¹Œã Reset
-	* 4–ß‚é 3¬Œ÷->Œã‚ë‚É–ß‚é
+	* ãƒ“ãƒ¼ãƒˆæ•°ã«å¿œã˜ã¦é·ç§»
+	* 1å¬å–š 5beatç›®		ç™ºç”Ÿ
+	* 2å¾…æ©Ÿ 8beat		å¾…æ©Ÿ
+	* 3æ¥è¿‘ 2å¾…æ©Ÿçµ‚äº†å¾Œ Reset
+	* 4æˆ»ã‚‹ 3æˆåŠŸ->å¾Œã‚ã«æˆ»ã‚‹
 	*/
 
 public:
@@ -55,27 +55,27 @@ private:
 	void Movement();
 	void Summon();
 
-	//€–SƒGƒtƒFƒNƒg
+	//æ­»äº¡ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	void DeadParticleApp();
-	//¢Š«ƒGƒtƒFƒNƒg
+	//å¬å–šã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	void SummonParticleApp();
 
 private:
 
-	//–¢oŒ»
+	//æœªå‡ºç¾
 	bool IsNotApp = false;
 
-	//ƒpƒ^[ƒ“ƒJƒEƒ“ƒg
+	//ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚«ã‚¦ãƒ³ãƒˆ
 	int patternCount = 0;
 
 	//HP
 	int hp = 0;
 
-	//ƒ_ƒ[ƒW
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸
 	bool IsDamage = false;
 	int damageResetCurFrame = 0;
 
-	//’ÇÕ
+	//è¿½è·¡
 	bool IsMove = true;
 	Vector3 targetPos;
 	bool IsMoveEasing = false;
@@ -86,31 +86,31 @@ private:
 	const float MoveEasingMaxTime = 0.05f;
 	float moveEasingFrame = 0;
 
-	//¢Š«
+	//å¬å–š
 	bool IsSummon = false;
 	bool IsSummonEnemyPop = false;
 	int summonEnemyPosNum = 0;
 
-	//‘Ş‹p
+	//é€€å´
 	bool IsComeBack= false;
 	Vector3 homePos = {};
 
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	float radius = 1.0f;
 
 	Vector3 NotAlivePos = {50,50,50};
-	//€–S
+	//æ­»äº¡
 	bool IsDead = false;
 	bool IsDeadOnceAudio = false;
 
-	//‹——£‚É‰‚¶‚½”ñ•\¦
+	//è·é›¢ã«å¿œã˜ãŸéè¡¨ç¤º
 	bool IsInvisible = false;
 	float distance = 0.f;
 
-	//ƒXƒP[ƒ‹
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	bool IsScaleEasing = false;
 
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	std::unique_ptr<ParticleObject> DeadParticle;
 	int appDeadParFrame = 0;
 	bool IsDeadOnceParticle = false;

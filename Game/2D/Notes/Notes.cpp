@@ -1,4 +1,4 @@
-#include "Notes.h"
+ï»¿#include "Notes.h"
 #include "../../../Engine/math/Easing/Easing.h"
 
 void Notes::Initialize(UINT textureNumber)
@@ -15,7 +15,7 @@ void Notes::InputUpdate()
 
 void Notes::Update(float goalTime)
 {
-	//’âŽ~
+	//åœæ­¢
 	if(IsMoveStop){
 		this->color.w = Easing_Linear_Point2(1,0,Time_OneWay(curAlphaFrame, AlphaMaxTime));
 

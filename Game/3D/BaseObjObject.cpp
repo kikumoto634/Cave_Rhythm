@@ -1,4 +1,4 @@
-#include "BaseObjObject.h"
+ï»¿#include "BaseObjObject.h"
 #include "../Collision/CollisionSystem/BaseCollider.h"
 #include "../Collision/CollisionSystem/CollisionManager.h"
 #include "../../../Engine/math/Easing/Easing.h"
@@ -6,7 +6,7 @@
 BaseObjObject::~BaseObjObject()
 {
 	//if(collider){
-	//	//ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ[‚©‚ç“o˜^‚ð‰ðœ‚·‚é
+	//	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç™»éŒ²ã‚’è§£é™¤ã™ã‚‹
 	//	CollisionManager::GetInstance()->RemoveCollider(collider);
 	//	delete collider;
 	//}
@@ -20,7 +20,7 @@ void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
 	world.Initialize();
 	world.UpdateMatrix();
 
-	//ƒNƒ‰ƒX–¼‚Ì•¶Žš—ñ‚ðŽæ“¾
+	//ã‚¯ãƒ©ã‚¹åã®æ–‡å­—åˆ—ã‚’å–å¾—
 	name = typeid(*this).name();
 }
 
@@ -32,7 +32,7 @@ void BaseObjObject::Initialize(ObjModelManager *model)
 	world.Initialize();
 	world.UpdateMatrix();
 
-	//ƒNƒ‰ƒX–¼‚Ì•¶Žš—ñ‚ðŽæ“¾
+	//ã‚¯ãƒ©ã‚¹åã®æ–‡å­—åˆ—ã‚’å–å¾—
 	name = typeid(*this).name();
 }
 
@@ -43,7 +43,7 @@ void BaseObjObject::Update(Camera *camera)
 	world.UpdateMatrix();
 	object->Update(world, this->camera);
 
-	//“–‚½‚è”»’èXV
+	//å½“ãŸã‚Šåˆ¤å®šæ›´æ–°
 	if(collider){
 		collider->Update();
 	}
@@ -57,7 +57,7 @@ void BaseObjObject::Draw()
 void BaseObjObject::Finalize()
 {
 	if(collider){
-		//ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ[‚©‚ç“o˜^‚ð‰ðœ‚·‚é
+		//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç™»éŒ²ã‚’è§£é™¤ã™ã‚‹
 		CollisionManager::GetInstance()->RemoveCollider(collider);
 		delete collider;
 	}
@@ -83,11 +83,11 @@ void BaseObjObject::SetCollider(BaseCollider *collider)
 {
 	collider->SetObjObject(this);
 	this->collider = collider;
-	//ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	CollisionManager::GetInstance()->AddCollider(collider);
-	//s—ñ‚ÌXV
+	//è¡Œåˆ—ã®æ›´æ–°
 	world.UpdateMatrix();
-	//ƒRƒ‰ƒCƒ_[‚ðXV‚µ‚Ä‚¨‚­
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æ›´æ–°ã—ã¦ãŠã
 	collider->Update();
 }
 

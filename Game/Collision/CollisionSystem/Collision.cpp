@@ -1,10 +1,10 @@
-#include "Collision.h"
+ï»¿#include "Collision.h"
 
 using namespace DirectX;
 
 bool Collision::CheckSphere2Sphere(const Sphere &sphere1, const Sphere &sphere2, DirectX::XMVECTOR *inter, DirectX::XMVECTOR* reject)
 {
-	// ’†S“_‚Ì‹——£‚Ì‚Qæ <= ”¼Œa‚Ì˜a‚Ì‚Qæ@‚È‚çŒğ·
+	// ä¸­å¿ƒç‚¹ã®è·é›¢ã®ï¼’ä¹— <= åŠå¾„ã®å’Œã®ï¼’ä¹—ã€€ãªã‚‰äº¤å·®
 	float dist = XMVector3LengthSq(sphere1.center - sphere2.center).m128_f32[0];
 
 	float radius = sphere1.radius + sphere2.radius;
@@ -14,11 +14,11 @@ bool Collision::CheckSphere2Sphere(const Sphere &sphere1, const Sphere &sphere2,
 	if(dist > radius)	{return false;}
 
 	if(inter){
-		//A‚Ì”¼Œa‚ª0‚ÌAÀ•W‚ÍB‚Ì’†SAB‚Ì”¼Œa‚ª0‚ÌÀ•W‚ÍA‚Ì’†S‚Æ‚È‚é
+		//Aã®åŠå¾„ãŒ0ã®æ™‚ã€åº§æ¨™ã¯Bã®ä¸­å¿ƒã€Bã®åŠå¾„ãŒ0ã®æ™‚åº§æ¨™ã¯Aã®ä¸­å¿ƒã¨ãªã‚‹
 		float t = sphere2.radius / (sphere1.radius + sphere2.radius);
 		*inter = XMVectorLerp(sphere1.center, sphere2.center, t);
 	}
-	//‰Ÿ‚µo‚·ƒxƒNƒgƒ‹‚ğŒvZ
+	//æŠ¼ã—å‡ºã™ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 	if(reject){
 		float rejectLen = sphere1.radius + sphere2.radius - sqrtf(dist);
 		*reject = XMVector3Normalize(sphere1.center - sphere2.center);
@@ -30,18 +30,18 @@ bool Collision::CheckSphere2Sphere(const Sphere &sphere1, const Sphere &sphere2,
 
 bool Collision::CheckSphere2Plane(const Sphere &sphere, const Plane &plane, DirectX::XMVECTOR *inter)
 {
-	//À•WŒn‚ÌŒ´“_‚©‚ç‹…‚Ì’†SÀ•W‚Ö‚Ì‹——£
+	//åº§æ¨™ç³»ã®åŸç‚¹ã‹ã‚‰çƒã®ä¸­å¿ƒåº§æ¨™ã¸ã®è·é›¢
 	XMVECTOR distV = XMVector3Dot(sphere.center, plane.normal);
-	//•½–Ê‚ÌŒ´“_‹——£‚ğŒ¸Z‚·‚é‚±‚Æ‚ÅA•½–Ê‚Æ‹…‚Ì’†S‚Æ‚Ì‹——£‚ªo‚é
+	//å¹³é¢ã®åŸç‚¹è·é›¢ã‚’æ¸›ç®—ã™ã‚‹ã“ã¨ã§ã€å¹³é¢ã¨çƒã®ä¸­å¿ƒã¨ã®è·é›¢ãŒå‡ºã‚‹
 	float dist = distV.m128_f32[0] - plane.distance;
-	//‹——£‚Ìâ‘Î’l‚ª”¼Œa‚æ‚è‘å‚«‚¯‚ê‚Î“–‚½‚Á‚Ä‚¢‚È‚¢
+	//è·é›¢ã®çµ¶å¯¾å€¤ãŒåŠå¾„ã‚ˆã‚Šå¤§ãã‘ã‚Œã°å½“ãŸã£ã¦ã„ãªã„
 	if(fabsf(dist) > sphere.radius)
 	{
 		return false;
 	}
-	//‹c–Œğ“_‚ğŒvZ
+	//è­°äº‹äº¤ç‚¹ã‚’è¨ˆç®—
 	if(inter){
-		//•½–Êã‚ÌÅ‹ßÚ“_‚ğA‹^—Œğ“_‚Æ‚·‚é
+		//å¹³é¢ä¸Šã®æœ€è¿‘æ¥ç‚¹ã‚’ã€ç–‘ä¼¼äº¤ç‚¹ã¨ã™ã‚‹
 		*inter = -dist * plane.normal + sphere.center;
 	}
 
@@ -50,7 +50,7 @@ bool Collision::CheckSphere2Plane(const Sphere &sphere, const Plane &plane, Dire
 
 void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR &point, const Triangle &triangle, DirectX::XMVECTOR *closest)
 {
-	//point‚ªp0‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	//pointãŒp0ã®å¤–å´ã®é ‚ç‚¹é ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
 	XMVECTOR p0_p1 = triangle.p1 - triangle.p0;
 	XMVECTOR p0_p2 = triangle.p2 - triangle.p0;
 	XMVECTOR p0_pt = point - triangle.p0;
@@ -60,12 +60,12 @@ void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR &point, const Tr
 
 	if(d1.m128_f32[0] <= 0.0f && d2.m128_f32[0] <= 0.0f)
 	{
-		//p0‚ÍÅ‹ß
+		//p0ã¯æœ€è¿‘
 		*closest = triangle.p0;
 		return ;
 	}
 
-	//point‚ªp1‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	//pointãŒp1ã®å¤–å´ã®é ‚ç‚¹é ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
 	XMVECTOR p1_pt = point - triangle.p1;
 
 	XMVECTOR d3 = XMVector3Dot(p0_p1, p1_pt);
@@ -73,12 +73,12 @@ void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR &point, const Tr
 
 	if(d3.m128_f32[0] >= 0.0f && d4.m128_f32[0] <= d3.m128_f32[0])
 	{
-		//p1‚ªÅ‹ß
+		//p1ãŒæœ€è¿‘
 		*closest = triangle.p1;
 		return ;
 	}
 
-	//point‚ªp0_p1‚Ì•Ò—Ìˆæ‚Ì‚ÈŠÈˆÕ‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p1ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	//pointãŒp0_p1ã®ç·¨é ˜åŸŸã®ãªç°¡æ˜“ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p0_p1ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float vc = d1.m128_f32[0] * d4.m128_f32[0] - d3.m128_f32[0] * d2.m128_f32[0];
 	
 	if(vc <= 0.0f && d1.m128_f32[0] >= 0.0f && d3.m128_f32[0] <= 0.0f)
@@ -88,7 +88,7 @@ void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR &point, const Tr
 		return ;
 	}
 
-	//point‚ªp2‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	//pointãŒp2ã®å¤–å´ã®é ‚ç‚¹é ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
 	XMVECTOR p2_pt = point - triangle.p2;
 
 	XMVECTOR d5 = XMVector3Dot(p0_p1, p2_pt);
@@ -100,7 +100,7 @@ void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR &point, const Tr
 		return ;
 	}
 
-	//point‚ªp0_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p2ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	//pointãŒp0_p2ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p0_p2ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float vb = d5.m128_f32[0] * d2.m128_f32[0] - d1.m128_f32[0] * d6.m128_f32[0];
 	
 	if(vb <= 0.0f && d2.m128_f32[0] >= 0.0f && d6.m128_f32[0] <= 0.0f)
@@ -110,7 +110,7 @@ void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR &point, const Tr
 		return ;
 	}
 
-	//point‚ªp1_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp1_p2‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	//pointãŒp1_p2ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p1_p2ã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float va = d3.m128_f32[0] * d6.m128_f32[0] - d5.m128_f32[0] * d4.m128_f32[0];
 
 	if(va <= 0.0f && (d4.m128_f32[0] - d3.m128_f32[0]) >= 0.0f && (d5.m128_f32[0] - d6.m128_f32[0]) >= 0.0f)
@@ -131,23 +131,23 @@ bool Collision::CheckSphere2Triangle(const Sphere &sphere, const Triangle &triag
 {
 	XMVECTOR p;
 
-	//‹…‚Ì’†S‚É‘Î‚·‚éÅ‹ßÚ“_‚Å‚ ‚éOŠpŒ`ã‚É‚ ‚é“_p‚ğŒ©‚Â‚¯‚é
+	//çƒã®ä¸­å¿ƒã«å¯¾ã™ã‚‹æœ€è¿‘æ¥ç‚¹ã§ã‚ã‚‹ä¸‰è§’å½¢ä¸Šã«ã‚ã‚‹ç‚¹pã‚’è¦‹ã¤ã‘ã‚‹
 	ClosestPtPoint2Triangle(sphere.center, triagnle, &p);
-	//“_p‚Æ‹…‚Ì’†S‚Ì·•ªƒxƒNƒgƒ‹
+	//ç‚¹pã¨çƒã®ä¸­å¿ƒã®å·®åˆ†ãƒ™ã‚¯ãƒˆãƒ«
 	XMVECTOR v = p - sphere.center;
-	//‹——£‚Ì“ñæ‚ğ‹‚ß‚é
-	//(“¯‚¶ƒxƒNƒgƒ‹“¯m‚Ì“àÏ‚ÍO•½•û‚Ì’è—‚Ìƒ‹[ƒg“à•”‚Ì®‚Æˆê’v‚·‚é)
+	//è·é›¢ã®äºŒä¹—ã‚’æ±‚ã‚ã‚‹
+	//(åŒã˜ãƒ™ã‚¯ãƒˆãƒ«åŒå£«ã®å†…ç©ã¯ä¸‰å¹³æ–¹ã®å®šç†ã®ãƒ«ãƒ¼ãƒˆå†…éƒ¨ã®å¼ã¨ä¸€è‡´ã™ã‚‹)
 	v = XMVector3Dot(v, v);
-	//‹…‚ÆOŠpŒ`‚Ì‹——£‚Í”¼ŒaƒCƒJ‚È‚ç“–‚½‚Á‚Ä‚¢‚È‚¢
+	//çƒã¨ä¸‰è§’å½¢ã®è·é›¢ã¯åŠå¾„ã‚¤ã‚«ãªã‚‰å½“ãŸã£ã¦ã„ãªã„
 	if(v.m128_f32[0] > sphere.radius * sphere.radius){
 		return false;
 	}
-	//‹^—Œğ“_‚ğŒvZ
+	//ç–‘ä¼¼äº¤ç‚¹ã‚’è¨ˆç®—
 	if(inter){
-		//OŠpŒ`ã‚ÌÅ‹ßÚ“_p‚ğ‹^—Œğ“_‚Æ‚·‚é
+		//ä¸‰è§’å½¢ä¸Šã®æœ€è¿‘æ¥ç‚¹pã‚’ç–‘ä¼¼äº¤ç‚¹ã¨ã™ã‚‹
 		*inter = p;
 	}
-	//‰Ÿ‚µo‚·ƒxƒNƒgƒ‹‚ğŒvZ
+	//æŠ¼ã—å‡ºã™ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 	if(reject){
 		float ds = XMVector3Dot(sphere.center, triagnle.normal).m128_f32[0];
 		float dt = XMVector3Dot(triagnle.p0, triagnle.normal).m128_f32[0];
@@ -161,62 +161,62 @@ bool Collision::CheckSphere2Triangle(const Sphere &sphere, const Triangle &triag
 
 bool Collision::CheckRay2Plane(const Ray &ray, const Plane &plane, float *distance, DirectX::XMVECTOR *inter)
 {
-	const float epsilon = 1.0e-5f;	//Œë·‹zû—p‚Ì”÷¬‚È’l
-	//–Ê–@ü‚ÆƒŒƒC‚Ì•ûŒüƒxƒNƒgƒ‹‚Ì“àÏ
+	const float epsilon = 1.0e-5f;	//èª¤å·®å¸åç”¨ã®å¾®å°ãªå€¤
+	//é¢æ³•ç·šã¨ãƒ¬ã‚¤ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©
 	float d1 = XMVector3Dot(plane.normal, ray.dir).m128_f32[0];
-	//— –Ê‚É‚Í“–‚½‚ç‚È‚¢
+	//è£é¢ã«ã¯å½“ãŸã‚‰ãªã„
 	if(d1 > -epsilon) {return false;}
-	//n“_‚ÆŒ´“_‚Ì‹——£(•½–Ê‚Ì–@ü•ûŒü)
-	//–Ê–@ü‚ÆƒŒƒC‚Ìn“_À•W(ˆÊ’uƒxƒNƒgƒ‹)‚Ì“àÏ
+	//å§‹ç‚¹ã¨åŸç‚¹ã®è·é›¢(å¹³é¢ã®æ³•ç·šæ–¹å‘)
+	//é¢æ³•ç·šã¨ãƒ¬ã‚¤ã®å§‹ç‚¹åº§æ¨™(ä½ç½®ãƒ™ã‚¯ãƒˆãƒ«)ã®å†…ç©
 	float d2 = XMVector3Dot(plane.normal, ray.start).m128_f32[0];
-	//n“_‚Æ•½–Ê‚Ì‹——£(•½–Ê‚Ì–@ü•ûŒü)
+	//å§‹ç‚¹ã¨å¹³é¢ã®è·é›¢(å¹³é¢ã®æ³•ç·šæ–¹å‘)
 	float dist = d2 - plane.distance;
-	//n“_‚Æ•½–Ê‚Ì‹——£(ƒŒƒC•ûŒü)
+	//å§‹ç‚¹ã¨å¹³é¢ã®è·é›¢(ãƒ¬ã‚¤æ–¹å‘)
 	float t = dist / -d1;
-	//Œğ·‚ªn“_‚æ‚èŒã‚ë‚É‚ ‚é‚Ì‚ÅA“–‚½‚ç‚È‚¢
+	//äº¤å·®ãŒå§‹ç‚¹ã‚ˆã‚Šå¾Œã‚ã«ã‚ã‚‹ã®ã§ã€å½“ãŸã‚‰ãªã„
 	if(t < 0)	return false;
-	//‹——£‚ğ‘‚«‚Ş
+	//è·é›¢ã‚’æ›¸ãè¾¼ã‚€
 	if(distance){*distance = t;}
-	//Œğ·‚ğŒvZ
+	//äº¤å·®ã‚’è¨ˆç®—
 	if(inter)	{*inter = ray.start + t * ray.dir;}
 	return true;
 }
 
 bool Collision::CheckRay2Triangle(const Ray &ray, const Triangle &triangle, float *distance, DirectX::XMVECTOR *inter)
 {
-	//OŠpŒ`‚ªæ‚Á‚Ä‚¢‚é•½–Ê‚ğZo
+	//ä¸‰è§’å½¢ãŒä¹—ã£ã¦ã„ã‚‹å¹³é¢ã‚’ç®—å‡º
 	Plane plane;
 	XMVECTOR interPlane;
 	plane.normal = triangle.normal;
 	plane.distance = XMVector3Dot(triangle.normal, triangle.p0).m128_f32[0];
-	//ƒŒƒC‚Æ•½–Ê‚ª“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚ÎA“–‚½‚Á‚Ä‚¢‚È‚¢
+	//ãƒ¬ã‚¤ã¨å¹³é¢ãŒå½“ãŸã£ã¦ã„ãªã‘ã‚Œã°ã€å½“ãŸã£ã¦ã„ãªã„
 	if(!CheckRay2Plane(ray, plane, distance, &interPlane)){return false;}
-	//ƒŒƒC‚Æ•½–Ê‚ª“–‚½‚Á‚Ä‚¢‚½‚Ì‚ÅA‹——£‚ÆŒğ“_‚ª‘‚«‚Ü‚ê‚½
-	//ƒŒƒC‚Æ•½–Ê‚ÌŒğ“_‚ªOŠpŒ`‚Ì“à‘¤‚É‚ ‚é‚©”»’è
+	//ãƒ¬ã‚¤ã¨å¹³é¢ãŒå½“ãŸã£ã¦ã„ãŸã®ã§ã€è·é›¢ã¨äº¤ç‚¹ãŒæ›¸ãè¾¼ã¾ã‚ŒãŸ
+	//ãƒ¬ã‚¤ã¨å¹³é¢ã®äº¤ç‚¹ãŒä¸‰è§’å½¢ã®å†…å´ã«ã‚ã‚‹ã‹åˆ¤å®š
 	const float epsilon = 1.0e-5f;
 	XMVECTOR m;
-	//•Óp0_p1‚É‚Â‚¢‚Ä
+	//è¾ºp0_p1ã«ã¤ã„ã¦
 	XMVECTOR pt_p0 = triangle.p0 - interPlane;
 	XMVECTOR p0_p1 = triangle.p1 - triangle.p0;
 	m = XMVector3Cross(pt_p0, p0_p1);
-	//•Ó‚ÌŠO‘¤‚Å‚ ‚ê‚Î“–‚½‚Á‚Ä‚¢‚È‚¢‚Ì‚Å”»’è‚ğ‘Å‚¿Ø‚é
+	//è¾ºã®å¤–å´ã§ã‚ã‚Œã°å½“ãŸã£ã¦ã„ãªã„ã®ã§åˆ¤å®šã‚’æ‰“ã¡åˆ‡ã‚‹
 	if(XMVector3Dot(m, triangle.normal).m128_f32[0] < -epsilon)	{return false;}
 	
-	//•Óp1_p2‚É‚Â‚¢‚Ä
+	//è¾ºp1_p2ã«ã¤ã„ã¦
 	XMVECTOR pt_p1 = triangle.p1 - interPlane;
 	XMVECTOR p1_p2 = triangle.p2 - triangle.p1;
 	m = XMVector3Cross(pt_p1, p1_p2);
-	//•Ó‚ÌŠO‘¤‚Å‚ ‚ê‚Î“–‚½‚Á‚Ä‚¢‚È‚¢‚Ì‚Å”»’è‚ğ‘Å‚¿Ø‚é
+	//è¾ºã®å¤–å´ã§ã‚ã‚Œã°å½“ãŸã£ã¦ã„ãªã„ã®ã§åˆ¤å®šã‚’æ‰“ã¡åˆ‡ã‚‹
 	if(XMVector3Dot(m, triangle.normal).m128_f32[0] < -epsilon) {return false;}
 
-	//•Óp2_p0‚É‚Â‚¢‚Ä
+	//è¾ºp2_p0ã«ã¤ã„ã¦
 	XMVECTOR pt_p2 = triangle.p2 - interPlane;
 	XMVECTOR p2_p0 = triangle.p0 - triangle.p2;
 	m = XMVector3Cross(pt_p2, p2_p0);
-	//•Ó‚ÌŠO‘¤‚Å‚ ‚ê‚Î“–‚½‚Á‚Ä‚¢‚È‚¢‚Ì‚Å”»’è‚ğ‘Å‚¿Ø‚é
+	//è¾ºã®å¤–å´ã§ã‚ã‚Œã°å½“ãŸã£ã¦ã„ãªã„ã®ã§åˆ¤å®šã‚’æ‰“ã¡åˆ‡ã‚‹
 	if(XMVector3Dot(m, triangle.normal).m128_f32[0] < -epsilon) {return false;}
 
-	//“à‘¤‚È‚Ì‚ÅA“–‚½‚Á‚Ä‚¢‚é
+	//å†…å´ãªã®ã§ã€å½“ãŸã£ã¦ã„ã‚‹
 	if(inter){
 		*inter = interPlane;
 	}
@@ -229,17 +229,17 @@ bool Collision::CheckRay2Sphere(const Ray &ray, const Sphere &sphere, float *dis
 	XMVECTOR m = ray.start - sphere.center;
 	float b = XMVector3Dot(m, ray.dir).m128_f32[0];
 	float c = XMVector3Dot(m, m).m128_f32[0] - sphere.radius * sphere.radius;
-	//ray‚Ìn“_‚ªsphere‚Ì‚»‚Ì‘¤‚É‚ ‚è(c > 0)Aray‚ªsphere‚©‚ç—£‚ê‚Ä‚¢‚­•ûŒü‚ğw‚µ‚Ä‚¢‚éê‡(b > 0)A“–‚½‚ç‚È‚¢
+	//rayã®å§‹ç‚¹ãŒsphereã®ãã®å´ã«ã‚ã‚Š(c > 0)ã€rayãŒsphereã‹ã‚‰é›¢ã‚Œã¦ã„ãæ–¹å‘ã‚’æŒ‡ã—ã¦ã„ã‚‹å ´åˆ(b > 0)ã€å½“ãŸã‚‰ãªã„
 	if(c > 0.0f && b > 0.0f) {return false;}
 
 	float discr = b * b - c;
-	//•‰‚Ì”»•Ê®‚ÍƒŒƒC‚ª‹…‚ğŠO‚ê‚Ä‚¢‚é‚±‚Æ‚Éˆê’v
+	//è² ã®åˆ¤åˆ¥å¼ã¯ãƒ¬ã‚¤ãŒçƒã‚’å¤–ã‚Œã¦ã„ã‚‹ã“ã¨ã«ä¸€è‡´
 	if(discr < 0.0f) {return false;}
 
-	//ƒŒƒC‚Í‹…‚ÆŒğ·‚µ‚Ä‚¢‚é
-	//Œğ·‚·‚éÅ¬‚Ì’l‚ğŒvZ
+	//ãƒ¬ã‚¤ã¯çƒã¨äº¤å·®ã—ã¦ã„ã‚‹
+	//äº¤å·®ã™ã‚‹æœ€å°ã®å€¤ã‚’è¨ˆç®—
 	float t = -b - sqrtf(discr);
-	//t‚ª•‰‚Å‚ ‚éê‡AƒŒƒC‚Í‹…‚Ì“à‘¤‚©‚çŠJn‚µ‚Ä‚¢‚é‚Ì‚Åt‚ğƒ[ƒ‚ÉƒNƒ‰ƒ“ƒv
+	//tãŒè² ã§ã‚ã‚‹å ´åˆã€ãƒ¬ã‚¤ã¯çƒã®å†…å´ã‹ã‚‰é–‹å§‹ã—ã¦ã„ã‚‹ã®ã§tã‚’ã‚¼ãƒ­ã«ã‚¯ãƒ©ãƒ³ãƒ—
 	if(t < 0.0f) t = 0.0f;
 	if(distance) {*distance = t;}
 

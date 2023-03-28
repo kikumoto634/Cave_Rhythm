@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../../Collision/MeshCollider.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
@@ -6,43 +6,43 @@
 class Planes : public BaseObjObject
 {
 private:
-	//•`‰æ”ÍˆÍ(”ñ•\¦)
+	//æç”»ç¯„å›²(éè¡¨ç¤º)
 	const int DrawingRange_Not = 11;
-	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\¦)
+	//æç”»ç¯„å›²(æš—ã‚ã®è¡¨ç¤º)
 	const int DrawingRange_Half = 7;
 
 public:
 	~Planes();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <returns></returns>
 	void Initialize(ObjModelManager* model);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// 3D•`‰æ
+	/// 3Dæç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	void OnCollision(const CollisionInfo& info) override;
 
 	/// <summary>
-	/// F•Ï‰»
+	/// è‰²å¤‰åŒ–
 	/// </summary>
 	void PlaneColorChange(bool IsSwitch,  bool IsColorChange);
 	inline void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
@@ -65,14 +65,14 @@ private:
 	Vector3 PlayerPos;
 	float distance = 0;
 
-	//ƒGƒŠƒA‚Åg—p‚µ‚È‚¢
+	//ã‚¨ãƒªã‚¢ã§ä½¿ç”¨ã—ãªã„
 	bool IsAlive = true;
-	//‹——£‚É‰‚¶‚½”ñ•\¦
+	//è·é›¢ã«å¿œã˜ãŸéè¡¨ç¤º
 	bool IsHide = false;
 
 	bool IsCollision = false;
 
-	//ƒ‰ƒCƒeƒBƒ“ƒO
+	//ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
 	bool IsCaveLight = false;
 };
 

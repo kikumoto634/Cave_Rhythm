@@ -1,4 +1,4 @@
-#include "HomeScene.h"
+ï»¿#include "HomeScene.h"
 
 #include "TitleScene.h"
 #include "GameScene.h"
@@ -25,7 +25,7 @@ void HomeScene::NextSceneChange()
 
 void HomeScene::AddCommonInitialize()
 {
-	//ƒ_ƒ“ƒWƒ‡ƒ“
+	//ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³
 	areaManager->CSVAreaInitialize("Home");
 }
 

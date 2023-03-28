@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/audio/Audio.h"
 #include "../../Engine/light/LightGroup.h"
 
@@ -13,104 +13,104 @@ class GameManager
 private:
 	const int PlaneColorChangeConboNum = 10;
 
-	//Xƒr[ƒg‚ÅPOPƒ^[ƒ“
+	//Xãƒ“ãƒ¼ãƒˆã§POPã‚¿ãƒ¼ãƒ³
 	const int EnemyPopBeatTurn = 6;
 
-	//1ƒr[ƒg‚Å‚Ì“GPOP”
+	//1ãƒ“ãƒ¼ãƒˆã§ã®æ•µPOPæ•°
 	const int EnemyPopCreateNum = 1;
 
-	//2DƒeƒLƒXƒg
+	//2Dãƒ†ã‚­ã‚¹ãƒˆ
 	const int NumberSpSize = 3;
 	const int TexNumberBegin = 3;
 
 public:
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize();
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	void Finalize();
 
-	//ƒRƒ“ƒ{‰ÁZ
+	//ã‚³ãƒ³ãƒœåŠ ç®—
 	void ComboIncrement();
-	//ƒRƒ“ƒ{ƒŠƒZƒbƒg
+	//ã‚³ãƒ³ãƒœãƒªã‚»ãƒƒãƒˆ
 	void ComboReset();
-	//ƒRƒ“ƒ{”æ“¾
+	//ã‚³ãƒ³ãƒœæ•°å–å¾—
 	inline int GetComboNum()	{return combo->GetComboNum();}
-	//’n–ÊF•Ï‰»ƒRƒ“ƒ{”
+	//åœ°é¢è‰²å¤‰åŒ–ã‚³ãƒ³ãƒœæ•°
 	inline int GetPlaneColorChangeCombo()	{return PlaneColorChangeConboNum;}
 
-	//ƒRƒCƒ“‰ÁZ
+	//ã‚³ã‚¤ãƒ³åŠ ç®—
 	void CoinIncrement();
-	//ƒRƒCƒ“”æ“¾
+	//ã‚³ã‚¤ãƒ³æ•°å–å¾—
 	inline int GetCoinNum()	{return coinNum;}
 
-	//‘Ì—Í‰Šúİ’è
+	//ä½“åŠ›åˆæœŸè¨­å®š
 	void InitializeSetHp(int _hp);
-	//‘Ì—ÍƒXƒvƒ‰ƒCƒgƒŠƒYƒ€ƒtƒ‰ƒO
+	//ä½“åŠ›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒªã‚ºãƒ ãƒ•ãƒ©ã‚°
 	void IsBeatEndOn()	{IsHpScaleChange = true;}
-	//‘Ì—ÍŒ¸­
+	//ä½“åŠ›æ¸›å°‘
 	void HpDecrement();
 
-	//ƒI[ƒfƒBƒIÄ¶
+	//ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªå†ç”Ÿ
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);
 
-	//ƒ‰ƒCƒgXV
+	//ãƒ©ã‚¤ãƒˆæ›´æ–°
 	void LightUpdate(bool IsPlayerShadowDead = false);
-	//ƒvƒŒƒCƒ„[ŠÛ‰e‚Ìİ’u
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä¸¸å½±ã®è¨­ç½®
 	void PlayerCircleShadowSet(Vector3 pos);
 
-	//“G¶¬
+	//æ•µç”Ÿæˆ
 	int EnemyPopTurnCount();
 	Vector2 EnemyRandomPos(const int groundWidth, const float Plane_Size);
 	Vector2 EnemyRandomDir(Vector2 pos);
 
-	//2DƒXƒvƒ‰ƒCƒgXV
+	//2Dã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	void SpriteUpdate();
 
-	//2DƒXƒvƒ‰ƒCƒg•`‰æ
+	//2Dã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	void SpriteDraw();
 
 private:
-	//ƒI[ƒfƒBƒI‰Šú‰»
+	//ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªåˆæœŸåŒ–
 	void AudioInitialize();
 
-	//ƒ‰ƒCƒg‰Šú‰»
+	//ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
 	void LightInitialize();
 
-	//ƒXƒvƒ‰ƒCƒg‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
 	void SpriteInitialize();
 
 private:
 	
-	//ƒRƒCƒ“
+	//ã‚³ã‚¤ãƒ³
 	int coinNum = 0;
 
-	//‘Ì—Í
+	//ä½“åŠ›
 	int hp = 0;
 
-	//ƒI[ƒfƒBƒI
+	//ã‚ªãƒ¼ãƒ‡ã‚£ã‚ª
 	Audio* audio = nullptr;
 
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	LightGroup* lightGroup = nullptr;
-	//ŠÛ‰e
-	//ƒvƒŒƒCƒ„[
+	//ä¸¸å½±
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	bool IsPlayerShadowAlive = false;
 	Vector3 circleShadowDir = { 0,-1,0 };
 	Vector3 circleShadowAtten = { 0.5f,0.6f,0.0f };
 	Vector2 circleShadowFactorAngle = { 0.0f, 0.5f };
 
-	//“G‚Ìƒ‰ƒ“ƒ_ƒ€¶¬
-	//Xƒr[ƒg‚ÅPOPƒ^[ƒ“
+	//æ•µã®ãƒ©ãƒ³ãƒ€ãƒ ç”Ÿæˆ
+	//Xãƒ“ãƒ¼ãƒˆã§POPã‚¿ãƒ¼ãƒ³
 	int currentEnemyPopBeatTurn = 0;
 
-	//ƒRƒ“ƒ{
+	//ã‚³ãƒ³ãƒœ
 	std::unique_ptr<Combo> combo;
 
-	//Šl“¾ƒRƒCƒ“
+	//ç²å¾—ã‚³ã‚¤ãƒ³
 	std::unique_ptr<BaseSprites> coinSp;
 	std::unique_ptr<BaseSprites> numberSp_coin[3];
 
-	//‘Ì—Í
+	//ä½“åŠ›
 	const int HpSpSize = 5;
 	int DamageHpSpriteIndex = 0;
 	std::vector<std::unique_ptr<BaseSprites>> hpSp;

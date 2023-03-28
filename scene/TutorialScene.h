@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseBattleScene.h"
 
 #include "../Game/3D/Enemy/BlueSlime.h"
@@ -14,27 +14,27 @@ public:
 	TutorialScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 private:
-//ƒV[ƒ“‘JˆÚ
+//ã‚·ãƒ¼ãƒ³é·ç§»
 	void NextSceneChange() override;
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void AddCommonInitialize() override;
 	void AddObject3DInitialize() override;
 	void AddObject2DInitialize() override;
 
-	//XV
+	//æ›´æ–°
 	void AddCommonUpdate() override;
 	void AddObject3DUpdate() override;
 	void AddObject2DUpdate() override;
 	void AddBeatEndUpdate() override;
 
-	//•`‰æ
+	//æç”»
 	void AddObject3DDraw() override;
 	void AddParticleDraw() override;
 	void AddFrontUIDraw() override;
 	void AddBackUIDraw() override;
 
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	void AddObjectFinalize() override;
 	void AddCommonFinalize() override;
 
@@ -49,7 +49,7 @@ private:
 	int coinPopNumMax = 10;
 	std::vector<std::unique_ptr<Coins>> coin;
 
-	//ƒXƒvƒ‰ƒCƒg
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::unique_ptr<TutorialSp> moveSp;
 	const Vector3 moveSpPos = {-25,-3,30};
 

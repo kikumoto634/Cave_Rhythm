@@ -1,10 +1,10 @@
-#include "DebugText.h"
+ï»¿#include "DebugText.h"
 
 DebugText::~DebugText()
 {
 	for(int i = 0; i < _countof(sprites); i++)
 	{
-		//ƒXƒvƒ‰ƒCƒg‚ğ‰ğ•ú
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’è§£æ”¾
 		delete sprites[i];
 		sprites[i] = nullptr;
 	}
@@ -14,15 +14,15 @@ void DebugText::Initialize(UINT texnumber)
 {
 	for(int i = 0; i < _countof(sprites); i++)
 	{
-		//ƒXƒvƒ‰ƒCƒg¶¬
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 		sprites[i] = new Sprite();
-		//ƒXƒvƒ‰ƒCƒg‚ğ‰Šú‰»‚·‚é
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 		sprites[i]->Initialize(texnumber);
 		sprites[i]->SetColor({0,1,0,1});
 	}
 }
 
-//ˆê•¶š’Ç‰Á
+//ä¸€æ–‡å­—è¿½åŠ 
 void DebugText::Print(const std::string& text, float x, float y, float scale)
 {
 	this->posX = x;
@@ -30,16 +30,16 @@ void DebugText::Print(const std::string& text, float x, float y, float scale)
 	this->scale = scale;
 	this->text = text.c_str();
 
-	//‚·‚×‚Ä‚Ì•¶š‚É‚Â‚¢‚Ä
+	//ã™ã¹ã¦ã®æ–‡å­—ã«ã¤ã„ã¦
 	for(int i = 0; i < (int)text.size(); i++)
 	{
-		//Å‘å•¶š”
+		//æœ€å¤§æ–‡å­—æ•°
 		if(spriteIndex >= maxCharCount)
 		{
 			break;
 		}
 
-		//ˆê•¶šæ‚èo‚·(¦ASCIIƒR[ƒh‚Å‚µ‚©¬‚è—§‚½‚È‚¢)
+		//ä¸€æ–‡å­—å–ã‚Šå‡ºã™(â€»ASCIIã‚³ãƒ¼ãƒ‰ã§ã—ã‹æˆã‚Šç«‹ãŸãªã„)
 		const unsigned char& character = this->text[i];
 
 		int fontIndex = character - 32;
@@ -51,12 +51,12 @@ void DebugText::Print(const std::string& text, float x, float y, float scale)
 		int fontIndexY = fontIndex / fontLineCount;
 		int fontIndexX = fontIndex % fontLineCount;
 
-		//À•WŒvZ
+		//åº§æ¨™è¨ˆç®—
 		sprites[spriteIndex]->SetPosition({posX + fontWidth * this->scale * i, posY});
 		sprites[spriteIndex]->SetTextureRect((float)fontIndexX * fontWidth, (float)fontIndexY * fontHeight, (float)fontWidth, (float)fontHeight);
 		sprites[spriteIndex]->SetSize({fontWidth * this->scale, fontHeight * this->scale});
 
-		//•¶š‚ğˆê‚Âi‚ß‚é
+		//æ–‡å­—ã‚’ä¸€ã¤é€²ã‚ã‚‹
 		spriteIndex++;
 	}
 }
@@ -72,10 +72,10 @@ void DebugText::Printf(float x, float y, float scale, const char *fmt, ...)
 
 void DebugText::DrawAll()
 {
-	//‚·‚×‚Ä‚Ì•¶š‚ÌƒXƒvƒ‰ƒCƒg‚É‚Â‚¢‚Ä
+	//ã™ã¹ã¦ã®æ–‡å­—ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ã¤ã„ã¦
 	for(int i = 0; i < spriteIndex; i++)
 	{
-		//ƒXƒvƒ‰ƒCƒg•`‰æ
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 		sprites[i]->Draw();
 	}
 	spriteIndex = 0;

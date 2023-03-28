@@ -1,4 +1,4 @@
-#include "Boss1Area.h"
+ï»¿#include "Boss1Area.h"
 #include "HomeScene.h"
 #include "SceneManager.h"
 
@@ -29,15 +29,15 @@ void Boss1Area::NextSceneChange()
 
 void Boss1Area::SceneChange()
 {
-	//PrevScene‚©‚ç‚ÌˆÚ“®Œãˆ—
+	//PrevSceneã‹ã‚‰ã®ç§»å‹•å¾Œå‡¦ç†
 	if(IsPrevSceneChange){
 
-		//‰æ–Ê‚ªŠJ‚­
+		//ç”»é¢ãŒé–‹ã
 		{
 			if(fadeColor.w <= 0){
 				IsPrevSceneChange = false;
 				fadeCurrentFrame = 0;
-				//ƒŠƒYƒ€
+				//ãƒªã‚ºãƒ 
 				rhythmManager->InitializeMeasurement(clock());
 				return;
 			}
@@ -48,7 +48,7 @@ void Boss1Area::SceneChange()
 			fade->Update();
 		}
 	}
-	//NextScene‚Ö‚ÌˆÚ“®
+	//NextSceneã¸ã®ç§»å‹•
 	else if(IsNextSceneChange || IsGameEnd){
 
 		if(fadeColor.w >= 1){
@@ -66,13 +66,13 @@ void Boss1Area::SceneChange()
 
 void Boss1Area::AddCommonInitialize()
 {
-	//ƒ_ƒ“ƒWƒ‡ƒ“
+	//ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³
 	areaManager->CSVAreaInitialize("Boss1");
 }
 
 void Boss1Area::AddObject3DInitialize()
 {
-	//ƒ{ƒX
+	//ãƒœã‚¹
 	boss = make_unique<Boss1>();
 	boss->Initialize("Skeleton");
 	Vector3 lpos = areaManager->GetCSVObjectPopPosition(0);
@@ -85,14 +85,14 @@ void Boss1Area::AddObject3DInitialize()
 	IndestructibleWallColliderModel = new ObjModelManager();
 	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
 	
-	//“üŒû
+	//å…¥å£
 	for(int i = 0; i < 3; i++){
 		enterWall[i] = make_unique<IndestructibleWall>();
 		enterWall[i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		enterWall[i]->SetPosition({enterWallBasePos.x + Block_Size*i, enterWallBasePos.y, enterWallBasePos.z});
 	}
 
-	//oŒû
+	//å‡ºå£
 	for(int i = 0; i < 3; i++){
 		exitWall[i] = make_unique<IndestructibleWall>();
 		exitWall[i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
@@ -119,7 +119,7 @@ void Boss1Area::AddCommonUpdate()
 
 void Boss1Area::AddObject3DUpdate()
 {
-	//ƒ{ƒX
+	//ãƒœã‚¹
 	if(IsEnterClose){
 		if(boss->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 1.5f);
@@ -140,7 +140,7 @@ void Boss1Area::AddObject3DUpdate()
 		(*it)->Update(camera,player->GetPosition());
 	}
 
-	//“üŒû
+	//å…¥å£
 	{
 		if(IsEnterClose){
 			for(int i = 0; i < 3; i++){
@@ -152,7 +152,7 @@ void Boss1Area::AddObject3DUpdate()
 			for(int i = 0; i < 3; i++){
 				enterWall[i]->ColliderRemove();
 			}
-			//êŠ‚É‰‚¶‚Ä•Â‚¶‚é
+			//å ´æ‰€ã«å¿œã˜ã¦é–‰ã˜ã‚‹
 			if(player->GetPosition().z >= enterBorderLineZ){
 				IsEnterClose = true;
 				camera->ShakeStart();
@@ -161,7 +161,7 @@ void Boss1Area::AddObject3DUpdate()
 		}
 	}
 
-	//oŒû
+	//å‡ºå£
 	{
 		if(IsExitOpen){
 			for(int i = 0; i < 3; i++){
@@ -205,12 +205,12 @@ void Boss1Area::AddObject3DDraw()
 	}
 
 	if(!IsEnterClose) return;
-	//ƒ{ƒX
+	//ãƒœã‚¹
 	boss->Draw();
 	for(auto it = skelton.begin(); it != skelton.end(); it++){
 		(*it)->Draw();
 	}
-	//“üŒû
+	//å…¥å£
 	for(int i = 0; i < 3; i++){
 		enterWall[i]->Draw();
 	}
@@ -235,7 +235,7 @@ void Boss1Area::AddBackUIDraw()
 
 void Boss1Area::AddObjectFinalize()
 {
-	//ƒ{ƒX
+	//ãƒœã‚¹
 	boss->Finalize();
 
 	for(auto it = skelton.begin(); it != skelton.end(); it++){
@@ -244,17 +244,17 @@ void Boss1Area::AddObjectFinalize()
 
 	delete IndestructibleWallModel;
 	delete IndestructibleWallColliderModel;
-	//“üŒû
+	//å…¥å£
 	for(int i = 0; i < 3; i++){
 		enterWall[i]->Finalize();
 	}
 
-	//oŒû
+	//å‡ºå£
 	for(int i = 0; i < 3; i++){
 		exitWall[i]->Finalize();
 	}
 
-	//ƒJƒbƒgƒCƒ“Sp
+	//ã‚«ãƒƒãƒˆã‚¤ãƒ³Sp
 	cutinFinalize();
 }
 
@@ -263,7 +263,7 @@ void Boss1Area::AddCommonFinalize()
 	areaManager->CSVAreaFinalize();
 }
 
-#pragma region ƒJƒbƒgƒCƒ“
+#pragma region ã‚«ãƒƒãƒˆã‚¤ãƒ³
 void Boss1Area::cutinInitialize()
 {
 	{
@@ -300,7 +300,7 @@ void Boss1Area::cutinUpdate()
 {
 	if(!IsCutInHide)
 	{
-		//‰¹º
+		//éŸ³å£°
 		if(!IsCutInAudio){
 			gameManager->AudioPlay(12, 0.5f);
 			IsCutInAudio = true;

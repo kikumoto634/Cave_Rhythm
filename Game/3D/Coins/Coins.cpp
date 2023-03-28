@@ -1,4 +1,4 @@
-#include "Coins.h"
+ï»¿#include "Coins.h"
 #include "../../Collision/SphereCollider.h"
 
 #include "../../Collision/CollisionSystem/CollisionManager.h"
@@ -15,7 +15,7 @@ void Coins::Initialize(std::string filePath, bool IsSmoothing)
 	SetPosition(DeadPos);
 	
 
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(DirectX::XMVECTOR{0,radius,0,0}, radius));
 	collider->SetAttribute(COLLISION_ATTR_ITEMS);
@@ -39,7 +39,7 @@ void Coins::Update(Camera *camera)
 		IsBeatEnd = false;
 	}
 
-	//ƒRƒ‰ƒCƒ_[XV
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼æ›´æ–°
 	collider->Update();
 	BaseObjObject::Update(this->camera);
 }

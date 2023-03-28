@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "DirectXCommon.h"
 
@@ -9,90 +9,90 @@
 
 using namespace DirectX;
 
-//ƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 class TextureManager
 {
-public://ƒGƒCƒŠƒAƒX
+public://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public:	//’è”
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÅ‘å–‡”
+public:	//å®šæ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æœ€å¤§æšæ•°
 	static const int maxTextureCount = 1024;
 
-	//ƒfƒBƒŒƒNƒgƒŠƒpƒX
+	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	const std::string directoryPath = "Resources/";
 
 public:
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	/// </summary>
 	struct Texture {
-		// ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒX
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹
 		ComPtr<ID3D12Resource> resource;
-		// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+		// ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«(CPU)
 		CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-		// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+		// ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«(CPU)
 		CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
 	};
 
-public://Ã“I
+public://é™çš„
 
 	static void Load(UINT texnumber, const std::string& filename);
 
 	static TextureManager* GetInstance();
 
-public:	//ƒƒ“ƒoŠÖ”
+public:	//ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <param name="dxCommon">DirectXCommon->device.Get()</param>
 	void Initialize(DirectXCommon* dxCommon);
 
 	/// <summary>
-	/// ƒNƒŠƒA
+	/// ã‚¯ãƒªã‚¢
 	/// </summary>
 	void ResetAll();
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="texnumber">ƒeƒNƒXƒ`ƒƒ”Ô†</param>
-	/// <param name="filename">ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="texnumber">ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·</param>
+	/// <param name="filename">ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void LoadTexture(UINT texnumber, const std::string& filename);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@æ“¾
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡å–å¾—
 	/// </summary>
-	/// <param name="texnumber">ƒeƒNƒXƒ`ƒƒ”Ô†</param>
+	/// <param name="texnumber">ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·</param>
 	/// <returns></returns>
 	ID3D12Resource* GetSpriteTexBuffer(UINT texnumber);
 
 	/// <summary>
-	/// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğƒZƒbƒg
+	/// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="commandList">ƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh</param>
+	/// <param name="commandList">ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰</param>
 	void SetDescriptorHeaps (ID3D12GraphicsCommandList* commandList);
 
 	/// <summary>
-	/// SRV‚ğƒZƒbƒg
+	/// SRVã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="commandList">ƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh</param>
-	/// <param name="RootParameterIndex">ƒ‹[ƒgƒpƒ‰ƒ[ƒ^”Ô†</param>
-	/// <param name="texnumber">ƒeƒNƒXƒ`ƒƒ”Ô†</param>
+	/// <param name="commandList">ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰</param>
+	/// <param name="RootParameterIndex">ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ç•ªå·</param>
+	/// <param name="texnumber">ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·</param>
 	void SetShaderResourceView(ID3D12GraphicsCommandList* commandList, UINT RootParameterIndex, UINT texnumber);
 
 	/// <summary>
-	/// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒvæ“¾
+	/// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	ID3D12DescriptorHeap* GetDescHeap() {return descHeap.Get(); }
 
-private:	//ƒƒ“ƒo•Ï”
-	//ƒeƒNƒXƒ`ƒƒ—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì¶¬
+private:	//ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ç”Ÿæˆ
 	ComPtr<ID3D12DescriptorHeap> descHeap;
-	//ƒeƒNƒXƒ`ƒƒî•ñ”z—ñ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£æƒ…å ±é…åˆ—
 	Texture textures[maxTextureCount];
-	//ƒfƒXƒNƒŠƒvƒ^ƒTƒCƒY
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚µã‚¤ã‚º
 	UINT descriptorhandleIncrementSize = 0u;
 	//DirectXCommon
 	DirectXCommon* dxCommon = nullptr;

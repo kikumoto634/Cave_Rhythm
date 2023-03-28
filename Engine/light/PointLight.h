@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 
 #include "../math/Vector/Vector2.h"
@@ -6,13 +6,13 @@
 #include "../math/Vector/Vector4.h"
 
 /// <summary>
-/// ŒõŒõŒ¹
+/// å…‰å…‰æº
 /// </summary>
 class PointLight
 {
-//ƒTƒuƒNƒ‰ƒX
+//ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 public:
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
 		Vector3 lightpos;
@@ -23,7 +23,7 @@ public:
 		unsigned int active;
 	};
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 
 	//Getter
@@ -38,15 +38,15 @@ public:
 	inline void SetLightAtten(const Vector3& lightAtten)	{this->lightAtten = lightAtten;}
 	inline void SetIsActive(bool IsActive)	{this->IsActive = IsActive;}
 
-//ƒƒ“ƒo•Ï”
+//ãƒ¡ãƒ³ãƒå¤‰æ•°
 private:
-	//ƒ‰ƒCƒgÀ•W
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™
 	Vector3 lightpos = {0,0,0};
-	//ƒ‰ƒCƒgF
+	//ãƒ©ã‚¤ãƒˆè‰²
 	Vector3 lightcolor = {1,1,1};
-	//ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	Vector3 lightAtten = {1.0f, 1.0f, 1.0f};
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool IsActive = false;
 };
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../ParticleObject.h"
 #include "../../Collision/MeshCollider.h"
@@ -7,39 +7,39 @@
 class Walls : public BaseObjObject
 {
 private:
-	//•`‰æ”ÍˆÍ
+	//æç”»ç¯„å›²
 	const int DrawingRange = 11;
-	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\¦)
+	//æç”»ç¯„å›²(æš—ã‚ã®è¡¨ç¤º)
 	const int DrawingRange_Half = 7;
 
 public:
 	~Walls();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <returns></returns>
 	void Initialize(ObjModelManager* model, ObjModelManager* collider);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// 3D•`‰æ
+	/// 3Dæç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	void OnCollision(const CollisionInfo& info) override;
 
 	inline void IsNotAlive()	{IsAlive = false;}
@@ -62,16 +62,16 @@ private:
 	bool IsDig = false;
 	Vector3 digPosition = {};
 
-	//ƒGƒŠƒA‚Åg—p‚µ‚È‚¢
+	//ã‚¨ãƒªã‚¢ã§ä½¿ç”¨ã—ãªã„
 	bool IsAlive = true;
-	//‹——£‚É‰‚¶‚½”ñ•\¦
+	//è·é›¢ã«å¿œã˜ãŸéè¡¨ç¤º
 	bool IsHide = false;
 
-	//ƒƒbƒVƒ…ƒRƒ‰ƒCƒ_[—pƒ‚ƒfƒ‹
+	//ãƒ¡ãƒƒã‚·ãƒ¥ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ç”¨ãƒ¢ãƒ‡ãƒ«
 	ObjModelManager* colliderModel = nullptr;
 	bool IsCollision = false;
 
-	//ƒ‰ƒCƒeƒBƒ“ƒO
+	//ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
 	bool IsCaveLight = false;
 };
 

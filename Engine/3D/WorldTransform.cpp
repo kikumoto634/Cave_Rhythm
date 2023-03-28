@@ -1,4 +1,4 @@
-#include "../Engine/base/DirectXCommon.h"
+ï»¿#include "../Engine/base/DirectXCommon.h"
 #include "WorldTransform.h"
 #include <cassert>
 #include <d3dx12.h>
@@ -16,15 +16,15 @@ void WorldTransform::CreateConstBuffer()
 {
 	HRESULT result;
 
-	// ƒq[ƒvƒvƒƒpƒeƒB
+	// ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// ƒŠƒ\[ƒXÝ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC resourceDesc =
 	  CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataWorldTransform) + 0xff) & ~0xff);
 
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = DirectXCommon::GetInstance()->GetDevice()->CreateCommittedResource(
-	  &heapProps, // ƒAƒbƒvƒ[ƒh‰Â”\
+	  &heapProps, // ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰å¯èƒ½
 	  D3D12_HEAP_FLAG_NONE, 
 	  &resourceDesc,
 	  D3D12_RESOURCE_STATE_GENERIC_READ, 
@@ -35,7 +35,7 @@ void WorldTransform::CreateConstBuffer()
 
 void WorldTransform::Map()
 {
-	// ’è”ƒoƒbƒtƒ@‚Æ‚Ìƒf[ƒ^ƒŠƒ“ƒN
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¨ã®ãƒ‡ãƒ¼ã‚¿ãƒªãƒ³ã‚¯
 	HRESULT result = constBuffer->Map(0, nullptr, (void**)&constMap);
 	assert(SUCCEEDED(result));
 }
@@ -44,7 +44,7 @@ void WorldTransform::UpdateMatrix(DirectX::XMMATRIX matBillboard)
 {
 	XMMATRIX matScale, matRot, matTrans;
 
-	// ƒXƒP[ƒ‹A‰ñ“]A•½sˆÚ“®s—ñ‚ÌŒvŽZ
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã€å›žè»¢ã€å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	matRot = XMMatrixIdentity();
 	matRot *= XMMatrixRotationZ(rotation.z);
@@ -52,18 +52,18 @@ void WorldTransform::UpdateMatrix(DirectX::XMMATRIX matBillboard)
 	matRot *= XMMatrixRotationY(rotation.y);
 	matTrans = XMMatrixTranslation(translation.x, translation.y, translation.z);
 
-	// ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
-	matWorld = XMMatrixIdentity(); // •ÏŒ`‚ðƒŠƒZƒbƒg
-	matWorld *= matScale;          // ƒ[ƒ‹ƒhs—ñ‚ÉƒXƒP[ƒŠƒ“ƒO‚ð”½‰f
-	matWorld *= matRot;            // ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ð”½‰f
-	//matWorld *= matBillboard;	//ƒrƒ‹ƒ{[ƒhs—ñ‚ðŠ|‚¯‚é
-	matWorld *= matTrans;          // ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ð”½‰f
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
+	matWorld = XMMatrixIdentity(); // å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	matWorld *= matScale;          // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
+	matWorld *= matRot;            // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å›žè»¢ã‚’åæ˜ 
+	//matWorld *= matBillboard;	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã‚’æŽ›ã‘ã‚‹
+	matWorld *= matTrans;          // ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 
-	// es—ñ‚ÌŽw’è‚ª‚ ‚éê‡‚ÍAŠ|‚¯ŽZ‚·‚é
+	// è¦ªè¡Œåˆ—ã®æŒ‡å®šãŒã‚ã‚‹å ´åˆã¯ã€æŽ›ã‘ç®—ã™ã‚‹
 	if (parent) {
 		matWorld *= parent->matWorld;
 	}
 
-	// ’è”ƒoƒbƒtƒ@‚É‘‚«ž‚Ý
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«æ›¸ãè¾¼ã¿
 	constMap->matWorld = matWorld;
 }

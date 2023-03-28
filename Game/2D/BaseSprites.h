@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/2D/Sprite.h"
 #include "../Engine/math/Vector/Vector2.h"
 #include "../../camera/Camera.h"
@@ -7,22 +7,22 @@ class BaseSprites
 {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Initialize(UINT textureNumber);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	virtual void Finalize();
 
@@ -40,19 +40,19 @@ public:
 
 public:
 	/// <summary>
-	/// ƒŠƒYƒ€‚É‚ ‚í‚¹‚ÄƒTƒCƒY•ÏX 
+	/// ãƒªã‚ºãƒ ã«ã‚ã‚ã›ã¦ã‚µã‚¤ã‚ºå¤‰æ›´ 
 	/// </summary>
-	/// <param name="sizeMax">Å‘åƒTƒCƒY</param>
-	/// <param name="sizeMin">Å¬ƒTƒCƒY</param>
-	/// <param name="EndTime">I—¹ŠÔ (x:•b)</param>
+	/// <param name="sizeMax">æœ€å¤§ã‚µã‚¤ã‚º</param>
+	/// <param name="sizeMin">æœ€å°ã‚µã‚¤ã‚º</param>
+	/// <param name="EndTime">çµ‚äº†æ™‚é–“ (x:ç§’)</param>
 	/// <returns></returns>
 	bool ScaleChange(Vector2 sizeMax = {1.f,1.f}, Vector2 sizeMin = {0.7f,0.7f}, float EndTime = 0.25f);
 
-	//3D->2D•ÏŠ·
+	//3D->2Då¤‰æ›
 	Vector2 ChangeTransformation(Vector3 target, Camera* camera);
 
 private:
-	//ƒxƒNƒgƒ‹*s—ñ
+	//ãƒ™ã‚¯ãƒˆãƒ«*è¡Œåˆ—
 	Vector3 Vector3Transform( Vector3 &v,  DirectX::XMMATRIX &m);
 
 private:
@@ -66,14 +66,14 @@ protected:
 
 	Vector3 targetPos = {};
 
-	//ƒŠƒYƒ€XV—p
-	//”I—¹ƒtƒ‰ƒO
+	//ãƒªã‚ºãƒ æ›´æ–°ç”¨
+	//æ‹çµ‚äº†ãƒ•ãƒ©ã‚°
 	bool IsBeatEnd = false;
 
-	//ƒTƒCƒY•ÏX—p
-	//ƒTƒCƒY
+	//ã‚µã‚¤ã‚ºå¤‰æ›´ç”¨
+	//ã‚µã‚¤ã‚º
 	Vector2 baseSize = {1,1};
 	Vector2 scale = {1,1};
-	//Œ»İŠÔ
+	//ç¾åœ¨æ™‚é–“
 	float scaleCurrentTime = 0.f;
 };

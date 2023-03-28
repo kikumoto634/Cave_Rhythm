@@ -1,49 +1,49 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../../Collision/SphereCollider.h"
 
 class PlayerWeapon : public BaseObjObject
 {
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 	~PlayerWeapon();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
 	void OnCollision(const CollisionInfo &info) override;
 
 	/// <summary>
-	/// UŒ‚
+	/// æ”»æ’ƒ
 	/// </summary>
 	void Attack();
 
 
 private:
-	//•ŠíoŒ»
+	//æ­¦å™¨å‡ºç¾
 	bool IsAppear = false;
 
-	//¶‘¶ŠÔ(ƒtƒŒ[ƒ€)
+	//ç”Ÿå­˜æ™‚é–“(ãƒ•ãƒ¬ãƒ¼ãƒ )
 	float aliveCurrentTime = 0;
 	const float AliveTime = 0.2f;
 };

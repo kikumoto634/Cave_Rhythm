@@ -1,4 +1,4 @@
-#include "JudgeLocation.h"
+﻿#include "JudgeLocation.h"
 
 void JudgeLocation::Initialize()
 {

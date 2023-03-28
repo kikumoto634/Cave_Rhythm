@@ -140,6 +140,8 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -263,6 +265,7 @@
     <ClInclude Include="Game\2D\TutorialSp.h" />
     <ClInclude Include="Game\3D\BaseFbxObjects.h" />
     <ClInclude Include="Game\3D\BaseObjObject.h" />
+    <ClInclude Include="Game\3D\Coins\Coins.h" />
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h" />
     <ClInclude Include="Game\3D\Enemy\Boss1.h" />
     <ClInclude Include="Game\3D\Enemy\Skelton.h" />

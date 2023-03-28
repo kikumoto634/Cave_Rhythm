@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CollisionSystem/BaseCollider.h"
 #include "../3D/BaseObjObject.h"
 
@@ -8,17 +8,17 @@
 class BaseObjObject;
 
 /// <summary>
-/// ƒŒƒCƒLƒƒƒXƒg‚É‚æ‚éî•ñ‚ğ“¾‚éˆ×‚Ì\‘¢‘Ì
+/// ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆã«ã‚ˆã‚‹æƒ…å ±ã‚’å¾—ã‚‹ç‚ºã®æ§‹é€ ä½“
 /// </summary>
 struct RaycastHit
 {
-	//Õ“Ë‘Šè‚ÌƒIƒuƒWƒFƒNƒg
+	//è¡çªç›¸æ‰‹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	BaseObjObject* object = nullptr;
-	//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	BaseCollider* collider = nullptr;
-	//Õ“Ë“_
+	//è¡çªç‚¹
 	DirectX::XMVECTOR inter;
-	//Õ“Ë“_‚Ü‚Å‚Ì‹——£
+	//è¡çªç‚¹ã¾ã§ã®è·é›¢
 	float distance = 0.0f;
 };
 

@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 
 
 /// <summary>
-/// “–‚½‚è”»’è‘®«
+/// å½“ãŸã‚Šåˆ¤å®šå±æ€§
 /// </summary>
 
-const unsigned short COLLISION_ATTR_LANDSHAPE = 0b1 << 0; //’nŒ`
-const unsigned short COLLISION_ATTR_ALLIES = 0b1 << 1; //–¡•ûw‰c
-const unsigned short COLLISION_ATTR_ENEMYS = 0b1 << 2; //“Gw‰c
-const unsigned short COLLISION_ATTR_WEAPONS = 0b11 << 1; //•Šíw‰c
-const unsigned short COLLISION_ATTR_ITEMS = 0b11 << 2;	//ƒAƒCƒeƒ€
-const unsigned short COLLISION_ATTR_DUMMY = 0b11 << 3;	//ƒ_ƒ~[
+const unsigned short COLLISION_ATTR_LANDSHAPE = 0b1 << 0; //åœ°å½¢
+const unsigned short COLLISION_ATTR_ALLIES = 0b1 << 1; //å‘³æ–¹é™£å–¶
+const unsigned short COLLISION_ATTR_ENEMYS = 0b1 << 2; //æ•µé™£å–¶
+const unsigned short COLLISION_ATTR_WEAPONS = 0b11 << 1; //æ­¦å™¨é™£å–¶
+const unsigned short COLLISION_ATTR_ITEMS = 0b11 << 2;	//ã‚¢ã‚¤ãƒ†ãƒ 
+const unsigned short COLLISION_ATTR_DUMMY = 0b11 << 3;	//ãƒ€ãƒŸãƒ¼

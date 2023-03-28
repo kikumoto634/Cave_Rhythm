@@ -1,4 +1,4 @@
-#include "TutorialScene.h"
+ï»¿#include "TutorialScene.h"
 
 #include "TitleScene.h"
 #include "HomeScene.h"
@@ -25,7 +25,7 @@ void TutorialScene::NextSceneChange()
 
 void TutorialScene::AddCommonInitialize()
 {
-	//ƒ_ƒ“ƒWƒ‡ƒ“
+	//ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³
 	areaManager->CSVAreaInitialize("Tutorial");
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <wrl.h>
 #include <vector>
@@ -12,22 +12,22 @@
 #include "ObjModelMesh.h"
 
 class ObjModelManager{
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 
 public:
-	//ƒ}ƒeƒŠƒAƒ‹
+	//ãƒãƒ†ãƒªã‚¢ãƒ«
 	struct Material
 	{
-		std::string name;//ƒ}ƒeƒŠƒAƒ‹–¼
+		std::string name;//ãƒãƒ†ãƒªã‚¢ãƒ«å
 		Vector3 ambient;
 		Vector3 diffuse;
 		Vector3 specular;
 		float alpha;
-		std::string textureFilename;	//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹
-		//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		std::string textureFilename;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«
+		//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Material(){
 			ambient = {1.0f, 1.0f, 1.0f};
 			diffuse = {0.0f, 0.0f, 0.0f};
@@ -49,51 +49,51 @@ public:
 	//Getter
 	
 	/// <summary>
-	/// ƒ}ƒeƒŠƒAƒ‹æ“¾
+	/// ãƒãƒ†ãƒªã‚¢ãƒ«å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	Material GetMaterial()	{return material;}
 
 	/// <summary>
-	/// ƒƒbƒVƒ…ƒRƒ“ƒeƒiæ“¾
+	/// ãƒ¡ãƒƒã‚·ãƒ¥ã‚³ãƒ³ãƒ†ãƒŠå–å¾—
 	/// </summary>
-	/// <returns>ƒ}ƒbƒVƒ…ƒRƒ“ƒeƒi</returns>
+	/// <returns>ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ³ãƒ†ãƒŠ</returns>
 	inline const std::vector<ObjModelMesh*>& GetMeshes() {return meshs;}
 
 private:
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹“Ç‚İ‚İ
+	/// ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadModel(const std::string& filePath, bool smmothing);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadTexture(const std::string& directoryPath, const std::string& filename);
 
 	/// <summary>
-	/// ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+	/// ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
 private:
 
 private:
-	// ƒfƒoƒCƒX
+	// ãƒ‡ãƒã‚¤ã‚¹
 	static DirectXCommon* dxCommon;
 
 private:
 
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeap;
 
-	//ƒƒbƒVƒ…
+	//ãƒ¡ãƒƒã‚·ãƒ¥
 	std::vector<ObjModelMesh*> meshs;
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> texbuff;
 
-	//ƒ}ƒeƒŠƒAƒ‹
+	//ãƒãƒ†ãƒªã‚¢ãƒ«
 	Material material;
 };

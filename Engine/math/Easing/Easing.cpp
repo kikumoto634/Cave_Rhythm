@@ -1,4 +1,4 @@
-#include "Easing.h"
+﻿#include "Easing.h"
 #include <cmath>
 
 float& Time_OneWay(float& frame, const float second)

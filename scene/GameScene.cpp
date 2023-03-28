@@ -1,4 +1,4 @@
-#include "GameScene.h"
+ï»¿#include "GameScene.h"
 
 #include "HomeScene.h"
 #include "Boss1Area.h"
@@ -42,10 +42,10 @@ void GameScene::AddCommonInitialize()
 {
 	srand( (unsigned int)time(NULL) );
 
-	//ƒ_ƒ“ƒWƒ‡ƒ“
+	//ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³
 	areaManager->RandamAreaInitialize();
 
-	//ŠK‘w‚É‰‚¶‚½¶¬”
+	//éšå±¤ã«å¿œã˜ãŸç”Ÿæˆæ•°
 	switch (floorValue)
 	{
 	case 1:
@@ -88,7 +88,7 @@ void GameScene::AddObject3DInitialize()
 
 void GameScene::AddObject2DInitialize()
 {
-	//ŠK‘wƒeƒLƒXƒg
+	//éšå±¤ãƒ†ã‚­ã‚¹ãƒˆ
 	{
 		floorDepth = make_unique<BaseSprites>();
 		floorDepth->Initialize(27);
@@ -96,7 +96,7 @@ void GameScene::AddObject2DInitialize()
 		floorDepth->SetSize({100,25});
 		floorDepth->SetAnchorPoint({0.5f,0.5f});
 	}
-	//ŠK‘w’l
+	//éšå±¤å€¤
 	{
 		floorValueTex = make_unique<BaseSprites>();
 		int value = floorValue + numberTextBase;

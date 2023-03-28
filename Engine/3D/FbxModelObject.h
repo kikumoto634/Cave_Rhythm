@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <DirectXMath.h>
 #include <string>
@@ -37,7 +37,7 @@ public:
 		Vector3 cameraPos;
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì(ƒXƒLƒjƒ“ƒO)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(ã‚¹ã‚­ãƒ‹ãƒ³ã‚°)
 	struct ConstBufferDataSkin
 	{
 		XMMATRIX bones[MAX_BONES];
@@ -61,13 +61,13 @@ public:
 	void Draw();
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
 	/// </summary>
 	void PlayAnimation();
 
 protected:
 	ComPtr<ID3D12Resource> constBufferTransform;
-	//’è”ƒoƒbƒtƒ@(ƒXƒLƒ“)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡(ã‚¹ã‚­ãƒ³)
 	ComPtr<ID3D12Resource> constBufferSkin;
 
 	ConstBufferDataTransform* constMap = nullptr;
@@ -75,14 +75,14 @@ protected:
 
 	FbxModelManager* model = nullptr;
 
-	//1frame‚ÌŠÔ
+	//1frameã®æ™‚é–“
 	FbxTime frameTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹æ™‚é–“
 	FbxTime startTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“I—¹ŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚é–“
 	FbxTime endTime;
-	//Œ»İŠÔ(ƒAƒjƒ[ƒVƒ‡ƒ“)
+	//ç¾åœ¨æ™‚é–“(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³)
 	FbxTime currentTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶’†
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿä¸­
 	bool isPlay = false;
 };

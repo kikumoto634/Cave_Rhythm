@@ -1,4 +1,4 @@
-#include "RhythmManager.h"
+ï»¿#include "RhythmManager.h"
 #include "../../Engine/input/Input.h"
 
 void RhythmManager::InitializeMeasurement(clock_t _clock)
@@ -22,10 +22,10 @@ void RhythmManager::InputRhythm()
 void RhythmManager::BeatMoveUp()
 {
 	IsRhythmEnd = false;
-	//ŒJ‚èã‚ª‚è’l‚æ‚è®”•”•ª‚ª‘å‚«‚­‚È‚Á‚½‚çŒJ‚èã‚ª‚è
+	//ç¹°ã‚Šä¸ŠãŒã‚Šå€¤ã‚ˆã‚Šæ•´æ•°éƒ¨åˆ†ãŒå¤§ãããªã£ãŸã‚‰ç¹°ã‚Šä¸ŠãŒã‚Š
 	if(timer >= moveUpNumber){
 
-		//ƒx[ƒXŠÔ
+		//ãƒ™ãƒ¼ã‚¹æ™‚é–“
 		judgeTimeBase = timer;
 
 		IsRhythmEnd = true;

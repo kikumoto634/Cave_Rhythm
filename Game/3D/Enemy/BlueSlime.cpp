@@ -1,4 +1,4 @@
-#include "BlueSlime.h"
+ï»¿#include "BlueSlime.h"
 #include "../../Collision/SphereCollider.h"
 #include "../../../Engine/base/ParticleManager.h"
 
@@ -20,7 +20,7 @@ void BlueSlime::Initialize(std::string filePath, bool IsSmoothing)
 	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 	world.UpdateMatrix();
 
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	DeadParticle = new ParticleObject();
 	DeadParticle->Initialize();
 	PopParticle = new ParticleObject();
@@ -32,7 +32,7 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 	this->camera = camera;
 	if(!IsNotApp) return;
 
-	//‹——£Œv‘ª
+	//è·é›¢è¨ˆæ¸¬
 	Vector3 pos = playerPos - world.translation;
 	distance = pos.length();
 	if(IsCaveLight){
@@ -51,7 +51,7 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 		IsInvisible = false;
 
 		if(!IsCollision){
-			//ƒRƒ‰ƒCƒ_[
+			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 			float radius = 0.6f;
 			SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
 			collider->SetAttribute(COLLISION_ATTR_ENEMYS);
@@ -64,14 +64,14 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 
 		if(IsCollision){
 			if(collider){
-				//ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ[‚©‚ç“o˜^‚ğ‰ğœ‚·‚é
+				//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç™»éŒ²ã‚’è§£é™¤ã™ã‚‹
 				CollisionManager::GetInstance()->RemoveCollider(collider);
 			}
 			IsCollision = false;
 		}
 	}
 
-	//oŒ»
+	//å‡ºç¾
 	if(IsPop){
 		if(IsBeatEnd){
 			popCount++;
@@ -90,7 +90,7 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 	PopParticleApp();
 	PopParticle->Update(this->camera);
 
-	//€–S
+	//æ­»äº¡
 	if(IsDead && !IsPop){
 		if(IsDeadOnceAudio){
 			IsDeadOnceAudio = false;
@@ -107,16 +107,16 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 	DeadParticle->Update(this->camera);
 
 	if(IsInvisible) return;
-	//¶‘¶
+	//ç”Ÿå­˜
 	if(!IsDead && !IsPop){
-		//”I—¹
+		//æ‹çµ‚äº†
 		if(IsBeatEnd){
-			//ƒXƒP[ƒ‹
+			//ã‚¹ã‚±ãƒ¼ãƒ«
 			IsScaleEasing  = true;
-			//”I—¹
+			//æ‹çµ‚äº†
 			IsBeatEnd = false;
 		}
-		//ƒXƒP[ƒ‹‘JˆÚ
+		//ã‚¹ã‚±ãƒ¼ãƒ«é·ç§»
 		if(IsScaleEasing){
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsScaleEasing = false;
@@ -197,7 +197,7 @@ void BlueSlime::PopParticleApp()
 {
 	for (int i = 0; i < 10; i++) {
 
-		//©g‚ÌÀ•W‚ğ²‚É[-1, 1]ƒ‰ƒ“ƒ_ƒ€
+		//è‡ªèº«ã®åº§æ¨™ã‚’è»¸ã«[-1, 1]ãƒ©ãƒ³ãƒ€ãƒ 
 		const Vector3 rnd_pos = PopParticlePos;
 		const float range = 1.5f;
 		Vector3 pos{};

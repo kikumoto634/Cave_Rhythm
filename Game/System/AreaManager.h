@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <sstream>
 #include <string>
 
@@ -17,11 +17,11 @@ private:
 	static const float DIV_NUM_HALF_FLOAT;
 	static const float Block_Size;
 
-	//•Ç”j‰óƒp[ƒeƒBƒNƒ‹‚ÌƒŠƒZƒbƒgŠÔ
+	//å£ç ´å£Šãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®ãƒªã‚»ãƒƒãƒˆæ™‚é–“
 	const int DigAppearanceFrame = 50;
 
 private:
-	//—Ìˆæ
+	//é ˜åŸŸ
 struct Area{
 	int X;
 	int Y;
@@ -30,7 +30,7 @@ struct Area{
 	int Height;
 };
 
-//•”‰®
+//éƒ¨å±‹
 struct Room{
 	int X;
 	int Y;
@@ -61,18 +61,18 @@ public:
 
 	void CommonFinalize();
 
-	//ƒ‰ƒ“ƒ_ƒ€—p
+	//ãƒ©ãƒ³ãƒ€ãƒ ç”¨
 	Vector3 GetExitPosition()	{return exitPosition;}
 	Vector3 GetPlayerPosition()	{return PlayerPopPosition;}
 	Vector3 GetObjectPopPosition();
 	
-	//CSV—p
+	//CSVç”¨
 	Vector3 GetCSVObjectPopPosition(int index);
 	bool GetCSVObjectPopActive(int index, bool IsFlag = true);
 	int GetCSVObjectSize()	{return (int)ObjectPos.size();}
 
 private:
-	//’n–Ê
+	//åœ°é¢
 	void RandamAreaPlaneInitialize();
 	void CSVAreaPlaneInitialize();
 	void PlaneUpdate();
@@ -80,7 +80,7 @@ private:
 	void PlaneDraw();
 	void PlaneFinalize();
 
-	//•Ç
+	//å£
 	void RandamAreaWallsInitialize();
 	void CVSAreaWallsInitialize();
 	void WallUpdate();
@@ -88,31 +88,31 @@ private:
 	void WallDraw();
 	void WallFinalize();
 
-	//”j‰ó•s‰Â
+	//ç ´å£Šä¸å¯
 	void RandamAreaIndestructibleWallInitialize();
 	void CSVAreaIndestructibleWallInitialize();
 	void IndestructibleWallUpdate();
 	void IndestructibleWallDraw();
 	void IndestructibleWallFinalize();
 
-	//ƒ_ƒ“ƒWƒ‡ƒ“¶¬
+	//ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³ç”Ÿæˆ
 	void CreateMap();
 	Room DevideRoom(Area area, bool hr = false);
 	Room CreateRoom(Area area);
 	void ConnectRoom(Room parent, Room childRoom, int divline, bool hr);
 
-	//CSV“Ç‚İ‚İ
+	//CSVèª­ã¿è¾¼ã¿
 	void CSVMapDataLoad(std::string fullPath);
 
-	//À•W
+	//åº§æ¨™
 	void ObjectRandomPop();
 
-	//•Ç”j‰óƒp[ƒeƒBƒNƒ‹”­¶
+	//å£ç ´å£Šãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç™ºç”Ÿ
 	void DigParticlePop();
 	
 
 private:
-	//Ø‚è‚à‚Ì
+	//å€Ÿã‚Šã‚‚ã®
 	Camera* camera = nullptr;
 	GameManager* gameManager = nullptr;
 	Vector3 PlayerPos={};
@@ -129,31 +129,31 @@ private:
 	char WallMap[DIV_NUM][DIV_NUM] = {};
 	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};
 
-	//”j‰ó•s‰Â”\•Ç
+	//ç ´å£Šä¸å¯èƒ½å£
 	ObjModelManager* IndestructibleWallModel = nullptr;
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 	IndestructibleWall* IndestructibleWalls[DIV_NUM][DIV_NUM] = {nullptr};
 
-	//•”‰®
+	//éƒ¨å±‹
 	std::vector<Room> rooms;
 
 
-	//oŒû
+	//å‡ºå£
 	Vector3 exitPosition = {0,-5,0};
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	Vector3 PlayerPopPosition = {0,-3,0};
 
-	//¶¬ƒIƒuƒWƒFƒNƒg
+	//ç”Ÿæˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	Vector3 ObjectPopPosition = {0,0,0};
 
-	//CSVƒRƒ}ƒ“ƒh
+	//CSVã‚³ãƒãƒ³ãƒ‰
 	std::stringstream csvCommands;
 	int CSVMap[DIV_NUM][DIV_NUM] = {0};
 	std::vector<Vector3> ObjectPos;
 	std::vector<bool> ObjectPopActive;
 
-	//•Ç”j‰óƒp[ƒeƒBƒNƒ‹
+	//å£ç ´å£Šãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	bool IsDig = false;
 	bool IsDigApp = false;
 	int paricleApperanceFrame = 0;

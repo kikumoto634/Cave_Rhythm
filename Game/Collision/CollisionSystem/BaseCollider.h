@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CollisionTypes.h"
 #include "CollisionInfo.h"
 #include "../../3D/BaseObjObject.h"
 
 /// <summary>
-/// ƒRƒ‰ƒCƒ_[Šî’êƒNƒ‰ƒX
+/// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŸºåº•ã‚¯ãƒ©ã‚¹
 /// </summary>
 class BaseCollider
 {
@@ -14,12 +14,12 @@ public:
 
 public:
 	BaseCollider() = default;
-	//‰¼‘zƒfƒXƒgƒ‰ƒNƒ^
+	//ä»®æƒ³ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~BaseCollider() = default;
 
 public:
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() = 0;
 
@@ -28,7 +28,7 @@ public:
 	}
 
 
-	//“–‚½‚è”»’è‘®«
+	//å½“ãŸã‚Šåˆ¤å®šå±æ€§
 	inline void SetAttribute(unsigned short attribute)	{this->attribute = attribute;}
 	inline unsigned short GetAttribute()	{return attribute;}
 	inline void AddAttribute(unsigned short attribute)	{this->attribute |= attribute;}
@@ -43,10 +43,10 @@ public:
 	inline void SetObjObject(BaseObjObject* objObject)	{this->objObject = objObject;}
 
 protected:
-	//ƒIƒuƒWƒFƒNƒg
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	BaseObjObject* objObject = nullptr;
-	//Œ`óƒ^ƒCƒv
+	//å½¢çŠ¶ã‚¿ã‚¤ãƒ—
 	CollisionShapeType shapeType = SHAPE_UNKNOWN;
-	//“–‚½‚è”»’è‘®«
+	//å½“ãŸã‚Šåˆ¤å®šå±æ€§
 	unsigned short attribute = 0b1111111111111111;
 };

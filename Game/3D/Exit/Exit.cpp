@@ -1,4 +1,4 @@
-#include "Exit.h"
+ï»¿#include "Exit.h"
 
 using namespace std;
 
@@ -13,14 +13,14 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 
 	SetModel(model);
 
-	//ƒRƒ‰ƒCƒ_[’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 	MeshCollider* collider = new MeshCollider;
 	SetCollider(collider);
-	//‘®«ƒZƒbƒg
+	//å±æ€§ã‚»ãƒƒãƒˆ
 	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
 	collider->ConstructTriangles(model);
 
-	//ƒXƒvƒ‰ƒCƒg
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	coinSp = make_unique<BaseSprites>();
 	coinSp->Initialize(13);
 	coinSp->SetSize({40,40});
@@ -39,7 +39,7 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 	exitOpenSp->SetSize({30,30});
 	exitOpenSp->SetAnchorPoint({0.5f,0.5f});
 
-	//ŠK’iƒ‚ƒfƒ‹
+	//éšæ®µãƒ¢ãƒ‡ãƒ«
 	stairsModel = new ObjModelManager();
 	stairsModel->CreateModel("Stairs");
 }
@@ -48,12 +48,12 @@ void Exit::Update(Camera *camera)
 {
 	this->camera = camera;
 
-	//”I‚í‚è
+	//æ‹çµ‚ã‚ã‚Šæ™‚
 	if(IsBeatEnd){
 		
-		//ƒvƒŒƒCƒ„[ÚG
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ¥è§¦æ™‚
 		if(IsPlayerContact){
-			//ƒTƒCƒY•ÏX
+			//ã‚µã‚¤ã‚ºå¤‰æ›´
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsBeatEnd = false;
 				IsPlayerContact = false;

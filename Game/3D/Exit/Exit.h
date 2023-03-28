@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../../Collision/MeshCollider.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
@@ -8,55 +8,55 @@
 class Exit : public BaseObjObject
 {
 private:
-	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\¦)
+	//æç”»ç¯„å›²(æš—ã‚ã®è¡¨ç¤º)
 	const int DrawingRange_Half = 8;
 
 public:
 	~Exit();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	/// <returns></returns>
 	void Initialize(std::string filePath, bool IsSmmothing = false) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// 3D•`‰æ
+	/// 3Dæç”»
 	/// </summary>
 	void Draw() override;
 
 	void Draw2D();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	void OnCollision(const CollisionInfo& info) override;
 
 	/// <summary>
-	/// oŒû‰ğ•ú
+	/// å‡ºå£è§£æ”¾
 	/// </summary>
 	void ExitOpen()	{IsOpen = true;}
 
 	/// <summary>
-	/// oŒû{ù
+	/// å‡ºå£æ–½éŒ 
 	/// </summary>
 	void ExitClose()	{IsOpen = false;}
 
-	//•K—vƒRƒCƒ“XV
+	//å¿…è¦ã‚³ã‚¤ãƒ³æ›´æ–°
 	void NeedCoinSpriteUpdate();
 
-	//ƒ‚ƒfƒ‹•ÏX
+	//ãƒ¢ãƒ‡ãƒ«å¤‰æ›´
 	void ModelChange()	{this->object->SetModel(stairsModel), IsOpenAudioOnce = true;}
 
 	//Getter
@@ -72,21 +72,21 @@ public:
 
 private:
 
-	//ƒvƒŒƒCƒ„[ÚG
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ¥è§¦
 	bool IsPlayerContact = false;
 
-	//•K—vƒRƒCƒ“”
+	//å¿…è¦ã‚³ã‚¤ãƒ³æ•°
 	std::unique_ptr<BaseSprites> coinSp;
 	int ExitNeedCoinsNum = 1;
-	const int TexNumberBegin = 3;	//ƒeƒNƒXƒ`ƒƒ”Ô†
-	const int CoinSpNumSize = 3;	//ƒTƒCƒY
+	const int TexNumberBegin = 3;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
+	const int CoinSpNumSize = 3;	//ã‚µã‚¤ã‚º
 	std::unique_ptr<BaseSprites> coinSpNum[3];
 
-	//ŠJ•Â
+	//é–‹é–‰
 	bool IsOpen = false;
 	std::unique_ptr<BaseSprites> exitOpenSp;
 
-	//ŠK’iƒ‚ƒfƒ‹
+	//éšæ®µãƒ¢ãƒ‡ãƒ«
 	ObjModelManager* stairsModel = nullptr;
 	bool IsModelChange = false;
 	bool IsOpenAudioOnce = false;

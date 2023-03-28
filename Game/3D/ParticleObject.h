@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/base/ParticleManager.h"
 
 class ParticleObject
 {
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 	ParticleObject(){};
 	ParticleObject(
@@ -20,32 +20,32 @@ public:
 	~ParticleObject();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// ƒp[ƒeƒBƒNƒ‹”­¶
+	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç™ºç”Ÿ
 	/// </summary>
 	void ParticleAppearance();
 
 	/// <summary>
-	/// ƒp[ƒeƒBƒNƒ‹•ÏX
+	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¤‰æ›´
 	/// </summary>
 	void ParticleSet(int life, 
 		Vector3 position, 
@@ -57,13 +57,13 @@ public:
 		Vector4 color
 	);
 
-//ƒƒ“ƒo•Ï”
+//ãƒ¡ãƒ³ãƒå¤‰æ•°
 public:
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	ParticleManager* particle = nullptr;
 	WorldTransform world = {};
 
-	//Še‘®«
+	//å„å±æ€§
 	int life = 0;
 	Vector3 position = {};
 	Vector3 velocity = {};

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseScene.h"
 
 #include "../Game/3D/SampleFbxObject/SampleFbxObject.h"
@@ -22,109 +22,109 @@
 class SampleScane : public BaseScene
 {
 private:
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	const float FadeSecond = 1.f;
 
 public:
 	
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	SampleScane(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 	/// <summary>
-	/// ‹N“®
+	/// èµ·å‹•æ™‚
 	/// </summary>
 	void Application() override;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 private:
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	void NextSceneChange();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void CommonInitialize();
 	void Object3DInitialize();
 	void Object2DInitialize();
 
-	//XV
+	//æ›´æ–°
 	void InputUpdate();
 	void Object3DUpdate();
 	void Object2DUpdate();
 	void CommonUpdate();
 
-	//ƒŠƒYƒ€ŠÖ˜A
+	//ãƒªã‚ºãƒ é–¢é€£
 	void RhythmMeasure();
 	void RhythmJudgeUpdate();
 	void BeatEndUpdate();
 
-	//•`‰æ
+	//æç”»
 	void Object3DDraw();
 	void ParticleDraw();
 	void UIDraw();
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	void SceneGameEnd();
 	void SceneChange();
 
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	void ObjectFinaize();
 	void CommonFinalize();
 
 private:
-	//CreateŠÖ”
+	//Createé–¢æ•°
 	void InitializeCreateBlueSlime();
 	void InitializeCreateCoin();
 
-	//PopŠÖ”
+	//Popé–¢æ•°
 	void BlueSlimePop();
 
 private:
-	//‹¤’Ê
-	//Õ“Ëƒ}ƒl[ƒWƒƒ[
+	//å…±é€š
+	//è¡çªãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	CollisionManager* collisionManager = nullptr;
 
 	//player
 	std::unique_ptr<Player> player;
-	//ƒZ[ƒu‘Ì—Í
+	//ã‚»ãƒ¼ãƒ–ä½“åŠ›
 	int saveHP = 0;
-	//ƒŠƒYƒ€ƒJƒEƒ“ƒg
+	//ãƒªã‚ºãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 	RhythmManager* rhythmManager = nullptr;
-	//ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
+	//ã‚²ãƒ¼ãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	GameManager* gameManager = nullptr;
-	//ƒŠƒYƒ€“ü—Í
+	//ãƒªã‚ºãƒ å…¥åŠ›
 	bool IsRhythmInput = false;
-	//oŒû
+	//å‡ºå£
 	std::unique_ptr<Exit> exit;
-	//ƒGƒŠƒAƒ}ƒl[ƒWƒƒ[
+	//ã‚¨ãƒªã‚¢ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	std::unique_ptr<AreaManager> areaManager;
 
 	std::unique_ptr<BlueSlime> slime;
 	std::unique_ptr<Coins> coin;
 
 #ifdef _DEBUG
-	//ƒJƒƒ‰ˆÚ“®A‰ñ“]•ÏXƒtƒ‰ƒO
+	//ã‚«ãƒ¡ãƒ©ç§»å‹•ã€å›è»¢å¤‰æ›´ãƒ•ãƒ©ã‚°
 	bool IsCameraMovementChange = true;
 #endif // _DEBUG
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	std::unique_ptr<BaseSprites> fade;
 	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
 	Vector2 fadeInSize = {};
@@ -137,7 +137,7 @@ private:
 	//GameOver
 	bool IsGameEnd = false;
 
-	//BGMÄ¶ƒtƒ‰ƒO
+	//BGMå†ç”Ÿãƒ•ãƒ©ã‚°
 	bool IsBGMStart = true;
 };
 

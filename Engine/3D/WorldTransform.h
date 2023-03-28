@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include <d3d12.h>
 #include <wrl.h>
@@ -6,51 +6,51 @@
 #include "../Engine/math/Vector/Vector2.h"
 #include "../Engine/math/Vector/Vector3.h"
 
-//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 struct ConstBufferDataWorldTransform{
-	DirectX::XMMATRIX matWorld;	//ƒ[ƒJƒ‹ -> ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	DirectX::XMMATRIX matWorld;	//ãƒ­ãƒ¼ã‚«ãƒ« -> ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 };
 
 /// <summary>
-/// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+/// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 /// </summary>
 struct WorldTransform{
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuffer;
-	//ƒ}ƒbƒsƒ“ƒOÏ‚İƒAƒhƒŒƒX
+	//ãƒãƒƒãƒ”ãƒ³ã‚°æ¸ˆã¿ã‚¢ãƒ‰ãƒ¬ã‚¹
 	ConstBufferDataWorldTransform* constMap = nullptr;
 
-	//ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	//ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector3 scale = {1,1,1};
-	//ƒ[ƒJƒ‹‰ñ“]Šp
+	//ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	Vector3 rotation = {0,0,0};
-	//ƒ[ƒJƒ‹À•W
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	Vector3 translation = {0,0,0};
-	//ƒ[ƒJƒ‹ -> ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ­ãƒ¼ã‚«ãƒ« -> ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	DirectX::XMMATRIX matWorld = {};
-	//e
+	//è¦ª
 	WorldTransform* parent = nullptr;
 
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// ’è”ƒoƒbƒtƒ@¶¬
+	/// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	/// </summary>
 	void CreateConstBuffer();
 
 	/// <summary>
-	/// ƒ}ƒbƒsƒ“ƒO
+	/// ãƒãƒƒãƒ”ãƒ³ã‚°
 	/// </summary>
 	void Map();
 
 	/// <summary>
-	/// s—ñ‚ÌXV
+	/// è¡Œåˆ—ã®æ›´æ–°
 	/// </summary>
 	void UpdateMatrix(DirectX::XMMATRIX matBillboard = DirectX::XMMatrixIdentity());
 };

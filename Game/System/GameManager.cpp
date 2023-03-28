@@ -1,4 +1,4 @@
-#include "GameManager.h"
+ï»¿#include "GameManager.h"
 #include "../../Engine/3D/ObjModelObject.h"
 
 using namespace std;
@@ -18,7 +18,7 @@ void GameManager::Finalize()
 
 	combo->Finalize();
 
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i]->Finalize();
 	}
@@ -45,7 +45,7 @@ void GameManager::CoinIncrement()
 {
 	coinNum += 1;
 
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	int hundred = coinNum/100;
 	int ten = (coinNum - (hundred*100))/10;
 	int one = (coinNum - (hundred*100) - (ten*10))/1;
@@ -58,7 +58,7 @@ void GameManager::InitializeSetHp(int _hp)
 {
 	hp = _hp;
 
-	//‘Ì—Í
+	//ä½“åŠ›
 	DamageHpSpriteIndex = hp-1;
 	for(int i = 0; i < HpSpSize; i++){
 		std::unique_ptr<BaseSprites> Sp = make_unique<BaseSprites>();
@@ -93,7 +93,7 @@ void GameManager::AudioPlay(int number, float volume, bool loop)
 void GameManager::LightUpdate(bool IsPlayerShadowDead)
 {
 	if(!IsPlayerShadowAlive && !IsPlayerShadowDead){	
-		//ŠÛ‰e
+		//ä¸¸å½±
 		lightGroup->SetCircleShadowDir(0, {circleShadowDir.x, circleShadowDir.y, circleShadowDir.z, 0});
 		lightGroup->SetCircleShadowAtten(0, circleShadowAtten);
 		lightGroup->SetCircleShadowFactorAngle(0, circleShadowFactorAngle);
@@ -108,7 +108,7 @@ void GameManager::LightUpdate(bool IsPlayerShadowDead)
 
 void GameManager::PlayerCircleShadowSet(Vector3 pos)
 {
-	//ƒvƒŒƒCƒ„[AŠÛ‰eÀ•W
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã€ä¸¸å½±åº§æ¨™
 	lightGroup->SetCircleShadowCasterPos(0, pos);
 }
 
@@ -138,65 +138,65 @@ Vector2 GameManager::EnemyRandomDir(Vector2 pos)
 	//0:{0,1}, 1:{0,-1}, 2:{1,0}, 3:{-1,0}
 	int random = rand()%4;	//0~3
 	
-	//‰œ¶
+	//å¥¥å·¦
 	if(pos.x < 0 && pos.y < 0){
-		//‰EŒü‚«
+		//å³å‘ã
 		if(random >= 1){
 			ldir = {1,0};
 		}
-		//è‘OŒü‚«
+		//æ‰‹å‰å‘ã
 		else if(random <= 2){
 			ldir = {0,1};
 		}
 	}
-	//‰œ‰E
+	//å¥¥å³
 	else if(pos.x > 0 && pos.y < 0){
-		//¶Œü‚«
+		//å·¦å‘ã
 		if(random >= 1){
 			ldir = {-1,0};
 		}
-		//è‘OŒü‚«
+		//æ‰‹å‰å‘ã
 		else if(random <= 2){
 			ldir = {0,1};
 		}
 	}
-	//è‘O‰E
+	//æ‰‹å‰å³
 	else if(pos.x > 0 && pos.y > 0){
-		//¶Œü‚«
+		//å·¦å‘ã
 		if(random >= 1){
 			ldir = {-1,0};
 		}
-		//‰œŒü‚«
+		//å¥¥å‘ã
 		else if(random <= 2){
 			ldir = {0,-1};
 		}
 	}
-	//è‘O¶
+	//æ‰‹å‰å·¦
 	else if(pos.x < 0 && pos.y > 0){
-		//‰EŒü‚«
+		//å³å‘ã
 		if(random >= 1){
 			ldir = {1,0};
 		}
-		//‰œŒü‚«
+		//å¥¥å‘ã
 		else if(random <= 2){
 			ldir = {0,-1};
 		}
 	}
-	//’†S’n
+	//ä¸­å¿ƒåœ°
 	else {
-		//¶
+		//å·¦
 		if(random == 0){
 			ldir = {-1,0};
 		}
-		//‰E
+		//å³
 		else if(random == 1){
 			ldir = {1,0};
 		}
-		//‰œ
+		//å¥¥
 		else if(random == 2){
 			ldir = {0,-1};
 		}
-		//è‘O
+		//æ‰‹å‰
 		else if(random == 3){
 			ldir = {0,1};
 		}
@@ -210,7 +210,7 @@ void GameManager::SpriteUpdate()
 	combo->Update();
 
 	coinSp->Update();
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i]->Update();
 	}
@@ -230,7 +230,7 @@ void GameManager::SpriteDraw()
 	combo->Draw();
 
 	coinSp->Draw();
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i]->Draw();
 	}
@@ -247,18 +247,18 @@ void GameManager::AudioInitialize()
 
 void GameManager::LightInitialize()
 {
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	lightGroup = LightGroup::Create();
-	//Fİ’è
+	//è‰²è¨­å®š
 	lightGroup->SetAmbientColor({0.15f, 0.15f, 0.15f});
-	//3DƒIƒuƒWƒFƒNƒg(.obj)‚ÉƒZƒbƒg
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(.obj)ã«ã‚»ãƒƒãƒˆ
 	ObjModelObject::SetLight(lightGroup);
 
 	lightGroup->SetDirLightActive(0, true);
 	lightGroup->SetDirLightActive(1, true);
 	lightGroup->SetDirLightActive(2, true);
 
-	//ŠÛ‰e
+	//ä¸¸å½±
 	lightGroup->SetCircleShadowActive(0, true);
 }
 
@@ -267,13 +267,13 @@ void GameManager::SpriteInitialize()
 	combo = make_unique<Combo>();
 	combo->Initialize();
 
-	//ƒRƒCƒ“ƒeƒLƒXƒg
+	//ã‚³ã‚¤ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 	coinSp = make_unique<BaseSprites>();
 	coinSp->Initialize(13);
 	coinSp->SetPosition({50,175});
 	coinSp->SetSize({75,75});
 
-	//”š
+	//æ•°å­—
 	for(int i = 0;i < NumberSpSize; i++){
 		numberSp_coin[i] = make_unique<BaseSprites>();
 		numberSp_coin[i]->Initialize(TexNumberBegin + 0);

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseScene.h"
 
 #include "../Game/3D/SampleFbxObject/SampleFbxObject.h"
@@ -22,95 +22,95 @@
 class BaseBattleScene : public BaseScene
 {
 protected:
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	const float FadeSecond = 1.f;
 
-	//ƒm[ƒc”
+	//ãƒãƒ¼ãƒ„æ•°
 	const int notesNum= 7;
 
 public:
 	
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	BaseBattleScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5, int floorVaule = 1);
 
 	~BaseBattleScene();
 
 	/// <summary>
-	/// ‹N“®
+	/// èµ·å‹•æ™‚
 	/// </summary>
 	void Application() override;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 private:
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void CommonInitialize();
 	void Object3DInitialize();
 	void Object2DInitialize();
 
-	//XV
+	//æ›´æ–°
 	void InputUpdate();
 	void Object3DUpdate();
 	void Object2DUpdate();
 	void CommonUpdate();
 
-	//ƒŠƒYƒ€ŠÖ˜A
+	//ãƒªã‚ºãƒ é–¢é€£
 	void RhythmMeasure();
 	void RhythmJudgeUpdate();
 	void BeatEndUpdate();
 
-	//•`‰æ
+	//æç”»
 	void Object3DDraw();
 	void ParticleDraw();
 	void UIDraw();
 
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	void ObjectFinaize();
 	void CommonFinalize();
 
 protected:
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	virtual void SceneGameEnd();
 	virtual void NextSceneChange() = 0;
 	virtual void SceneChange();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	virtual void AddCommonInitialize() = 0;
 	virtual void AddObject3DInitialize() = 0;
 	virtual void AddObject2DInitialize() = 0;
 
-	//XV
+	//æ›´æ–°
 	virtual void AddCommonUpdate() = 0;
 	virtual void AddObject3DUpdate() = 0;
 	virtual void AddObject2DUpdate() = 0;
 	virtual void AddBeatEndUpdate() = 0;
 
-	//•`‰æ
+	//æç”»
 	virtual void AddObject3DDraw() = 0;
 	virtual void AddParticleDraw() = 0;
 	virtual void AddFrontUIDraw() = 0;
 	virtual void AddBackUIDraw() = 0;
 
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	virtual void AddObjectFinalize() = 0;
 	virtual void AddCommonFinalize() = 0;
 
@@ -119,35 +119,34 @@ private:
 	void VectorObjIni();
 
 protected:
-	//‹¤’Ê
-	//Õ“Ëƒ}ƒl[ƒWƒƒ[
+	//å…±é€š
+	//è¡çªãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	CollisionManager* collisionManager = nullptr;
 
-	//‚¿‰z‚µ
-	//ƒZ[ƒu‘Ì—Í
+	//æŒã¡è¶Šã—
+	//ã‚»ãƒ¼ãƒ–ä½“åŠ›
 	int saveHP = 0;
-	//ŠK‘w
+	//éšå±¤
 	int floorValue = 1;
 
 	//player
 	std::unique_ptr<Player> player;
-	//ƒŠƒYƒ€ƒJƒEƒ“ƒg
+	//ãƒªã‚ºãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 	std::unique_ptr<RhythmManager> rhythmManager;
-	//ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
+	//ã‚²ãƒ¼ãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	std::unique_ptr<GameManager> gameManager;
-	//ƒŠƒYƒ€“ü—Í
+	//ãƒªã‚ºãƒ å…¥åŠ›
 	bool IsRhythmInput = false;
-	//oŒû
+	//å‡ºå£
 	std::unique_ptr<Exit> exit;
-	//ƒGƒŠƒAƒ}ƒl[ƒWƒƒ[
+	//ã‚¨ãƒªã‚¢ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	std::unique_ptr<AreaManager> areaManager;
 
 #ifdef _DEBUG
-	//ƒJƒƒ‰ˆÚ“®A‰ñ“]•ÏXƒtƒ‰ƒO
-	bool IsCameraMovementChange = true;
+
 #endif // _DEBUG
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	std::unique_ptr<BaseSprites> fade;
 	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
 	Vector2 fadeInSize = {};
@@ -160,10 +159,10 @@ protected:
 	//GameOver
 	bool IsGameEnd = false;
 
-	//BGMÄ¶ƒtƒ‰ƒO
+	//BGMå†ç”Ÿãƒ•ãƒ©ã‚°
 	bool IsBGMStart = true;
 
-	//ƒŠƒYƒ€–Ú‹Šm”F—pSP
+	//ãƒªã‚ºãƒ ç›®è¦–ç¢ºèªç”¨SP
 	std::unique_ptr<JudgeLocation> judgeLoca;
 
 	std::vector<std::unique_ptr<Notes>> lNotes;

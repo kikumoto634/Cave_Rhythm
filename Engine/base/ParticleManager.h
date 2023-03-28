@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
@@ -16,13 +16,13 @@
 
 class ParticleManager
 {
-public://ƒGƒCƒŠƒAƒX
+public://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public:	//’è”
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÅ‘å–‡”
+public:	//å®šæ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æœ€å¤§æšæ•°
 	static const int maxObjectCount = 512;
-	//’¸“_”
+	//é ‚ç‚¹æ•°
 	static const int vertexCount = 1024;
 public:
 	struct VertexPos{
@@ -30,33 +30,33 @@ public:
 		float scale;
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì(3D•ÏŠ·s—ñ
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(3Då¤‰æ›è¡Œåˆ—
 	struct ConstBufferData{
-		DirectX::XMMATRIX mat;	//3D•ÏŠ·s—ñ
-		DirectX::XMMATRIX matBillboard;	//ƒrƒ‹ƒ{[ƒhs—ñ
+		DirectX::XMMATRIX mat;	//3Då¤‰æ›è¡Œåˆ—
+		DirectX::XMMATRIX matBillboard;	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 		Vector4 color;
 	};
 
-	//ƒp[ƒeƒBƒNƒ‹—±
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç²’
 	struct Particle
 	{
-		//À•W
+		//åº§æ¨™
 		Vector3 position = {};
-		//‘¬“x
+		//é€Ÿåº¦
 		Vector3 velocity = {};
-		//‰Á‘¬“x
+		//åŠ é€Ÿåº¦
 		Vector3 accel = {};
 
-		//ƒXƒP[ƒ‹
+		//ã‚¹ã‚±ãƒ¼ãƒ«
 		float scale = 1.f;
-		//‰Šú’l
+		//åˆæœŸå€¤
 		float start_scale = 1.f;
-		//ÅI’l
+		//æœ€çµ‚å€¤
 		float end_scale = 0.f;
 
-		//Œ»İ‚ÌƒtƒŒ[ƒ€
+		//ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ 
 		int frame = 0;
-		//I—¹ƒtƒŒ[ƒ€
+		//çµ‚äº†ãƒ•ãƒ¬ãƒ¼ãƒ 
 		int num_frame = 0;
 	};
 
@@ -65,38 +65,38 @@ public:
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(DirectXCommon* dxCommon);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(WorldTransform worldTransform, Camera* camera);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒp[ƒeƒBƒNƒ‹’Ç‰Á
+	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«è¿½åŠ 
 	/// </summary>
-	/// <param name="life">¶‘¶ŠÔ</param>
-	/// <param name="position">‰ŠúÀ•W</param>
-	/// <param name="velocity">‘¬“x</param>
-	/// <param name="accel">‰Á‘¬“x</param>
-	/// <param name="start_scale">ŠJnƒXƒP[ƒ‹</param>
-	/// <param name="end_scale">I—¹ƒXƒP[ƒ‹</param>
+	/// <param name="life">ç”Ÿå­˜æ™‚é–“</param>
+	/// <param name="position">åˆæœŸåº§æ¨™</param>
+	/// <param name="velocity">é€Ÿåº¦</param>
+	/// <param name="accel">åŠ é€Ÿåº¦</param>
+	/// <param name="start_scale">é–‹å§‹æ™‚ã‚¹ã‚±ãƒ¼ãƒ«</param>
+	/// <param name="end_scale">çµ‚äº†æ™‚ã‚¹ã‚±ãƒ¼ãƒ«</param>
 	void Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale, UINT texNumber = 1);
 
 	//Get
 	int GetMaxObjectCount()	{return maxObjectCount;}
-	//’¸“_î•ñ
+	//é ‚ç‚¹æƒ…å ±
 	int Getvertices()	{return _countof(vertices);}
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW GetvbView()	{return vbView;}
-	//ƒp[ƒeƒBƒNƒ‹•`‰æ”
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»æ•°
 	UINT GetParticle()	{return (UINT)std::distance(particle.begin(), particle.end());}
 
 	//Setter
@@ -104,12 +104,12 @@ public:
 
 private:
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“‰Šú‰»
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³åˆæœŸåŒ–
 	/// </summary>
 	void InitializeGraphicsPipeline();
 
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^ƒq[ƒv‰Šú‰»
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ’ãƒ¼ãƒ—åˆæœŸåŒ–
 	/// </summary>
 	void InitializeDescriptorHeap();
 
@@ -117,34 +117,34 @@ private:
 	//DirectXCommon
 	DirectXCommon* dxCommon = nullptr;
 
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	ComPtr<ID3D12PipelineState> pipelineState;
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	ComPtr<ID3D12RootSignature> rootSignature;
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv(’è”ƒoƒbƒtƒ@ƒrƒ…[—p)
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—(å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ç”¨)
 	ComPtr<ID3D12DescriptorHeap> basicDescHeap;
 
 	TextureManager* textureManager;
 
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuffer;
-	//’¸“_ƒ}ƒbƒv
+	//é ‚ç‚¹ãƒãƒƒãƒ—
 	VertexPos* vertMap = nullptr;
 
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	VertexPos vertices[vertexCount];
 
-	//’è”ƒoƒbƒtƒ@(s—ñ)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡(è¡Œåˆ—)
 	ComPtr<ID3D12Resource> constBuffer;
-	//ƒ}ƒbƒsƒ“ƒO—pƒ|ƒCƒ“ƒ^
+	//ãƒãƒƒãƒ”ãƒ³ã‚°ç”¨ãƒã‚¤ãƒ³ã‚¿
 	ConstBufferData* constMap = nullptr;
 
-	//ƒp[ƒeƒBƒNƒ‹”z—ñ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é…åˆ—
 	std::forward_list<Particle> particle;
 
-	//ƒeƒNƒXƒ`ƒƒƒf[ƒ^
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿
 	UINT texNumber = 0;
 
 	Vector4 color = {0,1,0,0.5};

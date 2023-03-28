@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <vector>
@@ -32,7 +32,7 @@ public:
 
 private:
 	/// <summary>
-	/// ¶¬
+	/// ç”Ÿæˆ
 	/// </summary>
 	
 	HRESULT CreateDevice();
@@ -48,35 +48,35 @@ private:
 private:
 	Window* window = nullptr;
 
-	//DXGIƒtƒ@ƒNƒgƒŠ[
+	//DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼
 	ComPtr<IDXGIFactory7> dxgiFactory = nullptr;
-	//ƒfƒoƒCƒX
+	//ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<ID3D12Device> device = nullptr;
-	//ƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh
+	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰
 	ComPtr<ID3D12GraphicsCommandList> commandList = nullptr;
-	//ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^
+	//ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿
 	ComPtr<ID3D12CommandAllocator> commandAllocator = nullptr;
-	//ƒRƒ}ƒ“ƒhƒLƒ…[
+	//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
 	ComPtr<ID3D12CommandQueue> commandQueue = nullptr;
-	//ƒXƒƒbƒvƒ`ƒF[ƒ“
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
 	ComPtr<IDXGISwapChain4> swapChain  = nullptr;
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	//ƒoƒbƒNƒoƒbƒtƒ@
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡
 	std::vector<ComPtr<ID3D12Resource>> backBuffers;
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> depthBuffer = nullptr;
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+	//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 	ComPtr<ID3D12DescriptorHeap> dsvHeap= nullptr;
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼
 	ComPtr<ID3D12DescriptorHeap> rtvHeap= nullptr;
-	//ƒtƒFƒ“ƒX
+	//ãƒ•ã‚§ãƒ³ã‚¹
 	ComPtr<ID3D12Fence> fence= nullptr;
 	UINT64 fenceVal = 0;
 
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvH;
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH;
 
-	// ‹L˜^ŠÔ(FPSŒÅ’è—p)
+	// è¨˜éŒ²æ™‚é–“(FPSå›ºå®šç”¨)
     std::chrono::steady_clock::time_point reference_;
 };
 

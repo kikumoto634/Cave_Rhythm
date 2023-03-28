@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../math/Vector/Vector2.h"
 #include "../math/Vector/Vector3.h"
 #include "../math/Vector/Vector4.h"
@@ -12,63 +12,63 @@
 
 class ObjModelMesh
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:
-	// ’¸“_ƒf[ƒ^\‘¢‘Ì
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPosNormalUv
 	{
-		Vector3 pos; // xyzÀ•W
-		Vector3 normal; // –@üƒxƒNƒgƒ‹
-		Vector2 uv;  // uvÀ•W
+		Vector3 pos; // xyzåº§æ¨™
+		Vector3 normal; // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+		Vector2 uv;  // uvåº§æ¨™
 	};
 
-public: // Ã“Iƒƒ“ƒoŠÖ”
+public: // é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// Ã“I‰Šú‰»
+	/// é™çš„åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="device">ƒfƒoƒCƒX</param>
+	/// <param name="device">ãƒ‡ãƒã‚¤ã‚¹</param>
 	static void StaticInitialize(DirectXCommon* dxCommon);
 
-private: // Ã“Iƒƒ“ƒo•Ï”
-	// ƒfƒoƒCƒX
+private: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ãƒ‡ãƒã‚¤ã‚¹
 	static DirectXCommon* dxCommon;
 
 public:
 	/// <summary>
-	/// ƒoƒbƒtƒ@‚Ì¶¬
+	/// ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	/// </summary>
 	void CreateBuffers();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
-	/// <param name="cmdList">–½—ß”­sæƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="cmdList">å‘½ä»¤ç™ºè¡Œå…ˆã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	void Draw(ID3D12GraphicsCommandList* commandList);
 
 	/// <summary>
-	/// ’¸“_ƒf[ƒ^‚Ì’Ç‰Á
+	/// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¿½åŠ 
 	/// </summary>
-	/// <param name="vertex">’¸“_ƒf[ƒ^</param>
+	/// <param name="vertex">é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿</param>
 	void AddVertex(const VertexPosNormalUv& vertex);
 
 	/// <summary>
-	/// ’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ì’Ç‰Á
+	/// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®è¿½åŠ 
 	/// </summary>
-	/// <param name="index">ƒCƒ“ƒfƒbƒNƒX</param>
+	/// <param name="index">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
 	void AddIndex(unsigned short index);
 
 	/// <summary>
-	/// ƒGƒbƒW•½’R‰»ƒf[ƒ^‚Ì’Ç‰Á
+	/// ã‚¨ãƒƒã‚¸å¹³å¦åŒ–ãƒ‡ãƒ¼ã‚¿ã®è¿½åŠ 
 	/// </summary>
-	/// <param name="indexPosition">À•WƒCƒ“ƒfƒbƒNƒX</param>
-	/// <param name="indexVertex">’¸“_ƒCƒ“ƒfƒbƒNƒX</param>
+	/// <param name="indexPosition">åº§æ¨™ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
+	/// <param name="indexVertex">é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
 	void AddSmmpthData(unsigned short indexPosition, unsigned short indexVertex);
 
 	/// <summary>
-	/// •½ŠŠ‰»‚³‚ê‚½’¸“_–@ü‚ÌŒvZ
+	/// å¹³æ»‘åŒ–ã•ã‚ŒãŸé ‚ç‚¹æ³•ç·šã®è¨ˆç®—
 	/// </summary>
 	void CalculateSmoothedVertexNormals();
 
@@ -76,53 +76,53 @@ public:
 	//Getter
 
 	/// <summary>
-	/// ’¸“_ƒf[ƒ^”‚ğæ“¾
+	/// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ•°ã‚’å–å¾—
 	/// </summary>
-	/// <returns>’¸“_ƒf[ƒ^‚Ì”</returns>
+	/// <returns>é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®æ•°</returns>
 	inline size_t GetVertexCount()	{return vertices.size();}
 
 	/// <summary>
-	/// ’¸“_ƒoƒbƒtƒ@æ“¾
+	/// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡å–å¾—
 	/// </summary>
-	/// <returns>’¸“_ƒoƒbƒtƒ@</returns>
+	/// <returns>é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡</returns>
 	const D3D12_VERTEX_BUFFER_VIEW& GetVBView() { return vbView; }
 
 	/// <summary>
-	/// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@æ“¾
+	/// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@</returns>
+	/// <returns>ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡</returns>
 	const D3D12_INDEX_BUFFER_VIEW& GetIBView() { return ibView; }
 
 	/// <summary>
-	/// ’¸“_”z—ñ‚ğæ“¾
+	/// é ‚ç‚¹é…åˆ—ã‚’å–å¾—
 	/// </summary>
-	/// <returns>’¸“_”z—ñ</returns>
+	/// <returns>é ‚ç‚¹é…åˆ—</returns>
 	inline const std::vector<VertexPosNormalUv>& GetVertices() {return vertices;}
 
 	/// <summary>
-	/// ƒCƒ“ƒfƒbƒNƒX”z—ñ‚ğæ“¾
+	/// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ“ƒfƒbƒNƒX”z—ñ</returns>
+	/// <returns>ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—</returns>
 	inline const std::vector<unsigned short>& GetIndices() {return indices;}
 
 
 private:
-	// ’¸“_ƒf[ƒ^”z—ñ
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	std::vector<VertexPosNormalUv> vertices;
-	// ’¸“_ƒCƒ“ƒfƒbƒNƒX”z—ñ
+	// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
 	std::vector<unsigned short> indices;
 
-	// ’¸“_ƒoƒbƒtƒ@
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> indexBuff;
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView;
 
-	//’¸“_—p–@üƒXƒ€[ƒVƒ“ƒO—pƒf[ƒ^
+	//é ‚ç‚¹ç”¨æ³•ç·šã‚¹ãƒ ãƒ¼ã‚·ãƒ³ã‚°ç”¨ãƒ‡ãƒ¼ã‚¿
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 };
 

@@ -1,4 +1,4 @@
-#include "AreaManager.h"
+ï»¿#include "AreaManager.h"
 
 #include <fstream>
 #include <cassert>
@@ -167,7 +167,7 @@ void AreaManager::CommonFinalize()
 	delete DigParticle;
 }
 
-#pragma region ’n–Ê
+#pragma region åœ°é¢
 void AreaManager::RandamAreaPlaneInitialize()
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
@@ -205,7 +205,7 @@ void AreaManager::CSVAreaPlaneInitialize()
 }
 void AreaManager::PlaneUpdate()
 {
-	//’n–Ê
+	//åœ°é¢
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			if(plane[i][j] == nullptr) continue;
@@ -225,7 +225,7 @@ void AreaManager::PlaneBeatEndUpdate()
 				IsChange = !IsChange; 
 				continue;
 			}
-			//ƒRƒ“ƒ{”‚É‰‚¶‚ÄF•Ï‰»
+			//ã‚³ãƒ³ãƒœæ•°ã«å¿œã˜ã¦è‰²å¤‰åŒ–
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 				plane[i][j]->PlaneColorChange(IsChange, IsComboColorChange);
 				IsChange = !IsChange;
@@ -261,7 +261,7 @@ void AreaManager::PlaneFinalize()
 }
 #pragma endregion
 
-#pragma region •Ç
+#pragma region å£
 void AreaManager::RandamAreaWallsInitialize()
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
@@ -306,7 +306,7 @@ void AreaManager::CVSAreaWallsInitialize()
 }
 void AreaManager::WallUpdate()
 {
-	//’n–Ê
+	//åœ°é¢
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			if(Wall[i][j] == nullptr) continue;
@@ -353,34 +353,34 @@ void AreaManager::WallFinalize()
 }
 #pragma endregion
 
-#pragma region ”j‰ó•s‰Â•Ç
+#pragma region ç ´å£Šä¸å¯å£
 void AreaManager::RandamAreaIndestructibleWallInitialize()
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 	for(int i = 0; i <DIV_NUM; i++){
-		//ã
+		//ä¸Š
 		IndestructibleWalls[0][i] = new IndestructibleWall();
 		IndestructibleWalls[0][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos + i, startPos - 1};
 		pos*=Block_Size;
 		IndestructibleWalls[0][i]->SetPosition({pos.x, -3,pos.y});
 		IndestructibleWalls[0][i]->CaveLightOn();
-		//‰º
+		//ä¸‹
 		IndestructibleWalls[1][i] = new IndestructibleWall();
 		IndestructibleWalls[1][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos + i, DIV_NUM_HALF_FLOAT+1};
 		pos*=Block_Size;
 		IndestructibleWalls[1][i]->SetPosition({pos.x, -3,pos.y});
 		IndestructibleWalls[1][i]->CaveLightOn();
-		////¶
+		////å·¦
 		IndestructibleWalls[2][i] = new IndestructibleWall();
 		IndestructibleWalls[2][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {startPos - 1, startPos + i};
 		pos*=Block_Size;
 		IndestructibleWalls[2][i]->SetPosition({pos.x, -3,pos.y});
 		IndestructibleWalls[2][i]->CaveLightOn();
-		////‰E
+		////å³
 		IndestructibleWalls[3][i] = new IndestructibleWall();
 		IndestructibleWalls[3][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 		pos = {DIV_NUM_HALF_FLOAT+1, startPos + i};
@@ -410,7 +410,7 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 }
 void AreaManager::IndestructibleWallUpdate()
 {
-	//’n–Ê
+	//åœ°é¢
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			if(IndestructibleWalls[i][j] == nullptr) continue;
@@ -447,7 +447,7 @@ void AreaManager::IndestructibleWallFinalize()
 }
 #pragma endregion
 
-#pragma region ƒ_ƒ“ƒWƒ‡ƒ“©“®¶¬
+#pragma region ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³è‡ªå‹•ç”Ÿæˆ
 void AreaManager::CreateMap()
 {
 	for(int y = 0; y < DIV_NUM; y++){
@@ -465,44 +465,44 @@ AreaManager::Room AreaManager::DevideRoom(Area area, bool hr)
 	}
 
 	if(!hr){
-		//—Ìˆæ‚Ì‚‚³ 1/3~2/3‚Ì”ÍˆÍ‚Åƒ‰ƒ“ƒ_ƒ€
+		//é ˜åŸŸã®é«˜ã• 1/3~2/3ã®ç¯„å›²ã§ãƒ©ãƒ³ãƒ€ãƒ 
 		//24 : 1/3 = 8, 2/3 = 16
-		//•ªŠ„ƒ‰ƒCƒ“…•½
+		//åˆ†å‰²ãƒ©ã‚¤ãƒ³æ°´å¹³
 		int divline = static_cast<int>(floor(area.Height/3 + rand()%(area.Height/3)));
 
-		//e(ã)
+		//è¦ª(ä¸Š)
 		Area parent = {area.X,area.Y, area.Width,divline};
-		//q(‰º)
+		//å­(ä¸‹)
 		Area child = {area.X,area.Y+divline, area.Width,area.Height-divline};
 
-		//e—Ìˆæ‚É•”‰®ì¬
+		//è¦ªé ˜åŸŸã«éƒ¨å±‹ä½œæˆ
 		Room parentRoom = CreateRoom(parent);
-		//q—Ìˆæ‚É•”‰®ì¬
+		//å­é ˜åŸŸã«éƒ¨å±‹ä½œæˆ
 		Room childRoom = DevideRoom(child, !hr);
 
-		//’Ê˜HŠJ‘ñ
+		//é€šè·¯é–‹æ‹“
 		ConnectRoom(parentRoom, childRoom, divline, hr);
 
 		return parentRoom;
 	}
 	else if(hr){
-		//—Ìˆæ‚Ì‚‚³ 1/3~2/3‚Ì”ÍˆÍ‚Åƒ‰ƒ“ƒ_ƒ€
+		//é ˜åŸŸã®é«˜ã• 1/3~2/3ã®ç¯„å›²ã§ãƒ©ãƒ³ãƒ€ãƒ 
 		//48 : 1/3 = 16, 2/3 = 32
-		//•ªŠ„ƒ‰ƒCƒ“…•½
+		//åˆ†å‰²ãƒ©ã‚¤ãƒ³æ°´å¹³
 		//int divline = rand()%(area.Width/3)+ area.Width/3;
 		int divline = static_cast<int>(floor(area.Width/3 + rand()%(area.Width/3)));
 
-		//e(ã)
+		//è¦ª(ä¸Š)
 		Area parent = {area.X,area.Y, divline,area.Height};
-		//q(‰º)
+		//å­(ä¸‹)
 		Area child = {area.X+divline,area.Y, area.Width-divline,area.Height};
 
-		//e—Ìˆæ‚É•”‰®ì¬
+		//è¦ªé ˜åŸŸã«éƒ¨å±‹ä½œæˆ
 		Room parentRoom = CreateRoom(parent);
-		//q—Ìˆæ‚É•”‰®ì¬
+		//å­é ˜åŸŸã«éƒ¨å±‹ä½œæˆ
 		Room childRoom = DevideRoom(child, !hr);
 
-		//’Ê˜HŠJ‘ñ
+		//é€šè·¯é–‹æ‹“
 		ConnectRoom(parentRoom, childRoom, divline, hr);
 
 		return parentRoom;
@@ -511,25 +511,25 @@ AreaManager::Room AreaManager::DevideRoom(Area area, bool hr)
 }
 AreaManager::Room AreaManager::CreateRoom(Area area)
 {
-//”ÍˆÍ“à‚Åƒ‰ƒ“ƒ_ƒ€‚É4“_‚ğæ“¾
+//ç¯„å›²å†…ã§ãƒ©ãƒ³ãƒ€ãƒ ã«4ç‚¹ã‚’å–å¾—
 	int X1 = rand()%(area.Width) + area.X;
 	int X2 = rand()%(area.Width) + area.X;
 	int Y1 = rand()%(area.Height) + area.Y;
 	int Y2 = rand()%(area.Height) + area.Y;
 
-	//X‚Ìn“_A¬‚³‚¢‚Ù‚¤
+	//Xã®å§‹ç‚¹ã€å°ã•ã„ã»ã†
 	int X = min(X1,X2);
-	//·•ª‚ª•
+	//å·®åˆ†ãŒå¹…
 	int W = abs(X1 - X2) + 2;
-	//Y‚Ìn“_A¬‚³‚¢‚Ù‚¤
+	//Yã®å§‹ç‚¹ã€å°ã•ã„ã»ã†
 	int Y = min(Y1,Y2);
-	//·•ª‚ª‚‚³
+	//å·®åˆ†ãŒé«˜ã•
 	int H = abs(Y1 - Y2) + 2;
 
 	Room room = {X,Y,W,H};
 	rooms.push_back(room);
 
-	//ƒ}ƒbƒv‚É”½‰f
+	//ãƒãƒƒãƒ—ã«åæ˜ 
 	for(int y = 0; y < H; y++){
 		for(int x = 0; x < W; x++){
 			WallMap[Y + y][X + x] = 'A';
@@ -541,47 +541,47 @@ AreaManager::Room AreaManager::CreateRoom(Area area)
 void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 {
 	if(hr){
-		//e•”‰®‚È‚¢‚©‚çƒ‰ƒ“ƒ_ƒ€‚Éˆê“_‚ğ‘I‘ğ
+		//è¦ªéƒ¨å±‹ãªã„ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã«ä¸€ç‚¹ã‚’é¸æŠ
 		int X1 = parent.X + rand()%parent.Width;
-		//q•”‰®
+		//å­éƒ¨å±‹
 		int X2 = childRoom.X + rand()%childRoom.Width;
-		//¬‚³‚¢
+		//å°ã•ã„
 		int minX = min(X1,X2);
-		//‘å‚«‚¢
+		//å¤§ãã„
 		int maxX = max(X1,X2);
 
-		//ƒ}ƒbƒv‚É•ªŠ„ƒ‰ƒCƒ“ã‚Ì’Ê˜Hì¬
+		//ãƒãƒƒãƒ—ã«åˆ†å‰²ãƒ©ã‚¤ãƒ³ä¸Šã®é€šè·¯ä½œæˆ
 		for(int i = 0; minX + i <= maxX; i++){
 			WallMap[divline][minX + i] = 'A';
 		}
-		//•ªŠ„ƒ‰ƒCƒ“‚©‚çe•”‰®‚Ö‚Ì’Ê˜H
+		//åˆ†å‰²ãƒ©ã‚¤ãƒ³ã‹ã‚‰è¦ªéƒ¨å±‹ã¸ã®é€šè·¯
 		for(int i = 1; WallMap[divline-i][X1] == '*'; i++){
 			WallMap[divline-i][X1] = 'A';
 		}
-		//q•”‰®‚Ö
+		//å­éƒ¨å±‹ã¸
 		for(int i = 1; WallMap[divline+i][X2] == '*'; i++){
 			WallMap[divline+i][X2] = 'A';
 		}
 	}
 	else if(!hr){
-		//e•”‰®‚È‚¢‚©‚çƒ‰ƒ“ƒ_ƒ€‚Éˆê“_‚ğ‘I‘ğ
+		//è¦ªéƒ¨å±‹ãªã„ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã«ä¸€ç‚¹ã‚’é¸æŠ
 		int Y1 = parent.Y + rand()%parent.Height;
-		//q•”‰®
+		//å­éƒ¨å±‹
 		int Y2 = childRoom.Y + rand()%childRoom.Height;
-		//¬‚³‚¢
+		//å°ã•ã„
 		int minY = min(Y1,Y2);
-		//‘å‚«‚¢
+		//å¤§ãã„
 		int maxY = max(Y1,Y2);
 
-		//ƒ}ƒbƒv‚É•ªŠ„ƒ‰ƒCƒ“ã‚Ì’Ê˜Hì¬
+		//ãƒãƒƒãƒ—ã«åˆ†å‰²ãƒ©ã‚¤ãƒ³ä¸Šã®é€šè·¯ä½œæˆ
 		for(int i = 0; minY + i <= maxY; i++){
 			WallMap[minY + i][divline] = 'A';
 		}
-		//•ªŠ„ƒ‰ƒCƒ“‚©‚çe•”‰®‚Ö‚Ì’Ê˜H
+		//åˆ†å‰²ãƒ©ã‚¤ãƒ³ã‹ã‚‰è¦ªéƒ¨å±‹ã¸ã®é€šè·¯
 		for(int i = 1; WallMap[Y1][divline-i] == '*'; i++){
 			WallMap[Y1][divline-i] = 'A';
 		}
-		//q•”‰®‚Ö
+		//å­éƒ¨å±‹ã¸
 		for(int i = 1; WallMap[Y2][divline+i] == '*'; i++){
 			WallMap[Y2][divline+i] = 'A';
 		}
@@ -589,22 +589,22 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 }
 #pragma endregion
 
-#pragma region CSVƒf[ƒ^ ƒ_ƒ“ƒWƒ‡ƒ“¶¬
+#pragma region CSVãƒ‡ãƒ¼ã‚¿ ãƒ€ãƒ³ã‚¸ãƒ§ãƒ³ç”Ÿæˆ
 void AreaManager::CSVMapDataLoad(string fullPath)
 {
 	string directoryPath = "Resources/CSVData/";
 	string csv = ".csv";
-	//fileŠJ‚­
+	//fileé–‹ã
 	ifstream file;
 	string Path = directoryPath + fullPath + csv;
 	file.open(Path);
 	assert(file.is_open());
 
-	//file”|—{‚ğ•¶š—ñƒXƒgƒŠ[ƒ€‚ÉƒRƒs[
+	//fileåŸ¹é¤Šã‚’æ–‡å­—åˆ—ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ã‚³ãƒ”ãƒ¼
 	csvCommands << file.rdbuf();
 	file.close();
 
-	//ˆês•ª‚Ì•¶š—ñ‚ğ“ü‚ê‚é•Ï”
+	//ä¸€è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 	string line;
 	int y = 0;
 	int x = 0;
@@ -612,15 +612,15 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 	float start = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
 
-	//ƒRƒ}ƒ“ƒhƒ‹[ƒv
+	//ã‚³ãƒãƒ³ãƒ‰ãƒ«ãƒ¼ãƒ—
 	while(getline(csvCommands, line)){
-		//ˆês•ª‚Ì‚Á•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­
+		//ä¸€è¡Œåˆ†ã®ã£æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ã
 		istringstream line_stream(line);
 
 		string word;
 		string area;
 
-		//‹æØ‚è‚Ås‚Ì‘K“’•¶š—ñæ“¾
+		//åŒºåˆ‡ã‚Šã§è¡Œã®éŠ­æ¹¯æ–‡å­—åˆ—å–å¾—
 		getline(line_stream, word, ',');
 
 		x = 0;
@@ -699,7 +699,7 @@ bool AreaManager::GetCSVObjectPopActive(int index, bool IsFlag)
 }
 #pragma endregion
 
-#pragma region ƒ‰ƒ“ƒ_ƒ€¶¬
+#pragma region ãƒ©ãƒ³ãƒ€ãƒ ç”Ÿæˆ
 void AreaManager::ObjectRandomPop()
 {
 	int roomSize = (int)rooms.size();
@@ -707,9 +707,9 @@ void AreaManager::ObjectRandomPop()
 	Vector2 areaWH;
 
 	float start = -DIV_NUM_HALF_FLOAT;
-	//oŒû
+	//å‡ºå£
 	int exitRoomsNum = rand()%roomSize;
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	int playerRoomsNum = rand()%roomSize;
 
 	//exit

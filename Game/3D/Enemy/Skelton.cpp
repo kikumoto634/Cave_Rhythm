@@ -1,4 +1,4 @@
-#include "Skelton.h"
+ï»¿#include "Skelton.h"
 #include "../../Collision/SphereCollider.h"
 #include "../../../Engine/base/ParticleManager.h"
 
@@ -20,17 +20,17 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 	world.UpdateMatrix();
 
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
 	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
-	//‹…ƒRƒ‰ƒCƒ_[æ“¾
+	//çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
 	sphereCollider = dynamic_cast<SphereCollider*>(collider);
 	assert(sphereCollider);
 	collider->Update();
 	sphereCollider->Update();
 
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	DeadParticle = new ParticleObject();
 	DeadParticle->Initialize();
 	PopParticle = new ParticleObject();
@@ -42,7 +42,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 	this->camera = camera;
 	if(!IsNotApp) return;
 
-	//‹——£Œv‘ª
+	//è·é›¢è¨ˆæ¸¬
 	Vector3 pos = playerPos - world.translation;
 	distance = pos.length();
 	if(IsCaveLight){
@@ -64,7 +64,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 		IsInvisible = true;
 	}
 
-	//oŒ»
+	//å‡ºç¾
 	if(IsPop){
 		if(IsBeatEnd){
 			popCount++;
@@ -83,7 +83,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 	PopParticleApp();
 	PopParticle->Update(this->camera);
 
-	//€–S
+	//æ­»äº¡
 	if(IsDead && !IsPop){
 		if(IsDeadOnceAudio){
 			IsDeadOnceAudio = false;
@@ -100,18 +100,18 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 	DeadParticle->Update(this->camera);
 
 	if(IsInvisible) return;
-	//¶‘¶
+	//ç”Ÿå­˜
 	if(!IsDead && !IsPop){
-		//”I—¹
+		//æ‹çµ‚äº†
 		if(IsBeatEnd){
-			//ƒXƒP[ƒ‹
+			//ã‚¹ã‚±ãƒ¼ãƒ«
 			IsScaleEasing  = true;
-			//”I—¹
+			//æ‹çµ‚äº†
 			IsBeatEnd = false;
 
-			//‘Ò‹@ƒJƒEƒ“ƒg
+			//å¾…æ©Ÿã‚«ã‚¦ãƒ³ãƒˆ
 			if(waitCount >= WaitCount){
-				//ˆÚ“®
+				//ç§»å‹•
 				IsMoveEasing = true;
 				targetPos = playerPos;
 				Movement();
@@ -124,7 +124,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 			}
 		}
 
-		//ˆÚ“®
+		//ç§»å‹•
 		if(IsMoveEasing){
 			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 		
@@ -143,14 +143,14 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 		ray.dir = {RayDir.x, RayDir.y, RayDir.z, 0};
 		RaycastHit raycastHit;
 		if(IsMoveEasing){
-			//ƒXƒ€[ƒY‚Éâ‚ğ‰º‚éˆ×‚Ì‹z’…‹——£
+			//ã‚¹ãƒ ãƒ¼ã‚ºã«å‚ã‚’ä¸‹ã‚‹ç‚ºã®å¸ç€è·é›¢
 			const float adsDistance = 0.1f;
 			if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 				movePosition = OldPosition;
 			}
 		}
 
-		//ƒXƒP[ƒ‹‘JˆÚ
+		//ã‚¹ã‚±ãƒ¼ãƒ«é·ç§»
 		if(IsScaleEasing){
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsScaleEasing = false;
@@ -252,28 +252,28 @@ void Skelton::Movement()
 	float sita = acosf(cos);
 	sita = sita*(180/3.14159265f);
 	
-	//‰E
+	//å³
 	if(sita >= 135){
 		movePosition = world.translation + Vector3{2.f,0,0};
 		SetRotation({0,XMConvertToRadians(90),0});
 		RayDir = {1,0,0};
 	}
-	//¶
+	//å·¦
 	else if(45 >= sita){
 		movePosition = world.translation + Vector3{-2.f,0,0};
 		SetRotation({0,XMConvertToRadians(-90),0});
 		RayDir = {-1,0,0};
 	}
-	//‰º
+	//ä¸‹
 	else if(sita > 45 && 135 > sita){
 
-		//‰º
+		//ä¸‹
 		if(subVector.y > 0){
 			movePosition = world.translation + Vector3{0,0,-2.f};
 			SetRotation({0,XMConvertToRadians(180),0});
 			RayDir = {0,0,-1};
 		}
-		//ã
+		//ä¸Š
 		else if(subVector.y < 0){
 			movePosition = world.translation + Vector3{0,0,2.f};
 			SetRotation({0,0,0});
@@ -286,7 +286,7 @@ void Skelton::PopParticleApp()
 {
 	for (int i = 0; i < 10; i++) {
 
-		//©g‚ÌÀ•W‚ğ²‚É[-1, 1]ƒ‰ƒ“ƒ_ƒ€
+		//è‡ªèº«ã®åº§æ¨™ã‚’è»¸ã«[-1, 1]ãƒ©ãƒ³ãƒ€ãƒ 
 		const Vector3 rnd_pos = PopParticlePos;
 		const float range = 1.5f;
 		Vector3 pos{};

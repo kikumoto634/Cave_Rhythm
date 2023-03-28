@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "../Engine/audio/Audio.h"
 
 SceneManager* SceneManager::instance = nullptr;
@@ -46,7 +46,7 @@ void SceneManager::Update()
 			delete scene;
 		}
 
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 		scene = nextScene;
 
 #ifdef _DEBUG
@@ -56,10 +56,10 @@ void SceneManager::Update()
 
 		nextScene = nullptr;
 
-		//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[ƒZƒbƒg
+		//ã‚·ãƒ¼ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚»ãƒƒãƒˆ
 		scene->SetSceneManager(this);
 
-		//‰Šú‰»
+		//åˆæœŸåŒ–
 		scene->Application();
 		scene->Initialize();
 		Audio::GetInstance()->Initialize();

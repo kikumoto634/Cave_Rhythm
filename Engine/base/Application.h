@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Window.h"
 #include "DirectXCommon.h"
 
@@ -31,14 +31,14 @@
 class Application
 {
 private:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 	static Application* app;
 
 	Application();
 	~Application();
 
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“(Application‚ğ•¡”‚ÂˆÓ–¡‚Í‚È‚¢‚½‚ßA’Pˆê‚Ì‘¶İ)
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³(Applicationã‚’è¤‡æ•°æŒã¤æ„å‘³ã¯ãªã„ãŸã‚ã€å˜ä¸€ã®å­˜åœ¨)
 	static Application* GetInstance();
 	static void Delete();
 
@@ -51,7 +51,7 @@ private:
 	void Draw();
 
 private:
-#pragma region ”Ä—p‹@”\
+#pragma region æ±ç”¨æ©Ÿèƒ½
 	Window* window;
 	DirectXCommon* dxCommon;
 #pragma endregion

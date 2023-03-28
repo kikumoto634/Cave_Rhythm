@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/math/Vector/Vector3.h"
 
 #include <DirectXMath.h>
@@ -13,19 +13,19 @@ public:
 	void UpdateProjectionMatrix(int width, int height);
 
 public:
-	//ƒrƒ‹ƒ{[ƒhs—ñ
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	static XMMATRIX matBillboard;
-	//Y²ü‚èƒrƒ‹ƒ{[ƒhs—ñ
+	//Yè»¸å‘¨ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	static XMMATRIX matBillboardY;
 
-	//ƒJƒƒ‰î•ñ
-	//“§‹“Š‰e
-	XMMATRIX matProjection;	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-	//ƒrƒ…[•ÏŠ·s—ñ
-	XMMATRIX matView;		//ƒrƒ…[s—ñ
-	Vector3 eye;			//‹“_À•W
-	Vector3 target;		//’‹“_À•W
-	Vector3 up;			//ã•ûŒüƒxƒNƒgƒ‹
+	//ã‚«ãƒ¡ãƒ©æƒ…å ±
+	//é€è¦–æŠ•å½±
+	XMMATRIX matProjection;	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+	//ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—
+	XMMATRIX matView;		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
+	Vector3 eye;			//è¦–ç‚¹åº§æ¨™
+	Vector3 target;		//æ³¨è¦–ç‚¹åº§æ¨™
+	Vector3 up;			//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 
 	XMMATRIX matViewProjection;
 };

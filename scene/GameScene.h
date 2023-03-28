@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseBattleScene.h"
 
 #include "../Game/3D/Enemy/BlueSlime.h"
@@ -11,12 +11,12 @@ public:
 	struct FloorInfo{
 		int needCoin;
 
-		//ƒGƒlƒ~[¶¬”
+		//ã‚¨ãƒãƒŸãƒ¼ç”Ÿæˆæ•°
 		int slimne;
 		int skelton;
 	};
 
-//’è”
+//å®šæ•°
 private:
 	FloorInfo one	= {3,  10,5};
 	FloorInfo two	= {5,  8, 7};
@@ -24,7 +24,7 @@ private:
 	FloorInfo four	= {10, 2,13};
 
 
-	//ƒ|ƒbƒvƒJƒEƒ“ƒg
+	//ãƒãƒƒãƒ—ã‚«ã‚¦ãƒ³ãƒˆ
 	const int PopCount = 3;
 
 public:
@@ -33,28 +33,28 @@ public:
 	GameScene(DirectXCommon* dxCommon, Window* window, int saveHP = 5, int floorValue = 1);
 
 private:
-//ƒV[ƒ“‘JˆÚ
+//ã‚·ãƒ¼ãƒ³é·ç§»
 	void NextSceneChange() override;
 	void SceneGameEnd() override;
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void AddCommonInitialize() override;
 	void AddObject3DInitialize() override;
 	void AddObject2DInitialize() override;
 
-	//XV
+	//æ›´æ–°
 	void AddCommonUpdate() override;
 	void AddObject3DUpdate() override;
 	void AddObject2DUpdate() override;
 	void AddBeatEndUpdate() override;
 
-	//•`‰æ
+	//æç”»
 	void AddObject3DDraw() override;
 	void AddParticleDraw() override;
 	void AddFrontUIDraw() override;
 	void AddBackUIDraw() override;
 
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	void AddObjectFinalize() override;
 	void AddCommonFinalize() override;
 
@@ -63,10 +63,10 @@ private:
 	void ActorCreateInitialize();
 
 private:
-	//•K—vƒRƒCƒ“
+	//å¿…è¦ã‚³ã‚¤ãƒ³
 	int needCoin = 10;
 
-	//ƒ|ƒbƒvƒJƒEƒ“ƒg
+	//ãƒãƒƒãƒ—ã‚«ã‚¦ãƒ³ãƒˆ
 	int popCount = 0;
 
 	int slimePopNumMax = 5;

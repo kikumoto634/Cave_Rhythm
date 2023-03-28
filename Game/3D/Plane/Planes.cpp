@@ -1,4 +1,4 @@
-#include "Planes.h"
+ï»¿#include "Planes.h"
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 
 Planes::~Planes()
@@ -36,10 +36,10 @@ void Planes::Update(Camera *camera)
 		IsHide = true;
 
 		if(!IsCollision){
-			//ƒRƒ‰ƒCƒ_[’Ç‰Á
+			//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¿½åŠ 
 			MeshCollider* collider = new MeshCollider;
 			SetCollider(collider);
-			//‘®«ƒZƒbƒg
+			//å±æ€§ã‚»ãƒƒãƒˆ
 			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
 			collider->ConstructTriangles(model);
 			IsCollision = true;
@@ -50,7 +50,7 @@ void Planes::Update(Camera *camera)
 
 		if(IsCollision){
 			if(collider){
-				//ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ[‚©‚ç“o˜^‚ğ‰ğœ‚·‚é
+				//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç™»éŒ²ã‚’è§£é™¤ã™ã‚‹
 				CollisionManager::GetInstance()->RemoveCollider(collider);
 			}
 			IsCollision = false;
@@ -59,12 +59,12 @@ void Planes::Update(Camera *camera)
 	
 	if(!IsHide) return;
 
-	//”I‚í‚è
+	//æ‹çµ‚ã‚ã‚Šæ™‚
 	if(IsBeatEnd){
 		
-		//ƒvƒŒƒCƒ„[ÚG
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ¥è§¦æ™‚
 		if(IsPlayerContact){
-			//ƒTƒCƒY•ÏX
+			//ã‚µã‚¤ã‚ºå¤‰æ›´
 			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 				IsPlayerContact = false;
 				IsBeatEnd = false;

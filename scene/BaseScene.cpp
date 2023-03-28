@@ -1,4 +1,4 @@
-#include "BaseScene.h"
+ï»¿#include "BaseScene.h"
 
 using namespace std;
 
@@ -16,28 +16,28 @@ void BaseScene::Application()
 
 void BaseScene::Initialize()
 {
-	//Input‰Šú‰»
+	//InputåˆæœŸåŒ–
 	input->Initialize(window->GetHwnd());
 
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	camera->Initialize(window);
 }
 
 void BaseScene::Update()
 {
-	//“ü—Íî•ñXV
+	//å…¥åŠ›æƒ…å ±æ›´æ–°
 	input->Update();
 
 #ifdef _DEBUG
 	{
-		//À•W
+		//åº§æ¨™
 		ImGui::SetNextWindowPos(ImVec2{0,40});
-		//ƒTƒCƒY
+		//ã‚µã‚¤ã‚º
 		ImGui::SetNextWindowSize(ImVec2{300,55});
 		ImGui::Begin("Demo");
-		//ƒfƒ‚ƒEƒBƒ“ƒhƒE 
+		//ãƒ‡ãƒ¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ 
 		ImGui::Checkbox("demoWindow", &show_demo_window);
-		//ƒtƒ‰ƒO‚É‚æ‚éoŒ»•¨
+		//ãƒ•ãƒ©ã‚°ã«ã‚ˆã‚‹å‡ºç¾ç‰©
 		if(show_demo_window)	ImGui::ShowDemoWindow(&show_demo_window);
 		ImGui::End();
 	}
@@ -46,8 +46,8 @@ void BaseScene::Update()
 
 void BaseScene::EndUpdate()
 {
-#pragma region ”Ä—p‹@”\XV
-	//ƒJƒƒ‰
+#pragma region æ±Žç”¨æ©Ÿèƒ½æ›´æ–°
+	//ã‚«ãƒ¡ãƒ©
 	camera->Update();
 #pragma endregion
 }

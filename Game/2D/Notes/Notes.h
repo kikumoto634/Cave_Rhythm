@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseSprites.h"
 
 class Notes : public BaseSprites
@@ -7,16 +7,16 @@ protected:
 	const Vector2 L_Start_Pos = {1288,600};
 	const Vector2 R_Start_Pos = {-8,600};
 
-	//ƒC[ƒWƒ“ƒO–Ú•W’n
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç›®æ¨™åœ°
 	const Vector2 L_End_Pos = {650,600};
 	const Vector2 R_End_Pos = {630,600};
-	//ƒm[ƒcíœˆÊ’u
+	//ãƒãƒ¼ãƒ„å‰Šé™¤ä½ç½®
 	const Vector2 Delete_Pos = {640,600};
 
 	const Vector2 Notes_Size = {32,80};
 	const Vector2 Notes_Anc = {0.5,0.5};
 
-	//“§‰ß—¦•Ï‰»ŠÔ
+	//é€éç‡å¤‰åŒ–æ™‚é–“
 	const float AlphaMaxTime = 0.5f;
 
 public:
@@ -35,24 +35,24 @@ public:
 	inline bool GetIsNoteAlive()	{return IsNoteAlive;}
 
 protected:
-	//¶‘¶
+	//ç”Ÿå­˜
 	bool IsNoteAlive = false;
-	//’â~
+	//åœæ­¢
 	bool IsMoveStop = false;
 
-	//“§‰ß—¦•Ï‰»ŠÔ
+	//é€éç‡å¤‰åŒ–æ™‚é–“
 	float curAlphaFrame = 0.f;
 
 
-	//ˆÚ“®—pƒ^ƒCƒ€
+	//ç§»å‹•ç”¨ã‚¿ã‚¤ãƒ 
 	float curBeatTime = 0;
-	//ˆÚ“®ŠÔ
+	//ç§»å‹•æ™‚é–“
 	float easingTime = 0;
 
-	//ƒC[ƒWƒ“ƒOÀ•W
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°åº§æ¨™
 	Vector2 easingPos = {};
 
-	//ˆÚ“®‘¬“x
+	//ç§»å‹•é€Ÿåº¦
 	float easingSp = 0;
 };
 

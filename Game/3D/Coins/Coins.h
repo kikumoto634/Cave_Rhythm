@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 
 class Coins : public BaseObjObject
@@ -10,42 +10,42 @@ public:
 	~Coins();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// “–‚½‚è”»’è
+	/// å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
 	void OnCollision(const CollisionInfo& info) override;
 
 	/// <summary>
-	/// oŒ»
+	/// å‡ºç¾
 	/// </summary>
 	void Pop(Vector3 pos);
 
 	/// <summary>
-	/// oŒ»‰Â”\
+	/// å‡ºç¾å¯èƒ½
 	/// </summary>
 	bool PopPossible();
 	
 	/// <summary>
-	/// ƒRƒCƒ“Šl“¾
+	/// ã‚³ã‚¤ãƒ³ç²å¾—
 	/// </summary>
 	bool GetCoin();
 
@@ -53,16 +53,16 @@ public:
 	bool GetIsAlive() {return IsAlive;}
 
 private:
-	//oŒ»
+	//å‡ºç¾
 	bool IsAlive = false;
 
-	//Šl“¾
+	//ç²å¾—
 	bool IsGet = false;
 
-	//Á¸‚ÌÀ•W
+	//æ¶ˆå¤±æ™‚ã®åº§æ¨™
 	Vector3 DeadPos = {50,50,50};
 
-	//ƒƒXƒgŠÔ(ƒr[ƒg”‚Åˆ—)
+	//ãƒ­ã‚¹ãƒˆæ™‚é–“(ãƒ“ãƒ¼ãƒˆæ•°ã§å‡¦ç†)
 	int lostBeat = 0;
 };
 

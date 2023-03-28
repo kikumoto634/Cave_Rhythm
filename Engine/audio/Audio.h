@@ -1,50 +1,50 @@
-#pragma once
+ï»¿#pragma once
 #include <xaudio2.h>
 #include <wrl.h>
 #include <map>
 #include <string>
 
 /// <summary>
-/// ƒTƒEƒ“ƒhÄ¶ŠÇ—
+/// ã‚µã‚¦ãƒ³ãƒ‰å†ç”Ÿç®¡ç†
 /// </summary>
 class Audio
 {
-public://1ƒGƒCƒŠƒAƒX
+public://1ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	template<class T1, class T2> using map = std::map<T1,T2>;
 
-public://ƒCƒ“ƒi[ƒNƒ‰ƒX
-	//ƒ`ƒƒƒ“ƒNƒwƒbƒ_[
+public://ã‚¤ãƒ³ãƒŠãƒ¼ã‚¯ãƒ©ã‚¹
+	//ãƒãƒ£ãƒ³ã‚¯ãƒ˜ãƒƒãƒ€ãƒ¼
 	struct ChunkHeader
 	{
-		char id[4];//ƒ`ƒƒƒ“ƒN–ˆ‚ÌID
-		int size;	//ƒ`ƒƒƒ“ƒNƒTƒCƒY
+		char id[4];//ãƒãƒ£ãƒ³ã‚¯æ¯ã®ID
+		int size;	//ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
 	};
-	//RIFFƒwƒbƒ_ƒ`ƒFƒbƒN
+	//RIFFãƒ˜ãƒƒãƒ€ãƒã‚§ãƒƒã‚¯
 	struct RiffHeader
 	{
 		ChunkHeader chunk;	//"RIFF"
 		char type[4];	//"WAVE"
 	};
-	//FMTƒ`ƒFƒbƒN
+	//FMTãƒã‚§ãƒƒã‚¯
 	struct FormatChunk
 	{
 		ChunkHeader chunk;	//"fmt"
-		WAVEFORMATEX fmt;	//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		WAVEFORMATEX fmt;	//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	};
 
-	//‰¹ºƒf[ƒ^
+	//éŸ³å£°ãƒ‡ãƒ¼ã‚¿
 	struct SoundData
 	{
-		//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		WAVEFORMATEX wfex{};
-		//”gŒ`ƒf[ƒ^
+		//æ³¢å½¢ãƒ‡ãƒ¼ã‚¿
 		char* pBuffer;
-		//”gŒ`ƒf[ƒ^‚ÌƒTƒCƒY
+		//æ³¢å½¢ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚º
 		unsigned int dataSize;
 	};
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	static void Load(UINT number, std::string filename);
 
@@ -53,31 +53,31 @@ public://ƒƒ“ƒoŠÖ”
 	~Audio();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	/// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="number">ƒTƒEƒ“ƒh”Ô†</param>
-	/// <param name="filename">wavƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="number">ã‚µã‚¦ãƒ³ãƒ‰ç•ªå·</param>
+	/// <param name="filename">wavãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void LoadWave(int number, const char* filename);
 
-	//ƒTƒEƒ“ƒhÄ¶
+	//ã‚µã‚¦ãƒ³ãƒ‰å†ç”Ÿ
 	void PlayWave(int number, float volume = 1.0f, bool IsLoop = false);
 
-private://ƒƒ“ƒo•Ï”
-	//XAudio2‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+private://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//XAudio2ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	IXAudio2* xAudio2 = nullptr;
-	//ƒ}ƒXƒ^[ƒ{ƒCƒX
+	//ãƒã‚¹ã‚¿ãƒ¼ãƒœã‚¤ã‚¹
 	IXAudio2MasteringVoice* masterVoice = nullptr;
-	//”gŒ`ƒf[ƒ^‚Ì˜A‘z”z—ñ
+	//æ³¢å½¢ãƒ‡ãƒ¼ã‚¿ã®é€£æƒ³é…åˆ—
 	map<int, SoundData> soundDatas;
 };
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseScene.h"
 
 class SceneManager
@@ -15,11 +15,11 @@ public:
 	void Draw();
 
 private:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 	static SceneManager* instance;
 
 	BaseScene* scene = nullptr;
-	//ŸƒV[ƒ“
+	//æ¬¡ã‚·ãƒ¼ãƒ³
 	BaseScene* nextScene = nullptr;
 };
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../camera/Camera.h"
 
 #include <string>
@@ -9,24 +9,24 @@ class BaseFbxObjects
 {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Initialize(std::string filePath);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	/// <param name="camera"></param>
-	/// <param name="matBillboard">ƒrƒ‹ƒ{[ƒhŠJn</param>
+	/// <param name="matBillboard">ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰é–‹å§‹</param>
 	virtual void Update(Camera* camera);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	virtual void Finalize();
 

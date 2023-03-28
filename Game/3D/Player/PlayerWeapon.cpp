@@ -1,4 +1,4 @@
-#include "PlayerWeapon.h"
+ï»¿#include "PlayerWeapon.h"
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
@@ -17,11 +17,11 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 
 	object->SetColor({1.0f,1.0f,1.0f,1.0f});
 
-	//ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	float radius = 0.6f;
-	//”¼Œa•¶‚¾‚¯‘«Œ³‚©‚ç•‚‚¢‚½À•W‚ð‹…‚Ì’†S‚É‚·‚é
+	//åŠå¾„æ–‡ã ã‘è¶³å…ƒã‹ã‚‰æµ®ã„ãŸåº§æ¨™ã‚’çƒã®ä¸­å¿ƒã«ã™ã‚‹
 	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
-	//“–‚½‚è”»’è‘®«
+	//å½“ãŸã‚Šåˆ¤å®šå±žæ€§
 	collider->SetAttribute(COLLISION_ATTR_WEAPONS);
 }
 
@@ -30,7 +30,7 @@ void PlayerWeapon::Update(Camera *camera)
 	if(!IsAppear) return;
 	this->camera = camera;
 	
-	//¶‘¶ƒtƒŒ[ƒ€
+	//ç”Ÿå­˜ãƒ•ãƒ¬ãƒ¼ãƒ 
 	if(aliveCurrentTime >= AliveTime) {
 		aliveCurrentTime = 0;
 
@@ -42,7 +42,7 @@ void PlayerWeapon::Update(Camera *camera)
 	}
 	world.scale = Easing_Linear_Point2({1,1,1}, {0,0,0},Time_OneWay(aliveCurrentTime, AliveTime));
 
-	//ƒx[ƒXXV
+	//ãƒ™ãƒ¼ã‚¹æ›´æ–°
 	BaseObjObject::Update(this->camera);
 }
 

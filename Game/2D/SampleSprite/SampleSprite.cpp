@@ -1,4 +1,4 @@
-#include "SampleSprite.h"
+﻿#include "SampleSprite.h"
 
 SampleSprite::~SampleSprite()
 {

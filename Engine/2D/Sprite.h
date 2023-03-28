@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <wrl.h>
@@ -9,194 +9,194 @@
 #include "../Engine/math/Vector/Vector3.h"
 
 /// <summary>
-/// ƒXƒvƒ‰ƒCƒg
+/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class Sprite
 {
-public://ƒGƒCƒŠƒAƒX
+public://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	using XMMATRIX = DirectX::XMMATRIX;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 
-public://ƒTƒuƒNƒ‰ƒX
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	class Common{
 		friend class Sprite;
 		friend class PostEffect;
 
 	private:
-		//’¸“_”
+		//é ‚ç‚¹æ•°
 		const int vertNum = 4;
 		//DirectXCommon
 		DirectXCommon* dxCommon = nullptr;
-		//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+		//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		ComPtr<ID3D12PipelineState> pipelinestate;
-		//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+		//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 		ComPtr<ID3D12RootSignature> rootsignature;
-		//Ë‰es—ñ
+		//å°„å½±è¡Œåˆ—
 		XMMATRIX matProjection{};
 
 
-		//ƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 		//TextureManager* textureManager = nullptr;
 
 	public:
 		void InitializeGraphicsPipeline(const std::string& directoryPath);
 	};
 
-	//ƒXƒvƒ‰ƒCƒgƒf[ƒ^\‘¢
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿æ§‹é€ 
 	struct VertexPosUv
 	{
 		Vector3 pos;
 		Vector2 uv;
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì(3D•ÏŠ·s—ñ
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(3Då¤‰æ›è¡Œåˆ—
 	struct ConstBufferData{
-		XMMATRIX mat;	//3D•ÏŠ·s—ñ
-		XMFLOAT4 color;	//F(RGBA)
+		XMMATRIX mat;	//3Då¤‰æ›è¡Œåˆ—
+		XMFLOAT4 color;	//è‰²(RGBA)
 	};
 
-public://Ã“Iƒƒ“ƒoŠÖ”
+public://é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// Ã“Iƒƒ“ƒo‚Ì‰Šú‰»
+	/// é™çš„ãƒ¡ãƒ³ãƒã®åˆæœŸåŒ–
 	/// </summary>
 	static void StaticInitialize(DirectXCommon* dxCommon,
 		int window_width, int window_height, const std::string& directoryPath = "Resources/shader");
 
 	/// <summary>
-	/// Ã“Iƒƒ“ƒo‚Ì‰ğ•ú
+	/// é™çš„ãƒ¡ãƒ³ãƒã®è§£æ”¾
 	/// </summary>
 	static void StaticFinalize();
 
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‚ÌƒZƒbƒg
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="commandList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="commandList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void SetPipelineState();
 
 
 	static Sprite* Create(UINT texNumber, Vector2 pos, XMFLOAT4 color = {1,1,1,1},
 		Vector2 anchorpoint = {0.f,0.f}, bool isFlipX = false, bool isFlipY = false);
 
-protected://Ã“Iƒƒ“ƒo•Ï”
+protected://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 	static Common* common;
 
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	Sprite();
 	Sprite(UINT texnumber, Vector3 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY);
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize(UINT texNumber);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
-	//ƒXƒvƒ‰ƒCƒg’P‘Ì’¸“_ƒoƒbƒtƒ@‚Ì“]‘—
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå˜ä½“é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è»¢é€
 	void SpriteTransferVertexBuffer();
 
 
 	/// <summary>
-	/// À•Wæ“¾
+	/// åº§æ¨™å–å¾—
 	/// </summary>
 	Vector3 GetPosition()	{return position;}
 
 	/// <summary>
-	/// À•Wİ’è
+	/// åº§æ¨™è¨­å®š
 	/// </summary>
 	void SetPosition(Vector2 pos);
 
 	/// <summary>
-	/// ƒTƒCƒYæ“¾
+	/// ã‚µã‚¤ã‚ºå–å¾—
 	/// </summary>
 	Vector2 GetSize()	{return size;}
 
 	/// <summary>
-	/// ƒTƒCƒYİ’è
+	/// ã‚µã‚¤ã‚ºè¨­å®š
 	/// </summary>
 	void SetSize(Vector2 size);
 
 	/// <summary>
-	/// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒgİ’è
+	/// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆè¨­å®š
 	/// </summary>
 	void SetAnchorpoint(Vector2 pos);
 
 	/// <summary>
-	/// Ø‚è”²‚«ƒTƒCƒYİ’è
+	/// åˆ‡ã‚ŠæŠœãã‚µã‚¤ã‚ºè¨­å®š
 	/// </summary>
-	/// <param name="tex_x">¶ãX</param>
-	/// <param name="tex_y">¶ãY</param>
-	/// <param name="tex_width">•</param>
-	/// <param name="tex_height">‚‚³</param>
+	/// <param name="tex_x">å·¦ä¸ŠX</param>
+	/// <param name="tex_y">å·¦ä¸ŠY</param>
+	/// <param name="tex_width">å¹…</param>
+	/// <param name="tex_height">é«˜ã•</param>
 	void SetTextureRect(float tex_x, float tex_y, float tex_width, float tex_height);
 
 	/// <summary>
-	/// ¶‰E”½“]İ’è
+	/// å·¦å³åè»¢è¨­å®š
 	/// </summary>
 	void SetIsFlipX(bool IsFlipX);
 
 	/// <summary>
-	/// ã‰º”½“]İ’è
+	/// ä¸Šä¸‹åè»¢è¨­å®š
 	/// </summary>
 	void SetIsFlipY(bool IsFlipY);
 
 	/// <summary>
-	/// Fİ’è
+	/// è‰²è¨­å®š
 	/// </summary>
 	void SetColor(XMFLOAT4 color);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ”Ô†
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	/// </summary>
 	void SetTexNumber(UINT texNumber);
 
-protected://ƒƒ“ƒo•Ï”
-	///’¸“_ƒoƒbƒtƒ@
+protected://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	///é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuffData;
-	//’¸“_ƒoƒbƒtƒ@ƒ}ƒbƒv
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ—
 	VertexPosUv* vertMap = nullptr;
-	//’è”ƒoƒbƒtƒ@ƒ}ƒbƒv
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ—
 	ConstBufferData* constMap = nullptr;
-	///’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	///é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	//ƒeƒNƒXƒ`ƒƒ”Ô†
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	UINT texNumber = 0;
 
-	//À•W
+	//åº§æ¨™
 	Vector3 position = {0, 0, 0};
-	//Z²ü‚è‚Ì‰ñ“]Šp
+	//Zè»¸å‘¨ã‚Šã®å›è»¢è§’
 	float rotation = 0.f;
-	//‘å‚«‚³
+	//å¤§ãã•
 	Vector2 size = {100, 100};
 
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	Vector2 anchorpoint = {0.0f, 0.0f};
-	//¶‰E”½“]
+	//å·¦å³åè»¢
 	bool IsFlipX = false;
-	//ã‰º”½“]
+	//ä¸Šä¸‹åè»¢
 	bool IsFlipY = false;
-	//ƒeƒNƒXƒ`ƒƒ¶ãÀ•W
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£å·¦ä¸Šåº§æ¨™
 	Vector2 texLeftTop = {0,0};
-	//ƒeƒNƒXƒ`ƒƒØ‚èo‚µƒTƒCƒY
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 	Vector2 texSize = {100, 100};
-	//”ñ•\¦
+	//éè¡¨ç¤º
 	bool IsInvisible = false;
 
-	//ƒ[ƒ‹ƒhs—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 	XMMATRIX matWorld;
 
-	//F
+	//è‰²
 	XMFLOAT4 color = {1, 1, 1, 1};
 
-	//ƒŠƒ\[ƒXî•ñ
+	//ãƒªã‚½ãƒ¼ã‚¹æƒ…å ±
 	D3D12_RESOURCE_DESC resourceDesc;
 };
 

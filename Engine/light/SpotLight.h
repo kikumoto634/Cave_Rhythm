@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 
 #include "../math/Vector/Vector2.h"
@@ -6,13 +6,13 @@
 #include "../math/Vector/Vector4.h"
 
 /// <summary>
-/// ƒXƒ|ƒbƒgƒ‰ƒCƒg
+/// ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 /// </summary>
 class SpotLight
 {
-//ƒTƒuƒNƒ‰ƒX
+//ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 public:
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ 
 	struct ConstBufferData
 	{
 		DirectX::XMVECTOR lightv;
@@ -27,7 +27,7 @@ public:
 		float pad4;
 	};
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 
 	//Getter
@@ -50,18 +50,18 @@ public:
 	}
 	inline void SetActive(bool active)	{this->active = active;}
 
-//ƒƒ“ƒo•Ï”
+//ãƒ¡ãƒ³ãƒå¤‰æ•°
 private:
-	//ƒ‰ƒCƒg•ûŒü
+	//ãƒ©ã‚¤ãƒˆæ–¹å‘
 	DirectX::XMVECTOR lightdir = {1,0,0,0};
-	//ƒ‰ƒCƒgÀ•W
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™
 	Vector3 lightpos = {0,0,0};
-	//ƒ‰ƒCƒgF
+	//ãƒ©ã‚¤ãƒˆè‰²
 	Vector3 lightcolor = {1,1,1};
-	//ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	Vector3 lightAtten = {1.0f, 1.0f, 1.0f};
-	//ƒ‰ƒCƒgŒ¸ŠŠp“x(ŠJnŠp“xAI—¹Šp“x)
+	//ãƒ©ã‚¤ãƒˆæ¸›è¡°è§’åº¦(é–‹å§‹è§’åº¦ã€çµ‚äº†è§’åº¦)
 	Vector2 lightFactorAngleCos = {0.5f, 0.2f};
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active = false;
 };

@@ -1,20 +1,20 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <Windows.h>
 #include <d3d12.h>
 
 #include "../2D/Sprite.h"
 
-//ƒfƒoƒbƒN—p•¶š—ñƒNƒ‰ƒX‚Ì’è‹`
+//ãƒ‡ãƒãƒƒã‚¯ç”¨æ–‡å­—åˆ—ã‚¯ãƒ©ã‚¹ã®å®šç¾©
 class DebugText
 {
 public:
 
-	static const int maxCharCount = 512;	//Å‘å•¶š”
-	static const int fontWidth = 9;			//ƒtƒHƒ“ƒg‰æ‘œ“à1•¶š“à‚Ì‰¡•
-	static const int fontHeight = 18;		//ƒtƒHƒ“ƒg‰æ‘œ“à1•¶š“à‚Ìc•
-	static const int fontLineCount = 14;	//ƒtƒHƒ“ƒg‰æ‘œ“à1s•ª‚Ì•¶š”
-	static const int kBufferSize = 256;		//‘®‚Â‚«•¶š—ñ“WŠJ—pƒoƒbƒtƒ@ƒTƒCƒY
+	static const int maxCharCount = 512;	//æœ€å¤§æ–‡å­—æ•°
+	static const int fontWidth = 9;			//ãƒ•ã‚©ãƒ³ãƒˆç”»åƒå†…1æ–‡å­—å†…ã®æ¨ªå¹…
+	static const int fontHeight = 18;		//ãƒ•ã‚©ãƒ³ãƒˆç”»åƒå†…1æ–‡å­—å†…ã®ç¸¦å¹…
+	static const int fontLineCount = 14;	//ãƒ•ã‚©ãƒ³ãƒˆç”»åƒå†…1è¡Œåˆ†ã®æ–‡å­—æ•°
+	static const int kBufferSize = 256;		//æ›¸å¼ã¤ãæ–‡å­—åˆ—å±•é–‹ç”¨ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 
 	~DebugText();
 
@@ -32,6 +32,6 @@ private:
 	float posY;
 	float scale;
 	const char* text = {};
-	// ‘®•t‚«•¶š—ñ“WŠJ—pƒoƒbƒtƒ@
+	// æ›¸å¼ä»˜ãæ–‡å­—åˆ—å±•é–‹ç”¨ãƒãƒƒãƒ•ã‚¡
 	char buffer[kBufferSize] = {};
 };

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseBattleScene.h"
 
 #include "../Game/3D/Enemy/Boss1.h"
@@ -13,29 +13,29 @@ public:
 	Boss1Area(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
 
 private:
-//ƒV[ƒ“‘JˆÚ
+//ã‚·ãƒ¼ãƒ³é·ç§»
 	void SceneGameEnd()override;
 	void NextSceneChange() override;
 	void SceneChange() override;
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void AddCommonInitialize() override;
 	void AddObject3DInitialize() override;
 	void AddObject2DInitialize() override;
 
-	//XV
+	//æ›´æ–°
 	void AddCommonUpdate() override;
 	void AddObject3DUpdate() override;
 	void AddObject2DUpdate() override;
 	void AddBeatEndUpdate() override;
 
-	//•`‰æ
+	//æç”»
 	void AddObject3DDraw() override;
 	void AddParticleDraw() override;
 	void AddFrontUIDraw() override;
 	void AddBackUIDraw() override;
 
-	//Œãˆ—
+	//å¾Œå‡¦ç†
 	void AddObjectFinalize() override;
 	void AddCommonFinalize() override;
 
@@ -50,34 +50,34 @@ private:
 	void ActorSummon();
 
 private:
-	//ƒGƒlƒ~[
+	//ã‚¨ãƒãƒŸãƒ¼
 	std::unique_ptr<Boss1> boss;
 
 	int skeltonPopNumMax = 10;
 	std::vector<std::unique_ptr<Skelton>> skelton;
 
 	float Block_Size = 2.0f;
-	//“üŒûŠJ•Â
+	//å…¥å£é–‹é–‰
 	bool IsEnterClose = false;
 	int enterBorderLineZ = 0;
 	std::unique_ptr<IndestructibleWall> enterWall[3];
 	Vector3 enterWallBasePos = {-2,-3,-2};
 
-	//oŒûŠJ•Â
+	//å‡ºå£é–‹é–‰
 	bool IsExitOpen = false;
 	std::unique_ptr<IndestructibleWall> exitWall[3];
 	Vector3 exitWallBasePos = {-2,-3,24};
 
-	//ƒ‚ƒfƒ‹
+	//ãƒ¢ãƒ‡ãƒ«
 	ObjModelManager* IndestructibleWallModel = nullptr;
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 
 
-	//ƒQ[ƒ€ŠJn
+	//ã‚²ãƒ¼ãƒ é–‹å§‹
 	bool IsBossStart = false;
 
 
-	//ƒJƒbƒgƒCƒ“Sp
+	//ã‚«ãƒƒãƒˆã‚¤ãƒ³Sp
 	bool IsCutInHide = false;
 	bool IsCutInMoveStart = true;
 	bool IsCutInMoveEnd = false;

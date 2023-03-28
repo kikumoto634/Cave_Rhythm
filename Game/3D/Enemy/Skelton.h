@@ -1,21 +1,21 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../ParticleObject.h"
 #include "../../Collision/SphereCollider.h"
 
 class Skelton : public BaseObjObject
 {
-//’è”
-	//ƒr[ƒgx‰ñ”I—¹‚ÉPOP
+//å®šæ•°
+	//ãƒ“ãƒ¼ãƒˆxå›æ•°çµ‚äº†æ™‚ã«POP
 	const int POP_COUNT = 6;
-	//€–SŒã‚ÌƒŠƒZƒbƒgŠÔ
+	//æ­»äº¡å¾Œã®ãƒªã‚»ãƒƒãƒˆæ™‚é–“
 	const int AppearanceResetFrame = 50;
-	//ˆÚ“®‘Ò‹@
+	//ç§»å‹•å¾…æ©Ÿ
 	const int WaitCount = 2;
 
-	//•`‰æ”ÍˆÍ(”ñ•\¦)
+	//æç”»ç¯„å›²(éè¡¨ç¤º)
 	const int DrawingRange_Not = 11;
-	//•`‰æ”ÍˆÍ(ˆÃ‚ß‚Ì•\¦)
+	//æç”»ç¯„å›²(æš—ã‚ã®è¡¨ç¤º)
 	const int DrawingRange_Half = 7;
 
 public:
@@ -43,46 +43,46 @@ private:
 
 	void Movement();
 
-	//oŒ»—\’èƒGƒtƒFƒNƒg
+	//å‡ºç¾äºˆå®šã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	void PopParticleApp();
-	//€–SƒGƒtƒFƒNƒg
+	//æ­»äº¡ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	void DeadParticleApp();
 
 private:
 
-	//‘Ò‹@ŠÔ
+	//å¾…æ©Ÿæ™‚é–“
 	int waitCount = 0;
 
-	//ƒŒƒC
+	//ãƒ¬ã‚¤
 	Vector3 RayDir = {0,0,1};
 	Vector3 OldPosition = {};
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	SphereCollider* sphereCollider = nullptr;
 	bool IsCollision = true;
 
-	//–¢oŒ»
+	//æœªå‡ºç¾
 	bool IsNotApp = false;
 
 	Vector3 NotAlivePos = {50,50,50};
-	//€–S
+	//æ­»äº¡
 	bool IsDead = false;
 	bool IsDeadOnceAudio = false;
 	bool IsDeadOnceParticle = false;
 	Vector3 DeadParticlePos = {};
 
-	//•œŠˆ
+	//å¾©æ´»
 	int appearancePopFrame = 0;
 
-	//ƒ|ƒbƒv
+	//ãƒãƒƒãƒ—
 	bool IsPop = false;
 	int popCount = 0;
 	Vector3 PopParticlePos = {};
 
-	//‹——£‚É‰‚¶‚½”ñ•\¦
+	//è·é›¢ã«å¿œã˜ãŸéè¡¨ç¤º
 	bool IsInvisible = false;
 	float distance = 0.f;
 
-	//’ÇÕ
+	//è¿½è·¡
 	Vector3 targetPos;
 	bool IsMoveEasing = false;
 	Vector3 currentPos;
@@ -90,13 +90,13 @@ private:
 	const float MoveEasingMaxTime = 0.05f;
 	float moveEasingFrame = 0;
 
-	//ƒXƒP[ƒ‹
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	bool IsScaleEasing = false;
 
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	ParticleObject* PopParticle = nullptr;
 	ParticleObject* DeadParticle = nullptr;
-	//ƒ‰ƒCƒeƒBƒ“ƒO
+	//ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
 	bool IsCaveLight = false;
 };
 

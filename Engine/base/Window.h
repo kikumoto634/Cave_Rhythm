@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include <string>
 
@@ -27,8 +27,8 @@ public:
 
 
 private:
-	HWND hwnd = nullptr;	//ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-	WNDCLASSEX w{};		//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX
+	HWND hwnd = nullptr;	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+	WNDCLASSEX w{};		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹
 	static wchar_t kWindowClassName[];
 
 	std::string name;

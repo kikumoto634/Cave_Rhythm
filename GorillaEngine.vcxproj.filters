@@ -653,6 +653,9 @@
     <ClInclude Include="Game\2D\Combo.h">
       <Filter>ヘッダー ファイル\Game\2D</Filter>
     </ClInclude>
+    <ClInclude Include="Game\3D\Coins\Coins.h">
+      <Filter>ヘッダー ファイル\Game\3D\Coins</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\SpritePS.hlsl">

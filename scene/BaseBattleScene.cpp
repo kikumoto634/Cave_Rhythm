@@ -56,28 +56,17 @@ void BaseBattleScene::Update()
 
 #ifdef _DEBUG
 	if(input->Push(DIK_A)){
-		if(!IsCameraMovementChange)		camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
-		else if(IsCameraMovementChange)	camera->MoveVector({-1.f, 0.f, 0.f});
+		camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
 	}
 	else if(input->Push(DIK_D)){
-		if(!IsCameraMovementChange)		camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
-		else if(IsCameraMovementChange)	camera->MoveVector({1.f, 0.f, 0.f});
+		camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
 	}
 
 	if(input->Push(DIK_W)){
-		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
-		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, 1.f});
+		camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
 	}
 	else if(input->Push(DIK_S)){
-		if(!IsCameraMovementChange)		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
-		else if(IsCameraMovementChange)	camera->MoveVector({0.f, 0.f, -1.f});
-	}
-
-	if(input->Push(DIK_Q)){
-		camera->MoveVector({0.f, 1.f, 0.f});
-	}
-	else if(input->Push(DIK_E)){
-		camera->MoveVector({0.f, -1.f, 0.f});
+		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
 	}
 
 #endif // _DEBUG
@@ -112,8 +101,6 @@ void BaseBattleScene::Update()
 		ImGui::Begin("Camera");
 		//カメラ 回転:false , 移動:true
 		ImGui::Text("Camera");
-		ImGui::Text("true = transform / false = rotation");
-		ImGui::Checkbox("Change", &IsCameraMovementChange);
 		if(ImGui::Button("Shake")){
 			camera->ShakeStart();
 		}
@@ -309,31 +296,6 @@ void BaseBattleScene::Object3DUpdate()
 		Vector2 pos = exit->GetCoinSp()->ChangeTransformation(target, this->camera);
 		exit->SetCoinSpPosition(pos);
 	}
-
-	//カメラ
-	Vector3 cameraPosXZ = camera->GetEye() - camera->GetTarget();
-	float height = cameraPosXZ.y;
-	cameraPosXZ.y = 0.0f;
-	float cameraPosXZLen = cameraPosXZ.length();
-	cameraPosXZ.normalize();
-
-	Vector3 target = player->GetPosition();
-	target.y += 0.0f;
-
-	Vector3 newCameraPos = camera->GetTarget() - target;
-	newCameraPos.y = 50.0f;
-	newCameraPos.normalize();
-
-	float weight = 0.0f;
-	newCameraPos = newCameraPos * weight + cameraPosXZ * (1.0f - weight);
-	newCameraPos.normalize();
-	newCameraPos *= cameraPosXZLen;
-	newCameraPos.y = height;
-	Vector3 pos = target + newCameraPos;
-
-	camera->SetTarget(target);
-	camera->SetEye(pos);
-	camera->Update();
 }
 
 void BaseBattleScene::Object2DUpdate()
@@ -369,6 +331,9 @@ void BaseBattleScene::CommonUpdate()
 		exit->ExitClose();
 		player->SetIsExitOpen(false);
 	}
+
+	//カメラ追従
+	camera->Tracking(player->GetPosition());
 
 	//シーン遷移
 	if(player->GetIsNextScene())	{

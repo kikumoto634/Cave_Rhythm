@@ -1,56 +1,56 @@
-#pragma once
+ï»¿#pragma once
 #include "../Vector/Vector2.h"
 #include "../Vector/Vector3.h"
 
 /// <summary>
-/// ƒC[ƒWƒ“ƒO—pŠÔ(ˆê‰ñ)
+/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨æ™‚é–“(ä¸€å›)
 /// </summary>
-/// <param name="frame">ƒtƒŒ[ƒ€</param>
-/// <param name="second">‰½•b‚Å“’B</param>
+/// <param name="frame">ãƒ•ãƒ¬ãƒ¼ãƒ </param>
+/// <param name="second">ä½•ç§’ã§åˆ°é”</param>
 /// <returns></returns>
 float& Time_OneWay(float& frame, const float second);
 
 /// <summary>
-/// ƒC[ƒWƒ“ƒO—pŠÔ(ƒ‹[ƒv)
+/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨æ™‚é–“(ãƒ«ãƒ¼ãƒ—)
 /// </summary>
-/// <param name="frame">ƒtƒŒ[ƒ€</param>
-/// <param name="second">‰½•b‚Å“’B</param>
+/// <param name="frame">ãƒ•ãƒ¬ãƒ¼ãƒ </param>
+/// <param name="second">ä½•ç§’ã§åˆ°é”</param>
 /// <returns></returns>
 float& Time_Loop(float& frame, const float second);
 
 /// <summary>
-/// “™‘¬’¼ü 2“_
+/// ç­‰é€Ÿç›´ç·š 2ç‚¹
 /// </summary>
-/// <param name="start">ŠJnÀ•W</param>
-/// <param name="end">I—¹À•W</param>
-/// <param name="frame">ƒtƒŒ[ƒ€</param>
+/// <param name="start">é–‹å§‹åº§æ¨™</param>
+/// <param name="end">çµ‚äº†åº§æ¨™</param>
+/// <param name="frame">ãƒ•ãƒ¬ãƒ¼ãƒ </param>
 /// <returns></returns>
 const Vector3 Easing_Linear_Point2(const Vector3& start, const Vector3& end, const float& frame);
 
 /// <summary>
-/// “™‘¬’¼ü 2“_
+/// ç­‰é€Ÿç›´ç·š 2ç‚¹
 /// </summary>
-/// <param name="start">ŠJnÀ•W</param>
-/// <param name="end">I—¹À•W</param>
-/// <param name="frame">ƒtƒŒ[ƒ€</param>
+/// <param name="start">é–‹å§‹åº§æ¨™</param>
+/// <param name="end">çµ‚äº†åº§æ¨™</param>
+/// <param name="frame">ãƒ•ãƒ¬ãƒ¼ãƒ </param>
 /// <returns></returns>
 const Vector2 Easing_Linear_Point2(const Vector2& start, const Vector2& end, const float& frame);
 
 /// <summary>
-/// “™‘¬’¼ü 2“_
+/// ç­‰é€Ÿç›´ç·š 2ç‚¹
 /// </summary>
-/// <param name="start">ŠJnÀ•W</param>
-/// <param name="end">I—¹À•W</param>
-/// <param name="frame">ƒtƒŒ[ƒ€</param>
+/// <param name="start">é–‹å§‹åº§æ¨™</param>
+/// <param name="end">çµ‚äº†åº§æ¨™</param>
+/// <param name="frame">ãƒ•ãƒ¬ãƒ¼ãƒ </param>
 /// <returns></returns>
 const float Easing_Linear_Point2(const float& start, const float& end, const float& frame);
 
 /// <summary>
-/// “™‘¬’¼ü 3“_
+/// ç­‰é€Ÿç›´ç·š 3ç‚¹
 /// </summary>
-/// <param name="start">ŠJnÀ•W</param>
-/// <param name="center">’†ŠÔÀ•W</param>
-/// <param name="end">I—¹À•W</param>
-/// <param name="frame">ƒtƒŒ[ƒ€</param>
+/// <param name="start">é–‹å§‹åº§æ¨™</param>
+/// <param name="center">ä¸­é–“åº§æ¨™</param>
+/// <param name="end">çµ‚äº†åº§æ¨™</param>
+/// <param name="frame">ãƒ•ãƒ¬ãƒ¼ãƒ </param>
 /// <returns></returns>
 const Vector3 Easing_Linear_Point3(const Vector3& start, const Vector3& center, const Vector3& end, const float& frame);
