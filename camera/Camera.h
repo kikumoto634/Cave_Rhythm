@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Engine/base/Window.h"
 #include "../Engine/math/Vector/Vector3.h"
 
@@ -7,7 +7,7 @@
 #include <DirectXMath.h>
 
 /// <summary>
-/// ƒJƒƒ‰
+/// ã‚«ãƒ¡ãƒ©
 /// </summary>
 class Camera
 {
@@ -18,31 +18,31 @@ public:
 	static Camera* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(Window* window);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// ’‹“_ˆÚ“®
+	/// æ³¨è¦–ç‚¹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê(radian‚ğİ’è)</param>
+	/// <param name="move">ç§»å‹•é‡(radianã‚’è¨­å®š)</param>
 	void MoveEyeVeector(Vector3 move);
 
 	/// <summary>
-	/// ƒJƒƒ‰ˆÚ“®
+	/// ã‚«ãƒ¡ãƒ©ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	void MoveVector(Vector3 move);
 
 	/// <summary>
-	/// ‰ñ“]
+	/// å›è»¢
 	/// </summary>
-	/// <param name="rot">‰ñ“]—Ê</param>
+	/// <param name="rot">å›è»¢é‡</param>
 	void RotVector(Vector3 rot);
 
 	void ShakeStart(int MaxFrame = 5);
@@ -71,18 +71,18 @@ private:
 	void Shake();
 
 private:
-	//ƒAƒXƒyƒNƒg—p
+	//ã‚¢ã‚¹ãƒšã‚¯ãƒˆç”¨
 	Window* window;
 
 public:
 	ViewProjection view;
 protected:
-	float distance = 20.f;	//ƒJƒƒ‰‚Ì‹——£
+	float distance = 20.f;	//ã‚«ãƒ¡ãƒ©ã®è·é›¢
 
-	//‰ñ“]s—ñ
+	//å›è»¢è¡Œåˆ—
 	XMMATRIX matRot = DirectX::XMMatrixIdentity();
 
-	//ƒVƒFƒCƒN
+	//ã‚·ã‚§ã‚¤ã‚¯
 	bool IsShake = false;
 	int shakePower = 1;
 	int ShakeFrame = 5;

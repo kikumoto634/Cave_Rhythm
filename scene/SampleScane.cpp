@@ -1,4 +1,4 @@
-#include "SampleScane.h"
+ï»¿#include "SampleScane.h"
 
 #include "../Engine/math//Easing/Easing.h"
 
@@ -40,12 +40,12 @@ void SampleScane::Initialize()
 
 void SampleScane::Update()
 {
-	//Œv‘ªABGMŠJn
+	//è¨ˆæ¸¬ã€BGMé–‹å§‹
 	RhythmMeasure();
 
 	BaseScene::Update();
 
-#pragma region “ü—Íˆ—
+#pragma region å…¥åŠ›å‡¦ç†
 
 #ifdef _DEBUG
 	if(input->Push(DIK_A)){
@@ -74,32 +74,32 @@ void SampleScane::Update()
 	}
 #endif // _DEBUG
 
-	//ƒV[ƒ“XV
+	//ã‚·ãƒ¼ãƒ³æ›´æ–°
 	SceneChange();
 
-	//“ü—Í
+	//å…¥åŠ›
 	InputUpdate();
 
-	//ƒŠƒYƒ€
+	//ãƒªã‚ºãƒ 
 	RhythmJudgeUpdate();
 	BeatEndUpdate();
 
-	//XV
+	//æ›´æ–°
 	Object3DUpdate();
 
 	Object2DUpdate();
 
-	//ƒV[ƒ“AƒJƒƒ‰A”Ä—p
+	//ã‚·ãƒ¼ãƒ³ã€ã‚«ãƒ¡ãƒ©ã€æ±ç”¨
 	CommonUpdate();
 
 #ifdef _DEBUG
 	{
-		//À•W
+		//åº§æ¨™
 		ImGui::SetNextWindowPos(ImVec2{0,100});
-		//ƒTƒCƒY
+		//ã‚µã‚¤ã‚º
 		ImGui::SetNextWindowSize(ImVec2{300,150});
 		ImGui::Begin("Debug");
-		//ƒJƒƒ‰ ‰ñ“]:false , ˆÚ“®:true
+		//ã‚«ãƒ¡ãƒ© å›è»¢:false , ç§»å‹•:true
 		ImGui::Text("Camera");
 		ImGui::Text("true = transform / false = rotation");
 		ImGui::Checkbox("Change", &IsCameraMovementChange);
@@ -111,9 +111,9 @@ void SampleScane::Update()
 
 	//Scene
 	{
-		//À•W
+		//åº§æ¨™
 		ImGui::SetNextWindowPos(ImVec2{1000,40});
-		//ƒTƒCƒY
+		//ã‚µã‚¤ã‚º
 		ImGui::SetNextWindowSize(ImVec2{280,150});
 		ImGui::Begin("SCENE");
 
@@ -181,26 +181,26 @@ void SampleScane::Finalize()
 }
 
 
-#pragma region ‰Šú‰»
+#pragma region åˆæœŸåŒ–
 void SampleScane::NextSceneChange()
 {
 }
 void SampleScane::CommonInitialize()
 {
-	//Õ“Ëƒ}ƒl[ƒWƒƒ[
+	//è¡çªãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	collisionManager = CollisionManager::GetInstance();
 
-	//ƒŠƒYƒ€ƒ}ƒl[ƒWƒƒ[
+	//ãƒªã‚ºãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	rhythmManager = new RhythmManager();
 
-	//ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
+	//ã‚²ãƒ¼ãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	gameManager = new GameManager();
 	gameManager->Initialize();
 
 	areaManager = make_unique<AreaManager>();
 	areaManager->RandamAreaInitialize();
 
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
 	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
 	camera->Update();
@@ -208,23 +208,22 @@ void SampleScane::CommonInitialize()
 
 void SampleScane::Object3DInitialize()
 {
-	//blender‚Å‚Ì•Û‘¶ƒXƒP[ƒ‹‚Í 2/10(0.2)‚Å‚ÌƒGƒNƒXƒ|[ƒg
+	//blenderã§ã®ä¿å­˜ã‚¹ã‚±ãƒ¼ãƒ«ã¯ 2/10(0.2)ã§ã®ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
 	player = make_unique<Player>();
 	player->Initialize("human1");
 	player->SetPosition(areaManager->GetPlayerPosition());
-	player->SetCameeraInitPos(areaManager->GetPlayerPosition());
 	player->SetWeaponPos({0,0,-2.f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player->SetHp(saveHP);
 	gameManager->InitializeSetHp(player->GetHP());
 
-	//oŒû
+	//å‡ºå£
 	exit = make_unique<Exit>();
 	exit->SetExitOpenNeedCoin(1);
 	exit->Initialize("Exit");
 	exit->SetPosition(areaManager->GetExitPosition());
 
-	//ƒXƒ‰ƒCƒ€
+	//ã‚¹ãƒ©ã‚¤ãƒ 
 	slime =make_unique<BlueSlime>();
 	slime->Initialize("slime");
 
@@ -234,7 +233,7 @@ void SampleScane::Object3DInitialize()
 
 void SampleScane::Object2DInitialize()
 {
-	//ƒV[ƒ“‘JˆÚ(FadeOut)
+	//ã‚·ãƒ¼ãƒ³é·ç§»(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
 	fade = make_unique<BaseSprites>();
 	fade->Initialize(1);
@@ -243,14 +242,14 @@ void SampleScane::Object2DInitialize()
 }
 #pragma endregion
 
-#pragma region XV
+#pragma region æ›´æ–°
 void SampleScane::InputUpdate()
 {
 	if(IsPrevSceneChange)return;
 
 	//ToDo: 
-	// “¯‰Ÿ‚µ‚Å‚ÌƒRƒ“ƒ{+2‚ÌC³(ˆê“x³‰ğ‚É‚È‚Á‚½‚çŸ‚Ì“ü—Í‰Â”\ŠÔ‚Ü‚Å“ü—Í•s‰ÂB)
-	// ƒ~ƒX“ü—Í‚ÌAƒvƒŒƒCƒ„[‚ÌˆÚ“®‚ğ•s‰Â‚ÉB
+	// åŒæ™‚æŠ¼ã—ã§ã®ã‚³ãƒ³ãƒœ+2ã®ä¿®æ­£(ä¸€åº¦æ­£è§£ã«ãªã£ãŸã‚‰æ¬¡ã®å…¥åŠ›å¯èƒ½æ™‚é–“ã¾ã§å…¥åŠ›ä¸å¯ã€‚)
+	// ãƒŸã‚¹å…¥åŠ›ã®æ™‚ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•ã‚’ä¸å¯ã«ã€‚
 	if(player->GetIsInputOnce()){
 		rhythmManager->InputRhythm();
 		IsRhythmInput = true;
@@ -259,7 +258,7 @@ void SampleScane::InputUpdate()
 
 void SampleScane::Object3DUpdate()
 {
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	if(player->DamageSound())	{
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
@@ -270,7 +269,7 @@ void SampleScane::Object3DUpdate()
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
 	}
-	//oŒû
+	//å‡ºå£
 	exit->Update(camera);
 	{
 		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
@@ -301,11 +300,11 @@ void SampleScane::Object2DUpdate()
 void SampleScane::CommonUpdate()
 {
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
-	//’n–Ê
+	//åœ°é¢
 	areaManager->CSVAreaUpdate(this->camera, player->GetPosition());
 	gameManager->LightUpdate(player->GetIsDead());
 
-	//oŒû
+	//å‡ºå£
 	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
 		exit->ExitOpen();
 		player->SetIsExitOpen(true);
@@ -315,7 +314,7 @@ void SampleScane::CommonUpdate()
 		player->SetIsExitOpen(false);
 	}
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
 		if(!exit->GetIsOpenAudioOnce()){
@@ -326,22 +325,22 @@ void SampleScane::CommonUpdate()
 		}
 	}
 
-	//‚·‚×‚Ä‚ÌÕ“Ë‚ğƒ`ƒFƒbƒN
+	//ã™ã¹ã¦ã®è¡çªã‚’ãƒã‚§ãƒƒã‚¯
 	collisionManager->CheckAllCollisions();
 }
 
 void SampleScane::RhythmMeasure()
 {
-	//Œv‘ªŠJn
+	//è¨ˆæ¸¬é–‹å§‹
 	if(IsPrevSceneChange) return;
 
-	//ƒŠƒYƒ€Œv‘ª
+	//ãƒªã‚ºãƒ è¨ˆæ¸¬
 	rhythmManager->StartMeasurement(clock());
-	//Œv‘ªŠJn
+	//è¨ˆæ¸¬é–‹å§‹æ™‚
 	if(rhythmManager->GetMoveUpNumber() == 0 && IsBGMStart){
 		gameManager->AudioPlay(8, 0.5f, true);
 	}
-	//ƒŠƒYƒ€ŒJ‚èã‚ª‚è
+	//ãƒªã‚ºãƒ ç¹°ã‚Šä¸ŠãŒã‚Š
 	rhythmManager->BeatMoveUp();
 }
 
@@ -349,22 +348,22 @@ void SampleScane::RhythmJudgeUpdate()
 {
 	if(IsPrevSceneChange) return;
 
-	//ƒŠƒYƒ€”»•Ê
+	//ãƒªã‚ºãƒ åˆ¤åˆ¥
 	if(IsRhythmInput){
 		IsRhythmInput = false;
 
-		//High(“ü—Í‚ª’x‚­AjudgeTime‚ªXV‚³‚ê‚½ó‘Ô‚Å‚ÌXV)
+		//High(å…¥åŠ›ãŒé…ãã€judgeTimeãŒæ›´æ–°ã•ã‚ŒãŸçŠ¶æ…‹ã§ã®æ›´æ–°)
 		if(rhythmManager->HighJudgeRhythm()){
 			gameManager->ComboIncrement();
 			player->JudgeUpdate(true);
 		}
-		//Low(“ü—Í‚ª‘‚­‚ÄAJudgeTime‚ªXV‚³‚ê‚Ä‚¢‚È‚¢ˆ—‚Ì‚İ’Ê‚·@ŒJ‚èã‚ª‚è—pŠm”F®”‚Æ‚Ì”äŠr) judgeTime‚ªXV‚³‚ê‚é‚Ü‚Åˆ—‘Ò‚¿
+		//Low(å…¥åŠ›ãŒæ—©ãã¦ã€JudgeTimeãŒæ›´æ–°ã•ã‚Œã¦ã„ãªã„å‡¦ç†ã®ã¿é€šã™ã€€ç¹°ã‚Šä¸ŠãŒã‚Šç”¨ç¢ºèªæ•´æ•°ã¨ã®æ¯”è¼ƒ) judgeTimeãŒæ›´æ–°ã•ã‚Œã‚‹ã¾ã§å‡¦ç†å¾…ã¡
 		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
 			if(rhythmManager->LowJudgeRhythm()){
 				gameManager->ComboIncrement();
 				player->JudgeUpdate(true);
 			}
-			//ƒ~ƒX
+			//ãƒŸã‚¹
 			else{
 				gameManager->ComboReset();
 				player->JudgeUpdate(false);
@@ -377,13 +376,13 @@ void SampleScane::BeatEndUpdate()
 {
 	if(IsPrevSceneChange) return;
 
-	//ƒŠƒYƒ€I—¹ˆ—
+	//ãƒªã‚ºãƒ çµ‚äº†æ™‚å‡¦ç†
 	if(rhythmManager->GetIsRhythmEnd() && !IsGameEnd){
 		
 		//SE
 		gameManager->AudioPlay(0,0.25f);
 
-		//ŠeƒIƒuƒWƒFƒNƒgˆ—
+		//å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå‡¦ç†
 		if(!player->GetIsDead())player->IsBeatEndOn();
 
 		areaManager->BeatEndUpdate(gameManager);
@@ -404,7 +403,7 @@ void SampleScane::BeatEndUpdate()
 }
 #pragma endregion
 
-#pragma region •`‰æ
+#pragma region æç”»
 void SampleScane::Object3DDraw()
 {
 	player->Draw();
@@ -427,18 +426,18 @@ void SampleScane::UIDraw()
 {
 	Sprite::SetPipelineState();
 
-	//oŒû
+	//å‡ºå£
 	exit->Draw2D();
 
 	gameManager->SpriteDraw();
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	fade->Draw();
 }
 
 #pragma endregion
 
-#pragma region ƒV[ƒ“XV
+#pragma region ã‚·ãƒ¼ãƒ³æ›´æ–°
 void SampleScane::SceneGameEnd()
 {
 	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
@@ -446,12 +445,12 @@ void SampleScane::SceneGameEnd()
 
 void SampleScane::SceneChange()
 {
-	//PrevScene‚©‚ç‚ÌˆÚ“®Œãˆ—
+	//PrevSceneã‹ã‚‰ã®ç§»å‹•å¾Œå‡¦ç†
 	if(IsPrevSceneChange){
 		if(fadeColor.w <= 0){
 			IsPrevSceneChange = false;
 			fadeCurrentFrame = 0;
-			//ƒŠƒYƒ€
+			//ãƒªã‚ºãƒ 
 			rhythmManager->InitializeMeasurement(clock());
 			return;
 		}
@@ -461,7 +460,7 @@ void SampleScane::SceneChange()
 		fade->SetColor(fadeColor);
 		fade->Update();
 	}
-	//NextScene‚Ö‚ÌˆÚ“®
+	//NextSceneã¸ã®ç§»å‹•
 	else if(IsNextSceneChange || IsGameEnd){
 
 		if(fadeColor.w >= 1){
@@ -477,20 +476,20 @@ void SampleScane::SceneChange()
 }
 #pragma endregion
 
-#pragma region Œãˆ—
+#pragma region å¾Œå‡¦ç†
 void SampleScane::ObjectFinaize()
 {
-#pragma region _3D‰ğ•ú
+#pragma region _3Dè§£æ”¾
 	player->Finalize();
 	areaManager->CSVAreaFinalize();
 	exit->Finalize();
 	slime->Finalize();
 	coin->Finalize();
-#pragma endregion _3D‰ğ•ú
+#pragma endregion _3Dè§£æ”¾
 
-#pragma region _2D‰ğ•ú
+#pragma region _2Dè§£æ”¾
 	fade->Finalize();
-#pragma endregion _2D‰ğ•ú
+#pragma endregion _2Dè§£æ”¾
 }
 
 void SampleScane::CommonFinalize()

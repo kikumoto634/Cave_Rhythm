@@ -1,100 +1,100 @@
-#pragma once
+ï»¿#pragma once
 #include "../BaseObjObject.h"
 #include "../../../Engine/input/Input.h"
 #include "../../Collision/SphereCollider.h"
 
 #include "PlayerWeapon.h"
 
-//ToDO ƒvƒŒƒCƒ„[‚ÌƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO
+//ToDO ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°
 /*
-ˆ—ˆê——
+å‡¦ç†ä¸€è¦§
 Initialize();
-EƒXƒP[ƒ‹ƒC[ƒWƒ“ƒO‚ÌÅ¬’lİ’è
-EInput‚Ìinstanceæ“¾
-EƒRƒ‰ƒCƒ_[ƒZƒbƒg(“¯‚¶‘®«‚ğ‚Á‚½ƒRƒ‰ƒCƒ_[“¯m‚Ì“–‚½‚è”»’è)
-E‘®«ƒZƒbƒg
-E‹…ƒRƒ‰ƒCƒ_[‚Ìæ“¾(ƒŒƒC‚ğ”ò‚Î‚µ‚Ä‚Ì“–‚½‚è”»’è—p)
-E•Ší‚Ìæ“¾(new)
-EUŒ‚ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ(new)
+ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®æœ€å°å€¤è¨­å®š
+ãƒ»Inputã®instanceå–å¾—
+ãƒ»ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚»ãƒƒãƒˆ(åŒã˜å±æ€§ã‚’æŒã£ãŸã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŒå£«ã®å½“ãŸã‚Šåˆ¤å®š)
+ãƒ»å±æ€§ã‚»ãƒƒãƒˆ
+ãƒ»çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å–å¾—(ãƒ¬ã‚¤ã‚’é£›ã°ã—ã¦ã®å½“ãŸã‚Šåˆ¤å®šç”¨)
+ãƒ»æ­¦å™¨ã®å–å¾—(new)
+ãƒ»æ”»æ’ƒãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿(new)
 
 Update();
-EƒJƒƒ‰‚Ìó‚¯æ‚è
+ãƒ»ã‚«ãƒ¡ãƒ©ã®å—ã‘å–ã‚Š
 
-“ü—Í
-Eƒ{ƒ^ƒ“‚ª“ü—Í‚³‚ê‚½‚©‚ÌŠm”F
-EˆÚ“®(ƒ‚ƒfƒ‹•ÏX) À•WA‰ñ“]A‰ß‹À•WA•Ší‚ÌƒIƒtƒZƒbƒgÀ•W‚Ìæ“¾
-EUŒ‚(ƒ‚ƒfƒ‹•ÏX + weapon->Attack()ŒÄ‚Ño‚µ)
-EˆÚ“®§ŒÀ
+å…¥åŠ›
+ãƒ»ãƒœã‚¿ãƒ³ãŒå…¥åŠ›ã•ã‚ŒãŸã‹ã®ç¢ºèª
+ãƒ»ç§»å‹•(ãƒ¢ãƒ‡ãƒ«å¤‰æ›´) åº§æ¨™ã€å›è»¢ã€éå»åº§æ¨™ã€æ­¦å™¨ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåº§æ¨™ã®å–å¾—
+ãƒ»æ”»æ’ƒ(ãƒ¢ãƒ‡ãƒ«å¤‰æ›´ + weapon->Attack()å‘¼ã³å‡ºã—)
+ãƒ»ç§»å‹•åˆ¶é™
 
-XV
-Eƒr[ƒgˆ— (ƒTƒCƒYƒC[ƒWƒ“ƒO)
-Eƒ_ƒ[ƒW(ÚG‚Ì–³“GŠÔŒv‘ª)
-Ed—Í(•K—v«‚ğŠ´‚¶‚È‚¢)
-E•ŠíˆÊ’u‚ÌXV
-EBase‚ÌXV
-EƒRƒ‰ƒCƒ_[XV
-E’n–Ê‚ª‚ ‚é‚©–³‚¢‚©‚Ìæ“¾(Ray)
-E•ŠíXV
+æ›´æ–°
+ãƒ»ãƒ“ãƒ¼ãƒˆæ™‚å‡¦ç† (ã‚µã‚¤ã‚ºã‚¤ãƒ¼ã‚¸ãƒ³ã‚°)
+ãƒ»ãƒ€ãƒ¡ãƒ¼ã‚¸(æ¥è§¦æ™‚ã®ç„¡æ•µæ™‚é–“è¨ˆæ¸¬)
+ãƒ»é‡åŠ›(å¿…è¦æ€§ã‚’æ„Ÿã˜ãªã„)
+ãƒ»æ­¦å™¨ä½ç½®ã®æ›´æ–°
+ãƒ»Baseã®æ›´æ–°
+ãƒ»ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼æ›´æ–°
+ãƒ»åœ°é¢ãŒã‚ã‚‹ã‹ç„¡ã„ã‹ã®å–å¾—(Ray)
+ãƒ»æ­¦å™¨æ›´æ–°
 
-•`‰æ
-E•Ší•`‰æ
-EƒvƒŒƒCƒ„[•`‰æ
+æç”»
+ãƒ»æ­¦å™¨æç”»
+ãƒ»ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æç”»
 
-ÚG
-E“G(ƒ_ƒ[ƒW)
+æ¥è§¦æ™‚
+ãƒ»æ•µ(ãƒ€ãƒ¡ãƒ¼ã‚¸)
 
-Œãˆ—
-E•ŠíŒãˆ—A‰ğ•ú
-EUŒ‚ƒ‚ƒfƒ‹‰ğ•ú
-EBase‚Ì‰ğ•ú
+å¾Œå‡¦ç†
+ãƒ»æ­¦å™¨å¾Œå‡¦ç†ã€è§£æ”¾
+ãƒ»æ”»æ’ƒãƒ¢ãƒ‡ãƒ«è§£æ”¾
+ãƒ»Baseã®è§£æ”¾
 */
 
 class Player : public BaseObjObject
 {
-//’è”
-//–³“GŠÔ
+//å®šæ•°
+//ç„¡æ•µæ™‚é–“
 const int DamageFrame = 150;
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 	~Player();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// 3D•`‰æ
+	/// 3Dæç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// Œãˆ—
+	/// å¾Œå‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	void OnCollision(const CollisionInfo& info) override;
 
 	/// <summary>
-	/// “ü—Í¬”Û‚Ìˆ—
+	/// å…¥åŠ›æˆå¦æ™‚ã®å‡¦ç†
 	/// </summary>
-	/// <param name="IsFlag">¬”Û</param>
+	/// <param name="IsFlag">æˆå¦</param>
 	void JudgeUpdate(bool IsFlag);
 
 
 	//Sound
 	/// <summary>
-	/// ƒ_ƒ[ƒWƒTƒEƒ“ƒh”­¶
+	/// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚µã‚¦ãƒ³ãƒ‰ç™ºç”Ÿ
 	/// </summary>
 	bool DamageSound();
 
@@ -113,50 +113,37 @@ public:
 	inline void SetIsWait(bool IsFlag)	{IsWait = IsFlag;}
 	inline void SetWeaponPos(Vector3 pos)	{offSetWeaponPos = pos;}
 	inline void SetHp(int hp)	{HP = hp;}
-	inline void SetCameeraInitPos(Vector3 pos)	{InitializeCameraPos = pos;}
 
 private:
-	//ˆÚ“®
+	//ç§»å‹•
 	bool MovementInput();
 	void MoveModelSet();
 
-	//UŒ‚
+	//æ”»æ’ƒ
 	bool AttackInput();
 	void AttackModelSet();
 
-	//ƒ_ƒ[ƒW
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸
 	void Damage();
-	//ƒ_ƒ[ƒWXV
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸æ›´æ–°
 	void DamageUpdate();
 
 private:	
-	//ˆÚ“®
+	//ç§»å‹•
 	Vector3 movePosition = {0,0,0};
 	Vector3 moveRotation = {0,0,0};
 	bool IsMove = false;
 
-	//‰ß‹ˆÊ’u
+	//éå»ä½ç½®
 	Vector3 OldPosition = {};
-	Vector3 OldCameraTarget = {};
-	Vector3 OldCameraEye = {};
 
-	//ƒJƒƒ‰ˆÚ“®
-	bool IsCameraInit = false;
-	Vector3 moveCameraPosition = {0,0,0};
-	Vector3 InitializeCameraPos = {};
-
-	//ˆÚ“®ƒC[ƒWƒ“ƒO
+	//ç§»å‹•ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	bool IsMoveEasing = false;
 	float moveEasingFrame = 0;
 	float MoveEasingMaxTime = 0.075f;
 	Vector3 moveEasingPos;
 
-	bool IsMoveCameraEasing = false;
-	float moveEasingCameraFrame = 0;
-	float MoveEasingCameraMaxTime = 0.05f;
-	Vector3 CameraCurrentPosition = {0,0,0};
-
-	//ƒŒƒC
+	//ãƒ¬ã‚¤
 	Vector3 RayDir = {0,0,1};
 
 	//HP
@@ -164,40 +151,40 @@ private:
 	bool IsDeadAudioOnce = false;
 	int HP = 5;
 
-	//‘Ò‹@ƒtƒ‰ƒO
+	//å¾…æ©Ÿãƒ•ãƒ©ã‚°
 	bool IsWait = false;
 
-	//ƒ_ƒ[ƒW
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸
 	bool IsDamage = false;
 	bool IsDamageSoundOnce = false;
-	////–³“GŠÔ(ƒtƒŒ[ƒ€)
+	////ç„¡æ•µæ™‚é–“(ãƒ•ãƒ¬ãƒ¼ãƒ )
 	int damageCurrentFrame = 0;
 
-	//UŒ‚
+	//æ”»æ’ƒ
 	bool IsAttack = false;
 
-	//g—pƒ‚ƒfƒ‹”»•Ê(false:Move, true:Attack)
+	//ä½¿ç”¨ãƒ¢ãƒ‡ãƒ«åˆ¤åˆ¥(false:Move, true:Attack)
 	bool IsModelJudge = false;
 
-	//“ü—Í
+	//å…¥åŠ›
 	Input* input = nullptr;
 	bool IsInputOnce = false;
 	bool IsInputJudge = false;
 
-	//ƒRƒ‰ƒCƒ_[
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	SphereCollider* sphereCollider = nullptr;
 
-	//•Ší
+	//æ­¦å™¨
 	PlayerWeapon* weapon = nullptr;
 	Vector3 offSetWeaponPos = {0,0,2.5};
 
-	//UŒ‚ƒ‚ƒfƒ‹
+	//æ”»æ’ƒãƒ¢ãƒ‡ãƒ«
 	ObjModelManager* attackModel = nullptr;
 
-	//€–Sƒ‚ƒfƒ‹
+	//æ­»äº¡ãƒ¢ãƒ‡ãƒ«
 	ObjModelManager* deadModel = nullptr;
 
-	//Ÿ‚ÌƒV[ƒ“
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³
 	bool IsNextScene = false;
 	bool IsExitOpen = false;
 };

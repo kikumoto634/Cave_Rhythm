@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "../../Collision/CollisionSystem/CollisionManager.h"
 #include "../../Collision/CollisionSystem/CollisionAttribute.h"
 
@@ -16,30 +16,30 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
-	//“ü—Í
+	//å…¥åŠ›
 	input = Input::GetInstance();
-	//•Ší
+	//æ­¦å™¨
 	weapon = new PlayerWeapon();
 	weapon->Initialize("Slash", true);
-	//UŒ‚ƒ‚ƒfƒ‹
+	//æ”»æ’ƒãƒ¢ãƒ‡ãƒ«
 	attackModel = new ObjModelManager();
 	attackModel->CreateModel("human2");
-	//€–Sƒ‚ƒfƒ‹
+	//æ­»äº¡ãƒ¢ãƒ‡ãƒ«
 	deadModel = new ObjModelManager();
 	deadModel->CreateModel("human3");
 
-	//ƒTƒCƒY•ÏX‚ÌÅ¬’l•ÏX
+	//ã‚µã‚¤ã‚ºå¤‰æ›´ã®æœ€å°å€¤å¤‰æ›´
 	ScaleMin = {0.7f, 1.0f, 0.7f};
 
-	//‘Ò‹@ƒtƒ‰ƒO
+	//å¾…æ©Ÿãƒ•ãƒ©ã‚°
 	IsWait = true;
 
-	//ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR{0,-0.2f,0,0}, radius));
-	//“–‚½‚è”»’è‘®«
+	//å½“ãŸã‚Šåˆ¤å®šå±æ€§
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
-	//‹…ƒRƒ‰ƒCƒ_[æ“¾
+	//çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
 	sphereCollider = dynamic_cast<SphereCollider*>(collider);
 	assert(sphereCollider);
 }
@@ -47,32 +47,28 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
-	if(!IsCameraInit){
-		this->camera->MoveVector(InitializeCameraPos);
-		IsCameraInit = true;
-	}
 
-	//Once—p–ˆƒ‹[ƒv‰Šú‰»
+	//Onceç”¨æ¯ãƒ«ãƒ¼ãƒ—åˆæœŸåŒ–
 	IsInputOnce = false;
 	IsDamageSoundOnce = false;
 
-	//“ü—Íˆ—
+	//å…¥åŠ›å‡¦ç†
 	if(MovementInput()){
-		//“ü—ÍŠm”F
+		//å…¥åŠ›ç¢ºèª
 		IsInputOnce = true;
 	}
 	else if(AttackInput()){
-		//“ü—ÍŠm”F
+		//å…¥åŠ›ç¢ºèª
 		IsInputOnce = true;
 	}
 
-	//”I—¹(ƒQ[ƒ€‘S‘Ì‚ÌŠÔ‚ğ‘ª‚Á‚Ä‚¢‚éƒNƒ‰ƒX(GameScene)‚©‚çIsBeatEndOn()‚ğŒÄ‚Ño‚µ‚Åtrue‚ğæ“¾)
+	//æ‹çµ‚äº†(ã‚²ãƒ¼ãƒ å…¨ä½“ã®æ™‚é–“ã‚’æ¸¬ã£ã¦ã„ã‚‹ã‚¯ãƒ©ã‚¹(GameScene)ã‹ã‚‰IsBeatEndOn()ã‚’å‘¼ã³å‡ºã—ã§trueã‚’å–å¾—)
 	if(IsBeatEnd){
-		//ƒXƒP[ƒ‹ƒC[ƒWƒ“ƒO
+		//ã‚¹ã‚±ãƒ¼ãƒ«ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 			IsBeatEnd = false;
 
-			//‘Ò‹@ƒtƒ‰ƒO‰ğœ
+			//å¾…æ©Ÿãƒ•ãƒ©ã‚°è§£é™¤
 			if(IsWait && !IsNextScene){
 				IsWait = false;
 			}
@@ -80,16 +76,15 @@ void Player::Update(Camera *camera)
 
 		if(IsInputJudge){
 			IsInputJudge = false;
-			//ˆÚ“®
+			//ç§»å‹•
 			if(IsMove){
 				IsMoveEasing = true;
-				IsMoveCameraEasing = true;
 				IsMove = false;
 				world.rotation = moveRotation;
 				moveEasingPos = world.translation;
 				MoveModelSet();
 			}
-			//UŒ‚
+			//æ”»æ’ƒ
 			else if(IsAttack){
 				weapon->Attack();
 				AttackModelSet();
@@ -98,7 +93,7 @@ void Player::Update(Camera *camera)
 		}
 	}
 
-	//ˆÚ“®ƒC[ƒWƒ“ƒO
+	//ç§»å‹•ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	if(IsMoveEasing){
 		world.translation = Easing_Linear_Point2(moveEasingPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 
@@ -110,17 +105,6 @@ void Player::Update(Camera *camera)
 			moveEasingFrame = 0;
 		}
 	}
-	if(IsMoveCameraEasing){
-		CameraCurrentPosition = Easing_Linear_Point2({0,0,0},moveCameraPosition/2, Time_OneWay(moveEasingCameraFrame, MoveEasingCameraMaxTime));
-		camera->MoveVector(CameraCurrentPosition);
-
-		if(moveEasingCameraFrame >= 1.f){
-			IsMoveCameraEasing = false;
-			moveCameraPosition = {};
-			CameraCurrentPosition = {};
-			moveEasingCameraFrame = 0;
-		}
-	}
 
 	Ray ray;
 	ray.start = sphereCollider->center;
@@ -128,21 +112,17 @@ void Player::Update(Camera *camera)
 	ray.dir = {RayDir.x, RayDir.y, RayDir.z, 0};
 	RaycastHit raycastHit;
 	if(IsMoveEasing){
-		//ƒXƒ€[ƒY‚Éâ‚ğ‰º‚éˆ×‚Ì‹z’…‹——£
+		//ã‚¹ãƒ ãƒ¼ã‚ºã«å‚ã‚’ä¸‹ã‚‹ç‚ºã®å¸ç€è·é›¢
 		const float adsDistance = 0.1f;
 		if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 			movePosition = OldPosition;
-			this->camera->SetTarget(OldCameraTarget);
-			this->camera->SetEye(OldCameraEye);
 		}
 		else if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_ENEMYS, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
 			movePosition = OldPosition;
-			this->camera->SetTarget(OldCameraTarget);
-			this->camera->SetEye(OldCameraEye);
 		}
 	}
 
-	//€–S
+	//æ­»äº¡
 #ifdef _DEBUG
 	if(input->Trigger(DIK_SPACE)){
 		HP = 0;
@@ -153,37 +133,27 @@ void Player::Update(Camera *camera)
 		IsDead = true;
 		IsDeadAudioOnce = true;
 		this->object->SetModel(deadModel);
-		this->camera->ShakeStart();
+		//this->camera->ShakeStart();
 	}
 
-	//ˆÚ“®§ŒÀ
+	//ç§»å‹•åˆ¶é™
 	world.translation.x = max(world.translation.x , 15 * -2.f);
 	world.translation.x = min(world.translation.x , 15 * 2.f);
 	world.translation.z = max(world.translation.z , 15 * -2.f);
 	world.translation.z = min(world.translation.z , 15 * 2.f);
 
-	this->camera->view.target.x = min(this->camera->view.target.x, 30.f);
-	this->camera->view.target.x = max(this->camera->view.target.x, -30.f);
-	this->camera->view.target.z = min(this->camera->view.target.z, 27.f);
-	this->camera->view.target.z = max(this->camera->view.target.z, -33.f);
-
-	this->camera->view.eye.x = min(this->camera->view.eye.x, 30.f);
-	this->camera->view.eye.x = max(this->camera->view.eye.x, -30.f);
-	this->camera->view.eye.z = min(this->camera->view.eye.z, 16.f);
-	this->camera->view.eye.z = max(this->camera->view.eye.z, -42.f);
-
-	//•ŠíˆÊ’u
+	//æ­¦å™¨ä½ç½®
 	weapon->SetPosition(world.translation + offSetWeaponPos);
 	weapon->SetRotation(GetRotation());
 
-	//XVŠÖ”
-	//ƒ_ƒ[ƒW
+	//æ›´æ–°é–¢æ•°
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸
 	DamageUpdate();
-	//ƒRƒ‰ƒCƒ_[XV
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼æ›´æ–°
 	collider->Update();
-	//•Ší
+	//æ­¦å™¨
 	weapon->Update(this->camera);
-	//ƒx[ƒXXV
+	//ãƒ™ãƒ¼ã‚¹æ›´æ–°
 	BaseObjObject::Update(this->camera);
 }
 
@@ -214,7 +184,7 @@ void Player::OnCollision(const CollisionInfo &info)
 	if(IsWait) return;
 	if(IsDead) return;
 
-	//“GÚG
+	//æ•µæ¥è§¦
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
 		Damage();
 	}
@@ -223,12 +193,12 @@ void Player::OnCollision(const CollisionInfo &info)
 
 void Player::JudgeUpdate(bool IsFlag)
 {
-	//³
+	//æ­£
 	if(IsFlag){
 		IsInputJudge = true;
 		return;
 	}
-	//”Û
+	//å¦
 	IsInputJudge = false;
 	return;
 }
@@ -252,16 +222,15 @@ bool Player::GetIsDeadAudioOnce()
 
 bool Player::MovementInput()
 {
-	//–ß‚è’l
+	//æˆ»ã‚Šå€¤
 	bool IsReturn = false;
 
 	if(IsWait) return false;
 	if(IsDead) return false;
 	if(IsAttack) return false;
 	if(IsMoveEasing) return false;
-	if(IsMoveCameraEasing) return false;
 
-	//•às
+	//æ­©è¡Œ
 	if(input->Trigger(DIK_UP)){
 		movePosition = Vector3{0.0f,0.0f,2.f};
 		moveRotation.y = 0;
@@ -291,14 +260,11 @@ bool Player::MovementInput()
 		IsReturn = true;
 	}
 	if(IsReturn) {
-		//ƒ‚ƒfƒ‹¯•Ê
+		//ãƒ¢ãƒ‡ãƒ«è­˜åˆ¥
 		IsModelJudge = false;
-		//s“®
+		//è¡Œå‹•
 		IsMove = true;
-		//ˆÚ“®ŒãÀ•W
-		OldCameraTarget = this->camera->GetTarget();
-		OldCameraEye = this->camera->GetEye();
-		moveCameraPosition = movePosition;
+		//ç§»å‹•å¾Œåº§æ¨™
 		OldPosition = world.translation;
 		movePosition += world.translation;
 	}
@@ -313,7 +279,7 @@ void Player::MoveModelSet()
 
 bool Player::AttackInput()
 {
-	//–ß‚è’l
+	//æˆ»ã‚Šå€¤
 	bool IsReturn = false;
 
 	if(IsWait) return false;
@@ -323,7 +289,7 @@ bool Player::AttackInput()
 	if(input->Trigger(DIK_Z)){
 		IsReturn = true;
 
-		//oŒû
+		//å‡ºå£
 		if(IsExitOpen){
 			IsNextScene = true;
 			return false;
@@ -331,9 +297,9 @@ bool Player::AttackInput()
 	}
 
 	if(IsReturn) {
-		//ƒ‚ƒfƒ‹¯•Ê
+		//ãƒ¢ãƒ‡ãƒ«è­˜åˆ¥
 		IsModelJudge = true;
-		//s“®
+		//è¡Œå‹•
 		IsAttack = true;
 	}
 	return IsReturn;
@@ -359,11 +325,11 @@ void Player::DamageUpdate()
 
 	damageCurrentFrame += 1;
 
-	//–³“GŠÔ“à
+	//ç„¡æ•µæ™‚é–“å†…
 	Vector4 color = (damageCurrentFrame % 6 == 1) ? color = {0.0f, 0.0f, 0.0f, 0.0f} : color = {1.0f, 0.0f, 0.0f, 1.0f};
 	object->SetColor(color);
 
-	//–³“GŠÔI—¹
+	//ç„¡æ•µæ™‚é–“çµ‚äº†
 	if(damageCurrentFrame < DamageFrame) return;
 	damageCurrentFrame = 0;
 	object->SetColor({1.0f,1.0f,1.0f, 1.0f});

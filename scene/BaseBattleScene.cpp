@@ -1,4 +1,4 @@
-#include "BaseBattleScene.h"
+ï»¿#include "BaseBattleScene.h"
 #include "../Engine/math//Easing/Easing.h"
 
 #include "../Game/Collision/CollisionSystem/Collision.h"
@@ -47,12 +47,12 @@ void BaseBattleScene::Initialize()
 
 void BaseBattleScene::Update()
 {
-	//Œv‘ªABGMŠJn
+	//è¨ˆæ¸¬ã€BGMé–‹å§‹
 	RhythmMeasure();
 
 	BaseScene::Update();
 
-#pragma region “ü—Íˆ—
+#pragma region å…¥åŠ›å‡¦ç†
 
 #ifdef _DEBUG
 	if(input->Push(DIK_A)){
@@ -82,35 +82,35 @@ void BaseBattleScene::Update()
 
 #endif // _DEBUG
 
-	//ƒV[ƒ“XV
+	//ã‚·ãƒ¼ãƒ³æ›´æ–°
 	SceneChange();
 
-	//“ü—Í
+	//å…¥åŠ›
 	InputUpdate();
 
-	//ƒŠƒYƒ€
+	//ãƒªã‚ºãƒ 
 	RhythmJudgeUpdate();
 	BeatEndUpdate();
 
-	//XV
+	//æ›´æ–°
 	Object3DUpdate();
 	AddObject3DUpdate();
 
 	Object2DUpdate();
 	AddObject2DUpdate();
 
-	//ƒV[ƒ“AƒJƒƒ‰A”Ä—p
+	//ã‚·ãƒ¼ãƒ³ã€ã‚«ãƒ¡ãƒ©ã€æ±ç”¨
 	CommonUpdate();
 	AddCommonUpdate();
 
 #ifdef _DEBUG
 	{
-		//À•W
+		//åº§æ¨™
 		ImGui::SetNextWindowPos(ImVec2{0,100});
-		//ƒTƒCƒY
-		ImGui::SetNextWindowSize(ImVec2{300,150});
-		ImGui::Begin("Debug");
-		//ƒJƒƒ‰ ‰ñ“]:false , ˆÚ“®:true
+		//ã‚µã‚¤ã‚º
+		ImGui::SetNextWindowSize(ImVec2{300,125});
+		ImGui::Begin("Camera");
+		//ã‚«ãƒ¡ãƒ© å›è»¢:false , ç§»å‹•:true
 		ImGui::Text("Camera");
 		ImGui::Text("true = transform / false = rotation");
 		ImGui::Checkbox("Change", &IsCameraMovementChange);
@@ -122,9 +122,9 @@ void BaseBattleScene::Update()
 
 	//Scene
 	{
-		//À•W
+		//åº§æ¨™
 		ImGui::SetNextWindowPos(ImVec2{1000,40});
-		//ƒTƒCƒY
+		//ã‚µã‚¤ã‚º
 		ImGui::SetNextWindowSize(ImVec2{280,150});
 		ImGui::Begin("SCENE");
 
@@ -161,10 +161,11 @@ void BaseBattleScene::Draw()
 	AddBackUIDraw();
 
 #ifdef _DEBUG
-	debugText->Printf(0,0,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
-	debugText->Printf(0,16,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
+	debugText->Printf(0,400,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
+	debugText->Printf(0,420,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
-	debugText->Printf(0,48,1.f,"Player Pos X:%f, Y:%f, Z:%f", player->GetPosition().x, player->GetPosition().y,player->GetPosition().z);
+
+	debugText->Printf(0,560,1.f,"Player Pos X:%f, Y:%f, Z:%f", player->GetPosition().x, player->GetPosition().y,player->GetPosition().z);
 
 	debugText->Printf(0,580, 1.f,  "Time				: %lf[ms]", rhythmManager->GetTimer());
 	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager->GetJudgeTimeBase());
@@ -196,37 +197,34 @@ void BaseBattleScene::Finalize()
 
 void BaseBattleScene::CommonInitialize()
 {
-	//Õ“Ëƒ}ƒl[ƒWƒƒ[
+	//è¡çªãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	collisionManager = CollisionManager::GetInstance();
 
-	//ƒŠƒYƒ€ƒ}ƒl[ƒWƒƒ[
+	//ãƒªã‚ºãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	rhythmManager = make_unique<RhythmManager>();
 
-	//ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
+	//ã‚²ãƒ¼ãƒ ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 	gameManager = make_unique<GameManager>();
 	gameManager->Initialize();
 
 	areaManager = make_unique<AreaManager>();
 
-	//ƒJƒƒ‰
-	camera->SetTarget(Vector3(0.f, 2.f, -3.f));
-	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
-	camera->Update();
+	//ã‚«ãƒ¡ãƒ©
+	//camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
 }
 
 void BaseBattleScene::Object3DInitialize()
 {
-	//blender‚Å‚Ì•Û‘¶ƒXƒP[ƒ‹‚Í 2/10(0.2)‚Å‚ÌƒGƒNƒXƒ|[ƒg
+	//blenderã§ã®ä¿å­˜ã‚¹ã‚±ãƒ¼ãƒ«ã¯ 2/10(0.2)ã§ã®ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
 	player = make_unique<Player>();
 	player->Initialize("human1");
 	player->SetPosition(areaManager->GetPlayerPosition());
-	player->SetCameeraInitPos(areaManager->GetPlayerPosition());
 	player->SetWeaponPos({0,0,-2.f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player->SetHp(saveHP);
 	gameManager->InitializeSetHp(player->GetHP());
 
-	//oŒû
+	//å‡ºå£
 	exit = make_unique<Exit>();
 	exit->Initialize("Exit");
 	exit->SetPosition(areaManager->GetExitPosition());
@@ -236,7 +234,7 @@ void BaseBattleScene::Object3DInitialize()
 
 void BaseBattleScene::Object2DInitialize()
 {
-	//ƒV[ƒ“‘JˆÚ(FadeOut)
+	//ã‚·ãƒ¼ãƒ³é·ç§»(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
 	fade = make_unique<BaseSprites>();
 	fade->Initialize(1);
@@ -254,35 +252,35 @@ void BaseBattleScene::InputUpdate()
 	if(IsPrevSceneChange)return;
 
 	//ToDo: 
-	// “¯‰Ÿ‚µ‚Å‚ÌƒRƒ“ƒ{+2‚ÌC³(ˆê“x³‰ğ‚É‚È‚Á‚½‚çŸ‚Ì“ü—Í‰Â”\ŠÔ‚Ü‚Å“ü—Í•s‰ÂB)
-	// ƒ~ƒX“ü—Í‚ÌAƒvƒŒƒCƒ„[‚ÌˆÚ“®‚ğ•s‰Â‚ÉB
+	// åŒæ™‚æŠ¼ã—ã§ã®ã‚³ãƒ³ãƒœ+2ã®ä¿®æ­£(ä¸€åº¦æ­£è§£ã«ãªã£ãŸã‚‰æ¬¡ã®å…¥åŠ›å¯èƒ½æ™‚é–“ã¾ã§å…¥åŠ›ä¸å¯ã€‚)
+	// ãƒŸã‚¹å…¥åŠ›ã®æ™‚ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•ã‚’ä¸å¯ã«ã€‚
 	if(player->GetIsInputOnce()){
 		rhythmManager->InputRhythm();
 		IsRhythmInput = true;
 		IsNoteInput = true;
 	}
 
-	//“ü—Í‚ğŠm”F
+	//å…¥åŠ›ã‚’ç¢ºèª
 	if(IsNoteInput){
-		//¶
+		//å·¦
 		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 
-			//‘O’ñğŒ
+			//å‰ææ¡ä»¶
 			if(!(*it)->GetIsNoteAlive()) continue;
 			
-			//ƒn[ƒg‚Æƒm[ƒc‚Ì“–‚½‚è”»’è
+			//ãƒãƒ¼ãƒˆã¨ãƒãƒ¼ãƒ„ã®å½“ãŸã‚Šåˆ¤å®š
 			if(judgeLoca->GetPosition().x-judgeLoca->GetSize().x/2 <= (*it)->GetPosition().x+(*it)->GetSize().x/2 && 
 				(*it)->GetPosition().x-(*it)->GetSize().x/2 <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
 				(*it)->InputUpdate();
 			}
 		}
-		//‰E
+		//å³
 		for(auto it = rNotes.begin(); it != rNotes.end(); it++){
 
-			//‘O’ñğŒ
+			//å‰ææ¡ä»¶
 			if(!(*it)->GetIsNoteAlive()) continue;
 			
-			//ƒn[ƒg‚Æƒm[ƒc‚Ì“–‚½‚è”»’è
+			//ãƒãƒ¼ãƒˆã¨ãƒãƒ¼ãƒ„ã®å½“ãŸã‚Šåˆ¤å®š
 			if(judgeLoca->GetPosition().x-judgeLoca->GetSize().x/2 <= (*it)->GetPosition().x+(*it)->GetSize().x/2 && 
 				(*it)->GetPosition().x-(*it)->GetSize().x/2 <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
 				(*it)->InputUpdate();
@@ -293,7 +291,7 @@ void BaseBattleScene::InputUpdate()
 
 void BaseBattleScene::Object3DUpdate()
 {
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	if(player->DamageSound())	{
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
@@ -304,13 +302,38 @@ void BaseBattleScene::Object3DUpdate()
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
 	}
-	//oŒû
+	//å‡ºå£
 	exit->Update(camera);
 	{
 		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
 		Vector2 pos = exit->GetCoinSp()->ChangeTransformation(target, this->camera);
 		exit->SetCoinSpPosition(pos);
 	}
+
+	//ã‚«ãƒ¡ãƒ©
+	Vector3 cameraPosXZ = camera->GetEye() - camera->GetTarget();
+	float height = cameraPosXZ.y;
+	cameraPosXZ.y = 0.0f;
+	float cameraPosXZLen = cameraPosXZ.length();
+	cameraPosXZ.normalize();
+
+	Vector3 target = player->GetPosition();
+	target.y += 5.0f;
+
+	Vector3 newCameraPos = camera->GetTarget() - target;
+	newCameraPos.y = 0.0f;
+	newCameraPos.normalize();
+
+	float weight = 0.99f;
+	newCameraPos = newCameraPos * weight + cameraPosXZ * (1.0f - weight);
+	newCameraPos.normalize();
+	newCameraPos *= cameraPosXZLen;
+	newCameraPos.y = height;
+	Vector3 pos = target + newCameraPos;
+
+	camera->SetTarget(target);
+	camera->SetEye(pos);
+	camera->Update();
 }
 
 void BaseBattleScene::Object2DUpdate()
@@ -334,10 +357,10 @@ void BaseBattleScene::Object2DUpdate()
 void BaseBattleScene::CommonUpdate()
 {
 	gameManager->PlayerCircleShadowSet(player->GetPosition());
-	//’n–Ê
+	//åœ°é¢
 	gameManager->LightUpdate(player->GetIsDead());
 
-	//oŒû
+	//å‡ºå£
 	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
 		exit->ExitOpen();
 		player->SetIsExitOpen(true);
@@ -347,7 +370,7 @@ void BaseBattleScene::CommonUpdate()
 		player->SetIsExitOpen(false);
 	}
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
 		if(!exit->GetIsOpenAudioOnce()){
@@ -358,22 +381,22 @@ void BaseBattleScene::CommonUpdate()
 		}
 	}
 
-	//‚·‚×‚Ä‚ÌÕ“Ë‚ğƒ`ƒFƒbƒN
+	//ã™ã¹ã¦ã®è¡çªã‚’ãƒã‚§ãƒƒã‚¯
 	collisionManager->CheckAllCollisions();
 }
 
 void BaseBattleScene::RhythmMeasure()
 {
-	//Œv‘ªŠJn
+	//è¨ˆæ¸¬é–‹å§‹
 	if(IsPrevSceneChange) return;
 
-	//ƒŠƒYƒ€Œv‘ª
+	//ãƒªã‚ºãƒ è¨ˆæ¸¬
 	rhythmManager->StartMeasurement(clock());
-	//Œv‘ªŠJn
+	//è¨ˆæ¸¬é–‹å§‹æ™‚
 	if(rhythmManager->GetMoveUpNumber() == 0 && IsBGMStart){
 		gameManager->AudioPlay(8, 0.5f, true);
 	}
-	//ƒŠƒYƒ€ŒJ‚èã‚ª‚è
+	//ãƒªã‚ºãƒ ç¹°ã‚Šä¸ŠãŒã‚Š
 	rhythmManager->BeatMoveUp();
 }
 
@@ -381,22 +404,22 @@ void BaseBattleScene::RhythmJudgeUpdate()
 {
 	if(IsPrevSceneChange) return;
 
-	//ƒŠƒYƒ€”»•Ê
+	//ãƒªã‚ºãƒ åˆ¤åˆ¥
 	if(IsRhythmInput){
 		IsRhythmInput = false;
 
-		//High(“ü—Í‚ª’x‚­AjudgeTime‚ªXV‚³‚ê‚½ó‘Ô‚Å‚ÌXV)
+		//High(å…¥åŠ›ãŒé…ãã€judgeTimeãŒæ›´æ–°ã•ã‚ŒãŸçŠ¶æ…‹ã§ã®æ›´æ–°)
 		if(rhythmManager->HighJudgeRhythm()){
 			gameManager->ComboIncrement();
 			player->JudgeUpdate(true);
 		}
-		//Low(“ü—Í‚ª‘‚­‚ÄAJudgeTime‚ªXV‚³‚ê‚Ä‚¢‚È‚¢ˆ—‚Ì‚İ’Ê‚·@ŒJ‚èã‚ª‚è—pŠm”F®”‚Æ‚Ì”äŠr) judgeTime‚ªXV‚³‚ê‚é‚Ü‚Åˆ—‘Ò‚¿
+		//Low(å…¥åŠ›ãŒæ—©ãã¦ã€JudgeTimeãŒæ›´æ–°ã•ã‚Œã¦ã„ãªã„å‡¦ç†ã®ã¿é€šã™ã€€ç¹°ã‚Šä¸ŠãŒã‚Šç”¨ç¢ºèªæ•´æ•°ã¨ã®æ¯”è¼ƒ) judgeTimeãŒæ›´æ–°ã•ã‚Œã‚‹ã¾ã§å‡¦ç†å¾…ã¡
 		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
 			if(rhythmManager->LowJudgeRhythm()){
 				gameManager->ComboIncrement();
 				player->JudgeUpdate(true);
 			}
-			//ƒ~ƒX
+			//ãƒŸã‚¹
 			else{
 				gameManager->ComboReset();
 				player->JudgeUpdate(false);
@@ -409,13 +432,13 @@ void BaseBattleScene::BeatEndUpdate()
 {
 	if(IsPrevSceneChange) return;
 
-	//ƒŠƒYƒ€I—¹ˆ—
+	//ãƒªã‚ºãƒ çµ‚äº†æ™‚å‡¦ç†
 	if(rhythmManager->GetIsRhythmEnd() && !IsGameEnd){
 		
 		//SE
 		gameManager->AudioPlay(0,0.25f);
 
-		//ŠeƒIƒuƒWƒFƒNƒgˆ—
+		//å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå‡¦ç†
 		if(!player->GetIsDead())player->IsBeatEndOn();
 
 		areaManager->BeatEndUpdate(gameManager.get());
@@ -423,7 +446,7 @@ void BaseBattleScene::BeatEndUpdate()
 		exit->IsBeatEndOn();
 		gameManager->IsBeatEndOn();
 		
-		//ƒr[ƒg–Ú‹—p
+		//ãƒ“ãƒ¼ãƒˆç›®è¦–ç”¨
 		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 			if(!(*it)->GetIsNoteAlive()){
 				(*it)->BeatUpdate();
@@ -454,7 +477,7 @@ void BaseBattleScene::ParticleDraw()
 
 void BaseBattleScene::UIDraw()
 {
-	//oŒû
+	//å‡ºå£
 	exit->Draw2D();
 
 	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
@@ -467,7 +490,7 @@ void BaseBattleScene::UIDraw()
 
 	gameManager->SpriteDraw();
 
-	//ƒV[ƒ“‘JˆÚ
+	//ã‚·ãƒ¼ãƒ³é·ç§»
 	fade->Draw();
 }
 
@@ -478,15 +501,15 @@ void BaseBattleScene::SceneGameEnd()
 
 void BaseBattleScene::SceneChange()
 {
-	//PrevScene‚©‚ç‚ÌˆÚ“®Œãˆ—
+	//PrevSceneã‹ã‚‰ã®ç§»å‹•å¾Œå‡¦ç†
 	if(IsPrevSceneChange){
 
-		//‰æ–Ê‚ªŠJ‚­
+		//ç”»é¢ãŒé–‹ã
 		{
 			if(fadeColor.w <= 0){
 				IsPrevSceneChange = false;
 				fadeCurrentFrame = 0;
-				//ƒŠƒYƒ€
+				//ãƒªã‚ºãƒ 
 				rhythmManager->InitializeMeasurement(clock());
 				return;
 			}
@@ -497,7 +520,7 @@ void BaseBattleScene::SceneChange()
 			fade->Update();
 		}
 	}
-	//NextScene‚Ö‚ÌˆÚ“®
+	//NextSceneã¸ã®ç§»å‹•
 	else if(IsNextSceneChange || IsGameEnd){
 
 		if(fadeColor.w >= 1){
@@ -515,12 +538,12 @@ void BaseBattleScene::SceneChange()
 
 void BaseBattleScene::ObjectFinaize()
 {
-#pragma region _3D‰ğ•ú
+#pragma region _3Dè§£æ”¾
 	player->Finalize();
 	exit->Finalize();
-#pragma endregion _3D‰ğ•ú
+#pragma endregion _3Dè§£æ”¾
 
-#pragma region _2D‰ğ•ú
+#pragma region _2Dè§£æ”¾
 	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 		(*it)->Finalize();
 	}
@@ -529,7 +552,7 @@ void BaseBattleScene::ObjectFinaize()
 	}
 	judgeLoca->Finalize();
 	fade->Finalize();
-#pragma endregion _2D‰ğ•ú
+#pragma endregion _2Dè§£æ”¾
 }
 
 void BaseBattleScene::CommonFinalize()
