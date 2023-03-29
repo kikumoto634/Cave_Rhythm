@@ -198,6 +198,7 @@ void BaseBattleScene::CommonInitialize()
 
 	//カメラ
 	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
+	camera->Update();
 }
 
 void BaseBattleScene::Object3DInitialize()

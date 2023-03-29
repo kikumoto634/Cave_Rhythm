@@ -17,7 +17,7 @@ void Camera::Initialize(Window* window)
 	view.target = {0, 0, 0};
 	view.up = {0, 1, 0};
 
-
+	view.matViewProjection = view.matView * view.matProjection;
 	view.UpdateViewMatrix();
 	view.UpdateProjectionMatrix(window->GetWindowWidth(),window->GetWindowHeight());
 }
@@ -89,7 +89,7 @@ void Camera::RotVector(Vector3 rot)
 
 void Camera::Tracking(Vector3 target)
 {
-	Vector3 cameraPosXZ = GetEye() - GetTarget();
+	Vector3 cameraPosXZ = view.eye - view.target;
 	float height = cameraPosXZ.y;
 	cameraPosXZ.y = 0.0f;
 	float cameraPosXZLen = cameraPosXZ.length();
@@ -98,7 +98,7 @@ void Camera::Tracking(Vector3 target)
 	Vector3 ltarget = target;
 	ltarget.y += 0.0f;
 
-	Vector3 newCameraPos = GetTarget() - ltarget;
+	Vector3 newCameraPos = view.target - ltarget;
 	newCameraPos.y = 50.0f;
 	newCameraPos.normalize();
 
@@ -109,9 +109,9 @@ void Camera::Tracking(Vector3 target)
 	newCameraPos.y = height;
 	Vector3 pos = ltarget + newCameraPos;
 
-	SetTarget(ltarget);
-	SetEye(pos);
-	view.UpdateViewMatrix();
+	view.target = ltarget;
+	view.eye = pos;
+	ViewUpdate();
 }
 
 void Camera::ShakeStart(int MaxFrame)

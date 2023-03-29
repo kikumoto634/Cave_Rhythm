@@ -62,6 +62,11 @@ public:
 	//シェイク停止
 	void Reset();
 
+	/// <summary>
+	/// View更新
+	/// </summary>
+	inline void ViewUpdate()	{view.UpdateViewMatrix();}
+
 	//getter
 	const XMMATRIX& GetMatProjection()	{return view.matProjection;}
 	const XMMATRIX& GetMatView()	{return view.matView;}
