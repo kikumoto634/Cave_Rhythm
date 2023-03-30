@@ -1,4 +1,4 @@
-﻿#include "Application.h"
+#include "Application.h"
 #include "../../scene/TitleScene.h"
 
 #include "../../scene/HomeScene.h"
@@ -58,7 +58,7 @@ void Application::Initialize()
 {
 #pragma region 汎用機能初期化
 	//Window生成
-	window->Create("GiliraEngine", 1280, 720);
+	window->Create("CAVERHYTHM", 1280, 720);
 
 	//DirectXCommon
 	dxCommon->Initialize(window);
