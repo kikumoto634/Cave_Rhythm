@@ -112,41 +112,10 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 			//待機カウント
 			if(waitCount >= WaitCount){
 				//移動
-				IsMoveEasing = true;
-				targetPos = playerPos;
-				Movement();
-				currentPos = GetPosition();
-				OldPosition = currentPos;
 				waitCount = 0;
 			}
 			else{
 				waitCount++;
-			}
-		}
-
-		//移動
-		if(IsMoveEasing){
-			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
-		
-			if(moveEasingFrame >= 1.f){
-				IsMoveEasing = false;
-				world.translation = movePosition;
-				currentPos = {};
-				movePosition = {};
-				moveEasingFrame = 0;
-			}
-		}
-
-		Ray ray;
-		ray.start = sphereCollider->center;
-		ray.start.m128_f32[1] += sphereCollider->GetRadius();
-		ray.dir = {RayDir.x, RayDir.y, RayDir.z, 0};
-		RaycastHit raycastHit;
-		if(IsMoveEasing){
-			//スムーズに坂を下る為の吸着距離
-			const float adsDistance = 0.1f;
-			if(CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)){
-				movePosition = OldPosition;
 			}
 		}
 
@@ -229,57 +198,13 @@ void Skelton::Reset()
 	IsDead = false;
 
 	waitCount = 0;
-
-	IsMoveEasing = false;
-	currentPos = {};
-	movePosition = {};
-	OldPosition = {};
-	moveEasingFrame = 0;
 }
 
 void Skelton::Movement()
 {
 	if(IsInvisible) return;
 
-	Vector2 baseVector = {1,0};
-	Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
 
-	float lengthBase = baseVector.length();
-	float lengthSub = subVector.length();
-
-	float cos = baseVector.dot(subVector)/(lengthBase*lengthSub);
-
-	float sita = acosf(cos);
-	sita = sita*(180/3.14159265f);
-	
-	//右
-	if(sita >= 135){
-		movePosition = world.translation + Vector3{2.f,0,0};
-		SetRotation({0,XMConvertToRadians(90),0});
-		RayDir = {1,0,0};
-	}
-	//左
-	else if(45 >= sita){
-		movePosition = world.translation + Vector3{-2.f,0,0};
-		SetRotation({0,XMConvertToRadians(-90),0});
-		RayDir = {-1,0,0};
-	}
-	//下
-	else if(sita > 45 && 135 > sita){
-
-		//下
-		if(subVector.y > 0){
-			movePosition = world.translation + Vector3{0,0,-2.f};
-			SetRotation({0,XMConvertToRadians(180),0});
-			RayDir = {0,0,-1};
-		}
-		//上
-		else if(subVector.y < 0){
-			movePosition = world.translation + Vector3{0,0,2.f};
-			SetRotation({0,0,0});
-			RayDir = {0,0,1};
-		}
-	}
 }
 
 void Skelton::PopParticleApp()

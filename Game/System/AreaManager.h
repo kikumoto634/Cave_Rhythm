@@ -38,6 +38,7 @@ struct Room{
 	int Width;
 	int Height;
 };
+
 public:
 	void RandamAreaInitialize();
 	void CSVAreaInitialize(std::string name);
@@ -126,7 +127,6 @@ private:
 	ObjModelManager* WallModel = nullptr;
 	ObjModelManager* WallColliderModel = nullptr;
 	bool IsAlive = false;
-	char WallMap[DIV_NUM][DIV_NUM] = {};
 	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};
 
 	//破壊不可能壁
@@ -134,24 +134,20 @@ private:
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 	IndestructibleWall* IndestructibleWalls[DIV_NUM][DIV_NUM] = {nullptr};
 
+
+	//部屋作成配列
+	char WallMap[DIV_NUM][DIV_NUM] = {};
+
 	//部屋
 	std::vector<Room> rooms;
 
-
-	//出口
-	Vector3 exitPosition = {0,-5,0};
-
-	//プレイヤー
-	Vector3 PlayerPopPosition = {0,-3,0};
-
-	//生成オブジェクト
-	Vector3 ObjectPopPosition = {0,0,0};
 
 	//CSVコマンド
 	std::stringstream csvCommands;
 	int CSVMap[DIV_NUM][DIV_NUM] = {0};
 	std::vector<Vector3> ObjectPos;
 	std::vector<bool> ObjectPopActive;
+
 
 	//壁破壊パーティクル
 	bool IsDig = false;
@@ -161,5 +157,14 @@ private:
 	ParticleObject* DigParticle = nullptr;
 	bool IsDigSound = false;
 
+	//座標
+	//出口
+	Vector3 exitPosition = {0,-5,0};
+
+	//プレイヤー
+	Vector3 PlayerPopPosition = {0,-3,0};
+
+	//生成オブジェクト
+	Vector3 ObjectPopPosition = {0,0,0};
 };
 
