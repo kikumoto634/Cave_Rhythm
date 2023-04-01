@@ -134,17 +134,23 @@ private:
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 	IndestructibleWall* IndestructibleWalls[DIV_NUM][DIV_NUM] = {nullptr};
 
-
-	//部屋作成配列
-	char WallMap[DIV_NUM][DIV_NUM] = {};
+	//部屋情報
+	/*
+	* 0:無
+	* 1:道
+	* 2:不可壁
+	* 3:可能壁
+	*/
+	std::vector<std::vector<int>> mapInfo;
 
 	//部屋
 	std::vector<Room> rooms;
+	//ランダム生成用
+	//char WallMap[DIV_NUM][DIV_NUM] = {};
 
 
 	//CSVコマンド
 	std::stringstream csvCommands;
-	int CSVMap[DIV_NUM][DIV_NUM] = {0};
 	std::vector<Vector3> ObjectPos;
 	std::vector<bool> ObjectPopActive;
 

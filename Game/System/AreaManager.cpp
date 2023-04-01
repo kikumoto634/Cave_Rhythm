@@ -191,7 +191,7 @@ void AreaManager::CSVAreaPlaneInitialize()
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(CSVMap[i][j] == 0){
+			if(mapInfo[i][j] == 0){
 				continue;
 			}
 
@@ -269,7 +269,7 @@ void AreaManager::RandamAreaWallsInitialize()
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(WallMap[i][j] != '*') {
+			if(mapInfo[i][j] != 3) {
 				continue;
 			}
 
@@ -291,7 +291,7 @@ void AreaManager::CVSAreaWallsInitialize()
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
 			
-			if(CSVMap[i][j] != 3){
+			if(mapInfo[i][j] != 3){
 				continue;
 			}
 
@@ -396,7 +396,7 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 
 	for(int i = 0; i < DIV_NUM; i++){
 		for(int j = 0; j < DIV_NUM; j++){
-			if(CSVMap[i][j] != 2){
+			if(mapInfo[i][j] != 2){
 				continue;
 			}
 
@@ -451,8 +451,10 @@ void AreaManager::IndestructibleWallFinalize()
 void AreaManager::CreateMap()
 {
 	for(int y = 0; y < DIV_NUM; y++){
+		mapInfo.resize(y+1);
 		for(int x = 0; x < DIV_NUM; x++){
-			WallMap[y][x] = '*';
+			//WallMap[y][x] = '*';
+			mapInfo[y].push_back(3);
 		}
 	}
 
@@ -530,9 +532,10 @@ AreaManager::Room AreaManager::CreateRoom(Area area)
 	rooms.push_back(room);
 
 	//マップに反映
-	for(int y = 0; y < H; y++){
-		for(int x = 0; x < W; x++){
-			WallMap[Y + y][X + x] = 'A';
+	for(int y = 0; y < H-1; y++){
+		for(int x = 0; x < W-1; x++){
+			//WallMap[Y + y][X + x] = 'A';
+			mapInfo[Y+y][X+x] = 1;
 		}
 	}
 
@@ -543,47 +546,57 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 	if(hr){
 		//親部屋ないからランダムに一点を選択
 		int X1 = parent.X + rand()%parent.Width;
+		if(X1 == 31) X1 = 30;
 		//子部屋
 		int X2 = childRoom.X + rand()%childRoom.Width;
+		if(X2 == 31) X2 = 30;
 		//小さい
 		int minX = min(X1,X2);
 		//大きい
 		int maxX = max(X1,X2);
 
 		//マップに分割ライン上の通路作成
-		for(int i = 0; minX + i <= maxX; i++){
-			WallMap[divline][minX + i] = 'A';
+		for(int i = 0; minX + i < maxX; i++){
+			//WallMap[divline][minX + i] = 'A';
+			mapInfo[divline][minX + i] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; WallMap[divline-i][X1] == '*'; i++){
-			WallMap[divline-i][X1] = 'A';
+		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline-i > 0; i++){
+			//WallMap[divline-i][X1] = 'A';
+			mapInfo[divline-i][X1] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; WallMap[divline+i][X2] == '*'; i++){
-			WallMap[divline+i][X2] = 'A';
+		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline+i < 30; i++){
+			//WallMap[divline+i][X2] = 'A';
+			mapInfo[divline+i][X2] = 1;
 		}
 	}
 	else if(!hr){
 		//親部屋ないからランダムに一点を選択
 		int Y1 = parent.Y + rand()%parent.Height;
+		if(Y1 == 31) Y1 = 30;
 		//子部屋
 		int Y2 = childRoom.Y + rand()%childRoom.Height;
+		if(Y2 == 31) Y2 = 30;
 		//小さい
 		int minY = min(Y1,Y2);
 		//大きい
 		int maxY = max(Y1,Y2);
 
 		//マップに分割ライン上の通路作成
-		for(int i = 0; minY + i <= maxY; i++){
-			WallMap[minY + i][divline] = 'A';
+		for(int i = 0; minY + i < maxY; i++){
+			//WallMap[minY + i][divline] = 'A';
+			mapInfo[minY + i][divline] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; WallMap[Y1][divline-i] == '*'; i++){
-			WallMap[Y1][divline-i] = 'A';
+		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline-i > 0; i++){
+			//WallMap[Y1][divline-i] = 'A';
+			mapInfo[Y1][divline-i] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; WallMap[Y2][divline+i] == '*'; i++){
-			WallMap[Y2][divline+i] = 'A';
+		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline+i < 30; i++){
+			//WallMap[Y2][divline+i] = 'A';
+			mapInfo[Y2][divline+i] = 1;
 		}
 	}
 }
@@ -624,29 +637,31 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 		getline(line_stream, word, ',');
 
 		x = 0;
+		mapInfo.resize(y+1);
 		for(int i = 0; i < DIV_NUM*DIV_NUM; i++){
 
 			if(word.find("0") == 0){
+				mapInfo[y].push_back(0);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("1") == 0){
-				CSVMap[y][x] = 1;
+				mapInfo[y].push_back(1);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("2") == 0){
-				CSVMap[y][x] = 2;
+				mapInfo[y].push_back(2);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("3") == 0){
-				CSVMap[y][x] = 3;
+				mapInfo[y].push_back(3);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("4") == 0){
-				CSVMap[y][x] = 1;
+				mapInfo[y].push_back(1);
 
 				pos = {start + y, start + x};
 				pos *= Block_Size;
@@ -656,7 +671,7 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				x++;
 			}
 			else if(word.find("5") == 0){
-				CSVMap[y][x] = 1;
+				mapInfo[y].push_back(1);
 
 				pos = {start + y, start + x};
 				pos *= Block_Size;
@@ -667,7 +682,7 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 				x++;
 			}
 			else if(word.find("6") == 0){
-				CSVMap[y][x] = 1;
+				mapInfo[y].push_back(1);
 
 				pos = {start + y, start + x};
 				pos *= Block_Size;
@@ -710,7 +725,8 @@ void AreaManager::ObjectRandomPop()
 	//出口
 	int exitRoomsNum = rand()%roomSize;
 	//プレイヤー
-	int playerRoomsNum = rand()%roomSize;
+	//int playerRoomsNum = rand()%roomSize;
+	int playerRoomsNum = exitRoomsNum;
 
 	//exit
 	areaPos = {(start+rooms[exitRoomsNum].Y), (start+rooms[exitRoomsNum].X)};
