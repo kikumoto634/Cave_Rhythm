@@ -74,16 +74,14 @@ public:
 
 private:
 	//地面
-	void RandamAreaPlaneInitialize();
-	void CSVAreaPlaneInitialize();
+	void AreaPlaneInitialize(bool IsLighting = false);
 	void PlaneUpdate();
 	void PlaneBeatEndUpdate();
 	void PlaneDraw();
 	void PlaneFinalize();
 
 	//壁
-	void RandamAreaWallsInitialize();
-	void CVSAreaWallsInitialize();
+	void AreaWallsInitialize(bool IsLigthing = false);
 	void WallUpdate();
 	void WallBeatEndUpdate();
 	void WallDraw();
@@ -143,10 +141,8 @@ private:
 	*/
 	std::vector<std::vector<int>> mapInfo;
 
-	//部屋
+	//ランダム生成部屋
 	std::vector<Room> rooms;
-	//ランダム生成用
-	//char WallMap[DIV_NUM][DIV_NUM] = {};
 
 
 	//CSVコマンド

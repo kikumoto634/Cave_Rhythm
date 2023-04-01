@@ -18,8 +18,8 @@ void AreaManager::RandamAreaInitialize()
 
 	CommonInitialize();
 
-	RandamAreaWallsInitialize();
-	RandamAreaPlaneInitialize();
+	AreaWallsInitialize(true);
+	AreaPlaneInitialize(true);
 	RandamAreaIndestructibleWallInitialize();
 }
 
@@ -29,8 +29,8 @@ void AreaManager::CSVAreaInitialize(string name)
 
 	CommonInitialize();
 
-	CSVAreaPlaneInitialize();
-	CVSAreaWallsInitialize();
+	AreaPlaneInitialize();
+	AreaWallsInitialize();
 	CSVAreaIndestructibleWallInitialize();
 }
 
@@ -168,23 +168,7 @@ void AreaManager::CommonFinalize()
 }
 
 #pragma region 地面
-void AreaManager::RandamAreaPlaneInitialize()
-{
-	float startPos = -DIV_NUM_HALF_FLOAT;
-	Vector2 pos = {};
-
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			plane[i][j] = new Planes();
-			plane[i][j]->Initialize(PlaneModel);
-			pos = {startPos + i, startPos + j};
-			pos *= Block_Size;
-			plane[i][j]->SetPosition({pos.x,-5,pos.y});
-			plane[i][j]->CaveLightOn();
-		}
-	}
-}
-void AreaManager::CSVAreaPlaneInitialize()
+void AreaManager::AreaPlaneInitialize(bool IsLighting)
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
@@ -194,12 +178,14 @@ void AreaManager::CSVAreaPlaneInitialize()
 			if(mapInfo[i][j] == 0){
 				continue;
 			}
-
 			plane[i][j] = new Planes();
 			plane[i][j]->Initialize(PlaneModel);
 			pos = {startPos + i, startPos + j};
-			pos*= Block_Size;
+			pos *= Block_Size;
 			plane[i][j]->SetPosition({pos.x,-5,pos.y});
+
+			if(!IsLighting) continue;
+			plane[i][j]->CaveLightOn();
 		}
 	}
 }
@@ -262,28 +248,7 @@ void AreaManager::PlaneFinalize()
 #pragma endregion
 
 #pragma region 壁
-void AreaManager::RandamAreaWallsInitialize()
-{
-	float startPos = -DIV_NUM_HALF_FLOAT;
-	Vector2 pos = {};
-
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(mapInfo[i][j] != 3) {
-				continue;
-			}
-
-			Wall[i][j] = new Walls();
-			Wall[i][j]->Initialize(WallModel,WallColliderModel);
-
-			pos = {startPos + i, startPos + j};
-			pos*= Block_Size;
-			Wall[i][j]->SetPosition({pos.x,-3,pos.y});
-			Wall[i][j]->CaveLightOn();
-		}
-	}
-}
-void AreaManager::CVSAreaWallsInitialize()
+void AreaManager::AreaWallsInitialize(bool IsLigthing)
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
@@ -301,6 +266,9 @@ void AreaManager::CVSAreaWallsInitialize()
 			pos = {startPos + i, startPos + j};
 			pos*= Block_Size;
 			Wall[i][j]->SetPosition({pos.x,-3,pos.y});
+
+			if(!IsLigthing) continue;
+			Wall[i][j]->CaveLightOn();
 		}
 	}
 }
@@ -453,7 +421,6 @@ void AreaManager::CreateMap()
 	for(int y = 0; y < DIV_NUM; y++){
 		mapInfo.resize(y+1);
 		for(int x = 0; x < DIV_NUM; x++){
-			//WallMap[y][x] = '*';
 			mapInfo[y].push_back(3);
 		}
 	}
@@ -534,7 +501,6 @@ AreaManager::Room AreaManager::CreateRoom(Area area)
 	//マップに反映
 	for(int y = 0; y < H-1; y++){
 		for(int x = 0; x < W-1; x++){
-			//WallMap[Y + y][X + x] = 'A';
 			mapInfo[Y+y][X+x] = 1;
 		}
 	}
@@ -557,17 +523,14 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 
 		//マップに分割ライン上の通路作成
 		for(int i = 0; minX + i < maxX; i++){
-			//WallMap[divline][minX + i] = 'A';
 			mapInfo[divline][minX + i] = 1;
 		}
 		//分割ラインから親部屋への通路
 		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline-i > 0; i++){
-			//WallMap[divline-i][X1] = 'A';
 			mapInfo[divline-i][X1] = 1;
 		}
 		//子部屋へ
 		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline+i < 30; i++){
-			//WallMap[divline+i][X2] = 'A';
 			mapInfo[divline+i][X2] = 1;
 		}
 	}
@@ -585,17 +548,14 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 
 		//マップに分割ライン上の通路作成
 		for(int i = 0; minY + i < maxY; i++){
-			//WallMap[minY + i][divline] = 'A';
 			mapInfo[minY + i][divline] = 1;
 		}
 		//分割ラインから親部屋への通路
 		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline-i > 0; i++){
-			//WallMap[Y1][divline-i] = 'A';
 			mapInfo[Y1][divline-i] = 1;
 		}
 		//子部屋へ
 		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline+i < 30; i++){
-			//WallMap[Y2][divline+i] = 'A';
 			mapInfo[Y2][divline+i] = 1;
 		}
 	}
@@ -725,8 +685,7 @@ void AreaManager::ObjectRandomPop()
 	//出口
 	int exitRoomsNum = rand()%roomSize;
 	//プレイヤー
-	//int playerRoomsNum = rand()%roomSize;
-	int playerRoomsNum = exitRoomsNum;
+	int playerRoomsNum = rand()%roomSize;
 
 	//exit
 	areaPos = {(start+rooms[exitRoomsNum].Y), (start+rooms[exitRoomsNum].X)};
