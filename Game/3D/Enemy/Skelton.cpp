@@ -285,19 +285,19 @@ void Skelton::Movement()
 	//マップ情報の更新
 	mapPath = mapInfo;
 	int eX = int(GetPosition().x/2)+15;
-	int eY = int(GetPosition().z/2)+15;
+	int eY = -int(GetPosition().z/2)+15;
 	int pX = int(PlayerPos.x/2)+15;
 	int pY = int(PlayerPos.z/2)+15;
 
-	path = find_path(mapInfo,eY,eX, pY,pX);
+	path = find_path(mapInfo,eX,eY, pX,pY);
 	int i = 10;
 	for(auto it = path.begin(); it != path.end(); it++){
         mapPath[(*it)->y][(*it)->x] = i;
 		i++;
     }
 
-	mapPath[eX][eY] = 5;
-	mapPath[pX][pY] = 6;
+	mapPath[eY][eX] = 5;
+	mapPath[pY][pX] = 6;
 
 	if(IsDebug) return ;
 

@@ -180,9 +180,9 @@ void AreaManager::AreaPlaneInitialize(bool IsLighting)
 			}
 			plane[i][j] = new Planes();
 			plane[i][j]->Initialize(PlaneModel);
-			pos = {startPos + i, startPos + j};
+			pos = {startPos + j, startPos + i};
 			pos *= Block_Size;
-			plane[i][j]->SetPosition({pos.x,-5,pos.y});
+			plane[i][j]->SetPosition({pos.x,-5,-pos.y});
 
 			if(!IsLighting) continue;
 			plane[i][j]->CaveLightOn();
@@ -263,9 +263,9 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 			Wall[i][j] = new Walls();
 			Wall[i][j]->Initialize(WallModel,WallColliderModel);
 
-			pos = {startPos + i, startPos + j};
+			pos = {startPos + j, startPos + i};
 			pos*= Block_Size;
-			Wall[i][j]->SetPosition({pos.x,-3,pos.y});
+			Wall[i][j]->SetPosition({pos.x,-3,-pos.y});
 
 			if(!IsLigthing) continue;
 			Wall[i][j]->CaveLightOn();
@@ -370,9 +370,9 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 
 			IndestructibleWalls[i][j] = new IndestructibleWall();
 			IndestructibleWalls[i][j]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-			pos = {startPos + i ,startPos + j};
+			pos = {startPos + j ,startPos + i};
 			pos *= Block_Size;
-			IndestructibleWalls[i][j]->SetPosition({pos.x,-3,pos.y});
+			IndestructibleWalls[i][j]->SetPosition({pos.x,-3,-pos.y});
 		}
 	}
 }
@@ -623,9 +623,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 			else if(word.find("4") == 0){
 				mapInfo[y].push_back(1);
 
-				pos = {start + y, start + x};
+				pos = {start + x, start + y};
 				pos *= Block_Size;
-				PlayerPopPosition = {pos.x, -3, pos.y};
+				PlayerPopPosition = {pos.x, -3, -pos.y};
 
 				getline(line_stream, word, ',');
 				x++;
@@ -633,9 +633,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 			else if(word.find("5") == 0){
 				mapInfo[y].push_back(1);
 
-				pos = {start + y, start + x};
+				pos = {start + x, start + y};
 				pos *= Block_Size;
-				ObjectPos.push_back({pos.x,0,pos.y});
+				ObjectPos.push_back({pos.x,0,-pos.y});
 				ObjectPopActive.push_back(true);
 
 				getline(line_stream, word, ',');
@@ -644,9 +644,9 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 			else if(word.find("6") == 0){
 				mapInfo[y].push_back(1);
 
-				pos = {start + y, start + x};
+				pos = {start + x, start + y};
 				pos *= Block_Size;
-				exitPosition = {pos.x,-5,pos.y};
+				exitPosition = {pos.x,-5,-pos.y};
 
 				getline(line_stream, word, ',');
 				x++;
@@ -688,18 +688,18 @@ void AreaManager::ObjectRandomPop()
 	int playerRoomsNum = rand()%roomSize;
 
 	//exit
-	areaPos = {(start+rooms[exitRoomsNum].Y), (start+rooms[exitRoomsNum].X)};
+	areaPos = {(start+rooms[exitRoomsNum].X), (start+rooms[exitRoomsNum].Y)};
 	areaPos *= Block_Size;
 	areaWH = {float(rand()%(rooms[exitRoomsNum].Height-1)),float(rand()%(rooms[exitRoomsNum].Width-1))};
 	areaWH *= Block_Size;
-	exitPosition = {areaPos.x+areaWH.x,-5.f,areaPos.y+areaWH.y};
+	exitPosition = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
 
 	//player
-	areaPos = {(start+rooms[playerRoomsNum].Y),(start+rooms[playerRoomsNum].X)};
+	areaPos = {(start+rooms[playerRoomsNum].X),(start+rooms[playerRoomsNum].Y)};
 	areaPos*= Block_Size;
 	areaWH = {float(rand()%(rooms[playerRoomsNum].Height-1)),float(rand()%(rooms[playerRoomsNum].Width-1))};
 	areaWH *= Block_Size;
-	PlayerPopPosition = {areaPos.x+areaWH.x,-3.f,areaPos.y+areaWH.y};
+	PlayerPopPosition = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
 }
 
 Vector3 AreaManager::GetObjectPopPosition()
@@ -711,11 +711,11 @@ Vector3 AreaManager::GetObjectPopPosition()
 	float start = -DIV_NUM_HALF_FLOAT;
 	int RoomsNum = rand()%roomSize;
 
-	areaPos = {(start+rooms[RoomsNum].Y),(start+rooms[RoomsNum].X)};
+	areaPos = {(start+rooms[RoomsNum].X),(start+rooms[RoomsNum].Y)};
 	areaPos *= Block_Size;
 	areaWH = {float(rand()%(rooms[RoomsNum].Height-1)),float(rand()%(rooms[RoomsNum].Width-1))};
 	areaWH *= Block_Size;
-	ObjectPopPosition = {areaPos.x+areaWH.x,0.f,areaPos.y+areaWH.y};
+	ObjectPopPosition = {areaPos.x+areaWH.x,0.f,-(areaPos.y+areaWH.y)};
 
 	return ObjectPopPosition;
 }

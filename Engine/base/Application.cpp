@@ -4,6 +4,7 @@
 #include "../../scene/HomeScene.h"
 #include "../../scene/GameScene.h"
 #include "../../scene/Boss1Area.h"
+#include "../../scene/TutorialScene.h"
 
 Application* Application::app = nullptr;
 
@@ -142,7 +143,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new HomeScene(dxCommon, window);
+	BaseScene* scene = new Boss1Area(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);

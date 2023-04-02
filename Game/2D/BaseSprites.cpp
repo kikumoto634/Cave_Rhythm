@@ -1,4 +1,4 @@
-﻿#include "BaseSprites.h"
+#include "BaseSprites.h"
 #include "../../../Engine/math/Easing/Easing.h"
 
 void BaseSprites::Initialize(UINT textureNumber)
