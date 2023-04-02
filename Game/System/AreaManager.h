@@ -72,6 +72,9 @@ public:
 	bool GetCSVObjectPopActive(int index, bool IsFlag = true);
 	int GetCSVObjectSize()	{return (int)ObjectPos.size();}
 
+	//Getter
+	inline std::vector<std::vector<int>> GetMapInfo()	{return mapInfo;}
+
 private:
 	//地面
 	void AreaPlaneInitialize(bool IsLighting = false);

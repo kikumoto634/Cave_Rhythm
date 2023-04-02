@@ -1,4 +1,4 @@
-﻿#include "HomeScene.h"
+#include "HomeScene.h"
 
 #include "TitleScene.h"
 #include "GameScene.h"
@@ -71,6 +71,7 @@ void HomeScene::AddObject3DUpdate()
 		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
 		}
+		(*it)->SetMapInfo(areaManager->GetMapInfo());
 		(*it)->Update(camera,player->GetPosition());
 	}
 }
@@ -154,8 +155,8 @@ void HomeScene::AddCommonFinalize()
 void HomeScene::ActorCreateInitialize()
 {
 	for(int i = 0; i < slimePopNumMax; i++){
-		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
-		newObj->Initialize("Slime");
+		unique_ptr<Skelton> newObj = make_unique<Skelton>();
+		newObj->Initialize("Skeleton");
 		slime.push_back(move(newObj));
 	}
 }

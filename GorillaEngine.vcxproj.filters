@@ -229,6 +229,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Coins">
       <UniqueIdentifier>{88bd1333-2db8-444f-bada-4c190826bc99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\Struct">
+      <UniqueIdentifier>{dab8ceee-7f84-4444-a953-0fbed9000e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Struct">
+      <UniqueIdentifier>{4eaa2358-a61a-449d-b83a-d41c5582a998}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera\Camera.cpp">
@@ -428,6 +434,9 @@
     </ClCompile>
     <ClCompile Include="Game\2D\Combo.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Struct\MapNode.cpp">
+      <Filter>ソース ファイル\Game\Struct</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -655,6 +664,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Coins\Coins.h">
       <Filter>ヘッダー ファイル\Game\3D\Coins</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Struct\MapNode.h">
+      <Filter>ヘッダー ファイル\Game\Struct</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
