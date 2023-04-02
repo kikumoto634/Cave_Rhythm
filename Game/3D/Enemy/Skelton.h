@@ -114,5 +114,22 @@ private:
 	std::vector<MapNode*> path;
 	std::vector<std::vector<int>> mapPath;
 
+	//移動
+	bool IsMoveEasing = false;
+	Vector3 movePosition = {};
+	Vector3 currentPos = {};
+	const float MoveEasingMaxTime = 0.05f;
+    float moveEasingFrame = 0;
+	int pathRoot = 10;
+	int pathRootGoal = 0;
+	bool IsRootUpdate = false;
+
+	int eX;
+	int eY;
+	int pX;
+	int pY;
+
+#ifdef _DEBUG
 	bool IsDebug = false;
+#endif // _DEBUG
 };

@@ -46,7 +46,7 @@ private:
 private:
 	//ダンジョンテキスト
 	std::unique_ptr<TutorialSp> exitText;
-	const Vector3 exitTextPos = {-0,-3,-9};
+	const Vector3 exitTextPos = {-0,-3,-7};
 
 	std::unique_ptr<TutorialSp> trainingText;
 	const Vector3 trainingTextPos = {-8,-3,-1};

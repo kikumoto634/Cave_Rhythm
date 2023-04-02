@@ -113,14 +113,31 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 			IsBeatEnd = false;
 
 			//待機カウント
-			if(waitCount >= WaitCount){
-				//移動
-				Movement();
+			if(waitCount > WaitCount){
 				waitCount = 0;
+				//移動
+				if(!IsMoveEasing){
+					IsMoveEasing = true;
+					Movement();
+					currentPos = GetPosition();
+				}
 			}
-			else{
+			else if(waitCount <= WaitCount){
 				waitCount++;
 			}
+		}
+
+		//移動
+		if(IsMoveEasing){
+			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+        
+            if(moveEasingFrame >= 1.f){
+                IsMoveEasing = false;
+                world.translation = movePosition;
+                currentPos = {};
+                movePosition = {};
+                moveEasingFrame = 0;
+            }
 		}
 
 		//スケール遷移
@@ -252,7 +269,7 @@ vector<MapNode *> Skelton::find_path(std::vector<std::vector<int>> &grid, int st
             }
 
             //障害物
-            if (grid[next_y][next_x] == 2 || grid[next_y][next_x] == 3) {
+            if (grid[next_y][next_x] != 1) {
                 continue;
             }
 
@@ -275,6 +292,9 @@ void Skelton::Reset()
 	IsDead = false;
 
 	waitCount = 0;
+
+	movePosition = {};
+	currentPos = {};
 }
 
 void Skelton::Movement()
@@ -282,25 +302,57 @@ void Skelton::Movement()
 	if(IsInvisible) return;
 	if(mapInfo.size() == 0) return;
 
-	//マップ情報の更新
-	mapPath = mapInfo;
-	int eX = int(GetPosition().x/2)+15;
-	int eY = -int(GetPosition().z/2)+15;
-	int pX = int(PlayerPos.x/2)+15;
-	int pY = int(PlayerPos.z/2)+15;
+	if(!IsRootUpdate){
+		//マップ情報の更新
+		mapPath = mapInfo;
+		eX = int(GetPosition().x/2)+15;
+		eY = -int(GetPosition().z/2)+15;
+		pX = int(PlayerPos.x/2)+15;
+		pY = -int(PlayerPos.z/2)+15;
 
-	path = find_path(mapInfo,eX,eY, pX,pY);
-	int i = 10;
-	for(auto it = path.begin(); it != path.end(); it++){
-        mapPath[(*it)->y][(*it)->x] = i;
-		i++;
+		path = find_path(mapInfo,eX,eY, pX,pY);
+		int root = 9;
+		for(auto it = path.begin(); it != path.end(); it++){
+			mapPath[(*it)->y][(*it)->x] = root;
+			root++;
+		}
+		pathRootGoal = root;
+
+		mapPath[eY][eX] = 5;
+		mapPath[pY][pX] = 6;
+
+		IsRootUpdate = true;
+	}
+
+	//上下左右のルート先
+    int dx[4] = {-1, 1, 0, 0};
+    int dy[4] = {0, 0, -1, 1};
+
+    //四方向をforで調べる
+    for (int j = 0; j < 4; j++) {
+        //dx,dy方向のルート移動
+        int next_x = eX + dx[j];
+        int next_y = eY + dy[j];
+
+        if(mapPath[next_y][next_x] == pathRoot || mapPath[next_y][next_x] == 6){
+			movePosition = world.translation + Vector3{dx[j]*2.0f, 0.f, -dy[j]*2.0f};
+			eX = next_x;
+			eY = next_y;
+			if(pathRoot == pathRootGoal) {
+				IsRootUpdate = false;
+				pathRoot = 10;
+			}
+			else {
+				pathRoot++;
+			}
+			break;
+		}
+
+		movePosition = world.translation;
     }
 
-	mapPath[eY][eX] = 5;
-	mapPath[pY][pX] = 6;
-
+#ifdef _DEBUG
 	if(IsDebug) return ;
-
 	for(int y = 0; y < 31; y++){
 		for(int x = 0; x < 31; x++){
 			if(mapPath[y][x] == 0) OutputDebugString(L"00,");
@@ -325,7 +377,9 @@ void Skelton::Movement()
 		}
 		OutputDebugString(L"\n");
 	}
+	OutputDebugString(L"\n");
 	IsDebug = true;
+#endif // _DEBUG
 }
 
 void Skelton::PopParticleApp()
