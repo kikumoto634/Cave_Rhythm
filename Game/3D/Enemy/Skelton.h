@@ -121,7 +121,6 @@ private:
 	const float MoveEasingMaxTime = 0.05f;
     float moveEasingFrame = 0;
 	int pathRoot = 10;
-	int pathRootGoal = 0;
 	bool IsRootUpdate = false;
 
 	int eX;

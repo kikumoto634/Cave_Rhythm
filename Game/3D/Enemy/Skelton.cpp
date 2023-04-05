@@ -118,7 +118,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 				//移動
 				if(!IsMoveEasing){
 					IsMoveEasing = true;
-					Movement();
+					//Movement();
 					currentPos = GetPosition();
 				}
 			}
@@ -295,10 +295,15 @@ void Skelton::Reset()
 
 	movePosition = {};
 	currentPos = {};
+
+	IsRootUpdate = false;
+
+	mapInfo.clear();
 }
 
 void Skelton::Movement()
 {
+	movePosition = world.translation;
 	if(IsInvisible) return;
 	if(mapInfo.size() == 0) return;
 
@@ -316,8 +321,6 @@ void Skelton::Movement()
 			mapPath[(*it)->y][(*it)->x] = root;
 			root++;
 		}
-		pathRootGoal = root;
-
 		mapPath[eY][eX] = 5;
 		mapPath[pY][pX] = 6;
 
@@ -338,11 +341,12 @@ void Skelton::Movement()
 			movePosition = world.translation + Vector3{dx[j]*2.0f, 0.f, -dy[j]*2.0f};
 			eX = next_x;
 			eY = next_y;
-			if(pathRoot == pathRootGoal) {
+
+			if(pathRoot == 6) {
 				IsRootUpdate = false;
 				pathRoot = 10;
 			}
-			else {
+			else if(mapPath[next_y][next_x] == pathRoot){
 				pathRoot++;
 			}
 			break;

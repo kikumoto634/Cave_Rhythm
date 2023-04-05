@@ -1,4 +1,4 @@
-﻿#include "AreaManager.h"
+#include "AreaManager.h"
 
 #include <fstream>
 #include <cassert>
@@ -526,11 +526,11 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			mapInfo[divline][minX + i] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline-i > 0; i++){
+		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline-i >= 0; i++){
 			mapInfo[divline-i][X1] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline+i < 30; i++){
+		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline+i <= 30; i++){
 			mapInfo[divline+i][X2] = 1;
 		}
 	}
@@ -551,11 +551,11 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			mapInfo[minY + i][divline] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline-i > 0; i++){
+		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline-i >= 0; i++){
 			mapInfo[Y1][divline-i] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline+i < 30; i++){
+		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline+i <= 30; i++){
 			mapInfo[Y2][divline+i] = 1;
 		}
 	}
