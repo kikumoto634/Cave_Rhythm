@@ -511,11 +511,9 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 {
 	if(hr){
 		//親部屋ないからランダムに一点を選択
-		int X1 = parent.X + rand()%parent.Width;
-		if(X1 == 31) X1 = 30;
+		int X1 = parent.X + rand()%(parent.Width-1);
 		//子部屋
-		int X2 = childRoom.X + rand()%childRoom.Width;
-		if(X2 == 31) X2 = 30;
+		int X2 = childRoom.X + rand()%(childRoom.Width-1);
 		//小さい
 		int minX = min(X1,X2);
 		//大きい
@@ -526,21 +524,19 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			mapInfo[divline][minX + i] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline-i >= 0; i++){
+		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline - i != 0; i++){
 			mapInfo[divline-i][X1] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline+i <= 30; i++){
+		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline + i != 30; i++){
 			mapInfo[divline+i][X2] = 1;
 		}
 	}
 	else if(!hr){
 		//親部屋ないからランダムに一点を選択
-		int Y1 = parent.Y + rand()%parent.Height;
-		if(Y1 == 31) Y1 = 30;
+		int Y1 = parent.Y + rand()%(parent.Height-1);
 		//子部屋
-		int Y2 = childRoom.Y + rand()%childRoom.Height;
-		if(Y2 == 31) Y2 = 30;
+		int Y2 = childRoom.Y + rand()%(childRoom.Height-1);
 		//小さい
 		int minY = min(Y1,Y2);
 		//大きい
@@ -551,11 +547,11 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			mapInfo[minY + i][divline] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline-i >= 0; i++){
+		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline - i != 0; i++){
 			mapInfo[Y1][divline-i] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline+i <= 30; i++){
+		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline + i != 30; i++){
 			mapInfo[Y2][divline+i] = 1;
 		}
 	}
@@ -682,22 +678,20 @@ void AreaManager::ObjectRandomPop()
 	Vector2 areaWH;
 
 	float start = -DIV_NUM_HALF_FLOAT;
-	//出口
-	int exitRoomsNum = rand()%roomSize;
-	//プレイヤー
-	int playerRoomsNum = rand()%roomSize;
 
 	//exit
+	int exitRoomsNum = rand()%roomSize;
 	areaPos = {(start+rooms[exitRoomsNum].X), (start+rooms[exitRoomsNum].Y)};
-	areaPos *= Block_Size;
-	areaWH = {float(rand()%(rooms[exitRoomsNum].Height-1)),float(rand()%(rooms[exitRoomsNum].Width-1))};
+	areaWH = {float(rand()%(rooms[exitRoomsNum].Width-1)),float(rand()%(rooms[exitRoomsNum].Height-1))};
+	areaPos*= Block_Size;
 	areaWH *= Block_Size;
 	exitPosition = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
 
 	//player
+	int playerRoomsNum = rand()%roomSize;
 	areaPos = {(start+rooms[playerRoomsNum].X),(start+rooms[playerRoomsNum].Y)};
+	areaWH = {float(rand()%(rooms[playerRoomsNum].Width-1)),float(rand()%(rooms[playerRoomsNum].Height-1))};
 	areaPos*= Block_Size;
-	areaWH = {float(rand()%(rooms[playerRoomsNum].Height-1)),float(rand()%(rooms[playerRoomsNum].Width-1))};
 	areaWH *= Block_Size;
 	PlayerPopPosition = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
 }
@@ -712,8 +706,8 @@ Vector3 AreaManager::GetObjectPopPosition()
 	int RoomsNum = rand()%roomSize;
 
 	areaPos = {(start+rooms[RoomsNum].X),(start+rooms[RoomsNum].Y)};
-	areaPos *= Block_Size;
-	areaWH = {float(rand()%(rooms[RoomsNum].Height-1)),float(rand()%(rooms[RoomsNum].Width-1))};
+	areaWH = {float(rand()%(rooms[RoomsNum].Width-1)),float(rand()%(rooms[RoomsNum].Height-1))};
+	areaPos*= Block_Size;
 	areaWH *= Block_Size;
 	ObjectPopPosition = {areaPos.x+areaWH.x,0.f,-(areaPos.y+areaWH.y)};
 
