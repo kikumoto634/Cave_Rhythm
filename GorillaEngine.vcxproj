@@ -155,7 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="camera\Camera.cpp" />
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\3D\FbxModelObject.cpp" />
     <ClCompile Include="Engine\3D\ObjModelObject.cpp" />
@@ -203,6 +202,7 @@
     <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp" />
     <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp" />
     <ClCompile Include="Game\3D\Wall\Walls.cpp" />
+    <ClCompile Include="Game\camera\Camera.cpp" />
     <ClCompile Include="Game\Collision\CollisionSystem\Collision.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
     </ClCompile>
@@ -212,23 +212,22 @@
     <ClCompile Include="Game\Collision\CollisionSystem\CollisionPrimitive.cpp" />
     <ClCompile Include="Game\Collision\MeshCollider.cpp" />
     <ClCompile Include="Game\Collision\SphereCollider.cpp" />
+    <ClCompile Include="Game\scene\BaseBattleScene.cpp" />
+    <ClCompile Include="Game\scene\BaseScene.cpp" />
+    <ClCompile Include="Game\scene\Boss1Area.cpp" />
+    <ClCompile Include="Game\scene\GameScene.cpp" />
+    <ClCompile Include="Game\scene\HomeScene.cpp" />
+    <ClCompile Include="Game\scene\SampleScane.cpp" />
+    <ClCompile Include="Game\scene\SceneManager.cpp" />
+    <ClCompile Include="Game\scene\TitleScene.cpp" />
+    <ClCompile Include="Game\scene\TutorialScene.cpp" />
     <ClCompile Include="Game\Struct\MapNode.cpp" />
     <ClCompile Include="Game\System\AreaManager.cpp" />
     <ClCompile Include="Game\System\GameManager.cpp" />
     <ClCompile Include="Game\System\RhythmManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="scene\BaseBattleScene.cpp" />
-    <ClCompile Include="scene\BaseScene.cpp" />
-    <ClCompile Include="scene\Boss1Area.cpp" />
-    <ClCompile Include="scene\GameScene.cpp" />
-    <ClCompile Include="scene\HomeScene.cpp" />
-    <ClCompile Include="scene\SampleScane.cpp" />
-    <ClCompile Include="scene\SceneManager.cpp" />
-    <ClCompile Include="scene\TitleScene.cpp" />
-    <ClCompile Include="scene\TutorialScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera\Camera.h" />
     <ClInclude Include="Engine\2D\Sprite.h" />
     <ClInclude Include="Engine\3D\FbxModelObject.h" />
     <ClInclude Include="Engine\3D\ObjModelObject.h" />
@@ -280,6 +279,7 @@
     <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h" />
     <ClInclude Include="Game\3D\Wall\IndestructibleWall.h" />
     <ClInclude Include="Game\3D\Wall\Walls.h" />
+    <ClInclude Include="Game\camera\Camera.h" />
     <ClInclude Include="Game\Collision\CollisionSystem\BaseCollider.h" />
     <ClInclude Include="Game\Collision\CollisionSystem\Collision.h" />
     <ClInclude Include="Game\Collision\CollisionSystem\CollisionAttribute.h" />
@@ -291,19 +291,19 @@
     <ClInclude Include="Game\Collision\MeshCollider.h" />
     <ClInclude Include="Game\Collision\RaycastHit.h" />
     <ClInclude Include="Game\Collision\SphereCollider.h" />
+    <ClInclude Include="Game\scene\BaseBattleScene.h" />
+    <ClInclude Include="Game\scene\BaseScene.h" />
+    <ClInclude Include="Game\scene\Boss1Area.h" />
+    <ClInclude Include="Game\scene\GameScene.h" />
+    <ClInclude Include="Game\scene\HomeScene.h" />
+    <ClInclude Include="Game\scene\SampleScane.h" />
+    <ClInclude Include="Game\scene\SceneManager.h" />
+    <ClInclude Include="Game\scene\TitleScene.h" />
+    <ClInclude Include="Game\scene\TutorialScene.h" />
     <ClInclude Include="Game\Struct\MapNode.h" />
     <ClInclude Include="Game\System\AreaManager.h" />
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
-    <ClInclude Include="scene\BaseBattleScene.h" />
-    <ClInclude Include="scene\BaseScene.h" />
-    <ClInclude Include="scene\Boss1Area.h" />
-    <ClInclude Include="scene\GameScene.h" />
-    <ClInclude Include="scene\HomeScene.h" />
-    <ClInclude Include="scene\SampleScane.h" />
-    <ClInclude Include="scene\SceneManager.h" />
-    <ClInclude Include="scene\TitleScene.h" />
-    <ClInclude Include="scene\TutorialScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

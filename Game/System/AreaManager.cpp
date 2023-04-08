@@ -1,4 +1,4 @@
-#include "AreaManager.h"
+﻿#include "AreaManager.h"
 
 #include <fstream>
 #include <cassert>

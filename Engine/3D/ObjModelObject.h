@@ -4,7 +4,7 @@
 #include <string>
 
 #include "WorldTransform.h"
-#include "../../camera/Camera.h"
+#include "../../Game/camera/Camera.h"
 #include "../base/ObjModelManager.h"
 #include "../base/DirectXCommon.h"
 #include "../light/LightGroup.h"

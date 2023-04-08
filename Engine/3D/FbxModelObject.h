@@ -5,7 +5,7 @@
 
 #include "../Engine/base/FbxModelManager.h"
 #include "../Engine/loader/FbxLoader.h"
-#include "../../camera/Camera.h"
+#include "../../Game/camera/Camera.h"
 #include "WorldTransform.h"
 #include "../Engine/base/DirectXCommon.h"
 

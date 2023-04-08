@@ -11,7 +11,7 @@
 #include "../Engine/math/Vector/Vector4.h"
 #include "../Engine/base/DirectXCommon.h"
 #include "../Engine/base/TextureManager.h"
-#include "../../camera/Camera.h"
+#include "../../Game/camera/Camera.h"
 #include "../3D/WorldTransform.h"
 
 class ParticleManager

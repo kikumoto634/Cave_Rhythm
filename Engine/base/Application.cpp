@@ -1,9 +1,9 @@
 ﻿#include "Application.h"
-#include "../../scene/TitleScene.h"
+#include "../../Game/scene/TitleScene.h"
 
-#include "../../scene/HomeScene.h"
-#include "../../scene/GameScene.h"
-#include "../../scene/Boss1Area.h"
+#include "../../Game/scene/HomeScene.h"
+#include "../../Game/scene/GameScene.h"
+#include "../../Game/scene/Boss1Area.h"
 
 Application* Application::app = nullptr;
 

@@ -18,8 +18,8 @@
 #include "../light/DirectionalLight.h"
 
 
-#include "../../scene/BaseScene.h"
-#include "../../scene/SceneManager.h"
+#include "../../Game/scene/BaseScene.h"
+#include "../../Game/scene/SceneManager.h"
 #include "../Engine/2D/Sprite.h"
 
 #ifdef _DEBUG

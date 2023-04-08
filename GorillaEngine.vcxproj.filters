@@ -19,20 +19,8 @@
     <Filter Include="リソース ファイル\Geometry">
       <UniqueIdentifier>{e1f1ce9c-eda9-4957-8ccd-a66780b038c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\camera">
-      <UniqueIdentifier>{9bdd6785-2fba-430e-ae42-2cac5b9d4ae4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\camera">
-      <UniqueIdentifier>{488cb75a-813f-4766-a922-30ee4f0982af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\Fbx">
       <UniqueIdentifier>{9712e96f-6e1a-43e9-95c5-b4eea0854433}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene">
-      <UniqueIdentifier>{73170d81-237c-484b-9f28-c5917f45b962}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene">
-      <UniqueIdentifier>{cc9f3368-0578-423a-bbb2-7e03a2af66f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Engine">
       <UniqueIdentifier>{d069972c-0599-458c-94ac-c50530b3a62f}</UniqueIdentifier>
@@ -184,29 +172,11 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Exit">
       <UniqueIdentifier>{b525510e-d601-40c0-9c1a-93abf8829e26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\scene\Base">
-      <UniqueIdentifier>{c451715e-44b7-4d1f-bd91-a4924a872a7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\Base">
-      <UniqueIdentifier>{37d913e6-93f2-4bf2-b833-cb4c7790cd12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\Sample">
-      <UniqueIdentifier>{68ee3759-9694-4789-9393-7992b168c706}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\Sample">
-      <UniqueIdentifier>{abfadce0-77e3-473e-968a-d97f2c19617e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game\3D\Wall">
       <UniqueIdentifier>{99ecf705-09bf-48c2-9596-03c3211b664e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\3D\Wall">
       <UniqueIdentifier>{caaf6471-13f0-4f3d-b99a-2524f3b8ee83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\Old">
-      <UniqueIdentifier>{fd2e9f98-d7f8-4555-a799-e18cb86729c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\Old">
-      <UniqueIdentifier>{ff344a59-3448-40d7-88bd-cfe53ea77aaa}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Game\3D\Enemy">
       <UniqueIdentifier>{6de8bc6b-fa8c-4739-aded-676a5e2a7030}</UniqueIdentifier>
@@ -235,11 +205,38 @@
     <Filter Include="ヘッダー ファイル\Game\Struct">
       <UniqueIdentifier>{4eaa2358-a61a-449d-b83a-d41c5582a998}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\camera">
+      <UniqueIdentifier>{9bdd6785-2fba-430e-ae42-2cac5b9d4ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\scene">
+      <UniqueIdentifier>{73170d81-237c-484b-9f28-c5917f45b962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\scene\Base">
+      <UniqueIdentifier>{37d913e6-93f2-4bf2-b833-cb4c7790cd12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\scene\Sample">
+      <UniqueIdentifier>{68ee3759-9694-4789-9393-7992b168c706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\scene\Old">
+      <UniqueIdentifier>{fd2e9f98-d7f8-4555-a799-e18cb86729c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\camera">
+      <UniqueIdentifier>{488cb75a-813f-4766-a922-30ee4f0982af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\scene">
+      <UniqueIdentifier>{cc9f3368-0578-423a-bbb2-7e03a2af66f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\scene\Base">
+      <UniqueIdentifier>{c451715e-44b7-4d1f-bd91-a4924a872a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\scene\Sample">
+      <UniqueIdentifier>{abfadce0-77e3-473e-968a-d97f2c19617e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\scene\Old">
+      <UniqueIdentifier>{ff344a59-3448-40d7-88bd-cfe53ea77aaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="camera\Camera.cpp">
-      <Filter>ソース ファイル\camera</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\BaseFbxObjects.cpp">
       <Filter>ソース ファイル\Game\3D</Filter>
     </ClCompile>
@@ -363,20 +360,11 @@
     <ClCompile Include="Game\System\GameManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
-    <ClCompile Include="scene\SceneManager.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Coins\Coins.cpp">
       <Filter>ソース ファイル\Game\3D\Coins</Filter>
     </ClCompile>
     <ClCompile Include="Game\3D\Exit\Exit.cpp">
       <Filter>ソース ファイル\Game\3D\Exit</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\BaseScene.cpp">
-      <Filter>ソース ファイル\scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\SampleScane.cpp">
-      <Filter>ソース ファイル\scene\Sample</Filter>
     </ClCompile>
     <ClCompile Include="Game\System\AreaManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
@@ -387,32 +375,14 @@
     <ClCompile Include="Game\3D\Enemy\BlueSlime.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="scene\BaseBattleScene.cpp">
-      <Filter>ソース ファイル\scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\GameScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\TutorialScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\TitleScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp">
       <Filter>ソース ファイル\Game\3D\Wall</Filter>
     </ClCompile>
     <ClCompile Include="Game\2D\TutorialSp.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
     </ClCompile>
-    <ClCompile Include="scene\HomeScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Enemy\Skelton.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\Boss1Area.cpp">
-      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
@@ -438,11 +408,38 @@
     <ClCompile Include="Game\Struct\MapNode.cpp">
       <Filter>ソース ファイル\Game\Struct</Filter>
     </ClCompile>
+    <ClCompile Include="Game\camera\Camera.cpp">
+      <Filter>ソース ファイル\Game\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\Boss1Area.cpp">
+      <Filter>ソース ファイル\Game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\GameScene.cpp">
+      <Filter>ソース ファイル\Game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\HomeScene.cpp">
+      <Filter>ソース ファイル\Game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\SceneManager.cpp">
+      <Filter>ソース ファイル\Game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\TitleScene.cpp">
+      <Filter>ソース ファイル\Game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\TutorialScene.cpp">
+      <Filter>ソース ファイル\Game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\BaseBattleScene.cpp">
+      <Filter>ソース ファイル\Game\scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\BaseScene.cpp">
+      <Filter>ソース ファイル\Game\scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\SampleScane.cpp">
+      <Filter>ソース ファイル\Game\scene\Sample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera\Camera.h">
-      <Filter>ヘッダー ファイル\camera</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\2D\Sprite.h">
       <Filter>ヘッダー ファイル\Engine\2D</Filter>
     </ClInclude>
@@ -596,17 +593,8 @@
     <ClInclude Include="Game\System\GameManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
-    <ClInclude Include="scene\SceneManager.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Exit\Exit.h">
       <Filter>ヘッダー ファイル\Game\3D\Exit</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\BaseScene.h">
-      <Filter>ヘッダー ファイル\scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\SampleScane.h">
-      <Filter>ヘッダー ファイル\scene\Sample</Filter>
     </ClInclude>
     <ClInclude Include="Game\System\AreaManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
@@ -617,35 +605,17 @@
     <ClInclude Include="Game\3D\Enemy\BlueSlime.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="scene\BaseBattleScene.h">
-      <Filter>ヘッダー ファイル\scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\GameScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\TutorialScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\TitleScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Wall\IndestructibleWall.h">
       <Filter>ヘッダー ファイル\Game\3D\Wall</Filter>
     </ClInclude>
     <ClInclude Include="Game\2D\TutorialSp.h">
       <Filter>ヘッダー ファイル\Game\2D</Filter>
     </ClInclude>
-    <ClInclude Include="scene\HomeScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Skelton.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Boss1.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\Boss1Area.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\2D\Notes\Notes.h">
       <Filter>ヘッダー ファイル\Game\2D\Notes</Filter>
@@ -667,6 +637,36 @@
     </ClInclude>
     <ClInclude Include="Game\Struct\MapNode.h">
       <Filter>ヘッダー ファイル\Game\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\camera\Camera.h">
+      <Filter>ヘッダー ファイル\Game\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\Boss1Area.h">
+      <Filter>ヘッダー ファイル\Game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\GameScene.h">
+      <Filter>ヘッダー ファイル\Game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\HomeScene.h">
+      <Filter>ヘッダー ファイル\Game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\SceneManager.h">
+      <Filter>ヘッダー ファイル\Game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\TitleScene.h">
+      <Filter>ヘッダー ファイル\Game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\TutorialScene.h">
+      <Filter>ヘッダー ファイル\Game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\BaseBattleScene.h">
+      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\BaseScene.h">
+      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\SampleScane.h">
+      <Filter>ヘッダー ファイル\Game\scene\Sample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,0 @@
-﻿ビルドを開始しました...
-1>------ ビルド開始: プロジェクト: GorillaEngine, 構成: Debug x64 ------
-1>BaseBattleScene.cpp
-1>C:\Users\GSMAnager\Desktop\Project_Rhythm\Project_Rhythm\scene\BaseBattleScene.cpp(1,1): error C2220: 次の警告はエラーとして処理されます
-1>C:\Users\GSMAnager\Desktop\Project_Rhythm\Project_Rhythm\scene\BaseBattleScene.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-1>プロジェクト "GorillaEngine.vcxproj" のビルドが終了しました -- 失敗。
-========== ビルド: 成功 0、失敗 1、最新の状態 2、スキップ 0 ==========
-========== ビルド は 4:10 PM に開始され、03.047 秒 かかりました ==========
