@@ -6,11 +6,11 @@
 #include <DirectXTex.h>
 #include <forward_list>
 
-#include "../Engine/math/Vector/Vector2.h"
-#include "../Engine/math/Vector/Vector3.h"
-#include "../Engine/math/Vector/Vector4.h"
-#include "../Engine/base/DirectXCommon.h"
-#include "../Engine/base/TextureManager.h"
+#include "../math/Vector/Vector2.h"
+#include "../math/Vector/Vector3.h"
+#include "../math/Vector/Vector4.h"
+#include "../base/DirectXCommon.h"
+#include "../base/TextureManager.h"
 #include "../../Game/camera/Camera.h"
 #include "../3D/WorldTransform.h"
 

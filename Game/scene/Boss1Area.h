@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "BaseBattleScene.h"
 
-#include "../Game/3D/Enemy/Boss1.h"
-#include "../Game/3D/Enemy/Skelton.h"
-#include "../Game/2D/TutorialSp.h"
+#include "../3D/Enemy/Boss1.h"
+#include "../3D/Enemy/Skelton.h"
+#include "../2D/TutorialSp.h"
 
 class Boss1Area : public BaseBattleScene
 {

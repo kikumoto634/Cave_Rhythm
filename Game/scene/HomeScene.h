@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include "BaseBattleScene.h"
 
-#include "../Game/3D/Enemy/BlueSlime.h"
-#include "../Game/3D/Enemy/Skelton.h"
-#include "../Game/3D/Coins/Coins.h"
+#include "../3D/Enemy/BlueSlime.h"
+#include "../3D/Enemy/Skelton.h"
+#include "../3D/Coins/Coins.h"
 
-#include "../Game/2D/TutorialSp.h"
+#include "../2D/TutorialSp.h"
 
 class HomeScene : public BaseBattleScene
 {

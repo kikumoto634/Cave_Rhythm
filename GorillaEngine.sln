@@ -5,14 +5,9 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GorillaEngine", "GorillaEngine.vcxproj", "{7D05444E-0529-4B03-8422-4AAEAA1719EB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "imgui\imgui.vcxproj", "{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{9C6E65B6-F269-46AF-BB0E-01AA5661B8A5}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "External\imgui\imgui.vcxproj", "{F2B34B00-17FC-4357-A349-45574AEE4892}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,14 +33,14 @@ Global
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.Build.0 = Release|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x86.ActiveCfg = Release|Win32
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x86.Build.0 = Release|Win32
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Debug|x64.ActiveCfg = Debug|x64
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Debug|x64.Build.0 = Debug|x64
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Debug|x86.ActiveCfg = Debug|Win32
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Debug|x86.Build.0 = Debug|Win32
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Release|x64.ActiveCfg = Release|x64
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Release|x64.Build.0 = Release|x64
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Release|x86.ActiveCfg = Release|Win32
-		{3161B6B9-3A98-4F97-9CF1-A30DF6EFA6BB}.Release|x86.Build.0 = Release|Win32
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Debug|x64.ActiveCfg = Debug|x64
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Debug|x64.Build.0 = Debug|x64
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Debug|x86.ActiveCfg = Debug|Win32
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Debug|x86.Build.0 = Debug|Win32
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Release|x64.ActiveCfg = Release|x64
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Release|x64.Build.0 = Release|x64
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Release|x86.ActiveCfg = Release|Win32
+		{F2B34B00-17FC-4357-A349-45574AEE4892}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

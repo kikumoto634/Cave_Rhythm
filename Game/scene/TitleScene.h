@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include "BaseScene.h"
 
-#include "../Engine/light/LightGroup.h"
+#include "../../Engine/light/LightGroup.h"
 
-#include "../Game/2D/BaseSprites.h"
-#include "../Game/3D/BaseObjObject.h"
+#include "../2D/BaseSprites.h"
+#include "../3D/BaseObjObject.h"
 
-#include "../Game/System/GameManager.h"
+#include "../System/GameManager.h"
 
 class TitleScene : public BaseScene
 {

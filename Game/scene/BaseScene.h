@@ -1,14 +1,14 @@
 ﻿#pragma once
-#include "../Engine/base/DirectXCommon.h"
-#include "../Engine/base/Window.h"
-#include "../Engine/input/Input.h"
+#include "../../Engine/base/DirectXCommon.h"
+#include "../../Engine/base/Window.h"
+#include "../../Engine/input/Input.h"
 #include "../camera/Camera.h"
 
 //#include "SceneManager.h"
 
 #ifdef _DEBUG
-#include "../Engine/debugProcess/DebugText.h"
-#include "../Engine/base/imguiManager.h"
+#include "../../Engine/debugProcess/DebugText.h"
+#include "../../Engine/base/imguiManager.h"
 
 #include <imgui.h>
 #endif // _DEBUG

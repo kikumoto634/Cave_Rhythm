@@ -3,7 +3,6 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "SceneManager.h"
-
 using namespace std;
 
 HomeScene::~HomeScene()

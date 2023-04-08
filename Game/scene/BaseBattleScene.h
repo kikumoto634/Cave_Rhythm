@@ -1,23 +1,23 @@
 ﻿#pragma once
 #include "BaseScene.h"
 
-#include "../Game/3D/SampleFbxObject/SampleFbxObject.h"
-#include "../Game/3D/SampleObjObject/SampleObjObject.h"
-#include "../Engine/3D/TouchableObject.h"
+#include "../../Game/3D/SampleFbxObject/SampleFbxObject.h"
+#include "../../Game/3D/SampleObjObject/SampleObjObject.h"
+#include "../../Engine/3D/TouchableObject.h"
 
-#include "../Game/3D/Player/Player.h"
-#include "../Game/3D/Exit/Exit.h"
+#include "../../Game/3D/Player/Player.h"
+#include "../../Game/3D/Exit/Exit.h"
 
-#include "../Game/2D/JudgeLocation/JudgeLocation.h"
-#include "../Game/2D/Notes/RNotes.h"
-#include "../Game/2D/Notes/LNotes.h"
+#include "../../Game/2D/JudgeLocation/JudgeLocation.h"
+#include "../../Game/2D/Notes/RNotes.h"
+#include "../../Game/2D/Notes/LNotes.h"
 
-#include "../Game/Collision/CollisionSystem/CollisionPrimitive.h"
-#include "../Game/Collision/CollisionSystem/CollisionManager.h"
+#include "../Collision/CollisionSystem/CollisionPrimitive.h"
+#include "../Collision/CollisionSystem/CollisionManager.h"
 
-#include "../Game/System/RhythmManager.h"
-#include "../Game/System/GameManager.h"
-#include "../Game/System/AreaManager.h"
+#include "../System/RhythmManager.h"
+#include "../System/GameManager.h"
+#include "../System/AreaManager.h"
 
 class BaseBattleScene : public BaseScene
 {

@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "../Engine/audio/Audio.h"
+#include "../../Engine/audio/Audio.h"
 #include "../../Engine/light/LightGroup.h"
 
-#include "../Game/2D/BaseSprites.h"
+#include "../2D/BaseSprites.h"
 #include "../2D/combo.h"
 
 #include <string>

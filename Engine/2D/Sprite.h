@@ -4,9 +4,9 @@
 #include <wrl.h>
 #include <DirectXMath.h>
 
-#include "../Engine/base/TextureManager.h"
-#include "../Engine/math/Vector/Vector2.h"
-#include "../Engine/math/Vector/Vector3.h"
+#include "../base/TextureManager.h"
+#include "../math/Vector/Vector2.h"
+#include "../math/Vector/Vector3.h"
 
 /// <summary>
 /// スプライト
