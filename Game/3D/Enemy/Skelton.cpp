@@ -118,7 +118,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 				//移動
 				if(!IsMoveEasing){
 					IsMoveEasing = true;
-					//Movement();
+					Movement();
 					currentPos = GetPosition();
 				}
 			}
@@ -259,7 +259,7 @@ vector<MapNode *> Skelton::find_path(std::vector<std::vector<int>> &grid, int st
             int next_y = current_node->y + dy[i];
 
             //マップ範囲外
-            if (next_x < 0 || next_y < 0 || next_x >= grid.size() || next_y >= grid[0].size()) {
+            if (next_x < 0 || next_y < 0 || next_x >= grid[0].size()|| next_y >= grid[0].size()) {
                 continue;
             }
 
@@ -315,7 +315,8 @@ void Skelton::Movement()
 		pX = int(PlayerPos.x/2)+15;
 		pY = -int(PlayerPos.z/2)+15;
 
-		path = find_path(mapInfo,eX,eY, pX,pY);
+		path = find_path(mapInfo, eX,eY, pX,pY);
+
 		int root = 9;
 		for(auto it = path.begin(); it != path.end(); it++){
 			mapPath[(*it)->y][(*it)->x] = root;
@@ -342,9 +343,14 @@ void Skelton::Movement()
 			eX = next_x;
 			eY = next_y;
 
-			if(pathRoot == 6) {
+			if(mapPath[next_y][next_x] == 6) {
 				IsRootUpdate = false;
 				pathRoot = 10;
+
+				#ifdef _DEBUG
+				IsDebug = false;
+				#endif // _DEBUG
+
 			}
 			else if(mapPath[next_y][next_x] == pathRoot){
 				pathRoot++;

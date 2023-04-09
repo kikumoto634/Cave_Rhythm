@@ -139,7 +139,7 @@ void GameScene::AddObject3DUpdate()
 				}
 			}
 		}
-		//(*it)->SetMapInfo(areaManager->GetMapInfo());
+		(*it)->SetMapInfo(areaManager->GetMapInfo());
 		(*it)->Update(camera,player->GetPosition());
 	}
 
