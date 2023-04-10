@@ -32,11 +32,6 @@ public:
 	void Draw() override;
 
 	/// <summary>
-	/// 後処理
-	/// </summary>
-	void Finalize() override;
-
-	/// <summary>
 	/// 衝突時コールバック関数
 	/// </summary>
 	/// <param name="info">衝突情報</param>

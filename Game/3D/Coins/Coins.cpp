@@ -4,9 +4,6 @@
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 
-Coins::~Coins()
-{
-}
 
 void Coins::Initialize(std::string filePath, bool IsSmoothing)
 {
@@ -14,7 +11,6 @@ void Coins::Initialize(std::string filePath, bool IsSmoothing)
 
 	SetPosition(DeadPos);
 	
-
 	//コライダー
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(DirectX::XMVECTOR{0,radius,0,0}, radius));
@@ -27,6 +23,7 @@ void Coins::Update(Camera *camera)
 
 	if(!IsAlive)return;
 
+	//ビート処理
 	if(IsBeatEnd){
 		
 		if(lostBeat >= LostMaxBeat){
@@ -51,10 +48,6 @@ void Coins::Draw()
 	BaseObjObject::Draw();
 }
 
-void Coins::Finalize()
-{
-	BaseObjObject::Finalize();
-}
 
 void Coins::OnCollision(const CollisionInfo &info)
 {

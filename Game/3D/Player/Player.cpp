@@ -1,16 +1,10 @@
-﻿#include "Player.h"
+#include "Player.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 
 #include "Easing.h"
 
 using namespace DirectX;
-
-
-Player::~Player()
-{
-	//Finalize();
-}
 
 void Player::Initialize(std::string filePath, bool IsSmoothing)
 {

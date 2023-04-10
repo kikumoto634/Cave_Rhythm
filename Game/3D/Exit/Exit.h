@@ -12,8 +12,6 @@ private:
 	const int DrawingRange_Half = 8;
 
 public:
-	~Exit();
-
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -26,10 +24,8 @@ public:
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// 3D描画
+	/// 描画
 	/// </summary>
-	void Draw() override;
-
 	void Draw2D();
 
 	/// <summary>

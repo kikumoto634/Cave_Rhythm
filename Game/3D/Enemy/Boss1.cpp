@@ -1,4 +1,4 @@
-﻿#include "Boss1.h"
+#include "Boss1.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
 
@@ -192,9 +192,7 @@ void Boss1::ParticleUpdate()
 
 	//召喚
 	if(IsSummon){
-		/// <summary>
 		SummonParticlePos = GetPosition();
-		/// </summary>
 
 		if(appSummonParFrame >= AppSummonParMaxFrame){
 			appSummonParFrame = 0;

@@ -12,8 +12,6 @@ private:
 	const int DrawingRange_Half = 7;
 
 public:
-	~Planes();
-
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -29,11 +27,6 @@ public:
 	/// 3D描画
 	/// </summary>
 	void Draw() override;
-
-	/// <summary>
-	/// 後処理
-	/// </summary>
-	void Finalize() override;
 
 	/// <summary>
 	/// 衝突時コールバック関数

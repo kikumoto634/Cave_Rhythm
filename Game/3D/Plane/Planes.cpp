@@ -1,10 +1,6 @@
-﻿#include "Planes.h"
+#include "Planes.h"
 #include "CollisionManager.h"
 
-Planes::~Planes()
-{
-	//Finalize();
-}
 
 void Planes::Initialize(ObjModelManager *model)
 {
@@ -80,11 +76,6 @@ void Planes::Draw()
 	if(!IsAlive) return;
 	if(!IsHide) return;
 	BaseObjObject::Draw();
-}
-
-void Planes::Finalize()
-{
-	BaseObjObject::Finalize();
 }
 
 void Planes::OnCollision(const CollisionInfo &info)

@@ -1,11 +1,7 @@
-﻿#include "Exit.h"
+#include "Exit.h"
 
 using namespace std;
 
-Exit::~Exit()
-{
-	//Finalize();
-}
 
 void Exit::Initialize(std::string filePath, bool IsSmmothing)
 {
@@ -76,10 +72,6 @@ void Exit::Update(Camera *camera)
 	BaseObjObject::Update(this->camera);
 }
 
-void Exit::Draw()
-{
-	BaseObjObject::Draw();
-}
 
 void Exit::Draw2D()
 {

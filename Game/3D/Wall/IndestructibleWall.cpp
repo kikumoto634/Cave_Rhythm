@@ -1,4 +1,4 @@
-﻿#include "IndestructibleWall.h"
+#include "IndestructibleWall.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
@@ -14,8 +14,6 @@ void IndestructibleWall::Initialize(ObjModelManager* model, ObjModelManager* col
 	BaseObjObject::Initialize(model);
 
 	colliderModel = collider;
-
-	//object->OffLighting();
 }
 
 void IndestructibleWall::Update(Camera *camera)
@@ -73,12 +71,6 @@ void IndestructibleWall::Draw()
 	if(!IsAlive) return;
 	if(!IsHide) return;
 	BaseObjObject::Draw();
-}
-
-
-void IndestructibleWall::Finalize()
-{
-	BaseObjObject::Finalize();
 }
 
 void IndestructibleWall::OnCollision(const CollisionInfo &info)

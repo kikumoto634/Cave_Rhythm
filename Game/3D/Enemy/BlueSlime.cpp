@@ -1,4 +1,4 @@
-﻿#include "BlueSlime.h"
+#include "BlueSlime.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
 
@@ -35,6 +35,7 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 	//距離計測
 	Vector3 pos = playerPos - world.translation;
 	distance = pos.length();
+	//距離に応じたライト表現
 	if(IsCaveLight){
 		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
 			object->OnLighting();
@@ -47,6 +48,7 @@ void BlueSlime::Update(Camera *camera, Vector3 playerPos)
 		object->OnLighting();
 	}
 
+	//距離に応じたコライダーの削除
 	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not)		{
 		IsInvisible = false;
 

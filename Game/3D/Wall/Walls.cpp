@@ -1,4 +1,4 @@
-﻿#include "Walls.h"
+#include "Walls.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
@@ -6,7 +6,6 @@ using namespace DirectX;
 
 Walls::~Walls()
 {
-	//Finalize();
 }
 
 void Walls::Initialize(ObjModelManager* model, ObjModelManager* collider)
@@ -72,11 +71,6 @@ void Walls::Draw()
 	if(!IsAlive) return;
 	if(!IsHide) return;
 	BaseObjObject::Draw();
-}
-
-void Walls::Finalize()
-{
-	BaseObjObject::Finalize();
 }
 
 void Walls::OnCollision(const CollisionInfo &info)

@@ -1,4 +1,4 @@
-﻿#include "PlayerWeapon.h"
+#include "PlayerWeapon.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 
@@ -6,10 +6,6 @@
 
 using namespace DirectX;
 
-PlayerWeapon::~PlayerWeapon()
-{
-	//Finalize();
-}
 
 void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 {
@@ -53,10 +49,6 @@ void PlayerWeapon::Draw()
 	BaseObjObject::Draw();
 }
 
-void PlayerWeapon::Finalize()
-{
-	BaseObjObject::Finalize();
-}
 
 void PlayerWeapon::OnCollision(const CollisionInfo &info)
 {

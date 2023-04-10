@@ -7,8 +7,6 @@ private:
 	const int LostMaxBeat = 8;
 
 public:
-	~Coins();
-
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -23,11 +21,6 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
-	/// <summary>
-	/// 後処理
-	/// </summary>
-	void Finalize() override;
 
 	/// <summary>
 	/// 当たり判定

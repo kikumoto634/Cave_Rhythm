@@ -6,7 +6,6 @@ class PlayerWeapon : public BaseObjObject
 {
 //メンバ関数
 public:
-	~PlayerWeapon();
 
 	/// <summary>
 	/// 初期化
@@ -22,11 +21,6 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
-	/// <summary>
-	/// 後処理
-	/// </summary>
-	void Finalize() override;
 
 	/// <summary>
 	/// 衝突時コールバック関数
