@@ -82,12 +82,6 @@
     <Filter Include="ヘッダー ファイル\Game\2D">
       <UniqueIdentifier>{146d2af1-bf07-4573-8a4e-17cd53245a07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\2D\SampleSp">
-      <UniqueIdentifier>{d7c73088-bb8e-47cd-ae38-d0227f1c5969}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\2D\SampleSp">
-      <UniqueIdentifier>{b9ed47f6-925a-4393-94c5-5bd4141d0491}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\Obj">
       <UniqueIdentifier>{64f7312d-974c-4d51-8c15-3186ca7f85ab}</UniqueIdentifier>
     </Filter>
@@ -282,9 +276,6 @@
     <ClCompile Include="Game\2D\BaseSprites.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Game\2D\SampleSprite\SampleSprite.cpp">
-      <Filter>ソース ファイル\Game\2D\SampleSp</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\math\Vector\Vector2.cpp">
       <Filter>ソース ファイル\Engine\math\Vector</Filter>
     </ClCompile>
@@ -478,9 +469,6 @@
     </ClInclude>
     <ClInclude Include="Game\2D\BaseSprites.h">
       <Filter>ヘッダー ファイル\Game\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\2D\SampleSprite\SampleSprite.h">
-      <Filter>ヘッダー ファイル\Game\2D\SampleSp</Filter>
     </ClInclude>
     <ClInclude Include="Engine\math\Vector\Vector2.h">
       <Filter>ヘッダー ファイル\Engine\math\Vector</Filter>

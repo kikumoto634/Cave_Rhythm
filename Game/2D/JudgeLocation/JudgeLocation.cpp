@@ -1,4 +1,4 @@
-﻿#include "JudgeLocation.h"
+#include "JudgeLocation.h"
 
 void JudgeLocation::Initialize()
 {
@@ -10,8 +10,10 @@ void JudgeLocation::Initialize()
 
 void JudgeLocation::Update(bool &IsInput)
 {
+	//入力時
 	if(IsInput){
 		SetTexNumber(SizeMaxTextureNumber);
+		//サイズ変化
 		if(ScaleChange(Size_Min, Size_Max)){
 			IsInput = false;
 			SetTexNumber(SizeMinTextureNumber);
@@ -20,12 +22,3 @@ void JudgeLocation::Update(bool &IsInput)
 	BaseSprites::Update();
 }
 
-void JudgeLocation::Draw()
-{
-	BaseSprites::Draw();
-}
-
-void JudgeLocation::Finalize()
-{
-	BaseSprites::Finalize();
-}

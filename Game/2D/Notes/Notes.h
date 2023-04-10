@@ -28,8 +28,6 @@ public:
 	virtual void BeatUpdate();
 
 	void Draw() override;
-	
-	void Finalize() override;
 
 	//Getter
 	inline bool GetIsNoteAlive()	{return IsNoteAlive;}

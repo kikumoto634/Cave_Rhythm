@@ -17,6 +17,8 @@ void Notes::Update(float goalTime)
 {
 	//停止
 	if(IsMoveStop){
+
+		//消滅色変化
 		this->color.w = Easing_Linear_Point2(1,0,Time_OneWay(curAlphaFrame, AlphaMaxTime));
 
 		if(this->color.w <= 0){
@@ -42,9 +44,4 @@ void Notes::Draw()
 {
 	if(!IsNoteAlive)return;
 	BaseSprites::Draw();
-}
-
-void Notes::Finalize()
-{
-	BaseSprites::Finalize();
 }

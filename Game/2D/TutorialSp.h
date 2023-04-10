@@ -4,10 +4,8 @@
 class TutorialSp : public BaseSprites
 {
 public:
-	void Initialize(UINT textureNumber) override;
 	void Update() override;
 	void Draw() override;
-	void Finalize() override;
 
 	void SpriteHide()	{IsHide = true, Draw();}
 

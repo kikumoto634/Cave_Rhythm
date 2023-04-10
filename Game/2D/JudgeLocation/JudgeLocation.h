@@ -18,9 +18,5 @@ public:
 	void Initialize();
 
 	void Update(bool &IsInput);
-
-	void Draw() override;
-	
-	void Finalize() override;
 };
 
