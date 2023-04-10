@@ -1,22 +1,22 @@
 ﻿#pragma once
 #include "BaseScene.h"
 
-#include "../../Game/3D/SampleFbxObject/SampleFbxObject.h"
-#include "../../Game/3D/SampleObjObject/SampleObjObject.h"
-#include "../../Engine/3D/TouchableObject.h"
+#include "SampleFbxObject.h"
+#include "SampleObjObject.h"
+#include "TouchableObject.h"
 
-#include "../../Game/3D/Player/Player.h"
-#include "../../Game/3D/Exit/Exit.h"
+#include "Player.h"
+#include "Exit.h"
 
-#include "../../Game/3D/Enemy/BlueSlime.h"
-#include "../../Game/3D/Coins/Coins.h"
+#include "BlueSlime.h"
+#include "Coins.h"
 
-#include "../../Game/Collision/CollisionSystem/CollisionPrimitive.h"
-#include "../../Game/Collision/CollisionSystem/CollisionManager.h"
+#include "CollisionPrimitive.h"
+#include "CollisionManager.h"
 
-#include "../../Game/System/RhythmManager.h"
-#include "../../Game/System/GameManager.h"
-#include "../../Game/System/AreaManager.h"
+#include "RhythmManager.h"
+#include "GameManager.h"
+#include "AreaManager.h"
 
 
 class SampleScane : public BaseScene

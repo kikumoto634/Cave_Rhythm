@@ -1,5 +1,5 @@
 ﻿#include "RNotes.h"
-#include "../../../Engine/math/Easing/Easing.h"
+#include "Easing.h"
 
 void RNotes::Initialize(UINT textureNumber)
 {

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../../Engine/base/ParticleManager.h"
+#include "ParticleManager.h"
 
 class ParticleObject
 {

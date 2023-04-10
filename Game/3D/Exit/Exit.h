@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
-#include "../../Collision/MeshCollider.h"
-#include "../../Collision/CollisionSystem/CollisionAttribute.h"
+#include "BaseObjObject.h"
+#include "MeshCollider.h"
+#include "CollisionAttribute.h"
 
-#include "../../2D/BaseSprites.h"
+#include "BaseSprites.h"
 
 class Exit : public BaseObjObject
 {

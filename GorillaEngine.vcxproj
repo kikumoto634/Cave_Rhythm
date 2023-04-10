@@ -122,6 +122,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\Collision\CollisionSystem;$(ProjectDir)Game\Collision;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Engine\light;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -143,6 +144,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\Collision\CollisionSystem;$(ProjectDir)Game\Collision;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Engine\light;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -221,7 +223,6 @@
     <ClCompile Include="Game\scene\SceneManager.cpp" />
     <ClCompile Include="Game\scene\TitleScene.cpp" />
     <ClCompile Include="Game\scene\TutorialScene.cpp" />
-    <ClCompile Include="Game\Struct\MapNode.cpp" />
     <ClCompile Include="Game\System\AreaManager.cpp" />
     <ClCompile Include="Game\System\GameManager.cpp" />
     <ClCompile Include="Game\System\RhythmManager.cpp" />

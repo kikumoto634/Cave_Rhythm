@@ -2,9 +2,9 @@
 #include <sstream>
 #include <string>
 
-#include "../3D/Plane/Planes.h"
-#include "../3D/Wall/Walls.h"
-#include "../3D/Wall/IndestructibleWall.h"
+#include "Planes.h"
+#include "Walls.h"
+#include "IndestructibleWall.h"
 
 #include "GameManager.h"
 

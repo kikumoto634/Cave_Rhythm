@@ -1,7 +1,7 @@
 ﻿#include "CollisionManager.h"
 #include "BaseCollider.h"
 #include "Collision.h"
-#include "../MeshCollider.h"
+#include "MeshCollider.h"
 
 using namespace DirectX;
 

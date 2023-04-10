@@ -8,23 +8,23 @@
 
 #include "../audio/Audio.h"
 
-#include "../loader/FbxLoader.h"
+#include "FbxLoader.h"
 #include "FbxModelManager.h"
-#include "../3D/FbxModelObject.h"
+#include "FbxModelObject.h"
 
-#include "../base/ObjModelManager.h"
-#include "../3D/ObjModelObject.h"
+#include "ObjModelManager.h"
+#include "ObjModelObject.h"
 
-#include "../light/DirectionalLight.h"
+#include "DirectionalLight.h"
 
 
-#include "../../Game/scene/BaseScene.h"
-#include "../../Game/scene/SceneManager.h"
-#include "../2D/Sprite.h"
+#include "BaseScene.h"
+#include "SceneManager.h"
+#include "Sprite.h"
 
 #ifdef _DEBUG
 
-#include "../base/imguiManager.h"
+#include "imguiManager.h"
 #include <imgui.h>
 #endif // _DEBUG
 

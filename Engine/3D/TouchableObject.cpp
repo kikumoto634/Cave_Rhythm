@@ -1,6 +1,6 @@
 ﻿#include "TouchableObject.h"
-#include "../../Game/Collision/MeshCollider.h"
-#include "../../Game/Collision/CollisionSystem/CollisionAttribute.h"
+#include "MeshCollider.h"
+#include "CollisionAttribute.h"
 
 void TouchableObject::Initialize(std::string filePath, bool IsSmmothing)
 {

@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include "../../Engine/audio/Audio.h"
-#include "../../Engine/light/LightGroup.h"
+#include "Audio.h"
+#include "LightGroup.h"
 
-#include "../2D/BaseSprites.h"
-#include "../2D/combo.h"
+#include "BaseSprites.h"
+#include "combo.h"
 
 #include <string>
 #include <vector>

@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include "../camera/Camera.h"
+#include "Camera.h"
 
 #include <string>
-#include "../../Engine/base/FbxModelManager.h"
-#include "../../Engine/3D/FbxModelObject.h"
+#include "FbxModelManager.h"
+#include "FbxModelObject.h"
 
 class BaseFbxObjects
 {

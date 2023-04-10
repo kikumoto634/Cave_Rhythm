@@ -4,10 +4,10 @@
 #include <string>
 
 #include "WorldTransform.h"
-#include "../../Game/camera/Camera.h"
-#include "../base/ObjModelManager.h"
-#include "../base/DirectXCommon.h"
-#include "../light/LightGroup.h"
+#include "Camera.h"
+#include "ObjModelManager.h"
+#include "DirectXCommon.h"
+#include "LightGroup.h"
 
 
 /// <summary>

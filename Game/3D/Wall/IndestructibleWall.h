@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
-#include "../../Collision/MeshCollider.h"
-#include "../../Collision/CollisionSystem/CollisionAttribute.h"
+#include "BaseObjObject.h"
+#include "MeshCollider.h"
+#include "CollisionAttribute.h"
 
 class IndestructibleWall : public BaseObjObject
 {

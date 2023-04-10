@@ -1,5 +1,5 @@
-﻿#include "ParticleObject.h"
-#include "../../Engine/base/DirectXCommon.h"
+#include "ParticleObject.h"
+#include "DirectXCommon.h"
 
 ParticleObject::ParticleObject(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale, UINT texNumber, Vector4 color)
 {

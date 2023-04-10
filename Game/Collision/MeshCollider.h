@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "CollisionSystem/BaseCollider.h"
-#include "CollisionSystem/CollisionPrimitive.h"
+#include "BaseCollider.h"
+#include "CollisionPrimitive.h"
 
 #include <DirectXMath.h>
 

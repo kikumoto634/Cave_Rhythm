@@ -3,11 +3,11 @@
 #include <DirectXMath.h>
 #include <string>
 
-#include "../base/FbxModelManager.h"
-#include "../loader/FbxLoader.h"
-#include "../../Game/camera/Camera.h"
+#include "FbxModelManager.h"
+#include "FbxLoader.h"
+#include "Camera.h"
 #include "WorldTransform.h"
-#include "../base/DirectXCommon.h"
+#include "DirectXCommon.h"
 
 class FbxModelObject{
 protected:

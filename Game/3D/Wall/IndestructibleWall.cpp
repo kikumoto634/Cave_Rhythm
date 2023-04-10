@@ -1,6 +1,6 @@
 ﻿#include "IndestructibleWall.h"
-#include "../../Collision/SphereCollider.h"
-#include "../../Collision/CollisionSystem/CollisionManager.h"
+#include "SphereCollider.h"
+#include "CollisionManager.h"
 
 using namespace DirectX;
 

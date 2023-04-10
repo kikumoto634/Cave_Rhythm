@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "../../Engine/3D/ObjModelObject.h"
-#include "../../Engine/base/ObjModelManager.h"
+#include "ObjModelObject.h"
+#include "ObjModelManager.h"
 
-#include "../Collision/CollisionSystem/CollisionInfo.h"
+#include "CollisionInfo.h"
 
 
 class BaseCollider;

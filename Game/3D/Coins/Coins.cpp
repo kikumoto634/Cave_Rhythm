@@ -1,8 +1,8 @@
-﻿#include "Coins.h"
-#include "../../Collision/SphereCollider.h"
+#include "Coins.h"
+#include "SphereCollider.h"
 
-#include "../../Collision/CollisionSystem/CollisionManager.h"
-#include "../../Collision/CollisionSystem/CollisionAttribute.h"
+#include "CollisionManager.h"
+#include "CollisionAttribute.h"
 
 Coins::~Coins()
 {

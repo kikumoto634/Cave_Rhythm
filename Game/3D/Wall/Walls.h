@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
-#include "../ParticleObject.h"
-#include "../../Collision/MeshCollider.h"
-#include "../../Collision/CollisionSystem/CollisionAttribute.h"
+#include "BaseObjObject.h"
+#include "ParticleObject.h"
+#include "MeshCollider.h"
+#include "CollisionAttribute.h"
 
 class Walls : public BaseObjObject
 {

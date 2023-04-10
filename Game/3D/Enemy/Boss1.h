@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
-#include "../ParticleObject.h"
+#include "BaseObjObject.h"
+#include "ParticleObject.h"
 class Boss1 : public BaseObjObject
 {
 //定数

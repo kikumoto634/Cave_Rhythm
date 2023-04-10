@@ -2,7 +2,7 @@
 #include "HomeScene.h"
 #include "SceneManager.h"
 
-#include "../../Engine/math/Easing/Easing.h"
+#include "Easing.h"
 
 using namespace std;
 

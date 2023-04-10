@@ -1,5 +1,5 @@
 ﻿#include "LNotes.h"
-#include "../../../Engine/math/Easing/Easing.h"
+#include "Easing.h"
 
 void LNotes::Initialize(UINT textureNumber)
 {

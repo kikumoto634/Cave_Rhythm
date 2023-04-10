@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <DirectXMath.h>
 
-#include "../math/Vector/Vector2.h"
-#include "../math/Vector/Vector3.h"
-#include "../math/Vector/Vector4.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 
 /// <summary>
 /// スポットライト

@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "BaseBattleScene.h"
 
-#include "../../Game/3D/Enemy/BlueSlime.h"
-#include "../../Game/3D/Coins/Coins.h"
+#include "BlueSlime.h"
+#include "Coins.h"
 
-#include "../../Game/2D/TutorialSp.h"
+#include "TutorialSp.h"
 
 class TutorialScene : public BaseBattleScene
 {

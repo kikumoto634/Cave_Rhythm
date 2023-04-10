@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
-#include "../../Collision/SphereCollider.h"
+#include "BaseObjObject.h"
+#include "SphereCollider.h"
 
 class PlayerWeapon : public BaseObjObject
 {

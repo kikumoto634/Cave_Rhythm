@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "BaseBattleScene.h"
 
-#include "../3D/Enemy/BlueSlime.h"
-#include "../3D/Enemy/Skelton.h"
-#include "../3D/Coins/Coins.h"
+#include "BlueSlime.h"
+#include "Skelton.h"
+#include "Coins.h"
 
 class GameScene : public BaseBattleScene
 {

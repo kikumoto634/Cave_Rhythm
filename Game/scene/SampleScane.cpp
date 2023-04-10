@@ -1,15 +1,15 @@
 ﻿#include "SampleScane.h"
 
-#include "../../Engine/math//Easing/Easing.h"
+#include "Easing.h"
 
-#include "../../Game/Collision/CollisionSystem/Collision.h"
-#include "../../Game/Collision/SphereCollider.h"
-#include "../../Game/Collision/MeshCollider.h"
+#include "Collision.h"
+#include "SphereCollider.h"
+#include "MeshCollider.h"
 
 #include "SceneManager.h"
 #include "TitleScene.h"
 
-#include "../../Engine/math/Easing/Easing.h"
+#include "Easing.h"
 
 using namespace std;
 using namespace DirectX;

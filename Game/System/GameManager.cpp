@@ -1,5 +1,5 @@
 ﻿#include "GameManager.h"
-#include "../../Engine/3D/ObjModelObject.h"
+#include "ObjModelObject.h"
 
 using namespace std;
 

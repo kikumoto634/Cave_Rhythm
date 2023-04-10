@@ -6,7 +6,7 @@
 #include <d3dx12.h>
 
 #include <string>
-#include "../base/FbxModelManager.h"
+#include "FbxModelManager.h"
 
 class FbxLoader
 {

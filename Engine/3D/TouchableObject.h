@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../../Game/3D/BaseObjObject.h"
+#include "BaseObjObject.h"
 
 class TouchableObject : public BaseObjObject
 {

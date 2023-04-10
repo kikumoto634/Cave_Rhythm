@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CollisionPrimitive.h"
-#include "../RaycastHit.h"
+#include "RaycastHit.h"
 #include "QueryCallback.h"
 
 #include <d3d12.h>

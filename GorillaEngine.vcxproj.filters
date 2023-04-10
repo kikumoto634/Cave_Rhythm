@@ -405,9 +405,6 @@
     <ClCompile Include="Game\2D\Combo.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Struct\MapNode.cpp">
-      <Filter>ソース ファイル\Game\Struct</Filter>
-    </ClCompile>
     <ClCompile Include="Game\camera\Camera.cpp">
       <Filter>ソース ファイル\Game\camera</Filter>
     </ClCompile>

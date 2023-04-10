@@ -1,23 +1,23 @@
 ﻿#pragma once
 #include "BaseScene.h"
 
-#include "../../Game/3D/SampleFbxObject/SampleFbxObject.h"
-#include "../../Game/3D/SampleObjObject/SampleObjObject.h"
-#include "../../Engine/3D/TouchableObject.h"
+#include "SampleFbxObject.h"
+#include "SampleObjObject.h"
+#include "TouchableObject.h"
 
-#include "../../Game/3D/Player/Player.h"
-#include "../../Game/3D/Exit/Exit.h"
+#include "Player.h"
+#include "Exit.h"
 
-#include "../../Game/2D/JudgeLocation/JudgeLocation.h"
-#include "../../Game/2D/Notes/RNotes.h"
-#include "../../Game/2D/Notes/LNotes.h"
+#include "JudgeLocation.h"
+#include "RNotes.h"
+#include "LNotes.h"
 
-#include "../Collision/CollisionSystem/CollisionPrimitive.h"
-#include "../Collision/CollisionSystem/CollisionManager.h"
+#include "CollisionPrimitive.h"
+#include "CollisionManager.h"
 
-#include "../System/RhythmManager.h"
-#include "../System/GameManager.h"
-#include "../System/AreaManager.h"
+#include "RhythmManager.h"
+#include "GameManager.h"
+#include "AreaManager.h"
 
 class BaseBattleScene : public BaseScene
 {

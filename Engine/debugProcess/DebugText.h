@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <d3d12.h>
 
-#include "../2D/Sprite.h"
+#include "Sprite.h"
 
 //デバック用文字列クラスの定義
 class DebugText

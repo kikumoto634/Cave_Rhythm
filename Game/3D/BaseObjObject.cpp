@@ -1,7 +1,7 @@
 ﻿#include "BaseObjObject.h"
-#include "../Collision/CollisionSystem/BaseCollider.h"
-#include "../Collision/CollisionSystem/CollisionManager.h"
-#include "../../../Engine/math/Easing/Easing.h"
+#include "BaseCollider.h"
+#include "CollisionManager.h"
+#include "Easing.h"
 
 BaseObjObject::~BaseObjObject()
 {

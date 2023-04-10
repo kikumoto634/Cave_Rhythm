@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
-#include "../ParticleObject.h"
-#include "../../Collision/SphereCollider.h"
+#include "BaseObjObject.h"
+#include "ParticleObject.h"
+#include "SphereCollider.h"
 
-#include "../../Struct/MapNode.h"
+#include "MapNode.h"
 
 #include <vector>
 #include <queue>

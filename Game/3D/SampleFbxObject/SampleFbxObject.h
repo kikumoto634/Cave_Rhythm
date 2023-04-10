@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "../BaseFbxObjects.h"
-#include "../../../Engine/input/Input.h"
+#include "BaseFbxObjects.h"
+#include "Input.h"
 
 class SampleFbxObject : public BaseFbxObjects
 {

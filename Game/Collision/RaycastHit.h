@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "CollisionSystem/BaseCollider.h"
-#include "../3D/BaseObjObject.h"
+#include "BaseCollider.h"
+#include "BaseObjObject.h"
 
 #include <DirectXMath.h>
 

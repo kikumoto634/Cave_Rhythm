@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../BaseObjObject.h"
+#include "BaseObjObject.h"
 
 class SampleObjObject : public BaseObjObject
 {

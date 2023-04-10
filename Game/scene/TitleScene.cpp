@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 #include "TutorialScene.h"
 #include "GameScene.h"
-#include "../../Engine/math/Easing/Easing.h"
+#include "Easing.h"
 
 using namespace std;
 using namespace DirectX;

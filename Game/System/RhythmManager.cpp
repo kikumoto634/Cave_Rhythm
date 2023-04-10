@@ -1,5 +1,5 @@
 ﻿#include "RhythmManager.h"
-#include "../../Engine/input/Input.h"
+#include "Input.h"
 
 void RhythmManager::InitializeMeasurement(clock_t _clock)
 {

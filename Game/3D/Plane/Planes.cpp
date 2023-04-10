@@ -1,5 +1,5 @@
 ﻿#include "Planes.h"
-#include "../../Collision/CollisionSystem/CollisionManager.h"
+#include "CollisionManager.h"
 
 Planes::~Planes()
 {

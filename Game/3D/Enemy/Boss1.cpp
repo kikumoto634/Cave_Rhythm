@@ -1,11 +1,11 @@
 ﻿#include "Boss1.h"
-#include "../../Collision/SphereCollider.h"
-#include "../../../Engine/base/ParticleManager.h"
+#include "SphereCollider.h"
+#include "ParticleManager.h"
 
-#include "../../Collision/CollisionSystem/CollisionManager.h"
-#include "../../Collision/CollisionSystem/CollisionAttribute.h"
+#include "CollisionManager.h"
+#include "CollisionAttribute.h"
 
-#include "../../../Engine/math/Easing/Easing.h"
+#include "Easing.h"
 
 using namespace std;
 

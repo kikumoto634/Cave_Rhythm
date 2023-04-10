@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "../math/Vector/Vector2.h"
-#include "../math/Vector/Vector3.h"
-#include "../math/Vector/Vector4.h"
-#include "../base/DirectXCommon.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "DirectXCommon.h"
 
 #include <Windows.h>
 #include <d3d12.h>
