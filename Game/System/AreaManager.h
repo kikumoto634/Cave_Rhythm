@@ -128,7 +128,7 @@ private:
 	ObjModelManager* WallModel = nullptr;
 	ObjModelManager* WallColliderModel = nullptr;
 	bool IsAlive = false;
-	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};
+	std::vector<std::vector<Walls*>> Wall;
 
 	//破壊不可能壁
 	ObjModelManager* IndestructibleWallModel = nullptr;
