@@ -393,20 +393,11 @@
     <ClCompile Include="Game\scene\HomeScene.cpp">
       <Filter>ソース ファイル\Game\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Game\scene\SceneManager.cpp">
-      <Filter>ソース ファイル\Game\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Game\scene\TitleScene.cpp">
       <Filter>ソース ファイル\Game\scene</Filter>
     </ClCompile>
     <ClCompile Include="Game\scene\TutorialScene.cpp">
       <Filter>ソース ファイル\Game\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\scene\BaseBattleScene.cpp">
-      <Filter>ソース ファイル\Game\scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\scene\BaseScene.cpp">
-      <Filter>ソース ファイル\Game\scene\Base</Filter>
     </ClCompile>
     <ClCompile Include="Game\scene\SampleScane.cpp">
       <Filter>ソース ファイル\Game\scene\Sample</Filter>
@@ -425,6 +416,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Collision\CollisionSystem\CollisionPrimitive.cpp">
       <Filter>ソース ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\Base\BaseBattleScene.cpp">
+      <Filter>ソース ファイル\Game\scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene\Base\BaseScene.cpp">
+      <Filter>ソース ファイル\Game\scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\System\SceneManager.cpp">
+      <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -602,20 +602,11 @@
     <ClInclude Include="Game\scene\HomeScene.h">
       <Filter>ヘッダー ファイル\Game\scene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\scene\SceneManager.h">
-      <Filter>ヘッダー ファイル\Game\scene</Filter>
-    </ClInclude>
     <ClInclude Include="Game\scene\TitleScene.h">
       <Filter>ヘッダー ファイル\Game\scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\scene\TutorialScene.h">
       <Filter>ヘッダー ファイル\Game\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\scene\BaseBattleScene.h">
-      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\scene\BaseScene.h">
-      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="Game\scene\SampleScane.h">
       <Filter>ヘッダー ファイル\Game\scene\Sample</Filter>
@@ -649,6 +640,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Collision\CollisionSystem\QueryCallback.h">
       <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\Base\BaseBattleScene.h">
+      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene\Base\BaseScene.h">
+      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\System\SceneManager.h">
+      <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
