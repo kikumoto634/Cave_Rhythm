@@ -71,9 +71,6 @@ StyleCopReport.xml
 *.ilk
 *.meta
 //*.obj
-*.blend
-*.blend1
-*.aseprite
 *.wpix
 *.txt
 *.iobj
