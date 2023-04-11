@@ -254,41 +254,39 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
-		Wall.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			
 			if(mapInfo[i][j] != 3){
-				Wall[i].push_back(nullptr);
 				continue;
 			}
 
-			Walls* obj= new Walls();
-			obj->Initialize(WallModel,WallColliderModel);
+			Wall[i][j] = new Walls();
+			Wall[i][j]->Initialize(WallModel,WallColliderModel);
+
 			pos = {startPos + j, startPos + i};
 			pos*= Block_Size;
-			obj->SetPosition({pos.x,-3,-pos.y});
-			if(!IsLigthing) continue;
-			obj->CaveLightOn();
+			Wall[i][j]->SetPosition({pos.x,-3,-pos.y});
 
-			Wall[i].push_back(move(obj));
+			if(!IsLigthing) continue;
+			Wall[i][j]->CaveLightOn();
 		}
 	}
 }
 void AreaManager::WallUpdate()
 {
 	//地面
-	for(auto it1 = Wall.begin(); it1 != Wall.end(); it1++){
-		for(auto it2 = (*it1).begin(); it2 != (*it1).end(); it2++){
-			if((*it2) == nullptr) continue;
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			if(Wall[i][j] == nullptr) continue;
 
-			(*it2)->SetPlayerPos(PlayerPos);
-			if((*it2)->GetIsDIg()){
+			Wall[i][j]->SetPlayerPos(PlayerPos);
+			if(Wall[i][j]->GetIsDIg()){
 				IsDigSound = true;
 				IsDig =true;
-				DigParticlePos = (*it2)->GetDigPosition();
+				DigParticlePos = Wall[i][j]->GetDigPosition();
 				gameManager->AudioPlay(10);
 			}
-			(*it2)->Update(camera);
+			Wall[i][j]->Update(camera);
 		}
 	}
 }
@@ -297,10 +295,10 @@ void AreaManager::WallBeatEndUpdate()
 }
 void AreaManager::WallDraw()
 {
-	for(auto it1 = Wall.begin(); it1 != Wall.end(); it1++){
-		for(auto it2 = (*it1).begin(); it2 != (*it1).end(); it2++){
-			if((*it2) == nullptr) continue;
-			(*it2)->Draw();
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			if(Wall[i][j] == nullptr) continue;
+			Wall[i][j]->Draw();
 		}
 	}
 }
@@ -312,12 +310,12 @@ void AreaManager::WallFinalize()
 	delete WallColliderModel;
 	WallColliderModel = nullptr;
 
-	for(auto it1 = Wall.begin(); it1 != Wall.end(); it1++){
-		for(auto it2 = (*it1).begin(); it2 != (*it1).end(); it2++){
-			if((*it2) == nullptr) continue;
-			(*it2)->Finalize();
-			delete (*it2);
-			(*it2) = nullptr;
+	for(int i = 0; i < DIV_NUM; i++){
+		for(int j = 0; j < DIV_NUM; j++){
+			if(Wall[i][j] == nullptr) continue;
+			Wall[i][j]->Finalize();
+			delete Wall[i][j];
+			Wall[i][j] = nullptr;
 		}
 	}
 }
