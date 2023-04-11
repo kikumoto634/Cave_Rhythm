@@ -1,4 +1,4 @@
-﻿#include "GameScene.h"
+#include "GameScene.h"
 
 #include "HomeScene.h"
 #include "Boss1Area.h"
@@ -116,10 +116,10 @@ void GameScene::AddCommonUpdate()
 
 void GameScene::AddObject3DUpdate()
 {
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); ++it){
 		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
-			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
+			for(auto it2 = coin.begin(); it2!= coin.end(); ++it2){
 				if((*it2)->PopPossible()){
 					(*it2)->Pop({(*it)->GetDeadParticlepos().x, -5, (*it)->GetDeadParticlepos().z});
 					break;
@@ -129,10 +129,10 @@ void GameScene::AddObject3DUpdate()
 		(*it)->Update(camera,player->GetPosition());
 	}
 
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
-			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
+			for(auto it2 = coin.begin(); it2!= coin.end(); ++it2){
 				if((*it2)->PopPossible()){
 					(*it2)->Pop({(*it)->GetDeadParticlepos().x, -5, (*it)->GetDeadParticlepos().z});
 					break;
@@ -161,7 +161,7 @@ void GameScene::AddObject2DUpdate()
 void GameScene::AddBeatEndUpdate()
 {
 	if(popCount >= PopCount){
-		for(auto it = slime.begin(); it != slime.end(); it++){
+		for(auto it = slime.begin(); it != slime.end(); ++it){
 			if(!(*it)->GetIsNotApp()){
 				Vector3 lpos = areaManager->GetObjectPopPosition();
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
@@ -169,7 +169,7 @@ void GameScene::AddBeatEndUpdate()
 				break;
 			}
 		}
-		for(auto it = skelton.begin(); it != skelton.end(); it++){
+		for(auto it = skelton.begin(); it != skelton.end(); ++it){
 			if(!(*it)->GetIsNotApp()){
 				Vector3 lpos = areaManager->GetObjectPopPosition();
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
@@ -184,15 +184,15 @@ void GameScene::AddBeatEndUpdate()
 	}
 
 
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->IsBeatEndOn();
 	}
 
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->IsBeatEndOn();
 	}
 
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = coin.begin(); it != coin.end(); ++it){
 		if((*it)->GetIsAlive()){
 			(*it)->IsBeatEndOn();
 		}
@@ -203,23 +203,23 @@ void GameScene::AddObject3DDraw()
 {
 	areaManager->RandamAreaDraw();
 
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->Draw();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->Draw();
 	}
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = coin.begin(); it != coin.end(); ++it){
 		(*it)->Draw();
 	}
 }
 
 void GameScene::AddParticleDraw()
 {
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->ParticleDraw();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->ParticleDraw();
 	}
 }
@@ -239,13 +239,13 @@ void GameScene::AddObjectFinalize()
 	floorDepth->Finalize();
 	floorValueTex->Finalize();
 
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->Finalize();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->Finalize();
 	}
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = coin.begin(); it != coin.end(); ++it){
 		(*it)->Finalize();
 	}
 }

@@ -1,4 +1,4 @@
-﻿#include "Boss1.h"
+#include "Boss1.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
 
@@ -311,15 +311,18 @@ void Boss1::Summon()
 void Boss1::DeadParticleApp()
 {
 	if(!IsDeadOnceParticle) return;
-	for (int i = 0; i < 10; i++) {
-		const float rnd_vel = 0.08f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = 0.06f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-		Vector3 acc{};
-		acc.y = -0.005f;
+	Vector3 vel{};
+	const float rnd_vel = 0.08f;
+	float randomVel = rnd_vel - rnd_vel / 2.0f;
+	vel.y = 0.06f;
+
+	Vector3 acc{};
+	acc.y = -0.005f;
+
+	for (int i = 0; i < 10; i++) {
+		vel.x = (float)rand() / RAND_MAX * randomVel;
+		vel.z = (float)rand() / RAND_MAX * randomVel;
 
 		DeadParticle->ParticleSet(AppDeadParMaxFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
 		DeadParticle->ParticleAppearance();

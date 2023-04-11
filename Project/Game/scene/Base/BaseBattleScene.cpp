@@ -1,4 +1,4 @@
-﻿#include "BaseBattleScene.h"
+#include "BaseBattleScene.h"
 #include "Easing.h"
 
 #include "Collision.h"
@@ -251,7 +251,7 @@ void BaseBattleScene::InputUpdate()
 	//入力を確認
 	if(IsNoteInput){
 		//左
-		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
+		for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
 
 			//前提条件
 			if(!(*it)->GetIsNoteAlive()) continue;
@@ -263,7 +263,7 @@ void BaseBattleScene::InputUpdate()
 			}
 		}
 		//右
-		for(auto it = rNotes.begin(); it != rNotes.end(); it++){
+		for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
 
 			//前提条件
 			if(!(*it)->GetIsNoteAlive()) continue;
@@ -305,12 +305,12 @@ void BaseBattleScene::Object2DUpdate()
 
 	judgeLoca->Update(IsNoteInput);
 
-	for(auto it = lNotes.begin(); it != lNotes.end();it++){
+	for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
 		if((*it)->GetIsNoteAlive()){
 			(*it)->Update((float)rhythmManager->GetBPMTime());
 		}
 	}
-	for(auto it = rNotes.begin(); it != rNotes.end();it++){
+	for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
 		if((*it)->GetIsNoteAlive()){
 			(*it)->Update((float)rhythmManager->GetBPMTime());
 		}
@@ -413,13 +413,13 @@ void BaseBattleScene::BeatEndUpdate()
 		gameManager->IsBeatEndOn();
 		
 		//ビート目視用
-		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
+		for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
 			if(!(*it)->GetIsNoteAlive()){
 				(*it)->BeatUpdate();
 				break;
 			}
 		}
-		for(auto it = rNotes.begin(); it != rNotes.end(); it++){
+		for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
 			if(!(*it)->GetIsNoteAlive()){
 				(*it)->BeatUpdate();
 				break;
@@ -446,10 +446,10 @@ void BaseBattleScene::UIDraw()
 	//出口
 	exit->Draw2D();
 
-	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
+	for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
 		(*it)->Draw();
 	}
-	for(auto it = rNotes.begin(); it != rNotes.end(); it++){
+	for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
 		(*it)->Draw();
 	}
 	judgeLoca->Draw();
@@ -510,10 +510,10 @@ void BaseBattleScene::ObjectFinaize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
+	for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
 		(*it)->Finalize();
 	}
-	for(auto it = rNotes.begin(); it != rNotes.end(); it++){
+	for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
 		(*it)->Finalize();
 	}
 	judgeLoca->Finalize();

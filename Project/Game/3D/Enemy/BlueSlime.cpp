@@ -1,4 +1,4 @@
-﻿#include "BlueSlime.h"
+#include "BlueSlime.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
 
@@ -197,44 +197,53 @@ void BlueSlime::Reset()
 
 void BlueSlime::PopParticleApp()
 {
-	for (int i = 0; i < 10; i++) {
+	Vector3 pos{};
+	//自身の座標を軸に[-1, 1]ランダム
+	const Vector3 rnd_pos = PopParticlePos;
+	const float range = 1.5f;
+	float randomRange = range - range/2.0f;
+	pos.y = -0.5f;
 
-		//自身の座標を軸に[-1, 1]ランダム
-		const Vector3 rnd_pos = PopParticlePos;
-		const float range = 1.5f;
-		Vector3 pos{};
-		pos.x = (float)rand() / RAND_MAX * range - range/2.0f;
-		pos.y = -0.5f;
-		pos.z = (float)rand() / RAND_MAX * range - range/2.0f;
+	Vector3 vel{};
+	const float rnd_vel = 0.025f;
+	float randomVel = rnd_vel - rnd_vel / 2.0f;
+	vel.y = 0.05f;
+
+	Vector3 acc{};
+	const float rnd_acc = 0.001f;
+
+	for (int i = 0; i < 10; i++) {
+		pos.x = (float)rand() / RAND_MAX * randomRange;
+		pos.z = (float)rand() / RAND_MAX * randomRange;
 		pos += rnd_pos;
 
-		const float rnd_vel = 0.025f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = 0.05f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.x = (float)rand() / RAND_MAX * randomVel;
+		vel.z = (float)rand() / RAND_MAX * randomVel;
 
-		Vector3 acc{};
-		const float rnd_acc = 0.001f;
-		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+		acc.y = -(float)rand() / rnd_acc;
 
 		PopParticle->ParticleSet(40,pos,vel,acc,0.4f,0.0f,1,{0.6f,0.3f,0.2f,0.4f});
 		PopParticle->ParticleAppearance();
+
+		pos = {0,0,0};
 	}
 }
 
 void BlueSlime::DeadParticleApp()
 {
 	if(!IsDeadOnceParticle) return;
-	for (int i = 0; i < 10; i++) {
-		const float rnd_vel = 0.08f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = 0.06f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-		Vector3 acc{};
-		acc.y = -0.005f;
+	Vector3 vel{};
+	const float rnd_vel = 0.08f;
+	float randomVel = rnd_vel - rnd_vel / 2.0f;
+	vel.y = 0.06f;
+
+	Vector3 acc{};
+	acc.y = -0.005f;
+
+	for (int i = 0; i < 10; i++) {
+		vel.x = (float)rand() / RAND_MAX * randomVel;
+		vel.z = (float)rand() / RAND_MAX * randomVel;
 
 		DeadParticle->ParticleSet(AppearanceResetFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
 		DeadParticle->ParticleAppearance();
