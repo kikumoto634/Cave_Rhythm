@@ -103,12 +103,6 @@
     <Filter Include="ヘッダー ファイル\Engine\debug">
       <UniqueIdentifier>{d96c3c6b-9ff1-4f5c-8f22-9ad4e252726d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Collision">
-      <UniqueIdentifier>{ed55e1b5-df43-439c-91b9-e4f1cecb5398}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Game\Collision">
-      <UniqueIdentifier>{7a66ea4d-af22-4827-b1df-89c30e9f5083}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engine\math">
       <UniqueIdentifier>{70446899-e34a-4634-8bad-dbeb53b3a492}</UniqueIdentifier>
     </Filter>
@@ -132,12 +126,6 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\3D\Player">
       <UniqueIdentifier>{4f988093-55cc-4672-ab67-28950aae695c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Game\Collision\CollisionSystem">
-      <UniqueIdentifier>{a30e288a-a45b-4ebf-aa6b-672dfa094c99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Collision\CollisionSystem">
-      <UniqueIdentifier>{2fa0169a-8427-49bb-a175-5cfa3eac42f8}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\System">
       <UniqueIdentifier>{c16de102-9bbd-441c-ad95-b30ddbd0935a}</UniqueIdentifier>
@@ -229,6 +217,18 @@
     <Filter Include="ヘッダー ファイル\Game\scene\Old">
       <UniqueIdentifier>{ff344a59-3448-40d7-88bd-cfe53ea77aaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Collision">
+      <UniqueIdentifier>{ed55e1b5-df43-439c-91b9-e4f1cecb5398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Collision\CollisionSystem">
+      <UniqueIdentifier>{2fa0169a-8427-49bb-a175-5cfa3eac42f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Collision">
+      <UniqueIdentifier>{7a66ea4d-af22-4827-b1df-89c30e9f5083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Collision\CollisionSystem">
+      <UniqueIdentifier>{a30e288a-a45b-4ebf-aa6b-672dfa094c99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\3D\BaseFbxObjects.cpp">
@@ -309,26 +309,11 @@
     <ClCompile Include="Engine\base\imguiManager.cpp">
       <Filter>ソース ファイル\Engine\base</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Collision\SphereCollider.cpp">
-      <Filter>ソース ファイル\Game\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Player\Player.cpp">
       <Filter>ソース ファイル\Game\3D\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Collision\CollisionSystem\Collision.cpp">
-      <Filter>ソース ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\CollisionSystem\CollisionManager.cpp">
-      <Filter>ソース ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\CollisionSystem\CollisionPrimitive.cpp">
-      <Filter>ソース ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\base\ObjModelMesh.cpp">
       <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\MeshCollider.cpp">
-      <Filter>ソース ファイル\Game\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\TouchableObject.cpp">
       <Filter>ソース ファイル\Engine\3D</Filter>
@@ -426,6 +411,21 @@
     <ClCompile Include="Game\scene\SampleScane.cpp">
       <Filter>ソース ファイル\Game\scene\Sample</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Collision\MeshCollider.cpp">
+      <Filter>ソース ファイル\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collision\SphereCollider.cpp">
+      <Filter>ソース ファイル\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collision\CollisionSystem\Collision.cpp">
+      <Filter>ソース ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collision\CollisionSystem\CollisionManager.cpp">
+      <Filter>ソース ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collision\CollisionSystem\CollisionPrimitive.cpp">
+      <Filter>ソース ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\2D\Sprite.h">
@@ -518,47 +518,14 @@
     <ClInclude Include="Engine\light\CircleShadow.h">
       <Filter>ヘッダー ファイル\Engine\light</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Collision\SphereCollider.h">
-      <Filter>ヘッダー ファイル\Game\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Player\Player.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\Collision.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionInfo.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionManager.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionPrimitive.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionTypes.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\RaycastHit.h">
-      <Filter>ヘッダー ファイル\Game\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\ObjModelMesh.h">
       <Filter>ヘッダー ファイル\Engine\base</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Collision\MeshCollider.h">
-      <Filter>ヘッダー ファイル\Game\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\BaseCollider.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\3D\TouchableObject.h">
       <Filter>ヘッダー ファイル\Engine\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionAttribute.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Collision\CollisionSystem\QueryCallback.h">
-      <Filter>ヘッダー ファイル\Game\Collision\CollisionSystem</Filter>
     </ClInclude>
     <ClInclude Include="Engine\audio\Audio.h">
       <Filter>ヘッダー ファイル\Engine\audio</Filter>
@@ -652,6 +619,36 @@
     </ClInclude>
     <ClInclude Include="Game\scene\SampleScane.h">
       <Filter>ヘッダー ファイル\Game\scene\Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\MeshCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\RaycastHit.h">
+      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\SphereCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\BaseCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionInfo.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionManager.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionPrimitive.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionTypes.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\CollisionSystem\QueryCallback.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

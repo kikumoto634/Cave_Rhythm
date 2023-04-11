@@ -126,7 +126,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\Collision\CollisionSystem;$(ProjectDir)Game\Collision;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Engine\light;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Engine\light;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Collision\CollisionSystem;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,7 +148,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\Collision\CollisionSystem;$(ProjectDir)Game\Collision;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Engine\light;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Engine\light;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Collision\CollisionSystem;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,6 +177,11 @@
     <ClCompile Include="Engine\base\ParticleManager.cpp" />
     <ClCompile Include="Engine\base\TextureManager.cpp" />
     <ClCompile Include="Engine\base\Window.cpp" />
+    <ClCompile Include="Engine\Collision\CollisionSystem\Collision.cpp" />
+    <ClCompile Include="Engine\Collision\CollisionSystem\CollisionManager.cpp" />
+    <ClCompile Include="Engine\Collision\CollisionSystem\CollisionPrimitive.cpp" />
+    <ClCompile Include="Engine\Collision\MeshCollider.cpp" />
+    <ClCompile Include="Engine\Collision\SphereCollider.cpp" />
     <ClCompile Include="Engine\debugProcess\DebugText.cpp" />
     <ClCompile Include="Engine\input\Input.cpp" />
     <ClCompile Include="Engine\light\LightGroup.cpp" />
@@ -208,15 +213,6 @@
     <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp" />
     <ClCompile Include="Game\3D\Wall\Walls.cpp" />
     <ClCompile Include="Game\camera\Camera.cpp" />
-    <ClCompile Include="Game\Collision\CollisionSystem\Collision.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\CollisionSystem\CollisionManager.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
-    </ClCompile>
-    <ClCompile Include="Game\Collision\CollisionSystem\CollisionPrimitive.cpp" />
-    <ClCompile Include="Game\Collision\MeshCollider.cpp" />
-    <ClCompile Include="Game\Collision\SphereCollider.cpp" />
     <ClCompile Include="Game\scene\BaseBattleScene.cpp" />
     <ClCompile Include="Game\scene\BaseScene.cpp" />
     <ClCompile Include="Game\scene\Boss1Area.cpp" />
@@ -248,6 +244,16 @@
     <ClInclude Include="Engine\base\ParticleManager.h" />
     <ClInclude Include="Engine\base\TextureManager.h" />
     <ClInclude Include="Engine\base\Window.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\BaseCollider.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionInfo.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionManager.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionPrimitive.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\CollisionTypes.h" />
+    <ClInclude Include="Engine\Collision\CollisionSystem\QueryCallback.h" />
+    <ClInclude Include="Engine\Collision\MeshCollider.h" />
+    <ClInclude Include="Engine\Collision\RaycastHit.h" />
+    <ClInclude Include="Engine\Collision\SphereCollider.h" />
     <ClInclude Include="Engine\debugProcess\DebugText.h" />
     <ClInclude Include="Engine\input\Input.h" />
     <ClInclude Include="Engine\light\CircleShadow.h" />
@@ -283,17 +289,6 @@
     <ClInclude Include="Game\3D\Wall\IndestructibleWall.h" />
     <ClInclude Include="Game\3D\Wall\Walls.h" />
     <ClInclude Include="Game\camera\Camera.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\BaseCollider.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\Collision.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionAttribute.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionInfo.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionManager.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionPrimitive.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\CollisionTypes.h" />
-    <ClInclude Include="Game\Collision\CollisionSystem\QueryCallback.h" />
-    <ClInclude Include="Game\Collision\MeshCollider.h" />
-    <ClInclude Include="Game\Collision\RaycastHit.h" />
-    <ClInclude Include="Game\Collision\SphereCollider.h" />
     <ClInclude Include="Game\scene\BaseBattleScene.h" />
     <ClInclude Include="Game\scene\BaseScene.h" />
     <ClInclude Include="Game\scene\Boss1Area.h" />
