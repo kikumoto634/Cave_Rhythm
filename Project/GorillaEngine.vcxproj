@@ -126,7 +126,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d\Sprite;$(ProjectDir)Engine\2d\SpriteBase;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\base\Manager;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\light;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d\Sprite;$(ProjectDir)Engine\2d\SpriteBase;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\base\Manager;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\light;$(ProjectDir)Engine\light\CircleShadow;$(ProjectDir)Engine\light\Directional;$(ProjectDir)Engine\light\Spot;$(ProjectDir)Engine\light\Point;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -249,7 +249,7 @@
     <ClInclude Include="Engine\base\Manager\ParticleManager.h" />
     <ClInclude Include="Engine\base\Manager\TextureManager.h" />
     <ClInclude Include="Engine\base\Window.h" />
-    <ClInclude Include="Engine\Collision\CollisionSystem\BaseCollider.h" />
+    <ClInclude Include="Engine\Collision\BaseCollider.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionInfo.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionManager.h" />
@@ -261,11 +261,11 @@
     <ClInclude Include="Engine\Collision\SphereCollider.h" />
     <ClInclude Include="Engine\debugProcess\DebugText.h" />
     <ClInclude Include="Engine\input\Input.h" />
-    <ClInclude Include="Engine\light\CircleShadow.h" />
-    <ClInclude Include="Engine\light\DirectionalLight.h" />
+    <ClInclude Include="Engine\light\circleShadow\CircleShadow.h" />
+    <ClInclude Include="Engine\light\Directional\DirectionalLight.h" />
     <ClInclude Include="Engine\light\LightGroup.h" />
-    <ClInclude Include="Engine\light\PointLight.h" />
-    <ClInclude Include="Engine\light\SpotLight.h" />
+    <ClInclude Include="Engine\light\Point\PointLight.h" />
+    <ClInclude Include="Engine\light\Spot\SpotLight.h" />
     <ClInclude Include="Engine\loader\FbxLoader.h" />
     <ClInclude Include="Engine\math\Easing\Easing.h" />
     <ClInclude Include="Engine\math\Vector\Vector2.h" />

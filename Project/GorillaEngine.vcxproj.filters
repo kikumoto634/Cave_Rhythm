@@ -259,6 +259,18 @@
     <Filter Include="ソース ファイル\Engine\base\Manager">
       <UniqueIdentifier>{38723410-9ad6-4b94-9f8b-36543bc154dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\light\Point">
+      <UniqueIdentifier>{165deef4-c722-4a1c-84a2-281a6d001e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\light\Directional">
+      <UniqueIdentifier>{f798c766-ee30-4de1-840f-d627ddab9a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\light\CircleShadow">
+      <UniqueIdentifier>{e0541af6-fa5e-41d4-9f2c-154c84a6fb07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\light\Spot">
+      <UniqueIdentifier>{6251d208-a5c7-43ef-a3c3-b96404fc0b0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\3D\ViewProjection.cpp">
@@ -497,23 +509,11 @@
     <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h">
       <Filter>ヘッダー ファイル\Game\3D\SampleObjObj</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\light\DirectionalLight.h">
-      <Filter>ヘッダー ファイル\Engine\light</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\light\PointLight.h">
-      <Filter>ヘッダー ファイル\Engine\light</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\light\LightGroup.h">
       <Filter>ヘッダー ファイル\Engine\light</Filter>
     </ClInclude>
     <ClInclude Include="Engine\debugProcess\DebugText.h">
       <Filter>ヘッダー ファイル\Engine\debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\light\SpotLight.h">
-      <Filter>ヘッダー ファイル\Engine\light</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\light\CircleShadow.h">
-      <Filter>ヘッダー ファイル\Engine\light</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\Player\Player.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
@@ -608,9 +608,6 @@
     <ClInclude Include="Engine\Collision\SphereCollider.h">
       <Filter>ヘッダー ファイル\Engine\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collision\CollisionSystem\BaseCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h">
       <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
     </ClInclude>
@@ -679,6 +676,21 @@
     </ClInclude>
     <ClInclude Include="Engine\base\Manager\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\BaseCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\light\circleShadow\CircleShadow.h">
+      <Filter>ヘッダー ファイル\Engine\light\CircleShadow</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\light\Directional\DirectionalLight.h">
+      <Filter>ヘッダー ファイル\Engine\light\Directional</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\light\Point\PointLight.h">
+      <Filter>ヘッダー ファイル\Engine\light\Point</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\light\Spot\SpotLight.h">
+      <Filter>ヘッダー ファイル\Engine\light\Spot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
