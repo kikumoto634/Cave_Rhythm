@@ -126,7 +126,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d\Sprite;$(ProjectDir)Engine\2d\SpriteBase;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\base\Manager;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\light;$(ProjectDir)Engine\light\CircleShadow;$(ProjectDir)Engine\light\Directional;$(ProjectDir)Engine\light\Spot;$(ProjectDir)Engine\light\Point;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d\Sprite;$(ProjectDir)Engine\2d\SpriteBase;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\base\Manager;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\light;$(ProjectDir)Engine\light\CircleShadow;$(ProjectDir)Engine\light\Directional;$(ProjectDir)Engine\light\Spot;$(ProjectDir)Engine\light\Point;$(ProjectDir)Engine\camera;$(ProjectDir)Engine\scene\system;$(ProjectDir)Engine\scene\base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -182,6 +182,7 @@
     <ClCompile Include="Engine\base\Manager\ParticleManager.cpp" />
     <ClCompile Include="Engine\base\Manager\TextureManager.cpp" />
     <ClCompile Include="Engine\base\Window.cpp" />
+    <ClCompile Include="Engine\camera\Camera.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\Collision.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\CollisionManager.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\CollisionPrimitive.cpp" />
@@ -195,6 +196,8 @@
     <ClCompile Include="Engine\math\Vector\Vector2.cpp" />
     <ClCompile Include="Engine\math\Vector\Vector3.cpp" />
     <ClCompile Include="Engine\math\Vector\Vector4.cpp" />
+    <ClCompile Include="Engine\scene\base\BaseScene.cpp" />
+    <ClCompile Include="Engine\scene\system\SceneManager.cpp" />
     <ClCompile Include="Game\2D\Combo.cpp" />
     <ClCompile Include="Game\2D\JudgeLocation\JudgeLocation.cpp" />
     <ClCompile Include="Game\2D\Notes\LNotes.cpp" />
@@ -213,19 +216,15 @@
     <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp" />
     <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp" />
     <ClCompile Include="Game\3D\Wall\Walls.cpp" />
-    <ClCompile Include="Game\camera\Camera.cpp" />
     <ClCompile Include="Game\scene\Base\BaseBattleScene.cpp" />
-    <ClCompile Include="Game\scene\Base\BaseScene.cpp" />
     <ClCompile Include="Game\scene\Boss1Area.cpp" />
     <ClCompile Include="Game\scene\GameScene.cpp" />
     <ClCompile Include="Game\scene\HomeScene.cpp" />
-    <ClCompile Include="Game\scene\SampleScane.cpp" />
     <ClCompile Include="Game\scene\TitleScene.cpp" />
     <ClCompile Include="Game\scene\TutorialScene.cpp" />
     <ClCompile Include="Game\System\AreaManager.cpp" />
     <ClCompile Include="Game\System\GameManager.cpp" />
     <ClCompile Include="Game\System\RhythmManager.cpp" />
-    <ClCompile Include="Game\System\SceneManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +248,7 @@
     <ClInclude Include="Engine\base\Manager\ParticleManager.h" />
     <ClInclude Include="Engine\base\Manager\TextureManager.h" />
     <ClInclude Include="Engine\base\Window.h" />
+    <ClInclude Include="Engine\camera\Camera.h" />
     <ClInclude Include="Engine\Collision\BaseCollider.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionInfo.h" />
@@ -271,6 +271,8 @@
     <ClInclude Include="Engine\math\Vector\Vector2.h" />
     <ClInclude Include="Engine\math\Vector\Vector3.h" />
     <ClInclude Include="Engine\math\Vector\Vector4.h" />
+    <ClInclude Include="Engine\scene\base\BaseScene.h" />
+    <ClInclude Include="Engine\scene\system\SceneManager.h" />
     <ClInclude Include="Game\2D\Combo.h" />
     <ClInclude Include="Game\2D\JudgeLocation\JudgeLocation.h" />
     <ClInclude Include="Game\2D\Notes\LNotes.h" />
@@ -289,20 +291,16 @@
     <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h" />
     <ClInclude Include="Game\3D\Wall\IndestructibleWall.h" />
     <ClInclude Include="Game\3D\Wall\Walls.h" />
-    <ClInclude Include="Game\camera\Camera.h" />
     <ClInclude Include="Game\scene\Base\BaseBattleScene.h" />
-    <ClInclude Include="Game\scene\Base\BaseScene.h" />
     <ClInclude Include="Game\scene\Boss1Area.h" />
     <ClInclude Include="Game\scene\GameScene.h" />
     <ClInclude Include="Game\scene\HomeScene.h" />
-    <ClInclude Include="Game\scene\SampleScane.h" />
     <ClInclude Include="Game\scene\TitleScene.h" />
     <ClInclude Include="Game\scene\TutorialScene.h" />
     <ClInclude Include="Game\Struct\MapNode.h" />
     <ClInclude Include="Game\System\AreaManager.h" />
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
-    <ClInclude Include="Game\System\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

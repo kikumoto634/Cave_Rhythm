@@ -187,32 +187,20 @@
     <Filter Include="ヘッダー ファイル\Game\Struct">
       <UniqueIdentifier>{4eaa2358-a61a-449d-b83a-d41c5582a998}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\camera">
-      <UniqueIdentifier>{9bdd6785-2fba-430e-ae42-2cac5b9d4ae4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game\scene">
       <UniqueIdentifier>{73170d81-237c-484b-9f28-c5917f45b962}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Game\scene\Base">
       <UniqueIdentifier>{37d913e6-93f2-4bf2-b833-cb4c7790cd12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\scene\Sample">
-      <UniqueIdentifier>{68ee3759-9694-4789-9393-7992b168c706}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game\scene\Old">
       <UniqueIdentifier>{fd2e9f98-d7f8-4555-a799-e18cb86729c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\camera">
-      <UniqueIdentifier>{488cb75a-813f-4766-a922-30ee4f0982af}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\scene">
       <UniqueIdentifier>{cc9f3368-0578-423a-bbb2-7e03a2af66f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\scene\Base">
       <UniqueIdentifier>{c451715e-44b7-4d1f-bd91-a4924a872a7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\scene\Sample">
-      <UniqueIdentifier>{abfadce0-77e3-473e-968a-d97f2c19617e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Game\scene\Old">
       <UniqueIdentifier>{ff344a59-3448-40d7-88bd-cfe53ea77aaa}</UniqueIdentifier>
@@ -270,6 +258,30 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Engine\light\Spot">
       <UniqueIdentifier>{6251d208-a5c7-43ef-a3c3-b96404fc0b0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\camera">
+      <UniqueIdentifier>{488cb75a-813f-4766-a922-30ee4f0982af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\camera">
+      <UniqueIdentifier>{9bdd6785-2fba-430e-ae42-2cac5b9d4ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\scene">
+      <UniqueIdentifier>{3b2e25ea-2294-4287-8eb8-7daafa9e21d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\scene\base">
+      <UniqueIdentifier>{592fb324-f7cb-4ad2-8c73-34246c385946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\scene">
+      <UniqueIdentifier>{0fceea19-eb38-4eb3-a420-ce82d146f0ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\scene\base">
+      <UniqueIdentifier>{436975f2-01d9-450a-b1e8-774635789da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\scene\system">
+      <UniqueIdentifier>{a0c8903f-90de-4136-93ea-a04c7dc4c0ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\scene\system">
+      <UniqueIdentifier>{16d041c5-c1c3-4068-bfba-e3d20377fe96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -381,9 +393,6 @@
     <ClCompile Include="Game\2D\Combo.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Game\camera\Camera.cpp">
-      <Filter>ソース ファイル\Game\camera</Filter>
-    </ClCompile>
     <ClCompile Include="Game\scene\Boss1Area.cpp">
       <Filter>ソース ファイル\Game\scene</Filter>
     </ClCompile>
@@ -398,9 +407,6 @@
     </ClCompile>
     <ClCompile Include="Game\scene\TutorialScene.cpp">
       <Filter>ソース ファイル\Game\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\scene\SampleScane.cpp">
-      <Filter>ソース ファイル\Game\scene\Sample</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Collision\MeshCollider.cpp">
       <Filter>ソース ファイル\Engine\Collision</Filter>
@@ -419,12 +425,6 @@
     </ClCompile>
     <ClCompile Include="Game\scene\Base\BaseBattleScene.cpp">
       <Filter>ソース ファイル\Game\scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\scene\Base\BaseScene.cpp">
-      <Filter>ソース ファイル\Game\scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\System\SceneManager.cpp">
-      <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Model\FbxModelObject.cpp">
       <Filter>ソース ファイル\Engine\3D\Model</Filter>
@@ -467,6 +467,15 @@
     </ClCompile>
     <ClCompile Include="Engine\base\Manager\TextureManager.cpp">
       <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\camera\Camera.cpp">
+      <Filter>ソース ファイル\Engine\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\base\BaseScene.cpp">
+      <Filter>ソース ファイル\Engine\scene\base</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\scene\system\SceneManager.cpp">
+      <Filter>ソース ファイル\Engine\scene\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -578,9 +587,6 @@
     <ClInclude Include="Game\Struct\MapNode.h">
       <Filter>ヘッダー ファイル\Game\Struct</Filter>
     </ClInclude>
-    <ClInclude Include="Game\camera\Camera.h">
-      <Filter>ヘッダー ファイル\Game\camera</Filter>
-    </ClInclude>
     <ClInclude Include="Game\scene\Boss1Area.h">
       <Filter>ヘッダー ファイル\Game\scene</Filter>
     </ClInclude>
@@ -595,9 +601,6 @@
     </ClInclude>
     <ClInclude Include="Game\scene\TutorialScene.h">
       <Filter>ヘッダー ファイル\Game\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\scene\SampleScane.h">
-      <Filter>ヘッダー ファイル\Game\scene\Sample</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Collision\MeshCollider.h">
       <Filter>ヘッダー ファイル\Engine\Collision</Filter>
@@ -628,12 +631,6 @@
     </ClInclude>
     <ClInclude Include="Game\scene\Base\BaseBattleScene.h">
       <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\scene\Base\BaseScene.h">
-      <Filter>ヘッダー ファイル\Game\scene\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\System\SceneManager.h">
-      <Filter>ヘッダー ファイル\Game\System</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Model\ObjModelObject.h">
       <Filter>ヘッダー ファイル\Engine\3D\Model</Filter>
@@ -691,6 +688,15 @@
     </ClInclude>
     <ClInclude Include="Engine\light\Spot\SpotLight.h">
       <Filter>ヘッダー ファイル\Engine\light\Spot</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\camera\Camera.h">
+      <Filter>ヘッダー ファイル\Engine\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\base\BaseScene.h">
+      <Filter>ヘッダー ファイル\Engine\scene\base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\scene\system\SceneManager.h">
+      <Filter>ヘッダー ファイル\Engine\scene\system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
