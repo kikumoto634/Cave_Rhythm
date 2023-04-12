@@ -126,7 +126,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d\Sprite;$(ProjectDir)Engine\2d\SpriteBase;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\light;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2d\Sprite;$(ProjectDir)Engine\2d\SpriteBase;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\audio;$(ProjectDir)Engine\base;$(ProjectDir)Engine\base\Manager;$(ProjectDir)Engine\debugProcess;$(ProjectDir)Engine\imgui;$(ProjectDir)Engine\input;$(ProjectDir)Engine\loader;$(ProjectDir)Engine\math\Vector;$(ProjectDir)Engine\math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\light;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\camera;$(ProjectDir)Game\scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -175,12 +175,12 @@
     <ClCompile Include="Engine\audio\Audio.cpp" />
     <ClCompile Include="Engine\base\Application.cpp" />
     <ClCompile Include="Engine\base\DirectXCommon.cpp" />
-    <ClCompile Include="Engine\base\FbxModelManager.cpp" />
-    <ClCompile Include="Engine\base\imguiManager.cpp" />
-    <ClCompile Include="Engine\base\ObjModelManager.cpp" />
-    <ClCompile Include="Engine\base\ObjModelMesh.cpp" />
-    <ClCompile Include="Engine\base\ParticleManager.cpp" />
-    <ClCompile Include="Engine\base\TextureManager.cpp" />
+    <ClCompile Include="Engine\base\Manager\FbxModelManager.cpp" />
+    <ClCompile Include="Engine\base\Manager\imguiManager.cpp" />
+    <ClCompile Include="Engine\base\Manager\ObjModelManager.cpp" />
+    <ClCompile Include="Engine\base\Manager\ObjModelMesh.cpp" />
+    <ClCompile Include="Engine\base\Manager\ParticleManager.cpp" />
+    <ClCompile Include="Engine\base\Manager\TextureManager.cpp" />
     <ClCompile Include="Engine\base\Window.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\Collision.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\CollisionManager.cpp" />
@@ -242,12 +242,12 @@
     <ClInclude Include="Engine\audio\Audio.h" />
     <ClInclude Include="Engine\base\Application.h" />
     <ClInclude Include="Engine\base\DirectXCommon.h" />
-    <ClInclude Include="Engine\base\FbxModelManager.h" />
-    <ClInclude Include="Engine\base\imguiManager.h" />
-    <ClInclude Include="Engine\base\ObjModelManager.h" />
-    <ClInclude Include="Engine\base\ObjModelMesh.h" />
-    <ClInclude Include="Engine\base\ParticleManager.h" />
-    <ClInclude Include="Engine\base\TextureManager.h" />
+    <ClInclude Include="Engine\base\Manager\FbxModelManager.h" />
+    <ClInclude Include="Engine\base\Manager\imguiManager.h" />
+    <ClInclude Include="Engine\base\Manager\ObjModelManager.h" />
+    <ClInclude Include="Engine\base\Manager\ObjModelMesh.h" />
+    <ClInclude Include="Engine\base\Manager\ParticleManager.h" />
+    <ClInclude Include="Engine\base\Manager\TextureManager.h" />
     <ClInclude Include="Engine\base\Window.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\BaseCollider.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h" />

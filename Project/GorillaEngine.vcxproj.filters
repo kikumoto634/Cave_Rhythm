@@ -253,6 +253,12 @@
     <Filter Include="ヘッダー ファイル\Engine\2D\SpriteBase">
       <UniqueIdentifier>{6c523578-8e90-4b78-aab5-bcb58d8ae77a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\base\Manager">
+      <UniqueIdentifier>{a81bd5a2-4c4e-4e72-b19b-27f0d4a3f92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\base\Manager">
+      <UniqueIdentifier>{38723410-9ad6-4b94-9f8b-36543bc154dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\3D\ViewProjection.cpp">
@@ -265,15 +271,6 @@
       <Filter>ソース ファイル\Engine\base</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\DirectXCommon.cpp">
-      <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\FbxModelManager.cpp">
-      <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\ParticleManager.cpp">
-      <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\TextureManager.cpp">
       <Filter>ソース ファイル\Engine\base</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\Window.cpp">
@@ -300,9 +297,6 @@
     <ClCompile Include="Engine\math\Easing\Easing.cpp">
       <Filter>ソース ファイル\Engine\math\Easing</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\base\ObjModelManager.cpp">
-      <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp">
       <Filter>ソース ファイル\Game\3D\SampleObjObj</Filter>
     </ClCompile>
@@ -312,14 +306,8 @@
     <ClCompile Include="Engine\debugProcess\DebugText.cpp">
       <Filter>ソース ファイル\Engine\debug</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\base\imguiManager.cpp">
-      <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Player\Player.cpp">
       <Filter>ソース ファイル\Game\3D\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\ObjModelMesh.cpp">
-      <Filter>ソース ファイル\Engine\base</Filter>
     </ClCompile>
     <ClCompile Include="Engine\audio\Audio.cpp">
       <Filter>ソース ファイル\Engine\audio</Filter>
@@ -450,6 +438,24 @@
     <ClCompile Include="Engine\2D\SpriteBase\BaseSprites.cpp">
       <Filter>ソース ファイル\Engine\2D\SpriteBase</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\base\Manager\FbxModelManager.cpp">
+      <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\Manager\imguiManager.cpp">
+      <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\Manager\ObjModelManager.cpp">
+      <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\Manager\ObjModelMesh.cpp">
+      <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\Manager\ParticleManager.cpp">
+      <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\Manager\TextureManager.cpp">
+      <Filter>ソース ファイル\Engine\base\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\3D\ViewProjection.h">
@@ -462,15 +468,6 @@
       <Filter>ヘッダー ファイル\Engine\base</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル\Engine\base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\FbxModelManager.h">
-      <Filter>ヘッダー ファイル\Engine\base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\ParticleManager.h">
-      <Filter>ヘッダー ファイル\Engine\base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\base</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\Window.h">
@@ -497,9 +494,6 @@
     <ClInclude Include="Engine\math\Easing\Easing.h">
       <Filter>ヘッダー ファイル\Engine\math\Easing</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\base\ObjModelManager.h">
-      <Filter>ヘッダー ファイル\Engine\base</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h">
       <Filter>ヘッダー ファイル\Game\3D\SampleObjObj</Filter>
     </ClInclude>
@@ -515,9 +509,6 @@
     <ClInclude Include="Engine\debugProcess\DebugText.h">
       <Filter>ヘッダー ファイル\Engine\debug</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\base\imguiManager.h">
-      <Filter>ヘッダー ファイル\Engine\base</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\light\SpotLight.h">
       <Filter>ヘッダー ファイル\Engine\light</Filter>
     </ClInclude>
@@ -526,9 +517,6 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Player\Player.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\ObjModelMesh.h">
-      <Filter>ヘッダー ファイル\Engine\base</Filter>
     </ClInclude>
     <ClInclude Include="Engine\audio\Audio.h">
       <Filter>ヘッダー ファイル\Engine\audio</Filter>
@@ -673,6 +661,24 @@
     </ClInclude>
     <ClInclude Include="Engine\2D\SpriteBase\BaseSprites.h">
       <Filter>ヘッダー ファイル\Engine\2D\SpriteBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\Manager\FbxModelManager.h">
+      <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\Manager\imguiManager.h">
+      <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\Manager\ObjModelManager.h">
+      <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\Manager\ObjModelMesh.h">
+      <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\Manager\ParticleManager.h">
+      <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\Manager\TextureManager.h">
+      <Filter>ヘッダー ファイル\Engine\base\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
