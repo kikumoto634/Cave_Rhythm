@@ -198,7 +198,6 @@ void AreaManager::PlaneUpdate()
 	//地面
 	for(size_t i = 0; i < plane.size(); i++){
 		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->SetPlayerPos(PlayerPos);
 			(*it)->Update(camera);
 		}
@@ -211,10 +210,6 @@ void AreaManager::PlaneBeatEndUpdate()
 
 	for(size_t i = 0; i < plane.size(); i++){
 		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
-			if((*it) == nullptr){
-				IsChange = !IsChange; 
-				continue;
-			}
 			//コンボ数に応じて色変化
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
 				(*it)->PlaneColorChange(IsChange, IsComboColorChange);
@@ -232,7 +227,6 @@ void AreaManager::PlaneDraw()
 {
 	for(size_t i = 0; i < plane.size(); i++){
 		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->Draw();
 		}
 	}
@@ -242,7 +236,6 @@ void AreaManager::PlaneFinalize()
 	delete PlaneModel;
 	for(size_t i = 0; i < plane.size(); i++){
 		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->Finalize();
 		}
 	}
@@ -284,8 +277,6 @@ void AreaManager::WallUpdate()
 	//地面
 	for(size_t i = 0; i < wall.size(); i++){
 		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
-			if ((*it) == nullptr) continue;
-
 			(*it)->SetPlayerPos(PlayerPos);
 			if((*it)->GetIsDIg()){
 				IsDigSound = true;
@@ -304,7 +295,6 @@ void AreaManager::WallDraw()
 {
 	for(size_t i = 0; i < wall.size(); i++){
 		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->Draw();
 		}
 	}
@@ -319,7 +309,6 @@ void AreaManager::WallFinalize()
 
 	for(size_t i = 0; i < wall.size(); i++){
 		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->Finalize();
 		}
 	}
@@ -388,7 +377,6 @@ void AreaManager::IndestructibleWallUpdate()
 	//地面
 	for(size_t i = 0; i < indestructibleWalls.size(); i++){
 		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
-			if ((*it) == nullptr) continue;
 			(*it)->SetPlayerPos(PlayerPos);
 			(*it)->Update(camera);
 		}
@@ -398,7 +386,6 @@ void AreaManager::IndestructibleWallDraw()
 {
 	for(size_t i = 0; i < indestructibleWalls.size(); i++){
 		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->Draw();
 		}
 	}
@@ -413,7 +400,6 @@ void AreaManager::IndestructibleWallFinalize()
 
 	for(size_t i = 0; i < indestructibleWalls.size(); i++){
 		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
-			if((*it) == nullptr) continue;
 			(*it)->Finalize();
 		}
 	}
