@@ -229,17 +229,32 @@
     <Filter Include="ソース ファイル\Engine\Collision\CollisionSystem">
       <UniqueIdentifier>{a30e288a-a45b-4ebf-aa6b-672dfa094c99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3D\Model">
+      <UniqueIdentifier>{bcc31eae-2e1d-4c2b-9878-17d28dd69d42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3D\Model">
+      <UniqueIdentifier>{29e5c11b-653f-4faa-a755-9fe8883925de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3D\ObjectBase">
+      <UniqueIdentifier>{2abc4df4-1e46-4f2e-8416-1229cd4fcbe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\3D\ObjectBase">
+      <UniqueIdentifier>{f63136f0-9ec5-4603-b499-b9a0053a3d36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\2D\Sprite">
+      <UniqueIdentifier>{9b8ddd1c-5ac2-4ae8-96ae-a4ee8df6c87b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\2D\SpriteBase">
+      <UniqueIdentifier>{683116ac-e669-460d-89f2-43908d7f1a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\2D\Sprite">
+      <UniqueIdentifier>{8679791b-9ed8-4c9d-80a9-45c140bc5779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\2D\SpriteBase">
+      <UniqueIdentifier>{6c523578-8e90-4b78-aab5-bcb58d8ae77a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game\3D\BaseFbxObjects.cpp">
-      <Filter>ソース ファイル\Game\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\2D\Sprite.cpp">
-      <Filter>ソース ファイル\Engine\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3D\FbxModelObject.cpp">
-      <Filter>ソース ファイル\Engine\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\ViewProjection.cpp">
       <Filter>ソース ファイル\Engine\3D</Filter>
     </ClCompile>
@@ -273,9 +288,6 @@
     <ClCompile Include="Game\3D\SampleFbxObject\SampleFbxObject.cpp">
       <Filter>ソース ファイル\Game\3D\SampleFbxObj</Filter>
     </ClCompile>
-    <ClCompile Include="Game\2D\BaseSprites.cpp">
-      <Filter>ソース ファイル\Game\2D</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\math\Vector\Vector2.cpp">
       <Filter>ソース ファイル\Engine\math\Vector</Filter>
     </ClCompile>
@@ -288,14 +300,8 @@
     <ClCompile Include="Engine\math\Easing\Easing.cpp">
       <Filter>ソース ファイル\Engine\math\Easing</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\ObjModelObject.cpp">
-      <Filter>ソース ファイル\Engine\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\base\ObjModelManager.cpp">
       <Filter>ソース ファイル\Engine\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3D\BaseObjObject.cpp">
-      <Filter>ソース ファイル\Game\3D</Filter>
     </ClCompile>
     <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp">
       <Filter>ソース ファイル\Game\3D\SampleObjObj</Filter>
@@ -315,9 +321,6 @@
     <ClCompile Include="Engine\base\ObjModelMesh.cpp">
       <Filter>ソース ファイル\Engine\base</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\TouchableObject.cpp">
-      <Filter>ソース ファイル\Engine\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\audio\Audio.cpp">
       <Filter>ソース ファイル\Engine\audio</Filter>
     </ClCompile>
@@ -329,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Player\PlayerWeapon.cpp">
       <Filter>ソース ファイル\Game\3D\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3D\ParticleObject.cpp">
-      <Filter>ソース ファイル\Game\3D</Filter>
     </ClCompile>
     <ClCompile Include="Game\System\GameManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
@@ -426,14 +426,32 @@
     <ClCompile Include="Game\System\SceneManager.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3D\Model\FbxModelObject.cpp">
+      <Filter>ソース ファイル\Engine\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Model\ObjModelObject.cpp">
+      <Filter>ソース ファイル\Engine\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Model\TouchableObject.cpp">
+      <Filter>ソース ファイル\Engine\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\ObjectBase\BaseFbxObjects.cpp">
+      <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\ObjectBase\BaseObjObject.cpp">
+      <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\ObjectBase\ParticleObject.cpp">
+      <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル\Engine\2D\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2D\SpriteBase\BaseSprites.cpp">
+      <Filter>ソース ファイル\Engine\2D\SpriteBase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\2D\Sprite.h">
-      <Filter>ヘッダー ファイル\Engine\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\FbxModelObject.h">
-      <Filter>ヘッダー ファイル\Engine\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\3D\ViewProjection.h">
       <Filter>ヘッダー ファイル\Engine\3D</Filter>
     </ClInclude>
@@ -467,9 +485,6 @@
     <ClInclude Include="Game\3D\SampleFbxObject\SampleFbxObject.h">
       <Filter>ヘッダー ファイル\Game\3D\SampleFbxObj</Filter>
     </ClInclude>
-    <ClInclude Include="Game\2D\BaseSprites.h">
-      <Filter>ヘッダー ファイル\Game\2D</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\math\Vector\Vector2.h">
       <Filter>ヘッダー ファイル\Engine\math\Vector</Filter>
     </ClInclude>
@@ -482,17 +497,8 @@
     <ClInclude Include="Engine\math\Easing\Easing.h">
       <Filter>ヘッダー ファイル\Engine\math\Easing</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\BaseFbxObjects.h">
-      <Filter>ヘッダー ファイル\Game\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\ObjModelObject.h">
-      <Filter>ヘッダー ファイル\Engine\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\base\ObjModelManager.h">
       <Filter>ヘッダー ファイル\Engine\base</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3D\BaseObjObject.h">
-      <Filter>ヘッダー ファイル\Game\3D</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h">
       <Filter>ヘッダー ファイル\Game\3D\SampleObjObj</Filter>
@@ -524,9 +530,6 @@
     <ClInclude Include="Engine\base\ObjModelMesh.h">
       <Filter>ヘッダー ファイル\Engine\base</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3D\TouchableObject.h">
-      <Filter>ヘッダー ファイル\Engine\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\audio\Audio.h">
       <Filter>ヘッダー ファイル\Engine\audio</Filter>
     </ClInclude>
@@ -538,9 +541,6 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Player\PlayerWeapon.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3D\ParticleObject.h">
-      <Filter>ヘッダー ファイル\Game\3D</Filter>
     </ClInclude>
     <ClInclude Include="Game\System\GameManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
@@ -649,6 +649,30 @@
     </ClInclude>
     <ClInclude Include="Game\System\SceneManager.h">
       <Filter>ヘッダー ファイル\Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Model\ObjModelObject.h">
+      <Filter>ヘッダー ファイル\Engine\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Model\FbxModelObject.h">
+      <Filter>ヘッダー ファイル\Engine\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\Model\TouchableObject.h">
+      <Filter>ヘッダー ファイル\Engine\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\ObjectBase\BaseFbxObjects.h">
+      <Filter>ヘッダー ファイル\Engine\3D\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\ObjectBase\BaseObjObject.h">
+      <Filter>ヘッダー ファイル\Engine\3D\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\ObjectBase\ParticleObject.h">
+      <Filter>ヘッダー ファイル\Engine\3D\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\Sprite\Sprite.h">
+      <Filter>ヘッダー ファイル\Engine\2D\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2D\SpriteBase\BaseSprites.h">
+      <Filter>ヘッダー ファイル\Engine\2D\SpriteBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
