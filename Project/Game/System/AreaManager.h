@@ -121,19 +121,19 @@ private:
 
 	//Plane
 	ObjModelManager* PlaneModel = nullptr;
-	std::vector<std::vector<Planes*>> plane;
+	std::vector<std::vector<std::unique_ptr<Planes>>> plane;
 	bool IsComboColorChange = false;
 
 	//Wall
 	ObjModelManager* WallModel = nullptr;
 	ObjModelManager* WallColliderModel = nullptr;
 	bool IsAlive = false;
-	std::vector<std::vector<Walls*>> wall;
+	std::vector<std::vector<std::unique_ptr<Walls>>> wall;
 
 	//破壊不可能壁
 	ObjModelManager* IndestructibleWallModel = nullptr;
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
-	std::vector<std::vector<IndestructibleWall*>> indestructibleWalls;
+	std::vector<std::vector<std::unique_ptr<IndestructibleWall>>> indestructibleWalls;
 
 	//部屋情報
 	/*

@@ -164,7 +164,6 @@ void AreaManager::CSVAreaFinalize()
 void AreaManager::CommonFinalize()
 {
 	DigParticle->Finalize();
-	//delete DigParticle;
 }
 
 #pragma region 地面
@@ -179,7 +178,7 @@ void AreaManager::AreaPlaneInitialize(bool IsLighting)
 			if(mapInfo[i][j] == 0){
 				continue;
 			}
-			Planes* obj = new Planes();
+			unique_ptr<Planes> obj = make_unique<Planes>();
 			obj->Initialize(PlaneModel);
 			pos = {startPos + j, startPos + i};
 			pos *= Block_Size;
@@ -245,8 +244,6 @@ void AreaManager::PlaneFinalize()
 		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
 			if((*it) == nullptr) continue;
 			(*it)->Finalize();
-			delete (*it);
-			(*it) = nullptr;
 		}
 	}
 }
@@ -266,7 +263,7 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 				continue;
 			}
 
-			Walls* obj = new Walls();
+			unique_ptr<Walls> obj = make_unique<Walls>();
 			obj->Initialize(WallModel,WallColliderModel);
 
 			pos = {startPos + j, startPos + i};
@@ -324,8 +321,6 @@ void AreaManager::WallFinalize()
 		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
 			if((*it) == nullptr) continue;
 			(*it)->Finalize();
-			delete (*it);
-			(*it) = nullptr;
 		}
 	}
 }
@@ -340,7 +335,7 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 	for(int i = 0; i < 4; i++){
 		indestructibleWalls.resize(i + 1);
 		for(int j = 0; j < DIV_NUM; j++){
-			IndestructibleWall* obj = new IndestructibleWall();
+			unique_ptr<IndestructibleWall> obj = make_unique<IndestructibleWall>();
 			obj->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 
 			if(i == 0){
@@ -378,7 +373,7 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 				continue;
 			}
 
-			IndestructibleWall* obj = new IndestructibleWall();
+			unique_ptr<IndestructibleWall> obj = make_unique<IndestructibleWall>();
 			obj->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 			pos = {startPos + j ,startPos + i};
 			pos *= Block_Size;
@@ -420,8 +415,6 @@ void AreaManager::IndestructibleWallFinalize()
 		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
 			if((*it) == nullptr) continue;
 			(*it)->Finalize();
-			delete (*it);
-			(*it) = nullptr;
 		}
 	}
 }
