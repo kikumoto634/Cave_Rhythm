@@ -121,19 +121,19 @@ private:
 
 	//Plane
 	ObjModelManager* PlaneModel = nullptr;
-	Planes* plane[DIV_NUM][DIV_NUM] = {nullptr};
+	std::vector<std::vector<Planes*>> plane;
 	bool IsComboColorChange = false;
 
 	//Wall
 	ObjModelManager* WallModel = nullptr;
 	ObjModelManager* WallColliderModel = nullptr;
 	bool IsAlive = false;
-	Walls* Wall[DIV_NUM][DIV_NUM] = {nullptr};
+	std::vector<std::vector<Walls*>> wall;
 
 	//破壊不可能壁
 	ObjModelManager* IndestructibleWallModel = nullptr;
 	ObjModelManager* IndestructibleWallColliderModel = nullptr;
-	IndestructibleWall* IndestructibleWalls[DIV_NUM][DIV_NUM] = {nullptr};
+	std::vector<std::vector<IndestructibleWall*>> indestructibleWalls;
 
 	//部屋情報
 	/*
@@ -159,7 +159,7 @@ private:
 	bool IsDigApp = false;
 	int paricleApperanceFrame = 0;
 	Vector3 DigParticlePos = {};
-	ParticleObject* DigParticle = nullptr;
+	std::unique_ptr<ParticleObject> DigParticle;
 	bool IsDigSound = false;
 
 	//座標

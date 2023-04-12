@@ -59,7 +59,7 @@ void AreaManager::CommonInitialize()
 		IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
 	}
 
-	DigParticle = new ParticleObject();
+	DigParticle = make_unique<ParticleObject>();
 	DigParticle->Initialize();
 }
 
@@ -164,7 +164,7 @@ void AreaManager::CSVAreaFinalize()
 void AreaManager::CommonFinalize()
 {
 	DigParticle->Finalize();
-	delete DigParticle;
+	//delete DigParticle;
 }
 
 #pragma region 地面
@@ -174,29 +174,34 @@ void AreaManager::AreaPlaneInitialize(bool IsLighting)
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
+		plane.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			if(mapInfo[i][j] == 0){
 				continue;
 			}
-			plane[i][j] = new Planes();
-			plane[i][j]->Initialize(PlaneModel);
+			Planes* obj = new Planes();
+			obj->Initialize(PlaneModel);
 			pos = {startPos + j, startPos + i};
 			pos *= Block_Size;
-			plane[i][j]->SetPosition({pos.x,-5,-pos.y});
+			obj->SetPosition({pos.x,-5,-pos.y});
 
-			if(!IsLighting) continue;
-			plane[i][j]->CaveLightOn();
+			if(!IsLighting) {
+				plane[i].push_back(move(obj));
+				continue;
+			}
+			obj->CaveLightOn();
+			plane[i].push_back(move(obj));
 		}
 	}
 }
 void AreaManager::PlaneUpdate()
 {
 	//地面
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) continue;
-			plane[i][j]->SetPlayerPos(PlayerPos);
-			plane[i][j]->Update(camera);
+	for(size_t i = 0; i < plane.size(); i++){
+		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->SetPlayerPos(PlayerPos);
+			(*it)->Update(camera);
 		}
 	}
 }
@@ -205,43 +210,43 @@ void AreaManager::PlaneBeatEndUpdate()
 	IsComboColorChange = !IsComboColorChange;
 	bool IsChange = false;
 
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr){
+	for(size_t i = 0; i < plane.size(); i++){
+		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+			if((*it) == nullptr){
 				IsChange = !IsChange; 
 				continue;
 			}
 			//コンボ数に応じて色変化
 			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
-				plane[i][j]->PlaneColorChange(IsChange, IsComboColorChange);
+				(*it)->PlaneColorChange(IsChange, IsComboColorChange);
 				IsChange = !IsChange;
 			}
 			else if(gameManager->GetComboNum() < 10){
-				plane[i][j]->PlaneColorReset();
+				(*it)->PlaneColorReset();
 			}
 
-			plane[i][j]->IsBeatEndOn();
+			(*it)->IsBeatEndOn();
 		}
 	}
 }
 void AreaManager::PlaneDraw()
 {
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) continue;
-			plane[i][j]->Draw();
+	for(size_t i = 0; i < plane.size(); i++){
+		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->Draw();
 		}
 	}
 }
 void AreaManager::PlaneFinalize()
 {
 	delete PlaneModel;
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(plane[i][j] == nullptr) continue;
-			plane[i][j]->Finalize();
-			delete plane[i][j];
-			plane[i][j] = nullptr;
+	for(size_t i = 0; i < plane.size(); i++){
+		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->Finalize();
+			delete (*it);
+			(*it) = nullptr;
 		}
 	}
 }
@@ -254,39 +259,44 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
+		wall.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			
 			if(mapInfo[i][j] != 3){
 				continue;
 			}
 
-			Wall[i][j] = new Walls();
-			Wall[i][j]->Initialize(WallModel,WallColliderModel);
+			Walls* obj = new Walls();
+			obj->Initialize(WallModel,WallColliderModel);
 
 			pos = {startPos + j, startPos + i};
 			pos*= Block_Size;
-			Wall[i][j]->SetPosition({pos.x,-3,-pos.y});
+			obj->SetPosition({pos.x,-3,-pos.y});
 
-			if(!IsLigthing) continue;
-			Wall[i][j]->CaveLightOn();
+			if(!IsLigthing) {
+				wall[i].push_back(move(obj));
+				continue;
+			}
+			obj->CaveLightOn();
+			wall[i].push_back(move(obj));
 		}
 	}
 }
 void AreaManager::WallUpdate()
 {
 	//地面
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) continue;
+	for(size_t i = 0; i < wall.size(); i++){
+		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
+			if ((*it) == nullptr) continue;
 
-			Wall[i][j]->SetPlayerPos(PlayerPos);
-			if(Wall[i][j]->GetIsDIg()){
+			(*it)->SetPlayerPos(PlayerPos);
+			if((*it)->GetIsDIg()){
 				IsDigSound = true;
 				IsDig =true;
-				DigParticlePos = Wall[i][j]->GetDigPosition();
+				DigParticlePos = (*it)->GetDigPosition();
 				gameManager->AudioPlay(10);
 			}
-			Wall[i][j]->Update(camera);
+			(*it)->Update(camera);
 		}
 	}
 }
@@ -295,10 +305,10 @@ void AreaManager::WallBeatEndUpdate()
 }
 void AreaManager::WallDraw()
 {
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) continue;
-			Wall[i][j]->Draw();
+	for(size_t i = 0; i < wall.size(); i++){
+		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->Draw();
 		}
 	}
 }
@@ -310,12 +320,12 @@ void AreaManager::WallFinalize()
 	delete WallColliderModel;
 	WallColliderModel = nullptr;
 
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(Wall[i][j] == nullptr) continue;
-			Wall[i][j]->Finalize();
-			delete Wall[i][j];
-			Wall[i][j] = nullptr;
+	for(size_t i = 0; i < wall.size(); i++){
+		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->Finalize();
+			delete (*it);
+			(*it) = nullptr;
 		}
 	}
 }
@@ -326,35 +336,34 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 {
 	float startPos = -DIV_NUM_HALF_FLOAT;
 	Vector2 pos = {};
-	for(int i = 0; i <DIV_NUM; i++){
-		//上
-		IndestructibleWalls[0][i] = new IndestructibleWall();
-		IndestructibleWalls[0][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-		pos = {startPos + i, startPos - 1};
-		pos*=Block_Size;
-		IndestructibleWalls[0][i]->SetPosition({pos.x, -3,pos.y});
-		IndestructibleWalls[0][i]->CaveLightOn();
-		//下
-		IndestructibleWalls[1][i] = new IndestructibleWall();
-		IndestructibleWalls[1][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-		pos = {startPos + i, DIV_NUM_HALF_FLOAT+1};
-		pos*=Block_Size;
-		IndestructibleWalls[1][i]->SetPosition({pos.x, -3,pos.y});
-		IndestructibleWalls[1][i]->CaveLightOn();
-		////左
-		IndestructibleWalls[2][i] = new IndestructibleWall();
-		IndestructibleWalls[2][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-		pos = {startPos - 1, startPos + i};
-		pos*=Block_Size;
-		IndestructibleWalls[2][i]->SetPosition({pos.x, -3,pos.y});
-		IndestructibleWalls[2][i]->CaveLightOn();
-		////右
-		IndestructibleWalls[3][i] = new IndestructibleWall();
-		IndestructibleWalls[3][i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-		pos = {DIV_NUM_HALF_FLOAT+1, startPos + i};
-		pos*=Block_Size;
-		IndestructibleWalls[3][i]->SetPosition({pos.x, -3,pos.y});
-		IndestructibleWalls[3][i]->CaveLightOn();
+
+	for(int i = 0; i < 4; i++){
+		indestructibleWalls.resize(i + 1);
+		for(int j = 0; j < DIV_NUM; j++){
+			IndestructibleWall* obj = new IndestructibleWall();
+			obj->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
+
+			if(i == 0){
+				pos = {startPos + j, startPos - 1};
+				pos*=Block_Size;
+			}
+			else if(i == 1){
+				pos = {startPos + j, DIV_NUM_HALF_FLOAT+1};
+				pos*=Block_Size;
+			}
+			else if(i == 2){
+				pos = {startPos - 1, startPos + j};
+				pos*=Block_Size;
+			}
+			else if(i == 3){
+				pos = {DIV_NUM_HALF_FLOAT+1, startPos + j};
+				pos*=Block_Size;
+			}
+			obj->SetPosition({pos.x, -3,pos.y});
+			obj->CaveLightOn();
+
+			indestructibleWalls[i].push_back(move(obj));
+		}
 	}
 }
 void AreaManager::CSVAreaIndestructibleWallInitialize()
@@ -363,36 +372,39 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
+		indestructibleWalls.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			if(mapInfo[i][j] != 2){
 				continue;
 			}
 
-			IndestructibleWalls[i][j] = new IndestructibleWall();
-			IndestructibleWalls[i][j]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
+			IndestructibleWall* obj = new IndestructibleWall();
+			obj->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
 			pos = {startPos + j ,startPos + i};
 			pos *= Block_Size;
-			IndestructibleWalls[i][j]->SetPosition({pos.x,-3,-pos.y});
+			obj->SetPosition({pos.x,-3,-pos.y});
+
+			indestructibleWalls[i].push_back(move(obj));
 		}
 	}
 }
 void AreaManager::IndestructibleWallUpdate()
 {
 	//地面
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(IndestructibleWalls[i][j] == nullptr) continue;
-			IndestructibleWalls[i][j]->SetPlayerPos(PlayerPos);
-			IndestructibleWalls[i][j]->Update(camera);
+	for(size_t i = 0; i < indestructibleWalls.size(); i++){
+		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
+			if ((*it) == nullptr) continue;
+			(*it)->SetPlayerPos(PlayerPos);
+			(*it)->Update(camera);
 		}
 	}
 }
 void AreaManager::IndestructibleWallDraw()
 {
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(IndestructibleWalls[i][j] == nullptr) continue;
-			IndestructibleWalls[i][j]->Draw();
+	for(size_t i = 0; i < indestructibleWalls.size(); i++){
+		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->Draw();
 		}
 	}
 }
@@ -404,12 +416,12 @@ void AreaManager::IndestructibleWallFinalize()
 	delete IndestructibleWallColliderModel;
 	IndestructibleWallColliderModel = nullptr;
 
-	for(int i = 0; i < DIV_NUM; i++){
-		for(int j = 0; j < DIV_NUM; j++){
-			if(IndestructibleWalls[i][j] == nullptr) continue;
-			IndestructibleWalls[i][j]->Finalize();
-			delete IndestructibleWalls[i][j];
-			IndestructibleWalls[i][j] = nullptr;
+	for(size_t i = 0; i < indestructibleWalls.size(); i++){
+		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
+			if((*it) == nullptr) continue;
+			(*it)->Finalize();
+			delete (*it);
+			(*it) = nullptr;
 		}
 	}
 }
