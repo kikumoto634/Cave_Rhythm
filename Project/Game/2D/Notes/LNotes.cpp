@@ -1,4 +1,4 @@
-﻿#include "LNotes.h"
+#include "LNotes.h"
 #include "Easing.h"
 
 void LNotes::Initialize(UINT textureNumber)
@@ -15,7 +15,7 @@ void LNotes::Update(float goalTime)
 	if(!IsMoveStop){
 
 		easingSp = goalTime*3;
-		easingTime = (easingSp*60.f);
+		easingTime = (easingSp*55.f);
 
 		//戻し
 		if(GetPosition().x <= Delete_Pos.x){

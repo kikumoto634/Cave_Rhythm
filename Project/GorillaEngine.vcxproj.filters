@@ -693,5 +693,14 @@
     <None Include="Resources\shader\Obj.hlsli">
       <Filter>リソース ファイル\Obj</Filter>
     </None>
+    <None Include="Resources\CSVData\Boss1.csv">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="Resources\CSVData\Home.csv">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="Resources\CSVData\Tutorial.csv">
+      <Filter>リソース ファイル</Filter>
+    </None>
   </ItemGroup>
 </Project>

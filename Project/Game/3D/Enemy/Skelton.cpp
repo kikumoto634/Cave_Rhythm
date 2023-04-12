@@ -74,7 +74,7 @@ void Skelton::Update(Camera *camera, Vector3 playerPos)
 			IsBeatEnd = false;
 
 			if(popCount >= POP_COUNT){
-				SetPosition(PopParticlePos);
+				SetPosition({PopParticlePos.x,-3.5f,PopParticlePos.z});
 				PopParticlePos = {0,50,0};
 				popCount = 0;
 				IsPop = false;
@@ -198,11 +198,12 @@ void Skelton::OnCollision(const CollisionInfo &info)
 		DeadParticlePos = info.objObject->GetPosition();
 	}
 	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+		IsDead = true;
+
 		SetPosition(NotAlivePos);
 		world.UpdateMatrix();
 		collider->Update();
 		sphereCollider->Update();
-		IsDead = true;
 	}
 }
 
@@ -394,36 +395,38 @@ void Skelton::Movement()
 
 void Skelton::PopParticleApp()
 {
+	//座標
 	Vector3 pos{};
-	//自身の座標を軸に[-1, 1]ランダム
 	const Vector3 rnd_pos = PopParticlePos;
 	const float range = 1.5f;
-	float randomRange = range - range/2.0f;
-	pos.y = -0.5f;
+	//float randomPos = (float)rand()/RAND_MAX * range - range/2.0f;
 
+	//速度
 	Vector3 vel{};
 	const float rnd_vel = 0.025f;
-	float randomVel = rnd_vel - rnd_vel / 2.0f;
-	vel.y = 0.05f;
+	float randomVel = (float)rand()/RAND_MAX*rnd_vel - rnd_vel/2.0f;
 
+	//加速度
 	Vector3 acc{};
 	const float rnd_acc = 0.001f;
+	float randomAcc = -(float)rand()/RAND_MAX*rnd_acc;
 
 	for (int i = 0; i < 10; i++) {
 
-		pos.x = (float)rand() / RAND_MAX * randomRange;
-		pos.z = (float)rand() / RAND_MAX * randomRange;
+		//自身の座標を軸に[-1, 1]ランダム
+		pos.x = (float)rand()/RAND_MAX * range - range/2.0f;
+		pos.y = -0.5f;
+		pos.z = (float)rand()/RAND_MAX * range - range/2.0f;
 		pos += rnd_pos;
 
-		vel.x = (float)rand() / RAND_MAX * randomVel;
-		vel.z = (float)rand() / RAND_MAX * randomVel;
+		vel.x = randomVel;
+		vel.y = 0.05f;
+		vel.z = randomVel;
 
-		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+		acc.y = randomAcc;
 
 		PopParticle->ParticleSet(40,pos,vel,acc,0.4f,0.0f,1,{0.6f,0.3f,0.2f,0.4f});
 		PopParticle->ParticleAppearance();
-
-		pos = {0,0,0};
 	}
 }
 
@@ -431,17 +434,15 @@ void Skelton::DeadParticleApp()
 {
 	if(!IsDeadOnceParticle) return;
 
-	Vector3 vel{};
-	const float rnd_vel = 0.08f;
-	float randomVel = rnd_vel - rnd_vel / 2.0f;
-	vel.y = 0.06f;
-
-	Vector3 acc{};
-	acc.y = -0.005f;
-
 	for (int i = 0; i < 10; i++) {
-		vel.x = (float)rand() / RAND_MAX * randomVel;
-		vel.z = (float)rand() / RAND_MAX * randomVel;
+		const float rnd_vel = 0.08f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.06f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		acc.y = -0.005f;
 
 		DeadParticle->ParticleSet(AppearanceResetFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
 		DeadParticle->ParticleAppearance();

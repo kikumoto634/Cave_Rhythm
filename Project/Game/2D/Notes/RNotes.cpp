@@ -1,4 +1,4 @@
-﻿#include "RNotes.h"
+#include "RNotes.h"
 #include "Easing.h"
 
 void RNotes::Initialize(UINT textureNumber)
@@ -15,7 +15,7 @@ void RNotes::Update(float goalTime)
 	if(!IsMoveStop){
 
 		easingSp = goalTime*3;
-		easingTime = (easingSp*60.f);
+		easingTime = (easingSp*55.f);
 
 		//戻し
 		if(GetPosition().x >= Delete_Pos.x){

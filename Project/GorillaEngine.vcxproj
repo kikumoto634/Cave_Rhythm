@@ -313,6 +313,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CSVData\Boss1.csv" />
+    <None Include="Resources\CSVData\Home.csv" />
+    <None Include="Resources\CSVData\Tutorial.csv" />
     <None Include="Resources\shader\Obj.hlsli" />
     <None Include="Resources\shader\FBX.hlsli" />
     <None Include="Resources\shader\Particle.hlsli" />
