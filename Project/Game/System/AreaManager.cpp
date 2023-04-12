@@ -378,6 +378,9 @@ void AreaManager::IndestructibleWallUpdate()
 	for(size_t i = 0; i < indestructibleWalls.size(); i++){
 		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
 			(*it)->SetPlayerPos(PlayerPos);
+			if((*it)->GetIsReflect()){
+				gameManager->AudioPlay(13,0.5f);
+			}
 			(*it)->Update(camera);
 		}
 	}

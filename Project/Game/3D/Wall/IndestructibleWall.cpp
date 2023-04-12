@@ -1,4 +1,4 @@
-﻿#include "IndestructibleWall.h"
+#include "IndestructibleWall.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
@@ -20,6 +20,7 @@ void IndestructibleWall::Update(Camera *camera)
 {
 	this->camera = camera;
 
+	IsReflect = false;
 	if(!IsAlive) return;
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
@@ -77,6 +78,12 @@ void IndestructibleWall::OnCollision(const CollisionInfo &info)
 {
 	if(!IsAlive) return;
 	if(!IsHide) return;
+
+	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
+
+		if(IsReflect)return;
+		IsReflect = true;
+	}
 }
 
 void IndestructibleWall::ColliderRemove()

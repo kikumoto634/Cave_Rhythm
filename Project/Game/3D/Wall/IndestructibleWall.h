@@ -46,6 +46,7 @@ public:
 
 	//Getter
 	inline bool GetIsAlive()	{return IsAlive;}
+	inline bool GetIsReflect()	{return IsReflect;}
 
 	//Setter
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
@@ -62,6 +63,9 @@ private:
 	//メッシュコライダー用モデル
 	ObjModelManager* colliderModel = nullptr;
 	bool IsCollision = false;
+
+	//反射音
+	bool IsReflect = false;
 
 	//ライティング
 	bool IsCaveLight = false;
