@@ -73,8 +73,8 @@ private:
 	bool IsScaleEasing = false;
 
 	//パーティクル
-	ParticleObject* PopParticle = nullptr;
-	ParticleObject* DeadParticle = nullptr;
+	std::unique_ptr<ParticleObject> PopParticle;
+	std::unique_ptr<ParticleObject> DeadParticle;
 
 	//ライティング
 	bool IsCaveLight = false;

@@ -33,9 +33,9 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 	sphereCollider->Update();
 
 	//パーティクル
-	DeadParticle = new ParticleObject();
+	DeadParticle = make_unique<ParticleObject>();
 	DeadParticle->Initialize();
-	PopParticle = new ParticleObject();
+	PopParticle = make_unique<ParticleObject>();
 	PopParticle->Initialize();
 }
 
@@ -172,9 +172,7 @@ void Skelton::ParticleDraw()
 void Skelton::Finalize()
 {
 	DeadParticle->Finalize();
-	delete DeadParticle;
 	PopParticle->Finalize();
-	delete PopParticle;
 
 	BaseObjObject::Finalize();
 }

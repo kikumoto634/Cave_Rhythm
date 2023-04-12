@@ -7,6 +7,8 @@
 
 #include "Easing.h"
 
+using namespace std;
+
 BlueSlime::~BlueSlime()
 {
 }
@@ -21,9 +23,9 @@ void BlueSlime::Initialize(std::string filePath, bool IsSmoothing)
 	world.UpdateMatrix();
 
 	//パーティクル
-	DeadParticle = new ParticleObject();
+	DeadParticle = make_unique<ParticleObject>();
 	DeadParticle->Initialize();
-	PopParticle = new ParticleObject();
+	PopParticle = make_unique<ParticleObject>();
 	PopParticle->Initialize();
 }
 
@@ -150,9 +152,7 @@ void BlueSlime::ParticleDraw()
 void BlueSlime::Finalize()
 {
 	DeadParticle->Finalize();
-	delete DeadParticle;
 	PopParticle->Finalize();
-	delete PopParticle;
 
 	BaseObjObject::Finalize();
 }
