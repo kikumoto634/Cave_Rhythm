@@ -126,7 +126,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\ObjectMatrix;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess\DebugText;$(ProjectDir)Engine\DebugProcess\ImGui;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\ObjectMatrix;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess\DebugText;$(ProjectDir)Engine\DebugProcess\ImGui;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision\Mesh;$(ProjectDir)Engine\Collision\Ray;$(ProjectDir)Engine\Collision\Sphere;$(ProjectDir)Engine\Collision\Base;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\ObjectMatrix;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess\DebugText;$(ProjectDir)Engine\DebugProcess\ImGui;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\ObjectMatrix;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess\DebugText;$(ProjectDir)Engine\DebugProcess\ImGui;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision\Mesh;$(ProjectDir)Engine\Collision\Ray;$(ProjectDir)Engine\Collision\Sphere;$(ProjectDir)Engine\Collision\Base;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,8 +183,8 @@
     <ClCompile Include="Engine\Collision\CollisionSystem\Collision.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\CollisionManager.cpp" />
     <ClCompile Include="Engine\Collision\CollisionSystem\CollisionPrimitive.cpp" />
-    <ClCompile Include="Engine\Collision\MeshCollider.cpp" />
-    <ClCompile Include="Engine\Collision\SphereCollider.cpp" />
+    <ClCompile Include="Engine\Collision\Mesh\MeshCollider.cpp" />
+    <ClCompile Include="Engine\Collision\Sphere\SphereCollider.cpp" />
     <ClCompile Include="Engine\DebugProcess\DebugText\DebugText.cpp" />
     <ClCompile Include="Engine\DebugProcess\ImGui\imguiManager.cpp" />
     <ClCompile Include="Engine\input\Input.cpp" />
@@ -246,16 +246,16 @@
     <ClInclude Include="Engine\base\Manager\TextureManager.h" />
     <ClInclude Include="Engine\base\Window.h" />
     <ClInclude Include="Engine\camera\Camera.h" />
-    <ClInclude Include="Engine\Collision\BaseCollider.h" />
+    <ClInclude Include="Engine\Collision\BaseCollider\BaseCollider.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionInfo.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionManager.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionPrimitive.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionTypes.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\QueryCallback.h" />
-    <ClInclude Include="Engine\Collision\MeshCollider.h" />
-    <ClInclude Include="Engine\Collision\RaycastHit.h" />
-    <ClInclude Include="Engine\Collision\SphereCollider.h" />
+    <ClInclude Include="Engine\Collision\Mesh\MeshCollider.h" />
+    <ClInclude Include="Engine\Collision\Ray\RaycastHit.h" />
+    <ClInclude Include="Engine\Collision\Sphere\SphereCollider.h" />
     <ClInclude Include="Engine\DebugProcess\DebugText\DebugText.h" />
     <ClInclude Include="Engine\DebugProcess\ImGui\imguiManager.h" />
     <ClInclude Include="Engine\input\Input.h" />

@@ -295,6 +295,24 @@
     <Filter Include="ヘッダー ファイル\Engine\DebugProcess\ImGui">
       <UniqueIdentifier>{096eb9f9-f762-487f-ab86-b95fba3af7be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Collision\Mesh">
+      <UniqueIdentifier>{ef31b5b0-a362-46f1-88db-85805dcc2f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Collision\Sphere">
+      <UniqueIdentifier>{56873296-a6a6-4f1c-b11e-014f97e84fbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Collision\Base">
+      <UniqueIdentifier>{e6f2d9d1-9998-4044-98a2-989a277ed281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Collision\Mesh">
+      <UniqueIdentifier>{28317ac5-6cca-4fb8-8934-e4ffec3ab856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Collision\Ray">
+      <UniqueIdentifier>{ce0f5849-53c7-4d84-b297-59658bd9c772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Collision\Sphere">
+      <UniqueIdentifier>{5a873ec9-bd77-493a-9a50-c8880c28d9e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\base\Application.cpp">
@@ -411,12 +429,6 @@
     <ClCompile Include="Game\scene\TutorialScene.cpp">
       <Filter>ソース ファイル\Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Collision\MeshCollider.cpp">
-      <Filter>ソース ファイル\Engine\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Collision\SphereCollider.cpp">
-      <Filter>ソース ファイル\Engine\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Collision\CollisionSystem\Collision.cpp">
       <Filter>ソース ファイル\Engine\Collision\CollisionSystem</Filter>
     </ClCompile>
@@ -488,6 +500,12 @@
     </ClCompile>
     <ClCompile Include="Engine\DebugProcess\DebugText\DebugText.cpp">
       <Filter>ソース ファイル\Engine\DebugProcess\DebugText</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collision\Sphere\SphereCollider.cpp">
+      <Filter>ソース ファイル\Engine\Collision\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collision\Mesh\MeshCollider.cpp">
+      <Filter>ソース ファイル\Engine\Collision\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -605,15 +623,6 @@
     <ClInclude Include="Game\scene\TutorialScene.h">
       <Filter>ヘッダー ファイル\Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collision\MeshCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision\RaycastHit.h">
-      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision\SphereCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h">
       <Filter>ヘッダー ファイル\Engine\Collision\CollisionSystem</Filter>
     </ClInclude>
@@ -674,9 +683,6 @@
     <ClInclude Include="Engine\base\Manager\TextureManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collision\BaseCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\light\circleShadow\CircleShadow.h">
       <Filter>ヘッダー ファイル\Engine\Light\CircleShadow</Filter>
     </ClInclude>
@@ -709,6 +715,18 @@
     </ClInclude>
     <ClInclude Include="Engine\DebugProcess\DebugText\DebugText.h">
       <Filter>ヘッダー ファイル\Engine\DebugProcess\DebugText</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\Sphere\SphereCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\Ray\RaycastHit.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\Ray</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\Mesh\MeshCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collision\BaseCollider\BaseCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Collision\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
