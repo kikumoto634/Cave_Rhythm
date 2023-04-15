@@ -313,17 +313,26 @@
     <Filter Include="ヘッダー ファイル\Engine\Collision\Sphere">
       <UniqueIdentifier>{5a873ec9-bd77-493a-9a50-c8880c28d9e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\App">
+      <UniqueIdentifier>{0c93ae6a-acc1-42aa-9847-cb6c0723ea7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\DirectXCommon">
+      <UniqueIdentifier>{9d7b7b95-6595-43e9-81e6-a414fff3faad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\Window">
+      <UniqueIdentifier>{aab7c5f4-2ede-46d6-b678-73eaae37f100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\App">
+      <UniqueIdentifier>{5e4a4a4a-e5fc-4eac-8fc4-d650ce9ba30c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\DirectXCommon">
+      <UniqueIdentifier>{05fe4f88-ff93-44c7-b229-ae7185604107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\Window">
+      <UniqueIdentifier>{84dbef71-1013-442c-9f9b-17d49e79eb99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\base\Application.cpp">
-      <Filter>ソース ファイル\Engine\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\DirectXCommon.cpp">
-      <Filter>ソース ファイル\Engine\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\Window.cpp">
-      <Filter>ソース ファイル\Engine\Base</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\input\Input.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
@@ -507,17 +516,17 @@
     <ClCompile Include="Engine\Collision\Mesh\MeshCollider.cpp">
       <Filter>ソース ファイル\Engine\Collision\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Base\App\Application.cpp">
+      <Filter>ソース ファイル\Engine\Base\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\DirectXCommon\DirectXCommon.cpp">
+      <Filter>ソース ファイル\Engine\Base\DirectXCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Window\Window.cpp">
+      <Filter>ソース ファイル\Engine\Base\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\base\Application.h">
-      <Filter>ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Window.h">
-      <Filter>ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\input\Input.h">
       <Filter>ヘッダー ファイル\Engine\Input</Filter>
     </ClInclude>
@@ -727,6 +736,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Collision\BaseCollider\BaseCollider.h">
       <Filter>ヘッダー ファイル\Engine\Collision\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\App\Application.h">
+      <Filter>ヘッダー ファイル\Engine\Base\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\DirectXCommon\DirectXCommon.h">
+      <Filter>ヘッダー ファイル\Engine\Base\DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Window\Window.h">
+      <Filter>ヘッダー ファイル\Engine\Base\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
