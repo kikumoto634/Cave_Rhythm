@@ -331,6 +331,30 @@
     <Filter Include="ヘッダー ファイル\Engine\Base\Window">
       <UniqueIdentifier>{84dbef71-1013-442c-9f9b-17d49e79eb99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\Manager\Obj">
+      <UniqueIdentifier>{ded44352-de68-4d64-8b14-714be0cb3085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\Manager\Fbx">
+      <UniqueIdentifier>{0b97cbd7-bb0f-4738-8ad0-ed8a7f987d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\Manager\Particle">
+      <UniqueIdentifier>{e09b3eb2-ffd6-4b9b-8821-db01b2b1cba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Base\Manager\Texture">
+      <UniqueIdentifier>{f50cbf7a-ac17-47f2-bb3d-a937be04a9ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\Manager\Obj">
+      <UniqueIdentifier>{1e26e8eb-9ac4-4f07-b5c6-a1fbbb418eb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\Manager\Fbx">
+      <UniqueIdentifier>{86a0dc46-7296-43a7-af82-debbb328db4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\Manager\Texture">
+      <UniqueIdentifier>{befe5983-aba7-4822-95a3-c75bb59547f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Base\Manager\Particle">
+      <UniqueIdentifier>{5978c735-a316-434d-92bb-87725a011249}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -474,21 +498,6 @@
     <ClCompile Include="Engine\2D\SpriteBase\BaseSprites.cpp">
       <Filter>ソース ファイル\Engine\2D\SpriteBase</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\base\Manager\FbxModelManager.cpp">
-      <Filter>ソース ファイル\Engine\Base\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\Manager\ObjModelManager.cpp">
-      <Filter>ソース ファイル\Engine\Base\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\Manager\ObjModelMesh.cpp">
-      <Filter>ソース ファイル\Engine\Base\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\Manager\ParticleManager.cpp">
-      <Filter>ソース ファイル\Engine\Base\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\Manager\TextureManager.cpp">
-      <Filter>ソース ファイル\Engine\Base\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\camera\Camera.cpp">
       <Filter>ソース ファイル\Engine\Camera</Filter>
     </ClCompile>
@@ -524,6 +533,21 @@
     </ClCompile>
     <ClCompile Include="Engine\Base\Window\Window.cpp">
       <Filter>ソース ファイル\Engine\Base\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Manager\Texture\TextureManager.cpp">
+      <Filter>ソース ファイル\Engine\Base\Manager\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Manager\Particle\ParticleManager.cpp">
+      <Filter>ソース ファイル\Engine\Base\Manager\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Manager\Fbx\FbxModelManager.cpp">
+      <Filter>ソース ファイル\Engine\Base\Manager\Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Manager\Obj\ObjModelManager.cpp">
+      <Filter>ソース ファイル\Engine\Base\Manager\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Base\Manager\Obj\ObjModelMesh.cpp">
+      <Filter>ソース ファイル\Engine\Base\Manager\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -677,21 +701,6 @@
     <ClInclude Include="Engine\2D\SpriteBase\BaseSprites.h">
       <Filter>ヘッダー ファイル\Engine\2D\SpriteBase</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\base\Manager\FbxModelManager.h">
-      <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Manager\ObjModelManager.h">
-      <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Manager\ObjModelMesh.h">
-      <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Manager\ParticleManager.h">
-      <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Manager\TextureManager.h">
-      <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\light\circleShadow\CircleShadow.h">
       <Filter>ヘッダー ファイル\Engine\Light\CircleShadow</Filter>
     </ClInclude>
@@ -745,6 +754,21 @@
     </ClInclude>
     <ClInclude Include="Engine\Base\Window\Window.h">
       <Filter>ヘッダー ファイル\Engine\Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Manager\Texture\TextureManager.h">
+      <Filter>ヘッダー ファイル\Engine\Base\Manager\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Manager\Particle\ParticleManager.h">
+      <Filter>ヘッダー ファイル\Engine\Base\Manager\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Manager\Fbx\FbxModelManager.h">
+      <Filter>ヘッダー ファイル\Engine\Base\Manager\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Manager\Obj\ObjModelManager.h">
+      <Filter>ヘッダー ファイル\Engine\Base\Manager\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Base\Manager\Obj\ObjModelMesh.h">
+      <Filter>ヘッダー ファイル\Engine\Base\Manager\Obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
