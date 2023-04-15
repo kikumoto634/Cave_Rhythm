@@ -277,14 +277,14 @@
     <Filter Include="ヘッダー ファイル\Game\Scene\Base">
       <UniqueIdentifier>{c451715e-44b7-4d1f-bd91-a4924a872a7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\ObjectMatrix">
+      <UniqueIdentifier>{16976cca-b7ee-4865-ba40-64cbcf06c3cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\ObjectMatrix">
+      <UniqueIdentifier>{fc9f5eec-fa7f-4ecf-93c4-90dbade95968}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\3D\ViewProjection.cpp">
-      <Filter>ソース ファイル\Engine\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3D\WorldTransform.cpp">
-      <Filter>ソース ファイル\Engine\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\base\Application.cpp">
       <Filter>ソース ファイル\Engine\Base</Filter>
     </ClCompile>
@@ -471,14 +471,14 @@
     <ClCompile Include="Engine\scene\system\SceneManager.cpp">
       <Filter>ソース ファイル\Engine\Scene\System</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ObjectMatrix\ViewProjection.cpp">
+      <Filter>ソース ファイル\Engine\ObjectMatrix</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ObjectMatrix\WorldTransform.cpp">
+      <Filter>ソース ファイル\Engine\ObjectMatrix</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\3D\ViewProjection.h">
-      <Filter>ヘッダー ファイル\Engine\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\WorldTransform.h">
-      <Filter>ヘッダー ファイル\Engine\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\base\Application.h">
       <Filter>ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
@@ -691,6 +691,12 @@
     </ClInclude>
     <ClInclude Include="Engine\scene\system\SceneManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ObjectMatrix\ViewProjection.h">
+      <Filter>ヘッダー ファイル\Engine\ObjectMatrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ObjectMatrix\WorldTransform.h">
+      <Filter>ヘッダー ファイル\Engine\ObjectMatrix</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

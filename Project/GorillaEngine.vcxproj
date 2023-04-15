@@ -126,7 +126,7 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\ObjectMatrix;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Engine\2D\Sprite;$(ProjectDir)Engine\2D\SpriteBase;$(ProjectDir)Engine\3D\ObjectBase;$(ProjectDir)Engine\3D\Model;$(ProjectDir)Engine\ObjectMatrix;$(ProjectDir)Engine\Audio;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Base\Manager;$(ProjectDir)Engine\DebugProcess;$(ProjectDir)Engine\Input;$(ProjectDir)Engine\Loader;$(ProjectDir)Engine\Math\Vector;$(ProjectDir)Engine\Math\Easing;$(ProjectDir)Engine\Collision\CollisionSystem;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Light\CircleShadow;$(ProjectDir)Engine\Light\Directional;$(ProjectDir)Engine\Light\Spot;$(ProjectDir)Engine\Light\Point;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Scene\System;$(ProjectDir)Engine\Scene\Base;$(ProjectDir)Game\2D;$(ProjectDir)Game\2D\JudgeLocation;$(ProjectDir)Game\2D\Notes;$(ProjectDir)Game\2D\SampleSprite;$(ProjectDir)Game\3D\Coins;$(ProjectDir)Game\3D\Enemy;$(ProjectDir)Game\3D\Exit;$(ProjectDir)Game\3D\Plane;$(ProjectDir)Game\3D\Player;$(ProjectDir)Game\3D\SampleFbxObject;$(ProjectDir)Game\3D\SampleObjObject;$(ProjectDir)Game\3D\Wall;$(ProjectDir)Game\Scene;$(ProjectDir)Game\Struct;$(ProjectDir)Game\System;$(ProjectDir)Game\Scene\Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,8 +170,6 @@
     <ClCompile Include="Engine\3D\ObjectBase\BaseFbxObjects.cpp" />
     <ClCompile Include="Engine\3D\ObjectBase\BaseObjObject.cpp" />
     <ClCompile Include="Engine\3D\ObjectBase\ParticleObject.cpp" />
-    <ClCompile Include="Engine\3D\ViewProjection.cpp" />
-    <ClCompile Include="Engine\3D\WorldTransform.cpp" />
     <ClCompile Include="Engine\audio\Audio.cpp" />
     <ClCompile Include="Engine\base\Application.cpp" />
     <ClCompile Include="Engine\base\DirectXCommon.cpp" />
@@ -196,6 +194,8 @@
     <ClCompile Include="Engine\math\Vector\Vector2.cpp" />
     <ClCompile Include="Engine\math\Vector\Vector3.cpp" />
     <ClCompile Include="Engine\math\Vector\Vector4.cpp" />
+    <ClCompile Include="Engine\ObjectMatrix\ViewProjection.cpp" />
+    <ClCompile Include="Engine\ObjectMatrix\WorldTransform.cpp" />
     <ClCompile Include="Engine\scene\base\BaseScene.cpp" />
     <ClCompile Include="Engine\scene\system\SceneManager.cpp" />
     <ClCompile Include="Game\2D\Combo.cpp" />
@@ -236,8 +236,6 @@
     <ClInclude Include="Engine\3D\ObjectBase\BaseFbxObjects.h" />
     <ClInclude Include="Engine\3D\ObjectBase\BaseObjObject.h" />
     <ClInclude Include="Engine\3D\ObjectBase\ParticleObject.h" />
-    <ClInclude Include="Engine\3D\ViewProjection.h" />
-    <ClInclude Include="Engine\3D\WorldTransform.h" />
     <ClInclude Include="Engine\audio\Audio.h" />
     <ClInclude Include="Engine\base\Application.h" />
     <ClInclude Include="Engine\base\DirectXCommon.h" />
@@ -271,6 +269,8 @@
     <ClInclude Include="Engine\math\Vector\Vector2.h" />
     <ClInclude Include="Engine\math\Vector\Vector3.h" />
     <ClInclude Include="Engine\math\Vector\Vector4.h" />
+    <ClInclude Include="Engine\ObjectMatrix\ViewProjection.h" />
+    <ClInclude Include="Engine\ObjectMatrix\WorldTransform.h" />
     <ClInclude Include="Engine\scene\base\BaseScene.h" />
     <ClInclude Include="Engine\scene\system\SceneManager.h" />
     <ClInclude Include="Game\2D\Combo.h" />
