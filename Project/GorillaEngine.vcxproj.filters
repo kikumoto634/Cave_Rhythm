@@ -283,6 +283,18 @@
     <Filter Include="ヘッダー ファイル\Engine\ObjectMatrix">
       <UniqueIdentifier>{fc9f5eec-fa7f-4ecf-93c4-90dbade95968}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\DebugProcess\DebugText">
+      <UniqueIdentifier>{0094dfb1-04b8-4ccc-9467-fcac2a2a3150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\DebugProcess\DebugText">
+      <UniqueIdentifier>{b073c5ac-e110-489f-b571-7c2b444f3da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\DebugProcess\ImGui">
+      <UniqueIdentifier>{c029338d-0a58-4e03-ab9f-fba9352f6325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\DebugProcess\ImGui">
+      <UniqueIdentifier>{096eb9f9-f762-487f-ab86-b95fba3af7be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\base\Application.cpp">
@@ -320,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="Engine\light\LightGroup.cpp">
       <Filter>ソース ファイル\Engine\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\debugProcess\DebugText.cpp">
-      <Filter>ソース ファイル\Engine\DebugProcess</Filter>
     </ClCompile>
     <ClCompile Include="Game\3D\Player\Player.cpp">
       <Filter>ソース ファイル\Game\3D\Player</Filter>
@@ -447,9 +456,6 @@
     <ClCompile Include="Engine\base\Manager\FbxModelManager.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\base\Manager\imguiManager.cpp">
-      <Filter>ソース ファイル\Engine\Base\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\base\Manager\ObjModelManager.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager</Filter>
     </ClCompile>
@@ -476,6 +482,12 @@
     </ClCompile>
     <ClCompile Include="Engine\ObjectMatrix\WorldTransform.cpp">
       <Filter>ソース ファイル\Engine\ObjectMatrix</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\DebugProcess\ImGui\imguiManager.cpp">
+      <Filter>ソース ファイル\Engine\DebugProcess\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\DebugProcess\DebugText\DebugText.cpp">
+      <Filter>ソース ファイル\Engine\DebugProcess\DebugText</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -514,9 +526,6 @@
     </ClInclude>
     <ClInclude Include="Engine\light\LightGroup.h">
       <Filter>ヘッダー ファイル\Engine\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\debugProcess\DebugText.h">
-      <Filter>ヘッダー ファイル\Engine\DebugProcess</Filter>
     </ClInclude>
     <ClInclude Include="Game\3D\Player\Player.h">
       <Filter>ヘッダー ファイル\Game\3D\Player</Filter>
@@ -653,9 +662,6 @@
     <ClInclude Include="Engine\base\Manager\FbxModelManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\base\Manager\imguiManager.h">
-      <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\base\Manager\ObjModelManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager</Filter>
     </ClInclude>
@@ -697,6 +703,12 @@
     </ClInclude>
     <ClInclude Include="Engine\ObjectMatrix\WorldTransform.h">
       <Filter>ヘッダー ファイル\Engine\ObjectMatrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugProcess\ImGui\imguiManager.h">
+      <Filter>ヘッダー ファイル\Engine\DebugProcess\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugProcess\DebugText\DebugText.h">
+      <Filter>ヘッダー ファイル\Engine\DebugProcess\DebugText</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
