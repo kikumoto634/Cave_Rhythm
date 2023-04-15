@@ -540,13 +540,13 @@
     <ClCompile Include="Engine\Base\Manager\Particle\ParticleManager.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\Manager\Fbx\FbxModelManager.cpp">
+    <ClCompile Include="Engine\Base\Manager\.Fbx\FbxModelManager.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager\Fbx</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\Manager\Obj\ObjModelManager.cpp">
+    <ClCompile Include="Engine\Base\Manager\.Obj\ObjModelManager.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\Manager\Obj\ObjModelMesh.cpp">
+    <ClCompile Include="Engine\Base\Manager\.Obj\ObjModelMesh.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager\Obj</Filter>
     </ClCompile>
   </ItemGroup>
@@ -761,13 +761,13 @@
     <ClInclude Include="Engine\Base\Manager\Particle\ParticleManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\Manager\Fbx\FbxModelManager.h">
+    <ClInclude Include="Engine\Base\Manager\.Fbx\FbxModelManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager\Fbx</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\Manager\Obj\ObjModelManager.h">
+    <ClInclude Include="Engine\Base\Manager\.Obj\ObjModelManager.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\Manager\Obj\ObjModelMesh.h">
+    <ClInclude Include="Engine\Base\Manager\.Obj\ObjModelMesh.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager\Obj</Filter>
     </ClInclude>
   </ItemGroup>
