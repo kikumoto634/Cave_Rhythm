@@ -337,10 +337,25 @@ void Skelton::Movement()
         int next_x = eX + dx[j];
         int next_y = eY + dy[j];
 
+
         if(mapPath[next_y][next_x] == pathRoot || mapPath[next_y][next_x] == 6){
 			movePosition = world.translation + Vector3{dx[j]*2.0f, 0.f, -dy[j]*2.0f};
 			eX = next_x;
 			eY = next_y;
+
+			//回転
+			if(j == 0){//Left
+				world.rotation.y = XMConvertToRadians(-90);
+			}
+			else if(j == 1){//Right
+				world.rotation.y = XMConvertToRadians(90);
+			}
+			else if(j == 2){//down
+				world.rotation.y = 0;
+			}
+			else if(j == 3){//up
+				world.rotation.y = XMConvertToRadians(180);
+			}
 
 			if(mapPath[next_y][next_x] == 6) {
 				IsRootUpdate = false;
