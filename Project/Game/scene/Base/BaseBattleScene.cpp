@@ -216,7 +216,7 @@ void BaseBattleScene::Object3DInitialize()
 	exit = make_unique<Exit>();
 	exit->Initialize("Exit");
 	exit->SetPosition(areaManager->GetExitPosition());
-	exit->SetExitOpenNeedCoin(1);
+	exit->SetExitOpenNeedCoin(0);
 	exit->NeedCoinSpriteUpdate();
 }
 
