@@ -143,7 +143,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new HomeScene(dxCommon, window);
+	BaseScene* scene = new TitleScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
