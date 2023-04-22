@@ -1,4 +1,4 @@
-﻿#include "RhythmManager.h"
+#include "RhythmManager.h"
 #include "Input.h"
 
 void RhythmManager::InitializeMeasurement(clock_t _clock)

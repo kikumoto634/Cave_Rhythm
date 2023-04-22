@@ -14,14 +14,21 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	//武器
 	weapon_ = new PlayerWeapon();
 	weapon_->Initialize("Slash", false);
+
+	//拡縮最小値
+	ScaleMin = {0.7f, 0.7f, 0.7f};
 }
 
 void Player::Update(Camera *camera)
 {
 	this->camera = camera;
-	if(input_->Trigger(DIK_SPACE)) {
-		weapon_->Attack();
-	}
+
+	//アクション更新
+	ActionUpdate();
+	//入力更新
+	InputUpdate();
+	//ビート更新
+	BeatUpdate();
 
 	//武器更新
 	weapon_->SetPosition(world.translation + weaponOffset_);
@@ -54,4 +61,29 @@ void Player::OnCollision(const CollisionInfo &info)
 
 void Player::InputUpdate()
 {
+	isInput_ = false;
+
+	//入力
+	if(input_->Trigger(DIK_LEFT)){
+		isInput_ = true;
+	}
+	else if(input_->Trigger(DIK_RIGHT)){
+		isInput_ = true;
+	}
+}
+
+void Player::BeatUpdate()
+{
+	if(!IsBeatEnd) return;
+
+	//スケール
+	if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+		IsBeatEnd = false;
+	}
+}
+
+void Player::ActionUpdate()
+{
+	if(isInputJudge_){
+	}
 }

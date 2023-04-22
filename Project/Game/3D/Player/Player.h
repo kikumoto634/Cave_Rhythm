@@ -58,6 +58,11 @@ private:
 	//更新
 	void InputUpdate();
 
+	//拍終了
+	void BeatUpdate();
+
+	//アクション
+	void ActionUpdate();
 
 private:
 	//ポインタ
@@ -81,12 +86,6 @@ private:
 	bool isInput_ = false;
 	//判別
 	bool isInputJudge_ = false;
-
-	//行動フラグ
-	//移動
-	bool isMove_ = false;
-	//キャンセル
-	bool isCancel_ = false;
 
 	//移動
 	//移動先

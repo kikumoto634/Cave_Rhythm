@@ -74,9 +74,6 @@ void BaseBattleScene::Update()
 	//シーン更新
 	SceneChange();
 
-	//入力
-	InputUpdate();
-
 	//リズム
 	RhythmJudgeUpdate();
 	BeatEndUpdate();
@@ -231,49 +228,6 @@ void BaseBattleScene::Object2DInitialize()
 	judgeLoca = make_unique<JudgeLocation>();
 	judgeLoca->Initialize();
 
-	VectorObjIni();
-}
-
-void BaseBattleScene::InputUpdate()
-{
-	if(IsPrevSceneChange)return;
-
-	//ToDo: 
-	// 同時押しでのコンボ+2の修正(一度正解になったら次の入力可能時間まで入力不可。)
-	// ミス入力の時、プレイヤーの移動を不可に。
-	if(player->GetIsInput()){
-		rhythmManager->InputRhythm();
-		IsRhythmInput = true;
-		IsNoteInput = true;
-	}
-
-	//入力を確認
-	if(IsNoteInput){
-		//左
-		for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
-
-			//前提条件
-			if(!(*it)->GetIsNoteAlive()) continue;
-			
-			//ハートとノーツの当たり判定
-			if(judgeLoca->GetPosition().x-judgeLoca->GetSize().x/2 <= (*it)->GetPosition().x+(*it)->GetSize().x/2 && 
-				(*it)->GetPosition().x-(*it)->GetSize().x/2 <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
-				(*it)->InputUpdate();
-			}
-		}
-		//右
-		for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
-
-			//前提条件
-			if(!(*it)->GetIsNoteAlive()) continue;
-			
-			//ハートとノーツの当たり判定
-			if(judgeLoca->GetPosition().x-judgeLoca->GetSize().x/2 <= (*it)->GetPosition().x+(*it)->GetSize().x/2 && 
-				(*it)->GetPosition().x-(*it)->GetSize().x/2 <= judgeLoca->GetPosition().x+judgeLoca->GetSize().x/2){
-				(*it)->InputUpdate();
-			}
-		}
-	}
 }
 
 void BaseBattleScene::Object3DUpdate()
@@ -282,9 +236,14 @@ void BaseBattleScene::Object3DUpdate()
 	/*if(player->DamageSound())	{
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
-	}
+	}*/
 	player->Update(camera);
-	player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
+	if(player->GetIsInput()){
+		rhythmManager->InputRhythm();
+		IsRhythmInput = true;
+		IsNoteInput = true;
+	}
+	/*player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
 	if(player->GetIsDead() && player->GetIsDeadAudioOnce())	{
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
@@ -303,17 +262,6 @@ void BaseBattleScene::Object2DUpdate()
 	gameManager->SpriteUpdate();
 
 	judgeLoca->Update(IsNoteInput);
-
-	for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
-		if((*it)->GetIsNoteAlive()){
-			(*it)->Update((float)rhythmManager->GetBPMTime());
-		}
-	}
-	for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
-		if((*it)->GetIsNoteAlive()){
-			(*it)->Update((float)rhythmManager->GetBPMTime());
-		}
-	}
 }
 
 void BaseBattleScene::CommonUpdate()
@@ -411,19 +359,6 @@ void BaseBattleScene::BeatEndUpdate()
 		exit->IsBeatEndOn();
 		gameManager->IsBeatEndOn();
 		
-		//ビート目視用
-		for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
-			if(!(*it)->GetIsNoteAlive()){
-				(*it)->BeatUpdate();
-				break;
-			}
-		}
-		for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
-			if(!(*it)->GetIsNoteAlive()){
-				(*it)->BeatUpdate();
-				break;
-			}
-		}
 
 		AddBeatEndUpdate();
 	}
@@ -445,12 +380,6 @@ void BaseBattleScene::UIDraw()
 	//出口
 	exit->Draw2D();
 
-	for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
-		(*it)->Draw();
-	}
-	for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
-		(*it)->Draw();
-	}
 	judgeLoca->Draw();
 
 	gameManager->SpriteDraw();
@@ -509,12 +438,6 @@ void BaseBattleScene::ObjectFinaize()
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-	for(auto it = lNotes.begin(); it != lNotes.end(); ++it){
-		(*it)->Finalize();
-	}
-	for(auto it = rNotes.begin(); it != rNotes.end(); ++it){
-		(*it)->Finalize();
-	}
 	judgeLoca->Finalize();
 	fade->Finalize();
 #pragma endregion _2D解放
@@ -527,15 +450,3 @@ void BaseBattleScene::CommonFinalize()
 	rhythmManager = nullptr;
 }
 
-void BaseBattleScene::VectorObjIni()
-{
-	for(int i = 0; i < notesNum; i++){
-		unique_ptr<LNotes> newsp_L = make_unique<LNotes>();
-		newsp_L->Initialize(21);
-		lNotes.push_back(move(newsp_L));
-
-		unique_ptr<RNotes> newsp_R = make_unique<RNotes>();
-		newsp_R->Initialize(21);
-		rNotes.push_back(move(newsp_R));
-	}
-}

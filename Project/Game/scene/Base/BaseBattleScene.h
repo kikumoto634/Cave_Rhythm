@@ -67,7 +67,6 @@ private:
 	void Object2DInitialize();
 
 	//更新
-	void InputUpdate();
 	void Object3DUpdate();
 	void Object2DUpdate();
 	void CommonUpdate();
@@ -114,9 +113,6 @@ protected:
 	virtual void AddObjectFinalize() = 0;
 	virtual void AddCommonFinalize() = 0;
 
-
-private:
-	void VectorObjIni();
 
 protected:
 	//共通
@@ -165,8 +161,8 @@ protected:
 	//リズム目視確認用SP
 	std::unique_ptr<JudgeLocation> judgeLoca;
 
-	std::vector<std::unique_ptr<Notes>> lNotes;
-	std::vector<std::unique_ptr<Notes>> rNotes;
+	/*std::vector<std::unique_ptr<Notes>> lNotes;
+	std::vector<std::unique_ptr<Notes>> rNotes;*/
 
 	bool IsNoteInput = false;
 };
