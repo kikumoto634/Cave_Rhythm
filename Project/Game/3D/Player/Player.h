@@ -2,15 +2,10 @@
 #include "BaseObjObject.h"
 #include "Input.h"
 #include "SphereCollider.h"
-
 #include "PlayerWeapon.h"
 
 class Player : public BaseObjObject
 {
-//定数
-//無敵時間
-const int DamageFrame = 150;
-
 //メンバ関数
 public:
 	/// <summary>
@@ -39,107 +34,65 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-	/// <summary>
-	/// 入力成否時の処理
-	/// </summary>
-	/// <param name="IsFlag">成否</param>
-	void JudgeUpdate(bool IsFlag);
-
-
-	//Sound
-	/// <summary>
-	/// ダメージサウンド発生
-	/// </summary>
-	bool DamageSound();
-
-	bool GetIsDead()	{return IsDead;};
-	bool GetIsDeadAudioOnce();
-
-
 	//Getter
-	inline int GetHP()	{return HP;}
-	inline bool GetIsInputOnce()	{return IsInputOnce;}
-	inline bool GetIsNextScene()	{return IsNextScene;}
+	//入力確認
+	inline bool GetIsInput()	{return isInput_;}
+	//体力
+	inline int GetHp()	{return hp_;}
+	//死亡
+	inline bool GetIsDead()	{return isDead_;}
+
 
 	//Setter
-	inline void SetMoveEasingMaxTime(float time)	{MoveEasingMaxTime = time;}
-	inline void SetIsExitOpen(bool IsFlag)	{IsExitOpen = IsFlag;}
-	inline void SetIsWait(bool IsFlag)	{IsWait = IsFlag;}
-	inline void SetWeaponPos(Vector3 pos)	{offSetWeaponPos = pos;}
-	inline void SetHp(int hp)	{HP = hp;}
+	//入力判別
+	void SetInputJudge(bool isJudge)	{isInputJudge_ = isJudge;}
+	//武器のモデル、座標取得
+	inline void SetWeaponModelPos(Vector3 pos)	{weaponOffset_ = pos;}
+	//体力取得
+	inline void SetHp(int value)	{hp_ = value;}
+	//扉解放の取得
+	inline void SetIsExitOpen(bool isFlag)	{isExitOpen = isFlag;}
 
 private:
-	//移動
-	bool MovementInput();
-	void MoveModelSet();
-
-	//攻撃
-	bool AttackInput();
-	void AttackModelSet();
-
-	//ダメージ
-	void Damage();
-	//ダメージ更新
-	void DamageUpdate();
-
-private:	
-	//移動
-	Vector3 movePosition = {0,0,0};
-	Vector3 moveRotation = {0,0,0};
-	bool IsMove = false;
-
-	//過去位置
-	Vector3 OldPosition = {};
-
-	//移動イージング
-	bool IsMoveEasing = false;
-	float moveEasingFrame = 0;
-	float MoveEasingMaxTime = 0.075f;
-	Vector3 moveEasingPos;
-
-	//レイ
-	Vector3 RayDir = {0,0,1};
-
-	//HP
-	bool IsDead = false;
-	bool IsDeadAudioOnce = false;
-	int HP = 5;
-
-	//待機フラグ
-	bool IsWait = false;
-
-	//ダメージ
-	bool IsDamage = false;
-	bool IsDamageSoundOnce = false;
-	////無敵時間(フレーム)
-	int damageCurrentFrame = 0;
-
-	//攻撃
-	bool IsAttack = false;
-
-	//使用モデル判別(false:Move, true:Attack)
-	bool IsModelJudge = false;
-
 	//入力
-	Input* input = nullptr;
-	bool IsInputOnce = false;
-	bool IsInputJudge = false;
+	//更新
+	void InputUpdate();
 
-	//コライダー
-	SphereCollider* sphereCollider = nullptr;
+
+private:
+	//ポインタ
+	//入力
+	Input* input_ = nullptr;
+	//武器
+	PlayerWeapon* weapon_ = nullptr;
 
 	//武器
-	PlayerWeapon* weapon = nullptr;
-	Vector3 offSetWeaponPos = {0,0,2.5};
+	//オフセット
+	Vector3 weaponOffset_ = {};
 
-	//攻撃モデル
-	ObjModelManager* attackModel = nullptr;
+	//体力
+	int hp_ = 0;
 
-	//死亡モデル
-	ObjModelManager* deadModel = nullptr;
+	//死亡
+	bool isDead_ = false;
 
-	//次のシーン
-	bool IsNextScene = false;
-	bool IsExitOpen = false;
+	//入力
+	//入力確認
+	bool isInput_ = false;
+	//判別
+	bool isInputJudge_ = false;
+
+	//行動フラグ
+	//移動
+	bool isMove_ = false;
+	//キャンセル
+	bool isCancel_ = false;
+
+	//移動
+	//移動先
+	Vector3 addPosition_ = {};
+
+	//扉解放
+	bool isExitOpen = false;
 };
 

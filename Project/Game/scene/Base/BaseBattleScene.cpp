@@ -163,7 +163,6 @@ void BaseBattleScene::Draw()
 
 
 	debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
-	debugText->Printf(0, 660, 1.f, "HP : %d", player->GetHP());
 
 
 #endif // _DEBUG
@@ -207,10 +206,10 @@ void BaseBattleScene::Object3DInitialize()
 	player = make_unique<Player>();
 	player->Initialize("human1");
 	player->SetPosition(areaManager->GetPlayerPosition());
-	player->SetWeaponPos({0,0,-2.f});
+	player->SetWeaponModelPos({0,0,-2.f});
 	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player->SetHp(saveHP);
-	gameManager->InitializeSetHp(player->GetHP());
+	gameManager->InitializeSetHp(player->GetHp());
 
 	//出口
 	exit = make_unique<Exit>();
@@ -242,7 +241,7 @@ void BaseBattleScene::InputUpdate()
 	//ToDo: 
 	// 同時押しでのコンボ+2の修正(一度正解になったら次の入力可能時間まで入力不可。)
 	// ミス入力の時、プレイヤーの移動を不可に。
-	if(player->GetIsInputOnce()){
+	if(player->GetIsInput()){
 		rhythmManager->InputRhythm();
 		IsRhythmInput = true;
 		IsNoteInput = true;
@@ -280,7 +279,7 @@ void BaseBattleScene::InputUpdate()
 void BaseBattleScene::Object3DUpdate()
 {
 	//プレイヤー
-	if(player->DamageSound())	{
+	/*if(player->DamageSound())	{
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
 	}
@@ -289,7 +288,7 @@ void BaseBattleScene::Object3DUpdate()
 	if(player->GetIsDead() && player->GetIsDeadAudioOnce())	{
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
-	}
+	}*/
 	//出口
 	exit->Update(camera);
 	{
@@ -337,7 +336,7 @@ void BaseBattleScene::CommonUpdate()
 	camera->Tracking(player->GetPosition());
 
 	//シーン遷移
-	if(player->GetIsNextScene())	{
+	/*if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
 		if(!exit->GetIsOpenAudioOnce()){
 			gameManager->AudioPlay(6, 0.5f);
@@ -345,7 +344,7 @@ void BaseBattleScene::CommonUpdate()
 			player->SetIsWait(true);
 			exit->ModelChange();
 		}
-	}
+	}*/
 
 	//すべての衝突をチェック
 	collisionManager->CheckAllCollisions();
@@ -377,18 +376,18 @@ void BaseBattleScene::RhythmJudgeUpdate()
 		//High(入力が遅く、judgeTimeが更新された状態での更新)
 		if(rhythmManager->HighJudgeRhythm()){
 			gameManager->ComboIncrement();
-			player->JudgeUpdate(true);
+			player->SetInputJudge(true);
 		}
 		//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
 		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
 			if(rhythmManager->LowJudgeRhythm()){
 				gameManager->ComboIncrement();
-				player->JudgeUpdate(true);
+				player->SetInputJudge(true);
 			}
 			//ミス
 			else{
 				gameManager->ComboReset();
-				player->JudgeUpdate(false);
+				player->SetInputJudge(false);
 			}
 		}
 	}

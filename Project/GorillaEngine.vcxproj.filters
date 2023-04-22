@@ -486,9 +486,6 @@
     <ClCompile Include="Engine\3D\ObjectBase\BaseFbxObjects.cpp">
       <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\ObjectBase\BaseObjObject.cpp">
-      <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\ObjectBase\ParticleObject.cpp">
       <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
     </ClCompile>
@@ -548,6 +545,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Base\Manager\.Obj\ObjModelMesh.cpp">
       <Filter>ソース ファイル\Engine\Base\Manager\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\ObjectBase\BaseObjObject.cpp">
+      <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

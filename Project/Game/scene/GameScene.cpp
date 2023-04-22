@@ -26,10 +26,10 @@ void GameScene::NextSceneChange()
 {
 	if(floorValue >= 5){
 		//sceneManager->SetNextScene(new Boss1Area(dxCommon,window,player->GetHP()));
-		sceneManager->SetNextScene(new HomeScene(dxCommon,window,player->GetHP()));
+		sceneManager->SetNextScene(new HomeScene(dxCommon,window,player->GetHp()));
 	}
 	else{
-		sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHP(), floorValue));
+		sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHp(), floorValue));
 	}
 }
 
