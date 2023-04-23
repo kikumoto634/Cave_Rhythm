@@ -1,54 +1,64 @@
 #include "RhythmManager.h"
-#include "Input.h"
 
-void RhythmManager::InitializeMeasurement(clock_t _clock)
+using namespace std::chrono;
+
+void RhythmManager::Initialize()
 {
-	this->clock = _clock;
-	InitTimer = static_cast<double>(clock)/CLOCKS_PER_SEC;
+	//1小節時間の計算
+	beatTime_ = 60.0 / BPM;
+	//差分時間
+	beatSub_ = beatTime_/SUB;
 }
 
-void RhythmManager::StartMeasurement(clock_t _clock)
+void RhythmManager::PreUpdate()
 {
-	BPMTime = (1*secondFrame/bpm);
-	this->clock = _clock;
-	timer = (static_cast<double>(this->clock)/CLOCKS_PER_SEC) - InitTimer;
-}
+	IsJustRhythm = false;
 
-void RhythmManager::InputRhythm()
-{
-	inputJudgeTime = timer;
-}
+	//リズム値更新
+	if(inputTimeTarget_ + beatSub_ <= calTime_.count()){
+		inputTimeTarget_ += beatTime_;
+		IsRhythmMoveUp = false;
+	}
 
-void RhythmManager::BeatMoveUp()
-{
-	IsRhythmEnd = false;
-	//繰り上がり値より整数部分が大きくなったら繰り上がり
-	if(timer >= moveUpNumber){
+	if(!IsStart) return ;
 
-		//ベース時間
-		judgeTimeBase = timer;
-
-		IsRhythmEnd = true;
-		moveUpNumber += BPMTime;
+	//リズムピッタリ時
+	if(IsRhythmMoveUp) return;
+	if(inputTimeTarget_ <= calTime_.count()){
+		IsJustRhythm = true;
+		IsRhythmMoveUp = true;
 	}
 }
 
-bool RhythmManager::HighJudgeRhythm()
+void RhythmManager::PostUpdate()
 {
-	BPMTimeSub = BPMTime/RhythmSubTime_Split;
+	if(!IsStart) return;
 
-	if(inputJudgeTime <= (judgeTimeBase + BPMTimeSub) && judgeTimeBase <= inputJudgeTime){
+	//1ループ処理時間
+	endTime_ = system_clock::now();
+
+	//最終時間計測
+	calTime_ = endTime_ - startTime_;
+	inputTime_ = inputEndTime_ - startTime_;
+}
+
+void RhythmManager::TimeStart()
+{
+	startTime_ = system_clock::now();
+	IsStart = true;
+}
+
+void RhythmManager::InputTime()
+{
+	inputEndTime_ = std::chrono::system_clock::now();
+}
+
+bool RhythmManager::IsInputRhythmJudge()
+{
+	if(inputTime_.count() >= inputTimeTarget_ - beatSub_ && 
+		inputTime_.count() <= inputTimeTarget_ + beatSub_){
 		return true;
 	}
-	return false;
-}
 
-bool RhythmManager::LowJudgeRhythm()
-{
-	BPMTimeSub = BPMTime/RhythmSubTime_Split;
-
-	if(inputJudgeTime <= (judgeTimeBase + BPMTime) && (judgeTimeBase + BPMTime - BPMTimeSub) <= inputJudgeTime){
-		return true;
-	}
 	return false;
 }

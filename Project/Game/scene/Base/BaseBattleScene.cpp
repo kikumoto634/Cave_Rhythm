@@ -47,9 +47,6 @@ void BaseBattleScene::Initialize()
 
 void BaseBattleScene::Update()
 {
-	//計測、BGM開始
-	RhythmMeasure();
-
 	BaseScene::Update();
 
 #pragma region 入力処理
@@ -75,6 +72,7 @@ void BaseBattleScene::Update()
 	SceneChange();
 
 	//リズム
+	rhythmManager->PreUpdate();
 	RhythmJudgeUpdate();
 	BeatEndUpdate();
 
@@ -88,6 +86,8 @@ void BaseBattleScene::Update()
 	//シーン、カメラ、汎用
 	CommonUpdate();
 	AddCommonUpdate();
+
+	rhythmManager->PostUpdate();
 
 #ifdef _DEBUG
 	{
@@ -151,15 +151,15 @@ void BaseBattleScene::Draw()
 
 	debugText->Printf(0,560,1.f,"Player Pos X:%f, Y:%f, Z:%f", player->GetPosition().x, player->GetPosition().y,player->GetPosition().z);
 
-	debugText->Printf(0,580, 1.f,  "Time				: %lf[ms]", rhythmManager->GetTimer());
-	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager->GetJudgeTimeBase());
-	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager->GetInputJudgeTime());
+	debugText->Printf(0,580, 1.f,  "Time				: %lf[ms]", rhythmManager->GetCalTime());
+	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager->GetInputTimeTarget());
+	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager->GetInputTimet());
 	
 	debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager->GetComboNum());
 	debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager->GetCoinNum());
 
 
-	debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
+	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
 
 
 #endif // _DEBUG
@@ -185,6 +185,7 @@ void BaseBattleScene::CommonInitialize()
 
 	//リズムマネージャー
 	rhythmManager = make_unique<RhythmManager>();
+	rhythmManager->Initialize();
 
 	//ゲームマネージャー
 	gameManager = make_unique<GameManager>();
@@ -239,7 +240,7 @@ void BaseBattleScene::Object3DUpdate()
 	}*/
 	player->Update(camera);
 	if(player->GetIsInput()){
-		rhythmManager->InputRhythm();
+		rhythmManager->InputTime();
 		IsRhythmInput = true;
 		IsNoteInput = true;
 	}
@@ -298,21 +299,6 @@ void BaseBattleScene::CommonUpdate()
 	collisionManager->CheckAllCollisions();
 }
 
-void BaseBattleScene::RhythmMeasure()
-{
-	//計測開始
-	if(IsPrevSceneChange) return;
-
-	//リズム計測
-	rhythmManager->StartMeasurement(clock());
-	//計測開始時
-	if(rhythmManager->GetMoveUpNumber() == 0 && IsBGMStart){
-		gameManager->AudioPlay(8, 0.5f, true);
-	}
-	//リズム繰り上がり
-	rhythmManager->BeatMoveUp();
-}
-
 void BaseBattleScene::RhythmJudgeUpdate()
 {
 	if(IsPrevSceneChange) return;
@@ -321,22 +307,13 @@ void BaseBattleScene::RhythmJudgeUpdate()
 	if(IsRhythmInput){
 		IsRhythmInput = false;
 
-		//High(入力が遅く、judgeTimeが更新された状態での更新)
-		if(rhythmManager->HighJudgeRhythm()){
+		if(rhythmManager->IsInputRhythmJudge()){
 			gameManager->ComboIncrement();
 			player->SetInputJudge(true);
 		}
-		//Low(入力が早くて、JudgeTimeが更新されていない処理のみ通す　繰り上がり用確認整数との比較) judgeTimeが更新されるまで処理待ち
-		else if(rhythmManager->GetMoveUpNumber() > rhythmManager->GetJudgeTimeBase()){
-			if(rhythmManager->LowJudgeRhythm()){
-				gameManager->ComboIncrement();
-				player->SetInputJudge(true);
-			}
-			//ミス
-			else{
-				gameManager->ComboReset();
-				player->SetInputJudge(false);
-			}
+		else if(!rhythmManager->IsInputRhythmJudge()){
+			gameManager->ComboReset();
+			player->SetInputJudge(false);
 		}
 	}
 }
@@ -346,7 +323,7 @@ void BaseBattleScene::BeatEndUpdate()
 	if(IsPrevSceneChange) return;
 
 	//リズム終了時処理
-	if(rhythmManager->GetIsRhythmEnd() && !IsGameEnd){
+	if(rhythmManager->GetIsJustRhythm() && !IsGameEnd){
 		
 		//SE
 		gameManager->AudioPlay(0,0.25f);
@@ -404,7 +381,8 @@ void BaseBattleScene::SceneChange()
 				IsPrevSceneChange = false;
 				fadeCurrentFrame = 0;
 				//リズム
-				rhythmManager->InitializeMeasurement(clock());
+				rhythmManager->TimeStart();
+				gameManager->AudioPlay(8, 0.5f, true);
 				return;
 			}
 

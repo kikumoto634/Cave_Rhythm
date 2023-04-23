@@ -72,7 +72,6 @@ private:
 	void CommonUpdate();
 
 	//リズム関連
-	void RhythmMeasure();
 	void RhythmJudgeUpdate();
 	void BeatEndUpdate();
 

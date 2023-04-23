@@ -1,76 +1,76 @@
 ﻿#pragma once
-
-#include <time.h>
+#include <chrono>
 
 class RhythmManager
 {
 //定数
 private:
 	//BPM
-	const double bpm = 120;
-	//一秒(frame)
-	const double secondFrame = 60;
-	//判定時間の差分絶対値 BPMタイムの何分割分
-	const double RhythmSubTime_Split = 4;
+	const double BPM = 120;
+	//入力判定時の増減差分(1小節の何分割分の時間)
+	const double SUB = 5;
 
-//メンバ関数
+//エイリアス
 public:
-	//初期化時の計算時間差分用
-	void InitializeMeasurement(clock_t _clock);
+	template <class T> using Duration = std::chrono::duration<T>;
+	using Time = std::chrono::system_clock::time_point;
 
-	//計測開始
-	void StartMeasurement(clock_t _clock);
+public:
+	//初期化
+	void Initialize();
 
-	//入力
-	void InputRhythm();
+	//更新前
+	void PreUpdate();
+	
+	//更新終了後
+	void PostUpdate();
 
-	//ビートくり返し
-	void BeatMoveUp();
 
-	bool HighJudgeRhythm();
-	bool LowJudgeRhythm();
+	//時間計測開始
+	void TimeStart();
+
+	//入力時間取得
+	void InputTime();
+	//入力判定
+	bool IsInputRhythmJudge();
 
 	//Getter
-	//計測時間
-	inline double GetTimer()	{return timer;}
-	//判別時間のベース
-	inline double GetJudgeTimeBase()	{return judgeTimeBase;}
-	//判別用入力時間
-	inline double GetInputJudgeTime()	{return inputJudgeTime;}
-	//繰り上がり用
-	inline double GetMoveUpNumber()	{return moveUpNumber;}
-	//ビートタイミング
-	inline bool GetIsRhythmEnd()	{return IsRhythmEnd;}
-	//リズム判別時の絶対値差分
-	inline double GetBPMTimeSub()	{return BPMTimeSub;}
-	//1BPMの秒数
-	inline double GetBPMTime()	{return BPMTime;}
+	inline bool GetIsJustRhythm()	{return IsJustRhythm;}
+	inline double GetCalTime()	{return calTime_.count();}
+	inline double GetInputTimeTarget()	{return inputTimeTarget_;}
+	inline double GetInputTimet()	{return inputTime_.count();}
 
-	//メンバ変数
+	//Setter
+
 private:
-	//include "clock.h"使用
-	clock_t clock;
+	//計測時間
+	Duration<double> calTime_;
+	//入力した時間
+	Duration<double> inputTime_;
 
-	//初期化時の時間計算差分
-	double InitTimer = 0;
-	//更新時の時間(Main)
-	double timer = 0;
+	//計測時間
+	//スタート
+	Time startTime_;
+	//計測用iループ終了時間
+	Time endTime_;
+	//入力時の時間
+	Time inputEndTime_;
 
-	//繰り上がり(リズムタイミング終了)
-	bool IsRhythmEnd = false;
-	//繰り上がり判別用整数
-	double moveUpNumber = 0;
-	//判別時間のベース
-	double judgeTimeBase = 0;
-	//前回の判定時間
-	double oldJudgeTimeBase = 0;
-	//判別用、入力時間
-	double inputJudgeTime = 0;
 
-	//BPM計算式
-	double BPMTime = (1*secondFrame/bpm);
+	//1小節時間
+	double beatTime_ = 60.0 / BPM;
 
-	//リズム判別時の絶対値差分
-	double BPMTimeSub;
+	//入力目標時間
+	double inputTimeTarget_ = 0;
+	//入力時間差分
+	double beatSub_ = 0;
+
+
+	//計測開始
+	bool IsStart = false;
+	//リズムピッタリ
+	bool IsJustRhythm = false;
+	//リズム繰り上げ
+	bool IsRhythmMoveUp = false;
 };
 

@@ -1,4 +1,4 @@
-﻿#include "Boss1Area.h"
+#include "Boss1Area.h"
 #include "HomeScene.h"
 #include "SceneManager.h"
 
@@ -38,7 +38,7 @@ void Boss1Area::SceneChange()
 				IsPrevSceneChange = false;
 				fadeCurrentFrame = 0;
 				//リズム
-				rhythmManager->InitializeMeasurement(clock());
+				rhythmManager->TimeStart();
 				return;
 			}
 
