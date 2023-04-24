@@ -99,6 +99,8 @@ private:
 	//判別
 	bool isInputJudge_ = false;
 
+	bool isDebug_ = false;
+
 	//状態
 	enum State{
 		None,

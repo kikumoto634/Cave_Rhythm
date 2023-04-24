@@ -79,6 +79,8 @@ void Player::InputUpdate()
 {
 	isInput_ = false;
 
+
+	if(isDebug_) return;
 	//入力
 	bool isLEFT = input_->Trigger(DIK_LEFT);
 	bool isRIGHT = input_->Trigger(DIK_RIGHT);
@@ -92,6 +94,7 @@ void Player::InputUpdate()
 		world.rotation.y = XMConvertToRadians(-90);
 
 		weaponOffset_ = addVector3;
+		isDebug_ = true;
 	}
 	else if(isRIGHT){
 		isInput_ = true;
@@ -100,6 +103,7 @@ void Player::InputUpdate()
 		world.rotation.y = XMConvertToRadians(90);
 
 		weaponOffset_ = addVector3;
+		isDebug_ = true;
 	}
 	else if(isUP){
 		isInput_ = true;
@@ -108,6 +112,7 @@ void Player::InputUpdate()
 		world.rotation.y = XMConvertToRadians(0);
 
 		weaponOffset_ = addVector3;
+		isDebug_ = true;
 	}
 	else if(isDOWN){
 		isInput_ = true;
@@ -116,6 +121,7 @@ void Player::InputUpdate()
 		world.rotation.y = XMConvertToRadians(180);
 
 		weaponOffset_ = addVector3;
+		isDebug_ = true;
 	}
 }
 
