@@ -6,6 +6,13 @@
 
 class Player : public BaseObjObject
 {
+//定数
+private:
+	//移動時の時間
+	const float EasingMoveTimeMax = 0.075f;
+	//レイキャストの長さ
+	const float adsDistance = 0.1f;
+
 //メンバ関数
 public:
 	/// <summary>
@@ -54,6 +61,11 @@ public:
 	inline void SetIsExitOpen(bool isFlag)	{isExitOpen = isFlag;}
 
 private:
+
+	//初期化
+	//コライダー
+	void SphereColliderSet();
+
 	//入力
 	//更新
 	void InputUpdate();
@@ -87,11 +99,33 @@ private:
 	//判別
 	bool isInputJudge_ = false;
 
+	//状態
+	enum State{
+		None,
+		Move,
+		Dig
+	};
+
+	State state_ = None;
+
 	//移動
-	//移動先
-	Vector3 addPosition_ = {};
+	//イージングの移動開始座標
+	Vector3 easigStartPos_ = {};
+	//イージングの移動終了座標
+	Vector3 easingEndPos = {};
+	//イージングの移動タイム
+	float easingMoveTime = 0;
+	//移動ベクトル
+	Vector3 addVector3;
+	
 
 	//扉解放
 	bool isExitOpen = false;
+
+	//コライダー
+	SphereCollider* sphereCollider_ = nullptr;
+	//レイキャスト
+	Ray ray_;
+	Vector3 rayCastDir_ = {0,0,-1};
 };
 
