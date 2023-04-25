@@ -148,7 +148,7 @@ void Player::ActionUpdate()
 		RaycastHit rayCastHit_;
 		//壁判定
 		if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_LANDSHAPE, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			weapon_->Attack();
+			state_ = State::Dig;
 			return ;
 		}
 
@@ -178,6 +178,11 @@ void Player::ActionUpdate()
 			easingEndPos = {};
 			easingMoveTime = 0.f;
 		}
+		break;
+
+	case Player::Dig:
+		weapon_->Attack();
+		state_ = State::None;
 		break;
 
 	default:
