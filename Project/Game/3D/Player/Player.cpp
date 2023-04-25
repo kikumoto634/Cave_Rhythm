@@ -147,11 +147,6 @@ void Player::ActionUpdate()
 			state_ = State::Dig;
 			return ;
 		}
-		//敵判定
-		else if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_ENEMYS, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			state_ = State::Attack;
-			return ;
-		}
 
 		//移動
 		state_ = State::Move;
