@@ -41,6 +41,10 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+
+	//入力可能状態
+	inline void InputPossible()	{isDuplicateLimit_ = false;}
+
 	//Getter
 	//入力確認
 	inline bool GetIsInput()	{return isInput_;}
@@ -98,8 +102,8 @@ private:
 	bool isInput_ = false;
 	//判別
 	bool isInputJudge_ = false;
-
-	bool isDebug_ = false;
+	//重複入力制限
+	bool isDuplicateLimit_ = false;
 
 	//状態
 	enum State{

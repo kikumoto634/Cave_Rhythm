@@ -238,6 +238,10 @@ void BaseBattleScene::Object3DUpdate()
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
 	}*/
+	//小節終了時に入力可能状態に変更
+	if(rhythmManager->GetIsMeasureUp()){
+		player->InputPossible();
+	}
 	player->Update(camera);
 	if(player->GetIsInput()){
 		rhythmManager->InputTime();

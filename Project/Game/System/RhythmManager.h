@@ -35,10 +35,11 @@ public:
 	bool IsInputRhythmJudge();
 
 	//Getter
-	inline bool GetIsJustRhythm()	{return IsJustRhythm;}
+	inline bool GetIsJustRhythm()	{return isJustRhythm_;}
 	inline double GetCalTime()	{return calTime_.count();}
 	inline double GetInputTimeTarget()	{return inputTimeTarget_;}
 	inline double GetInputTimet()	{return inputTime_.count();}
+	inline bool GetIsMeasureUp()	{return isMeasureUp_;}
 
 	//Setter
 
@@ -67,10 +68,12 @@ private:
 
 
 	//計測開始
-	bool IsStart = false;
+	bool isStart_ = false;
 	//リズムピッタリ
-	bool IsJustRhythm = false;
+	bool isJustRhythm_ = false;
 	//リズム繰り上げ
-	bool IsRhythmMoveUp = false;
+	bool isRhythmMoveUp_ = false;
+	//次の小節移動
+	bool isMeasureUp_ = false;
 };
 

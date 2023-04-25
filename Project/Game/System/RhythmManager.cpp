@@ -12,27 +12,29 @@ void RhythmManager::Initialize()
 
 void RhythmManager::PreUpdate()
 {
-	IsJustRhythm = false;
+	isJustRhythm_ = false;
+	isMeasureUp_ = false;
 
 	//リズム値更新
 	if(inputTimeTarget_ + beatSub_ <= calTime_.count()){
 		inputTimeTarget_ += beatTime_;
-		IsRhythmMoveUp = false;
+		isRhythmMoveUp_ = false;
+		isMeasureUp_ = true;
 	}
 
-	if(!IsStart) return ;
+	if(!isStart_) return ;
 
 	//リズムピッタリ時
-	if(IsRhythmMoveUp) return;
+	if(isRhythmMoveUp_) return;
 	if(inputTimeTarget_ <= calTime_.count()){
-		IsJustRhythm = true;
-		IsRhythmMoveUp = true;
+		isJustRhythm_ = true;
+		isRhythmMoveUp_ = true;
 	}
 }
 
 void RhythmManager::PostUpdate()
 {
-	if(!IsStart) return;
+	if(!isStart_) return;
 
 	//1ループ処理時間
 	endTime_ = system_clock::now();
@@ -45,7 +47,7 @@ void RhythmManager::PostUpdate()
 void RhythmManager::TimeStart()
 {
 	startTime_ = system_clock::now();
-	IsStart = true;
+	isStart_ = true;
 }
 
 void RhythmManager::InputTime()
