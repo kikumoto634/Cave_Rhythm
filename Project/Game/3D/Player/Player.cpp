@@ -172,11 +172,11 @@ void Player::ActionUpdate()
 
 		//移動完了時
 		if(easingMoveTime >= 1.0f){
-			state_ = State::None;
 			world.translation = easingEndPos;
 			easigStartPos_ = {};
 			easingEndPos = {};
 			easingMoveTime = 0.f;
+			state_ = State::None;
 		}
 		break;
 
@@ -191,6 +191,8 @@ void Player::ActionUpdate()
 		break;
 
 	default:
+
+		state_ = State::None;
 		break;
 	}
 }
