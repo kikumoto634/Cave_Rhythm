@@ -109,7 +109,8 @@ private:
 	enum State{
 		None,
 		Move,
-		Dig
+		Dig,
+		Attack
 	};
 
 	State state_ = None;

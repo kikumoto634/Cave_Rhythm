@@ -185,6 +185,11 @@ void Player::ActionUpdate()
 		state_ = State::None;
 		break;
 
+	case Player::Attack:
+
+		state_ = State::None;
+		break;
+
 	default:
 		break;
 	}
