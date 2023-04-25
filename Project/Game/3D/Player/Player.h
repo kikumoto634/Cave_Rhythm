@@ -8,10 +8,13 @@ class Player : public BaseObjObject
 {
 //定数
 private:
+	//移動距離
+	const float MoveLength = 2.0f;
 	//移動時の時間
 	const float EasingMoveTimeMax = 0.075f;
 	//レイキャストの長さ
-	const float adsDistance = 0.1f;
+	const float adsDistance = 1.0f;
+
 
 //メンバ関数
 public:
@@ -73,6 +76,7 @@ private:
 	//入力
 	//更新
 	void InputUpdate();
+	void InputMovement();
 
 	//拍終了
 	void BeatUpdate();

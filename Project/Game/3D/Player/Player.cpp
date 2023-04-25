@@ -81,48 +81,44 @@ void Player::InputUpdate()
 
 
 	if(isDuplicateLimit_) return;
+	
+	//移動処理
+	InputMovement();
+}
+
+void Player::InputMovement()
+{
 	//入力
 	bool isLEFT = input_->Trigger(DIK_LEFT);
 	bool isRIGHT = input_->Trigger(DIK_RIGHT);
 	bool isUP = input_->Trigger(DIK_UP);
 	bool isDOWN = input_->Trigger(DIK_DOWN);
 
-	if(isLEFT){
-		isInput_ = true;
-		addVector3 = {-2.f,0.f,0.f};
-		rayCastDir_ = {-1,0,0};
-		world.rotation.y = XMConvertToRadians(-90);
+	if(!isLEFT && !isRIGHT && !isUP && !isDOWN) return;
 
-		weaponOffset_ = addVector3;
-		isDuplicateLimit_ = true;
+	//固有処理
+	if(isLEFT){
+		addVector3 = {-MoveLength,0.f,0.f};
+		world.rotation.y = XMConvertToRadians(-90);
 	}
 	else if(isRIGHT){
-		isInput_ = true;
-		addVector3 = {2.f,0.f,0.f};
-		rayCastDir_ = {1,0,0};
+		addVector3 = {MoveLength,0.f,0.f};
 		world.rotation.y = XMConvertToRadians(90);
-
-		weaponOffset_ = addVector3;
-		isDuplicateLimit_ = true;
 	}
 	else if(isUP){
-		isInput_ = true;
-		addVector3 = {0.f,0.f,2.f};
-		rayCastDir_ = {0,0,1};
+		addVector3 = {0.f,0.f,MoveLength};
 		world.rotation.y = XMConvertToRadians(0);
-
-		weaponOffset_ = addVector3;
-		isDuplicateLimit_ = true;
 	}
 	else if(isDOWN){
-		isInput_ = true;
-		addVector3 = {0.f,0.f,-2.f};
-		rayCastDir_ = {0,0,-1};
+		addVector3 = {0.f,0.f,-MoveLength};
 		world.rotation.y = XMConvertToRadians(180);
-
-		weaponOffset_ = addVector3;
-		isDuplicateLimit_ = true;
 	}
+	rayCastDir_ = {float(isRIGHT - isLEFT),0, float(isUP - isDOWN)};
+
+	//共通
+	isInput_ = true;
+	weaponOffset_ = addVector3;
+	isDuplicateLimit_ = true;
 }
 
 void Player::BeatUpdate()
@@ -149,6 +145,11 @@ void Player::ActionUpdate()
 		//壁判定
 		if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_LANDSHAPE, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
 			state_ = State::Dig;
+			return ;
+		}
+		//敵判定
+		else if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_ENEMYS, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
+			state_ = State::Attack;
 			return ;
 		}
 
@@ -186,7 +187,7 @@ void Player::ActionUpdate()
 		break;
 
 	case Player::Attack:
-
+		weapon_->Attack();
 		state_ = State::None;
 		break;
 
