@@ -23,7 +23,7 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 	world.UpdateMatrix();
 
 	//コライダー
-	float radius = 0.6f;
+	float radius = 1.0f;
 	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
 	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
 	//球コライダー取得
