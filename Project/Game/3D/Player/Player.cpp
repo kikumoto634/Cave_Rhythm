@@ -191,7 +191,6 @@ void Player::ActionUpdate()
 		break;
 
 	default:
-		weapon_->Attack();
 		state_ = State::None;
 		break;
 	}
