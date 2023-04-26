@@ -289,15 +289,14 @@ void BaseBattleScene::CommonUpdate()
 	camera->Tracking(player->GetPosition());
 
 	//シーン遷移
-	/*if(player->GetIsNextScene())	{
+	if(player->GetIsNextScene())	{
 		IsNextSceneChange = true;
 		if(!exit->GetIsOpenAudioOnce()){
 			gameManager->AudioPlay(6, 0.5f);
 			camera->ShakeStart();
-			player->SetIsWait(true);
 			exit->ModelChange();
 		}
-	}*/
+	}
 
 	//すべての衝突をチェック
 	collisionManager->CheckAllCollisions();

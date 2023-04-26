@@ -121,12 +121,14 @@ public:
 	//Getter
 	//ダメージ
 	bool GetIsDamage();
-	//入力確認
-	inline bool GetIsInput()	{return isInput_;}
 	//体力
 	inline int GetHp()	{return hp_;}
+	//入力確認
+	inline bool GetIsInput()	{return isInput_;}
 	//死亡
 	inline bool GetIsDead()	{return isDead_;}
+	//次のシーン
+	inline bool GetIsNextScene()	{return isNextScene_;}
 
 	//Setter
 	//入力判別
@@ -136,7 +138,7 @@ public:
 	//体力取得
 	inline void SetHp(int value)	{hp_ = value;}
 	//扉解放の取得
-	inline void SetIsExitOpen(bool isFlag)	{isExitOpen = isFlag;}
+	inline void SetIsExitOpen(bool isFlag)	{isExitOpen_ = isFlag;}
 
 private:
 
@@ -147,7 +149,10 @@ private:
 	//入力
 	//更新
 	void InputUpdate();
+	//移動
 	void InputMovement();
+	//決定
+	void InputDecision();
 
 	//拍終了
 	void BeatUpdate();
@@ -173,8 +178,8 @@ private:
 	int hp_ = 0;
 
 	//ダメージ
-	bool isDamage = false;
-	int damageFrame = 0;
+	bool isDamage_ = false;
+	int damageFrame_ = 0;
 
 	//死亡
 	bool isDead_ = false;
@@ -188,21 +193,23 @@ private:
 	bool isDuplicateLimit_ = false;
 
 	//状態
-	StateManager* state = nullptr;
+	StateManager* state_ = nullptr;
 
 	//移動
 	//イージングの移動開始座標
 	Vector3 easigStartPos_ = {};
 	//イージングの移動終了座標
-	Vector3 easingEndPos = {};
+	Vector3 easingEndPos_ = {};
 	//イージングの移動タイム
-	float easingMoveTime = 0;
+	float easingMoveTime_ = 0;
 	//移動ベクトル
-	Vector3 addVector3;
+	Vector3 addVector3_;
 	
-
 	//扉解放
-	bool isExitOpen = false;
+	bool isExitOpen_ = false;
+
+	//シーン移動
+	bool isNextScene_ = false;
 
 	//コライダー
 	SphereCollider* sphereCollider_ = nullptr;

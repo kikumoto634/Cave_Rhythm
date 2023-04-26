@@ -24,9 +24,9 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
 	//状態
-	state = StateManager::GetInstance();
+	state_ = StateManager::GetInstance();
 	
-	state->SetNextState(new IdelState);
+	state_->SetNextState(new IdelState);
 
 	//コライダー
 	SphereColliderSet();
@@ -38,7 +38,7 @@ void Player::Update(Camera *camera)
 
 	//アクション更新
 	ActionUpdate();
-	state->Update(this);
+	state_->Update(this);
 	//入力更新
 	InputUpdate();
 	//ビート更新
@@ -75,7 +75,7 @@ void Player::Finalize()
 void Player::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
-		isDamage = true;
+		isDamage_ = true;
 	}
 }
 
@@ -83,7 +83,7 @@ void Player::OnCollision(const CollisionInfo &info)
 bool Player::GetIsDamage()
 {
 	//(サウンド管理をするのでトリガー)
-	if(damageFrame == 0 && isDamage){
+	if(damageFrame_ == 0 && isDamage_){
 		return true;
 	}
 	return false;
@@ -107,11 +107,15 @@ void Player::InputUpdate()
 
 	//死亡
 	if(isDead_) return;
+	//シーン遷移
+	if(isNextScene_) return ;
 	//重複
 	if(isDuplicateLimit_) return;
 	
 	//移動処理
 	InputMovement();
+	//扉解放
+	InputDecision();
 }
 
 void Player::InputMovement()
@@ -126,27 +130,37 @@ void Player::InputMovement()
 
 	//固有処理
 	if(isLEFT){
-		addVector3 = {-MoveLength,0.f,0.f};
+		addVector3_ = {-MoveLength,0.f,0.f};
 		world.rotation.y = XMConvertToRadians(-90);
 	}
 	else if(isRIGHT){
-		addVector3 = {MoveLength,0.f,0.f};
+		addVector3_ = {MoveLength,0.f,0.f};
 		world.rotation.y = XMConvertToRadians(90);
 	}
 	else if(isUP){
-		addVector3 = {0.f,0.f,MoveLength};
+		addVector3_ = {0.f,0.f,MoveLength};
 		world.rotation.y = XMConvertToRadians(0);
 	}
 	else if(isDOWN){
-		addVector3 = {0.f,0.f,-MoveLength};
+		addVector3_ = {0.f,0.f,-MoveLength};
 		world.rotation.y = XMConvertToRadians(180);
 	}
 	rayCastDir_ = {float(isRIGHT - isLEFT),0, float(isUP - isDOWN)};
 
 	//共通
 	isInput_ = true;
-	weaponOffset_ = addVector3;
+	weaponOffset_ = addVector3_;
 	isDuplicateLimit_ = true;
+}
+
+void Player::InputDecision()
+{
+	bool isZ = input_->Trigger(DIK_Z);
+
+	if(!isZ) return;
+	if(!isExitOpen_) return;
+
+	isNextScene_ = true;
 }
 
 void Player::BeatUpdate()
@@ -172,42 +186,42 @@ void Player::ActionUpdate()
 		RaycastHit rayCastHit_;
 		//壁判定
 		if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_LANDSHAPE, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			state->SetNextState(new DigState);
+			state_->SetNextState(new DigState);
 			return ;
 		}
 		else if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_ENEMYS, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			state->SetNextState(new AttackState);
+			state_->SetNextState(new AttackState);
 			return ;
 		}
 
 		//移動
-		state->SetNextState(new MoveState);
+		state_->SetNextState(new MoveState);
 		easigStartPos_ = world.translation;
-		easingEndPos = world.translation + addVector3;
+		easingEndPos_ = world.translation + addVector3_;
 	}
 }
 
 void Player::DamageUpdate(){
 	
-	if(!isDamage) return;
+	if(!isDamage_) return;
 
 	//初回のみ
-	if(damageFrame == 0){
+	if(damageFrame_ == 0){
 		camera->ShakeStart(3);
 		hp_-= 1;
 	}
 
 	//無敵時間内
-	Vector4 color = (damageFrame % 6 == 1) ? color = {0.0f, 0.0f, 0.0f, 0.0f} : color = {1.0f, 0.0f, 0.0f, 1.0f};
+	Vector4 color = (damageFrame_ % 6 == 1) ? color = {0.0f, 0.0f, 0.0f, 0.0f} : color = {1.0f, 0.0f, 0.0f, 1.0f};
 	object->SetColor(color);
-	damageFrame ++;
+	damageFrame_ ++;
 
 
 	//無敵時間終了
-	if(damageFrame < DamageFrameMax) return;
-	damageFrame = 0;
+	if(damageFrame_ < DamageFrameMax) return;
+	damageFrame_ = 0;
 	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
-	isDamage = false;
+	isDamage_ = false;
 }
 
 
@@ -259,14 +273,14 @@ void Player::IdelState::Update(Player* player)
 void Player::MoveState::Update(Player* player)
 {
 	//移動処理
-	player->world.translation = Easing_Linear_Point2(player->easigStartPos_, player->easingEndPos, Time_OneWay(player->easingMoveTime, player->EasingMoveTimeMax));
+	player->world.translation = Easing_Linear_Point2(player->easigStartPos_, player->easingEndPos_, Time_OneWay(player->easingMoveTime_, player->EasingMoveTimeMax));
 
 	//移動完了時
-	if(player->easingMoveTime >= 1.0f){
-		player->world.translation = player->easingEndPos;
+	if(player->easingMoveTime_ >= 1.0f){
+		player->world.translation = player->easingEndPos_;
 		player->easigStartPos_ = {};
-		player->easingEndPos = {};
-		player->easingMoveTime = 0.f;
+		player->easingEndPos_ = {};
+		player->easingMoveTime_ = 0.f;
 		
 		stateManager_->SetNextState(new IdelState);
 	}
