@@ -234,10 +234,10 @@ void BaseBattleScene::Object2DInitialize()
 void BaseBattleScene::Object3DUpdate()
 {
 	//プレイヤー
-	/*if(player->DamageSound())	{
+	if(player->GetIsDamage())	{
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
-	}*/
+	}
 	//小節終了時に入力可能状態に変更
 	if(rhythmManager->GetIsMeasureUp()){
 		player->InputPossible();

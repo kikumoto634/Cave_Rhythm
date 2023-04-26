@@ -44,6 +44,9 @@ void Player::Update(Camera *camera)
 	//ビート更新
 	BeatUpdate();
 
+	//ダメージ
+	DamageUpdate();
+
 	//武器更新
 	weapon_->SetPosition(world.translation + weaponOffset_);
 	weapon_->SetRotation(GetRotation());
@@ -71,6 +74,18 @@ void Player::Finalize()
 
 void Player::OnCollision(const CollisionInfo &info)
 {
+	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
+		isDamage = true;
+	}
+}
+
+bool Player::GetIsDamage()
+{
+	//(サウンド管理をするのでトリガー)
+	if(damageFrame == 0 && isDamage){
+		return true;
+	}
+	return false;
 }
 
 void Player::SphereColliderSet()
@@ -89,7 +104,9 @@ void Player::InputUpdate()
 {
 	isInput_ = false;
 
-
+	//死亡
+	if(isDead_) return;
+	//重複
 	if(isDuplicateLimit_) return;
 	
 	//移動処理
@@ -167,6 +184,29 @@ void Player::ActionUpdate()
 		easigStartPos_ = world.translation;
 		easingEndPos = world.translation + addVector3;
 	}
+}
+
+void Player::DamageUpdate(){
+	
+	if(!isDamage) return;
+
+	//初回のみ
+	if(damageFrame == 0){
+		camera->ShakeStart(3);
+		hp_-= 1;
+	}
+
+	//無敵時間内
+	Vector4 color = (damageFrame % 6 == 1) ? color = {0.0f, 0.0f, 0.0f, 0.0f} : color = {1.0f, 0.0f, 0.0f, 1.0f};
+	object->SetColor(color);
+	damageFrame ++;
+
+
+	//無敵時間終了
+	if(damageFrame < DamageFrameMax) return;
+	damageFrame = 0;
+	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
+	isDamage = false;
 }
 
 

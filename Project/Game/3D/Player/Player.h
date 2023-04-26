@@ -15,6 +15,8 @@ private:
 	//レイキャストの長さ
 	const float adsDistance = 1.0f;
 
+	//ダメージ状態の総フレーム
+	const int DamageFrameMax = 150;
 
 //TODO : 長いからファイル分割
 //サブクラス
@@ -117,13 +119,14 @@ public:
 	inline void InputPossible()	{isDuplicateLimit_ = false;}
 
 	//Getter
+	//ダメージ
+	bool GetIsDamage();
 	//入力確認
 	inline bool GetIsInput()	{return isInput_;}
 	//体力
 	inline int GetHp()	{return hp_;}
 	//死亡
 	inline bool GetIsDead()	{return isDead_;}
-
 
 	//Setter
 	//入力判別
@@ -152,6 +155,9 @@ private:
 	//アクション
 	void ActionUpdate();
 
+	//ダメージ
+	void DamageUpdate();
+
 private:
 	//ポインタ
 	//入力
@@ -165,6 +171,10 @@ private:
 
 	//体力
 	int hp_ = 0;
+
+	//ダメージ
+	bool isDamage = false;
+	int damageFrame = 0;
 
 	//死亡
 	bool isDead_ = false;
