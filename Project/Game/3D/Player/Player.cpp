@@ -210,6 +210,7 @@ void Player::StateManager::Update(Player* player)
 }
 
 
+
 void Player::IdelState::Update(Player* player)
 {
 }

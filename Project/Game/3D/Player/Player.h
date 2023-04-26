@@ -16,6 +16,7 @@ private:
 	const float adsDistance = 1.0f;
 
 
+//TODO : 長いからファイル分割
 //サブクラス
 public:
 	//前方宣言
