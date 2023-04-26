@@ -16,6 +16,73 @@ private:
 	const float adsDistance = 1.0f;
 
 
+//サブクラス
+public:
+	//前方宣言
+	class StateManager;
+	class StateBase;
+	//フレンド
+	friend StateBase;
+
+	//状態
+	class StateBase{
+	public:
+		virtual void SetStateManager(StateManager* stateManager)	{stateManager_ = stateManager;}
+
+		virtual void Update(Player* player) = 0;
+
+	protected:
+		//借り物
+		StateManager* stateManager_ = nullptr;
+	};
+
+	//通常
+	class IdelState : public StateBase{
+	public:
+		void Update(Player* player) override;
+	};
+
+	//移動
+	class MoveState : public StateBase{
+	public:
+		void Update(Player* player) override;
+	};
+
+	//攻撃
+	class AttackState : public StateBase{
+	public:
+		void Update(Player* player) override;
+	};
+
+	//掘る
+	class DigState : public StateBase{
+	public:
+		void Update(Player* player) override;
+	};
+
+
+	//状態遷移クラス
+	class StateManager{
+	public:
+		~StateManager();
+
+		static StateManager* GetInstance();
+		static void Delete();
+
+		void SetNextState(StateBase* nextState)	{nextState_ = nextState;}
+
+		void Update(Player* player);
+
+	private:
+		static StateManager* instance;
+
+		StateBase* state_ = nullptr;
+		StateBase* nextState_ = nullptr;
+
+		Player* player = nullptr;
+	};
+
+
 //メンバ関数
 public:
 	/// <summary>
@@ -110,14 +177,7 @@ private:
 	bool isDuplicateLimit_ = false;
 
 	//状態
-	enum State{
-		None,
-		Move,
-		Dig,
-		Attack
-	};
-
-	State state_ = None;
+	StateManager* state = nullptr;
 
 	//移動
 	//イージングの移動開始座標
