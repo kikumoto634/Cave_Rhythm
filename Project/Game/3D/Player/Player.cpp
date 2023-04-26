@@ -79,6 +79,7 @@ void Player::OnCollision(const CollisionInfo &info)
 	}
 }
 
+
 bool Player::GetIsDamage()
 {
 	//(サウンド管理をするのでトリガー)
