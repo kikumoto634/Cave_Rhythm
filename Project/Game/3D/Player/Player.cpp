@@ -2,12 +2,10 @@
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 #include "Easing.h"
+#include "PlayerStateManager.h"
+#include "PlayerState.h"
 
 using namespace DirectX;
-
-//静的
-Player::StateManager* Player::StateManager::instance = nullptr;
-
 
 void Player::Initialize(std::string filePath, bool IsSmoothing)
 {
@@ -24,9 +22,9 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
 	//状態
-	state_ = StateManager::GetInstance();
+	state_ = PlayerStateManager::GetInstance();
 	
-	state_->SetNextState(new IdelState);
+	state_->SetNextState(new IdelPlayerState);
 
 	//コライダー
 	SphereColliderSet();
@@ -186,16 +184,16 @@ void Player::ActionUpdate()
 		RaycastHit rayCastHit_;
 		//壁判定
 		if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_LANDSHAPE, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			state_->SetNextState(new DigState);
+			state_->SetNextState(new DigPlayerState);
 			return ;
 		}
 		else if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_ENEMYS, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			state_->SetNextState(new AttackState);
+			state_->SetNextState(new AttackPlayerState);
 			return ;
 		}
 
 		//移動
-		state_->SetNextState(new MoveState);
+		state_->SetNextState(new MovePlayerState);
 		easigStartPos_ = world.translation;
 		easingEndPos_ = world.translation + addVector3_;
 	}
@@ -224,76 +222,3 @@ void Player::DamageUpdate(){
 	isDamage_ = false;
 }
 
-
-
-Player::StateManager::~StateManager()
-{
-	delete state_;
-}
-
-Player::StateManager* Player::StateManager::GetInstance()
-{
-	if(!instance)
-	{
-		instance = new StateManager();
-	}
-	return instance;
-}
-
-void Player::StateManager::Delete()
-{
-	if(instance){
-		delete instance;
-		instance = nullptr;
-	}
-}
-
-void Player::StateManager::Update(Player* player)
-{
-	if(nextState_){
-		if(state_){
-			delete state_;
-		}
-		state_ = nextState_;
-
-		nextState_ = nullptr;
-
-		state_->SetStateManager(this);
-	}
-
-	state_->Update(player);
-}
-
-
-
-void Player::IdelState::Update(Player* player)
-{
-}
-
-void Player::MoveState::Update(Player* player)
-{
-	//移動処理
-	player->world.translation = Easing_Linear_Point2(player->easigStartPos_, player->easingEndPos_, Time_OneWay(player->easingMoveTime_, player->EasingMoveTimeMax));
-
-	//移動完了時
-	if(player->easingMoveTime_ >= 1.0f){
-		player->world.translation = player->easingEndPos_;
-		player->easigStartPos_ = {};
-		player->easingEndPos_ = {};
-		player->easingMoveTime_ = 0.f;
-		
-		stateManager_->SetNextState(new IdelState);
-	}
-}
-
-void Player::AttackState::Update(Player *player)
-{
-	player->weapon_->Attack();
-	stateManager_->SetNextState(new IdelState);
-}
-
-void Player::DigState::Update(Player *player)
-{
-	player->weapon_->Attack();
-	stateManager_->SetNextState(new IdelState);
-}

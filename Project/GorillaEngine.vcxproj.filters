@@ -355,6 +355,12 @@
     <Filter Include="ヘッダー ファイル\Engine\Base\Manager\Particle">
       <UniqueIdentifier>{5978c735-a316-434d-92bb-87725a011249}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Player\State">
+      <UniqueIdentifier>{a17b8b4f-04dc-4257-a5ae-d7f4ade25f4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Player\State">
+      <UniqueIdentifier>{eeddf66b-f894-41ad-a1dc-288bd392ae26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -548,6 +554,12 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\ObjectBase\BaseObjObject.cpp">
       <Filter>ソース ファイル\Engine\3D\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Player\State\PlayerState.cpp">
+      <Filter>ソース ファイル\Game\3D\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Player\State\PlayerStateManager.cpp">
+      <Filter>ソース ファイル\Game\3D\Player\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -769,6 +781,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Base\Manager\.Obj\ObjModelMesh.h">
       <Filter>ヘッダー ファイル\Engine\Base\Manager\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Player\State\PlayerState.h">
+      <Filter>ヘッダー ファイル\Game\3D\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Player\State\PlayerStateManager.h">
+      <Filter>ヘッダー ファイル\Game\3D\Player\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
