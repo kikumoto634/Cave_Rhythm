@@ -100,7 +100,8 @@ bool Player::GetIsDamage()
 bool Player::GetIsDead()
 {
 	//(サウンド管理をするのでトリガー)
-	if(damageFrame_ == 0 && isDead_){
+	if(isDead_){
+		isDead_ = false;
 		return true;
 	}
 	return false;
@@ -253,15 +254,6 @@ void Player::DamageUpdate(){
 void Player::DeadUpdate()
 {
 	if(!isDead_) return;
-
-	//初回
-	if(damageFrame_ == 0){
-		camera->ShakeStart(3);
-	}
-
-	damageFrame_++;
-
-	if(damageFrame_ < DamageFrameMax) return;
-	damageFrame_ = 0;
+	camera->ShakeStart(6);
 }
 
