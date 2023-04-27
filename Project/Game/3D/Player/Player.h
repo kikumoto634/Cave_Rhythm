@@ -14,6 +14,7 @@ friend class IdelPlayerState;
 friend class MovePlayerState;
 friend class AttackPlayerState;
 friend class DigPlayerState;
+friend class DeadPlayerState;
 
 //定数
 private:
@@ -103,10 +104,6 @@ private:
 
 	//ダメージ
 	void DamageUpdate();
-
-	//死亡
-	void DeadUpdate();
-
 private:
 	//ポインタ
 	//入力
@@ -117,6 +114,10 @@ private:
 	//武器
 	//オフセット
 	Vector3 weaponOffset_ = {};
+
+	//モデル
+	ObjModelManager* attackModel_ = nullptr;
+	ObjModelManager* deadModel_ = nullptr;
 
 	//体力
 	int hp_ = 0;

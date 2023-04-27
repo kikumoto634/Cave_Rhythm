@@ -18,12 +18,18 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	weapon_ = new PlayerWeapon();
 	weapon_->Initialize("Slash", false);
 
+	//攻撃モデル
+	attackModel_ = new ObjModelManager();
+	attackModel_->CreateModel("human2");
+	//死亡モデル
+	deadModel_ = new ObjModelManager();
+	deadModel_->CreateModel("human3");
+
 	//拡縮最小値
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
 	//状態
 	state_ = PlayerStateManager::GetInstance();
-	
 	state_->SetNextState(new IdelPlayerState);
 
 	//コライダー
@@ -44,12 +50,11 @@ void Player::Update(Camera *camera)
 
 	//ダメージ
 	DamageUpdate();
-	//死亡
-	DeadUpdate();
 #ifdef _DEBUG
 	if(input_->Trigger(DIK_SPACE)){
 		//isDead_ = true;
 		isDamage_ = true;
+		hp_ = 0;
 	}
 #endif // _DEBUG
 
@@ -72,6 +77,11 @@ void Player::Draw()
 
 void Player::Finalize()
 {
+	delete attackModel_;
+	attackModel_ = nullptr;
+	delete deadModel_;
+	deadModel_ = nullptr;
+
 	weapon_->Finalize();
 	delete weapon_;
 	weapon_ = nullptr;
@@ -230,6 +240,8 @@ void Player::DamageUpdate(){
 		
 		//死亡判定
 		if(hp_ <= 0){
+			state_->SetNextState(new DeadPlayerState);
+
 			isDamage_ = false;
 			isDead_ = true;
 			return ;
@@ -249,11 +261,5 @@ void Player::DamageUpdate(){
 	damageFrame_ = 0;
 	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
 	isDamage_ = false;
-}
-
-void Player::DeadUpdate()
-{
-	if(!isDead_) return;
-	camera->ShakeStart(6);
 }
 

@@ -3,17 +3,26 @@
 #include "Easing.h"
 #include "Player.h"
 
-void IdelPlayerState::Update(Player* player)
+#include <cassert>
+
+void PlayerState::Initialize(Player *player)
 {
+	assert(player);
 	player_ = player;
 }
 
-void MovePlayerState::Update(Player* player)
-{
-	player_ = player;
 
+void IdelPlayerState::Update()
+{
+}
+
+void MovePlayerState::Update()
+{
 	//移動処理
 	player_->world.translation = Easing_Linear_Point2(player_->easigStartPos_, player_->easingEndPos_, Time_OneWay(player_->easingMoveTime_, player_->EasingMoveTimeMax));
+
+	//モデル変更
+	player_->object->SetModel(player_->model);
 
 	//移動完了時
 	if(player_->easingMoveTime_ >= 1.0f){
@@ -26,18 +35,25 @@ void MovePlayerState::Update(Player* player)
 	}
 }
 
-void AttackPlayerState::Update(Player *player)
+void AttackPlayerState::Update()
 {
-	player_ = player;
-
 	player_->weapon_->Attack();
+	//モデル変更
+	player_->object->SetModel(player_->attackModel_);
+
 	stateManager_->SetNextState(new IdelPlayerState);
 }
 
-void DigPlayerState::Update(Player *player)
+void DigPlayerState::Update()
 {
-	player_ = player;
-
 	player_->weapon_->Attack();
+	//モデル変更
+	player_->object->SetModel(player_->attackModel_);
+
 	stateManager_->SetNextState(new IdelPlayerState);
+}
+
+void DeadPlayerState::Update()
+{
+	player_->object->SetModel(player_->deadModel_);
 }

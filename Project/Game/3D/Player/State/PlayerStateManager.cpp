@@ -30,8 +30,6 @@ void PlayerStateManager::Delete()
 
 void PlayerStateManager::Update(Player* player)
 {
-	player_ = player;
-
 	if(nextState_){
 		if(state_){
 			delete state_;
@@ -41,7 +39,8 @@ void PlayerStateManager::Update(Player* player)
 		nextState_ = nullptr;
 
 		state_->SetStateManager(this);
+		state_->Initialize(player);
 	}
 
-	state_->Update(player_);
+	state_->Update();
 }
