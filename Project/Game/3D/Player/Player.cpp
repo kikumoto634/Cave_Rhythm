@@ -47,14 +47,15 @@ void Player::Update(Camera *camera)
 	InputUpdate();
 	//ビート更新
 	BeatUpdate();
-
 	//ダメージ
 	DamageUpdate();
+
 #ifdef _DEBUG
 	if(input_->Trigger(DIK_SPACE)){
-		//isDead_ = true;
+		//state_->SetNextState(new DeadPlayerState);
+
 		isDamage_ = true;
-		hp_ = 0;
+		//hp_ = 0;
 	}
 #endif // _DEBUG
 
@@ -110,8 +111,7 @@ bool Player::GetIsDamage()
 bool Player::GetIsDead()
 {
 	//(サウンド管理をするのでトリガー)
-	if(isDead_){
-		isDead_ = false;
+	if(damageFrame_ == 0 && isDead_){
 		return true;
 	}
 	return false;
@@ -229,13 +229,13 @@ void Player::ActionUpdate()
 	}
 }
 
-void Player::DamageUpdate(){
-	
+void Player::DamageUpdate()
+{
 	if(!isDamage_) return;
 	if(isDead_) return;
 
-	//初回のみ
 	if(damageFrame_ == 0){
+		isDamage_ = true;
 		hp_-= 1;
 		
 		//死亡判定
@@ -255,11 +255,9 @@ void Player::DamageUpdate(){
 	object->SetColor(color);
 	damageFrame_ ++;
 
-
 	//無敵時間終了
 	if(damageFrame_ < DamageFrameMax) return;
 	damageFrame_ = 0;
 	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
 	isDamage_ = false;
 }
-

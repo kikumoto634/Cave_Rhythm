@@ -104,6 +104,7 @@ private:
 
 	//ダメージ
 	void DamageUpdate();
+
 private:
 	//ポインタ
 	//入力

@@ -14,6 +14,7 @@ void PlayerState::Initialize(Player *player)
 
 void IdelPlayerState::Update()
 {
+	if(player_->isDamage_) return;
 }
 
 void MovePlayerState::Update()
@@ -55,5 +56,9 @@ void DigPlayerState::Update()
 
 void DeadPlayerState::Update()
 {
+	//初回のみ
+	if(player_->isDead_) player_->damageFrame_ ++;
+	player_->isDead_ = true;
+
 	player_->object->SetModel(player_->deadModel_);
 }
