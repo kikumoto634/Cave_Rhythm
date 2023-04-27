@@ -18,13 +18,13 @@ protected:
 };
 
 //通常
-class IdelPlayerState : public PlayerState{
+class IdelPlayerState   : public PlayerState{
 public:
 	void Update(Player* player) override;
 };
 
 //移動
-class MovePlayerState : public PlayerState{
+class MovePlayerState   : public PlayerState{
 public:
 	void Update(Player* player) override;
 };
@@ -36,7 +36,7 @@ public:
 };
 
 //掘る
-class DigPlayerState : public PlayerState{
+class DigPlayerState    : public PlayerState{
 public:
 	void Update(Player* player) override;
 };
