@@ -216,6 +216,7 @@ void GameManager::SpriteUpdate()
 	}
 
 	if(IsHpScaleChange){
+		if(DamageHpSpriteIndex < 0) return;
 		if(hpSp[DamageHpSpriteIndex]->ScaleChange({75,75}, {50,50})){
 			IsHpScaleChange = false;
 		}

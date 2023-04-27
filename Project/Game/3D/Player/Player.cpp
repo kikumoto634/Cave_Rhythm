@@ -44,6 +44,15 @@ void Player::Update(Camera *camera)
 
 	//ダメージ
 	DamageUpdate();
+	//死亡
+	DeadUpdate();
+#ifdef _DEBUG
+	if(input_->Trigger(DIK_SPACE)){
+		//isDead_ = true;
+		isDamage_ = true;
+	}
+#endif // _DEBUG
+
 
 	//武器更新
 	weapon_->SetPosition(world.translation + weaponOffset_);
@@ -80,8 +89,18 @@ void Player::OnCollision(const CollisionInfo &info)
 
 bool Player::GetIsDamage()
 {
+	if(isDead_) return false;
 	//(サウンド管理をするのでトリガー)
 	if(damageFrame_ == 0 && isDamage_){
+		return true;
+	}
+	return false;
+}
+
+bool Player::GetIsDead()
+{
+	//(サウンド管理をするのでトリガー)
+	if(damageFrame_ == 0 && isDead_){
 		return true;
 	}
 	return false;
@@ -202,11 +221,20 @@ void Player::ActionUpdate()
 void Player::DamageUpdate(){
 	
 	if(!isDamage_) return;
+	if(isDead_) return;
 
 	//初回のみ
 	if(damageFrame_ == 0){
-		camera->ShakeStart(3);
 		hp_-= 1;
+		
+		//死亡判定
+		if(hp_ <= 0){
+			isDamage_ = false;
+			isDead_ = true;
+			return ;
+		}
+
+		camera->ShakeStart(3);
 	}
 
 	//無敵時間内
@@ -220,5 +248,20 @@ void Player::DamageUpdate(){
 	damageFrame_ = 0;
 	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
 	isDamage_ = false;
+}
+
+void Player::DeadUpdate()
+{
+	if(!isDead_) return;
+
+	//初回
+	if(damageFrame_ == 0){
+		camera->ShakeStart(3);
+	}
+
+	damageFrame_++;
+
+	if(damageFrame_ < DamageFrameMax) return;
+	damageFrame_ = 0;
 }
 

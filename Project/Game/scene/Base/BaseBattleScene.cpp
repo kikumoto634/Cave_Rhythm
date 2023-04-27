@@ -238,6 +238,10 @@ void BaseBattleScene::Object3DUpdate()
 		gameManager->AudioPlay(2,0.2f);
 		gameManager->HpDecrement();
 	}
+	if(player->GetIsDead())	{
+		gameManager->AudioPlay(2,0.5f);
+		IsGameEnd = true;
+	}
 	//小節終了時に入力可能状態に変更
 	if(rhythmManager->GetIsMeasureUp()){
 		player->InputPossible();
@@ -248,11 +252,7 @@ void BaseBattleScene::Object3DUpdate()
 		IsRhythmInput = true;
 		IsNoteInput = true;
 	}
-	/*player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
-	if(player->GetIsDead() && player->GetIsDeadAudioOnce())	{
-		gameManager->AudioPlay(2,0.5f);
-		IsGameEnd = true;
-	}*/
+	//player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
 	//出口
 	exit->Update(camera);
 	{

@@ -62,12 +62,12 @@ public:
 	//Getter
 	//ダメージ
 	bool GetIsDamage();
+	//死亡
+	bool GetIsDead();
 	//体力
 	inline int GetHp()	{return hp_;}
 	//入力確認
 	inline bool GetIsInput()	{return isInput_;}
-	//死亡
-	inline bool GetIsDead()	{return isDead_;}
 	//次のシーン
 	inline bool GetIsNextScene()	{return isNextScene_;}
 
@@ -103,6 +103,9 @@ private:
 
 	//ダメージ
 	void DamageUpdate();
+
+	//死亡
+	void DeadUpdate();
 
 private:
 	//ポインタ
