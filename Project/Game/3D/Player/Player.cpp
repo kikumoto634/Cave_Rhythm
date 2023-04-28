@@ -235,7 +235,6 @@ void Player::DamageUpdate()
 	if(isDead_) return;
 
 	if(damageFrame_ == 0){
-		isDamage_ = true;
 		hp_-= 1;
 		
 		//死亡判定

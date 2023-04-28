@@ -238,7 +238,6 @@ void BaseBattleScene::Object3DUpdate()
 	if(rhythmManager->GetIsMeasureUp()){
 		player->InputPossible();
 	}
-	player->Update(camera);
 	if(player->GetIsInput()){
 		rhythmManager->InputTime();
 		IsRhythmInput = true;
@@ -252,6 +251,7 @@ void BaseBattleScene::Object3DUpdate()
 		gameManager->AudioPlay(2,0.5f);
 		IsGameEnd = true;
 	}
+	player->Update(camera);
 	//player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
 	//出口
 	exit->Update(camera);
