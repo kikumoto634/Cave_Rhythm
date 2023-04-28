@@ -349,6 +349,24 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Player\State">
       <UniqueIdentifier>{eeddf66b-f894-41ad-a1dc-288bd392ae26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\BlueSlime">
+      <UniqueIdentifier>{5d9b710d-fee6-40f5-a5e7-8434f155b91a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\BlueSlime">
+      <UniqueIdentifier>{85068870-9c3b-4612-b0ec-92e9ff9c9890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\Boss">
+      <UniqueIdentifier>{c2f7aa22-0a62-47f0-8ef5-5aa2531970f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\Boss">
+      <UniqueIdentifier>{159045c0-9a99-4116-8736-297f62d72023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\Skeleton">
+      <UniqueIdentifier>{71660658-a63f-4015-8d28-5dddae6d79b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\Skeleton">
+      <UniqueIdentifier>{3f6fc23e-5286-4039-8253-26c693e9289f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -402,23 +420,14 @@
     <ClCompile Include="Game\3D\Wall\Walls.cpp">
       <Filter>ソース ファイル\Game\3D\Wall</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3D\Enemy\BlueSlime.cpp">
-      <Filter>ソース ファイル\Game\3D\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp">
       <Filter>ソース ファイル\Game\3D\Wall</Filter>
     </ClCompile>
     <ClCompile Include="Game\2D\TutorialSp.cpp">
       <Filter>ソース ファイル\Game\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3D\Enemy\Skelton.cpp">
-      <Filter>ソース ファイル\Game\3D\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3D\Enemy\Boss1.cpp">
-      <Filter>ソース ファイル\Game\3D\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Game\2D\Notes\Notes.cpp">
       <Filter>ソース ファイル\Game\2D\Notes</Filter>
@@ -543,6 +552,15 @@
     <ClCompile Include="Game\3D\Player\State\PlayerStateManager.cpp">
       <Filter>ソース ファイル\Game\3D\Player\State</Filter>
     </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\BlueSlime\BlueSlime.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\BlueSlime</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Boss\Boss1.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Skelton\Skelton.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\Skeleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\Input.h">
@@ -593,20 +611,11 @@
     <ClInclude Include="Game\3D\Wall\Walls.h">
       <Filter>ヘッダー ファイル\Game\3D\Wall</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\Enemy\BlueSlime.h">
-      <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Game\3D\Wall\IndestructibleWall.h">
       <Filter>ヘッダー ファイル\Game\3D\Wall</Filter>
     </ClInclude>
     <ClInclude Include="Game\2D\TutorialSp.h">
       <Filter>ヘッダー ファイル\Game\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3D\Enemy\Skelton.h">
-      <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3D\Enemy\Boss1.h">
-      <Filter>ヘッダー ファイル\Game\3D\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Game\2D\Notes\Notes.h">
       <Filter>ヘッダー ファイル\Game\2D\Notes</Filter>
@@ -763,6 +772,15 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Player\State\PlayerStateManager.h">
       <Filter>ヘッダー ファイル\Game\3D\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\BlueSlime\BlueSlime.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\BlueSlime</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Boss\Boss1.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Skelton\Skelton.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\Skeleton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
