@@ -133,12 +133,12 @@ void Boss1Area::AddObject3DUpdate()
 		boss->ParticleUpdate();
 	}
 
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
-		if((*it)->GetIsDeadAudio()){
-			gameManager->AudioPlay(2, 0.5f);
-		}
-		(*it)->Update(camera,player->GetPosition());
-	}
+	//for(auto it = skelton.begin(); it != skelton.end(); it++){
+	//	/*if((*it)->GetIsDeadAudio()){
+	//		gameManager->AudioPlay(2, 0.5f);
+	//	}
+	//	(*it)->Update(camera,player->GetPosition());*/
+	//}
 
 	//入口
 	{
@@ -189,9 +189,9 @@ void Boss1Area::AddBeatEndUpdate()
 	if(!IsEnterClose) return;
 	boss->IsBeatEndOn();
 
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
 		(*it)->IsBeatEndOn();
-	}
+	}*/
 }
 
 void Boss1Area::AddObject3DDraw()
@@ -207,9 +207,9 @@ void Boss1Area::AddObject3DDraw()
 	if(!IsEnterClose) return;
 	//ボス
 	boss->Draw();
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
 		(*it)->Draw();
-	}
+	}*/
 	//入口
 	for(int i = 0; i < 3; i++){
 		enterWall[i]->Draw();
@@ -219,9 +219,9 @@ void Boss1Area::AddObject3DDraw()
 void Boss1Area::AddParticleDraw()
 {
 	boss->ParticleDraw();
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
 		(*it)->ParticleDraw();
-	}
+	}*/
 }
 
 void Boss1Area::AddFrontUIDraw()
@@ -238,9 +238,9 @@ void Boss1Area::AddObjectFinalize()
 	//ボス
 	boss->Finalize();
 
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
 		(*it)->Finalize();
-	}
+	}*/
 
 	delete IndestructibleWallModel;
 	delete IndestructibleWallColliderModel;
@@ -374,17 +374,17 @@ void Boss1Area::cutinFinalize()
 
 void Boss1Area::ActorCreateInitialize()
 {
-	for(int i = 0; i < skeltonPopNumMax; i++){
+	/*for(int i = 0; i < skeltonPopNumMax; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Skeleton");
 		skelton.push_back(move(newObj));
-	}
+	}*/
 }
 
 void Boss1Area::ActorSummon()
 {
 	if(!boss->GetIsSummonEnemyPop()) return;
-	for(auto it = skelton.begin(); it != skelton.end(); it++){
+	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
 		if(!(*it)->GetIsNotApp()){
 			int lx = rand()%7 + -3;
 			int lz = rand()%4;
@@ -394,5 +394,5 @@ void Boss1Area::ActorSummon()
 			boss->IsSummonEnemyPopNot();
 			break;
 		}
-	}
+	}*/
 }

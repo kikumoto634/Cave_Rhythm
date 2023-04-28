@@ -66,13 +66,13 @@ void HomeScene::AddCommonUpdate()
 
 void HomeScene::AddObject3DUpdate()
 {
-	for(auto it = slime.begin(); it != slime.end(); it++){
-		if((*it)->GetIsDeadAudio()){
-			gameManager->AudioPlay(2, 0.5f);
-		}
-		//(*it)->SetMapInfo(areaManager->GetMapInfo());
-		(*it)->Update(camera,player->GetPosition());
-	}
+	//for(auto it = slime.begin(); it != slime.end(); it++){
+	//	if((*it)->GetIsDeadAudio()){
+	//		gameManager->AudioPlay(2, 0.5f);
+	//	}
+	//	//(*it)->SetMapInfo(areaManager->GetMapInfo());
+	//	(*it)->Update(camera,player->GetPosition());
+	//}
 }
 
 void HomeScene::AddObject2DUpdate()
@@ -97,7 +97,7 @@ void HomeScene::AddBeatEndUpdate()
 {
 	int index = 0;
 	Vector3 lpos;
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	/*for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
 		if(!(*it)->GetIsNotApp()){
 			if(areaManager->GetCSVObjectPopActive(index)) {
@@ -106,7 +106,7 @@ void HomeScene::AddBeatEndUpdate()
 			}
 			index++;
 		}
-	}
+	}*/
 }
 
 void HomeScene::AddObject3DDraw()
@@ -121,9 +121,9 @@ void HomeScene::AddObject3DDraw()
 
 void HomeScene::AddParticleDraw()
 {
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	/*for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->ParticleDraw();
-	}
+	}*/
 }
 
 void HomeScene::AddFrontUIDraw()
@@ -153,9 +153,9 @@ void HomeScene::AddCommonFinalize()
 
 void HomeScene::ActorCreateInitialize()
 {
-	for(int i = 0; i < slimePopNumMax; i++){
+	/*for(int i = 0; i < slimePopNumMax; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Slime");
 		slime.push_back(move(newObj));
-	}
+	}*/
 }

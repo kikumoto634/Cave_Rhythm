@@ -1,6 +1,6 @@
 #include "SkeltonStateManager.h"
 #include "SkeltonState.h"
-#include "Player.h"
+#include "Skelton.h"
 
 
 //静的

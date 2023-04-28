@@ -130,7 +130,7 @@ void GameScene::AddObject3DUpdate()
 		(*it)->Update(camera,player->GetPosition());
 	}
 
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	/*for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
 			for(auto it2 = coin.begin(); it2!= coin.end(); ++it2){
@@ -142,7 +142,7 @@ void GameScene::AddObject3DUpdate()
 		}
 		(*it)->SetMapInfo(areaManager->GetMapInfo());
 		(*it)->Update(camera,player->GetPosition());
-	}
+	}*/
 
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		if((*it)->GetCoin()){
@@ -170,14 +170,14 @@ void GameScene::AddBeatEndUpdate()
 				break;
 			}
 		}
-		for(auto it = skelton.begin(); it != skelton.end(); ++it){
+		/*for(auto it = skelton.begin(); it != skelton.end(); ++it){
 			if(!(*it)->GetIsNotApp()){
 				Vector3 lpos = areaManager->GetObjectPopPosition();
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
 				(*it)->CaveLightOn();
 				break;
 			}
-		}
+		}*/
 		popCount = 0;
 	}
 	else{
@@ -189,9 +189,9 @@ void GameScene::AddBeatEndUpdate()
 		(*it)->IsBeatEndOn();
 	}
 
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	/*for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->IsBeatEndOn();
-	}
+	}*/
 
 	for(auto it = coin.begin(); it != coin.end(); ++it){
 		if((*it)->GetIsAlive()){
@@ -207,9 +207,9 @@ void GameScene::AddObject3DDraw()
 	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->Draw();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	/*for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->Draw();
-	}
+	}*/
 	for(auto it = coin.begin(); it != coin.end(); ++it){
 		(*it)->Draw();
 	}
@@ -220,9 +220,9 @@ void GameScene::AddParticleDraw()
 	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->ParticleDraw();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	/*for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->ParticleDraw();
-	}
+	}*/
 }
 
 void GameScene::AddFrontUIDraw()
@@ -243,9 +243,9 @@ void GameScene::AddObjectFinalize()
 	for(auto it = slime.begin(); it != slime.end(); ++it){
 		(*it)->Finalize();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	/*for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->Finalize();
-	}
+	}*/
 	for(auto it = coin.begin(); it != coin.end(); ++it){
 		(*it)->Finalize();
 	}
@@ -265,11 +265,11 @@ void GameScene::ActorCreateInitialize()
 		slime.push_back(move(newObj));
 	}
 
-	for(int i = 0; i < skeltonPopNumMax; i++){
+	/*for(int i = 0; i < skeltonPopNumMax; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Skeleton");
 		skelton.push_back(move(newObj));
-	}
+	}*/
 
 	for(int i = 0; i < coinPopNumMax; i++){
 		unique_ptr<Coins> newObj = make_unique<Coins>();

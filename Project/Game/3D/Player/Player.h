@@ -9,6 +9,7 @@ class PlayerStateManager;
 
 class Player : public BaseObjObject
 {
+public:
 //フレンド関数
 friend class IdelPlayerState;
 friend class MovePlayerState;
@@ -120,6 +121,9 @@ private:
 	ObjModelManager* attackModel_ = nullptr;
 	ObjModelManager* deadModel_ = nullptr;
 
+	//状態
+	PlayerStateManager* state_ = nullptr;
+
 	//体力
 	int hp_ = 0;
 
@@ -137,9 +141,6 @@ private:
 	bool isInputJudge_ = false;
 	//重複入力制限
 	bool isDuplicateLimit_ = false;
-
-	//状態
-	PlayerStateManager* state_ = nullptr;
 
 	//移動
 	//イージングの移動開始座標

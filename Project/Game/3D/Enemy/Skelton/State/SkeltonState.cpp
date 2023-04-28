@@ -10,3 +10,24 @@ void SkeltonState::Initialize(Skelton *skelton)
 	assert(skelton_);
 	skelton_ = skelton;
 }
+
+void IdelSkeltonState::Update()
+{
+}
+
+void TrackSkeltonState::Update()
+{
+
+}
+
+void AttackSkeltonState::Update()
+{
+}
+
+void DeadSkeltonState::Update()
+{
+}
+
+void PopSkeltonState::Update()
+{
+}
