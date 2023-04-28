@@ -52,12 +52,6 @@
     <Filter Include="ヘッダー ファイル\Game\3D">
       <UniqueIdentifier>{4c4fdb4d-7c3f-431a-a161-12b986251feb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Game\3D\SampleFbxObj">
-      <UniqueIdentifier>{a286ec1a-2191-48c4-a219-f77bebdfcf67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\3D\SampleFbxObj">
-      <UniqueIdentifier>{290283ec-e8c0-429d-82c8-a1497a9a6cda}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game\2D">
       <UniqueIdentifier>{8c305fec-40eb-4bdd-ad79-77df9925e8d6}</UniqueIdentifier>
     </Filter>
@@ -66,12 +60,6 @@
     </Filter>
     <Filter Include="リソース ファイル\Obj">
       <UniqueIdentifier>{64f7312d-974c-4d51-8c15-3186ca7f85ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Game\3D\SampleObjObj">
-      <UniqueIdentifier>{07f97024-e6e9-4372-922a-d8221dcfcaa3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game\3D\SampleObjObj">
-      <UniqueIdentifier>{8eb6ad4c-b470-42bd-847b-87701060ec31}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Game\3D\Player">
       <UniqueIdentifier>{5949d41d-9305-416f-9905-588970eaa92f}</UniqueIdentifier>
@@ -369,9 +357,6 @@
     <ClCompile Include="Engine\loader\FbxLoader.cpp">
       <Filter>ソース ファイル\Engine\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="Game\3D\SampleFbxObject\SampleFbxObject.cpp">
-      <Filter>ソース ファイル\Game\3D\SampleFbxObj</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\math\Vector\Vector2.cpp">
       <Filter>ソース ファイル\Engine\Math\Vector</Filter>
     </ClCompile>
@@ -383,9 +368,6 @@
     </ClCompile>
     <ClCompile Include="Engine\math\Easing\Easing.cpp">
       <Filter>ソース ファイル\Engine\Math\Easing</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp">
-      <Filter>ソース ファイル\Game\3D\SampleObjObj</Filter>
     </ClCompile>
     <ClCompile Include="Engine\light\LightGroup.cpp">
       <Filter>ソース ファイル\Engine\Light</Filter>
@@ -569,9 +551,6 @@
     <ClInclude Include="Engine\loader\FbxLoader.h">
       <Filter>ヘッダー ファイル\Engine\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="Game\3D\SampleFbxObject\SampleFbxObject.h">
-      <Filter>ヘッダー ファイル\Game\3D\SampleFbxObj</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\math\Vector\Vector2.h">
       <Filter>ヘッダー ファイル\Engine\Math\Vector</Filter>
     </ClInclude>
@@ -583,9 +562,6 @@
     </ClInclude>
     <ClInclude Include="Engine\math\Easing\Easing.h">
       <Filter>ヘッダー ファイル\Engine\Math\Easing</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h">
-      <Filter>ヘッダー ファイル\Game\3D\SampleObjObj</Filter>
     </ClInclude>
     <ClInclude Include="Engine\light\LightGroup.h">
       <Filter>ヘッダー ファイル\Engine\Light</Filter>

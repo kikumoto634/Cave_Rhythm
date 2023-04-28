@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include "BaseScene.h"
 
-#include "SampleFbxObject.h"
-#include "SampleObjObject.h"
 #include "TouchableObject.h"
 
 #include "Player.h"

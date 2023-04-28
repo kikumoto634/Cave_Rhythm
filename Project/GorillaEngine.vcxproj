@@ -214,8 +214,6 @@
     <ClCompile Include="Game\3D\Player\PlayerWeapon.cpp" />
     <ClCompile Include="Game\3D\Player\State\PlayerState.cpp" />
     <ClCompile Include="Game\3D\Player\State\PlayerStateManager.cpp" />
-    <ClCompile Include="Game\3D\SampleFbxObject\SampleFbxObject.cpp" />
-    <ClCompile Include="Game\3D\SampleObjObject\SampleObjObject.cpp" />
     <ClCompile Include="Game\3D\Wall\IndestructibleWall.cpp" />
     <ClCompile Include="Game\3D\Wall\Walls.cpp" />
     <ClCompile Include="Game\scene\Base\BaseBattleScene.cpp" />
@@ -291,8 +289,6 @@
     <ClInclude Include="Game\3D\Player\PlayerWeapon.h" />
     <ClInclude Include="Game\3D\Player\State\PlayerState.h" />
     <ClInclude Include="Game\3D\Player\State\PlayerStateManager.h" />
-    <ClInclude Include="Game\3D\SampleFbxObject\SampleFbxObject.h" />
-    <ClInclude Include="Game\3D\SampleObjObject\SampleObjObject.h" />
     <ClInclude Include="Game\3D\Wall\IndestructibleWall.h" />
     <ClInclude Include="Game\3D\Wall\Walls.h" />
     <ClInclude Include="Game\scene\Base\BaseBattleScene.h" />
