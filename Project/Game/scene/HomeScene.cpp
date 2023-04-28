@@ -154,7 +154,7 @@ void HomeScene::AddCommonFinalize()
 void HomeScene::ActorCreateInitialize()
 {
 	for(int i = 0; i < slimePopNumMax; i++){
-		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
+		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Slime");
 		slime.push_back(move(newObj));
 	}

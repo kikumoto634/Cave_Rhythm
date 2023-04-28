@@ -367,6 +367,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Enemy\Skelton">
       <UniqueIdentifier>{3f6fc23e-5286-4039-8253-26c693e9289f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\Skelton\State">
+      <UniqueIdentifier>{45d8214c-439f-4ce3-ab00-937c9751eb70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\Skelton\State">
+      <UniqueIdentifier>{c43fc8a7-dee3-4e76-83eb-09774008f206}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -560,6 +566,12 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Enemy\Skelton\Skelton.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy\Skelton</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Skelton\State\SkeltonState.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\Skelton\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Skelton\State\SkeltonStateManager.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\Skelton\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +793,12 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Skelton\Skelton.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy\Skelton</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Skelton\State\SkeltonState.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\Skelton\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Skelton\State\SkeltonStateManager.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\Skelton\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

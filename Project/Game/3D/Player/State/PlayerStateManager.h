@@ -21,6 +21,4 @@ private:
 
 	PlayerState* state_ = nullptr;
 	PlayerState* nextState_ = nullptr;
-
-	Player* player_ = nullptr;
 };
