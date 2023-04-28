@@ -20,30 +20,30 @@ protected:
 
 //通常
 class IdelPlayerState   : public PlayerState{
-public:
+private:
 	void Update() override;
 };
 
 //移動
 class MovePlayerState   : public PlayerState{
-public:
+private:
 	void Update() override;
 };
 
 //攻撃
 class AttackPlayerState : public PlayerState{
-public:
+private:
 	void Update() override;
 };
 
 //掘る
 class DigPlayerState    : public PlayerState{
-public:
+private:
 	void Update() override;
 };
 
 //死亡
 class DeadPlayerState   : public PlayerState{
-public:
+private:
 	void Update() override;
 };

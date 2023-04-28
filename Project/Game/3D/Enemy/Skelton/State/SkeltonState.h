@@ -18,3 +18,33 @@ protected:
 	Skelton* skelton_ = nullptr;
 };
 
+//待機
+class IdelSkeltonState : public SkeltonState{
+private:
+	void Update() override;
+};
+
+//追跡
+class TrackSkeltonState : public SkeltonState{
+private:
+	void Update() override;
+};
+
+//攻撃
+class AttackSkeltonState : public SkeltonState{
+private:
+	void Update() override;
+};
+
+//死亡
+class DeadSkeltonState : public SkeltonState{
+private:
+	void Update() override;
+};
+
+//出現
+class PopSkeltonState : public SkeltonState{
+private:
+	void Update() override;
+};
+
