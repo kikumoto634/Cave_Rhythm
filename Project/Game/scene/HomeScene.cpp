@@ -70,7 +70,7 @@ void HomeScene::AddObject3DUpdate()
 		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
 		}
-		(*it)->SetMapInfo(areaManager->GetMapInfo());
+		//(*it)->SetMapInfo(areaManager->GetMapInfo());
 		(*it)->Update(camera,player->GetPosition());
 	}
 }
@@ -154,7 +154,7 @@ void HomeScene::AddCommonFinalize()
 void HomeScene::ActorCreateInitialize()
 {
 	for(int i = 0; i < slimePopNumMax; i++){
-		unique_ptr<Skelton> newObj = make_unique<Skelton>();
+		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
 		newObj->Initialize("Slime");
 		slime.push_back(move(newObj));
 	}
