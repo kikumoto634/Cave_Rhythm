@@ -1,4 +1,4 @@
-﻿#include "TutorialScene.h"
+#include "TutorialScene.h"
 
 #include "TitleScene.h"
 #include "HomeScene.h"
@@ -50,7 +50,7 @@ void TutorialScene::AddObject2DInitialize()
 		moveSp->SetAnchorPoint(lancher);
 	}
 
-	{
+	/*{
 		attackSp = make_unique<TutorialSp>();
 		attackSp->Initialize(24);
 		Vector3 ltarget = attackSpPos;
@@ -58,7 +58,7 @@ void TutorialScene::AddObject2DInitialize()
 		attackSp->SetPosition(lpos);
 		attackSp->SetSize(lsize);
 		attackSp->SetAnchorPoint(lancher);
-	}
+	}*/
 }
 
 void TutorialScene::AddCommonUpdate()
@@ -100,13 +100,13 @@ void TutorialScene::AddObject2DUpdate()
 		moveSp->Update();
 	}
 
-	{
+	/*{
 		Vector3 ltarget = attackSpPos;
 		Vector2 lpos = attackSp->ChangeTransformation(ltarget, this->camera);
 		attackSp->SetPosition(lpos);
 		attackSp->SetPlayerPos(player->GetPosition());
 		attackSp->Update();
-	}
+	}*/
 }
 
 void TutorialScene::AddBeatEndUpdate()
@@ -154,7 +154,7 @@ void TutorialScene::AddParticleDraw()
 void TutorialScene::AddFrontUIDraw()
 {
 	moveSp->Draw();
-	attackSp->Draw();
+	/*attackSp->Draw();*/
 }
 
 void TutorialScene::AddBackUIDraw()
@@ -163,7 +163,7 @@ void TutorialScene::AddBackUIDraw()
 
 void TutorialScene::AddObjectFinalize()
 {
-	attackSp->Finalize();
+	//attackSp->Finalize();
 	moveSp->Finalize();
 
 	for(auto it = slime.begin(); it != slime.end(); it++){

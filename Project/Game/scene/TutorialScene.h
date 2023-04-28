@@ -53,7 +53,7 @@ private:
 	std::unique_ptr<TutorialSp> moveSp;
 	const Vector3 moveSpPos = {-25,-3,30};
 
-	std::unique_ptr<TutorialSp> attackSp;
-	const Vector3 attackSpPos = {7,-3,20};
+	//std::unique_ptr<TutorialSp> attackSp;
+	//const Vector3 attackSpPos = {7,-3,20};
 };
 
