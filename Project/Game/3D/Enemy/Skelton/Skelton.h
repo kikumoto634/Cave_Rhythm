@@ -68,8 +68,8 @@ private:
 	Vector3 addVector3_;
 
 	//コライダー
-	SphereCollider* sphereCollider_ = nullptr;
+	//SphereCollider* sphereCollider_ = nullptr;
 	//レイキャスト
-	Ray ray_;
+	//Ray ray_;
 	Vector3 rayCastDir_ = {0,0,-1};
 };

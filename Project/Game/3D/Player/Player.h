@@ -21,8 +21,6 @@ friend class DeadPlayerState;
 private:
 	//移動距離
 	const float MoveLength = 2.0f;
-	//移動時の時間
-	const float EasingMoveTimeMax = 0.075f;
 	//レイキャストの長さ
 	const float adsDistance = 1.0f;
 
@@ -133,6 +131,9 @@ private:
 
 	//死亡
 	bool isDead_ = false;
+	
+	//移動ベクトル
+	Vector3 addVector3_;
 
 	//入力
 	//入力確認
@@ -142,16 +143,6 @@ private:
 	//重複入力制限
 	bool isDuplicateLimit_ = false;
 
-	//移動
-	//イージングの移動開始座標
-	Vector3 easigStartPos_ = {};
-	//イージングの移動終了座標
-	Vector3 easingEndPos_ = {};
-	//イージングの移動タイム
-	float easingMoveTime_ = 0;
-	//移動ベクトル
-	Vector3 addVector3_;
-	
 	//扉解放
 	bool isExitOpen_ = false;
 

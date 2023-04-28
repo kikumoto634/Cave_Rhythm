@@ -224,8 +224,6 @@ void Player::ActionUpdate()
 
 		//移動
 		state_->SetNextState(new MovePlayerState);
-		easigStartPos_ = world.translation;
-		easingEndPos_ = world.translation + addVector3_;
 	}
 }
 

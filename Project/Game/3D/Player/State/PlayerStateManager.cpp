@@ -40,6 +40,7 @@ void PlayerStateManager::Update(Player* player)
 
 		state_->SetStateManager(this);
 		state_->Initialize(player);
+		state_->UpdateTrigger();
 	}
 
 	state_->Update();
