@@ -40,6 +40,7 @@ void SkeltonStateManager::Update(Skelton* skelton)
 
 		state_->SetStateManager(this);
 		state_->Initialize(skelton);
+		state_->UpdateTrigger();
 	}
 
 	state_->Update();

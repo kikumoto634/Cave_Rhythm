@@ -7,6 +7,8 @@
 
 #include "TutorialSp.h"
 
+#include <list>
+
 class HomeScene : public BaseBattleScene
 {
 public:
@@ -52,6 +54,6 @@ private:
 	const Vector3 trainingTextPos = {-8,-3,-1};
 
 	int slimePopNumMax = 1;
-	std::vector<std::unique_ptr<Skelton>> slime;
+	std::list<std::unique_ptr<Skelton>> slime;
 };
 

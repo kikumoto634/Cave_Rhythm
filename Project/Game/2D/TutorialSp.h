@@ -13,7 +13,7 @@ public:
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
 
 private:
-	float distance;
+	float distance = 0.f;
 	Vector3 PlayerPos ={};
 	bool IsHide = false;
 };
