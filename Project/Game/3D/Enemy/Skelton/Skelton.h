@@ -117,7 +117,7 @@ private:
 	bool isPosImposibble_ = true;
 
 	//死亡
-	bool isDead_ = false;
+	bool isDead_ = true;
 
 	//非表示
 	bool isInvisible_ = false;
@@ -137,5 +137,8 @@ private:
 	float colliderRadius_ = 1.0f;
 
 	//パーティクル
-	unique_ptr<ParticleObject> particle_;
+	unique_ptr<ParticleObject> deadParticle_;
+	unique_ptr<ParticleObject> popParticle_;
+	Vector3 particlePos_ = {0,-10,0};
+	int particleAliveFrame = 0;
 };

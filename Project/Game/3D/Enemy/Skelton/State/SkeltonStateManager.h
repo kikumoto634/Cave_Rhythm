@@ -16,6 +16,8 @@ public:
 
 	void Update(Skelton* skelton);
 
+	void ParticleDraw();
+
 private:
 	static SkeltonStateManager* instance;
 

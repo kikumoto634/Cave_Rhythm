@@ -16,7 +16,8 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
 	state_ = SkeltonStateManager::GetInstance();
-	state_->SetNextState(new IdelSkeltonState);
+	//state_->SetNextState(new IdelSkeltonState);
+	state_->SetNextState(new PopSkeltonState);
 
     //コライダー
     ColliderInitialize();
@@ -30,10 +31,10 @@ void Skelton::Update(Camera *camera, const Vector3& playerPos)
 	this->camera = camera;
 	playerPos_ = playerPos;
 
+    state_->Update(this);
 	//距離に応じた更新
 	DistanceUpdate();
 	//アクション更新
-	state_->Update(this);
 	ActionUpdate();
 	//ビート更新
 	BeatUpdate();
@@ -50,12 +51,13 @@ void Skelton::Draw()
 
 void Skelton::ParticleDraw()
 {
-    particle_->Draw();
+    state_->ParticleDraw();
 }
 
 void Skelton::Finalize()
 {
-    particle_->Finalize();
+    deadParticle_->Finalize();
+    popParticle_->Finalize();
 
 	BaseObjObject::Finalize();
 }
@@ -70,8 +72,8 @@ void Skelton::OnCollision(const CollisionInfo &info)
 
 void Skelton::Pop(Vector3 pos)
 {
+    particlePos_ = pos;
 	isPosImposibble_ = false;
-	world.translation = pos;
 }
 
 
@@ -201,6 +203,7 @@ vector<MapNode*> Skelton::PathSearch(vector<vector<int>> &grid, int start_x, int
     return path;
 }
 
+
 void Skelton::ColliderInitialize()
 {
     SetCollider(new SphereCollider(XMVECTOR{0,0,0,0}, colliderRadius_));
@@ -225,7 +228,10 @@ void Skelton::ColliderRemove()
 
 void Skelton::ParticleInitialize()
 {
-    particle_ = make_unique<ParticleObject>();
-    particle_->Initialize();
+    deadParticle_ = make_unique<ParticleObject>();
+    deadParticle_->Initialize();
+
+    popParticle_ = make_unique<ParticleObject>();
+    popParticle_->Initialize();
 }
 

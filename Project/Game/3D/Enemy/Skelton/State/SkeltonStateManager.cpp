@@ -45,3 +45,8 @@ void SkeltonStateManager::Update(Skelton* skelton)
 
 	state_->Update();
 }
+
+void SkeltonStateManager::ParticleDraw()
+{
+	state_->ParticleDraw();
+}

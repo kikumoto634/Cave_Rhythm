@@ -2,10 +2,8 @@
 #include "SkeltonStateManager.h"
 #include "Easing.h"
 #include "Skelton.h"
-
 #include <cassert>
 
-using namespace DirectX;
 using namespace std;
 
 void SkeltonState::Initialize(Skelton *skelton)
@@ -13,6 +11,7 @@ void SkeltonState::Initialize(Skelton *skelton)
 	assert(skelton);
 	skelton_ = skelton;
 }
+
 
 
 
@@ -34,6 +33,11 @@ void IdelSkeltonState::Update()
 	waitCount_++;
 }
 
+void IdelSkeltonState::ParticleDraw()
+{
+}
+
+
 
 
 void TrackSkeltonState::UpdateTrigger()
@@ -41,52 +45,52 @@ void TrackSkeltonState::UpdateTrigger()
 	easigStartPos_ = skelton_->world.translation;
 	//移動先計算
 	mapPath_ = skelton_->mapInfo_;
-	eX_ = int(skelton_->world.translation.x/2)+15;
-	eY_ = -int(skelton_->world.translation.z/2)+15;
-	pX_ = int(skelton_->playerPos_.x/2)+15;
-	pY_ = -int(skelton_->playerPos_.z/2)+15;
+	eX_ = +int(skelton_->world.translation.x/AreaBlockSize)+AreaBlocksHalfNum;
+	eY_ = -int(skelton_->world.translation.z/AreaBlockSize)+AreaBlocksHalfNum;
+	pX_ = +int(skelton_->playerPos_.x/AreaBlockSize)+AreaBlocksHalfNum;
+	pY_ = -int(skelton_->playerPos_.z/AreaBlockSize)+AreaBlocksHalfNum;
 	path_ = skelton_->PathSearch(skelton_->mapInfo_, eX_,eY_, pX_,pY_);
 
-	int root = 9;
+	int root = RootPathStartNumber;
 	for(auto it = path_.begin(); it != path_.end(); it++){
 		mapPath_[(*it)->y][(*it)->x] = root;
 		root++;
 	}
-	mapPath_[eY_][eX_] = 5;
-	mapPath_[pY_][pX_] = 6;
+	mapPath_[eY_][eX_] = RootPathSkeltonNumber;
+	mapPath_[pY_][pX_] = RootPathPlayerNumber;
 
 	//上下左右のルート先
-    int dx[4] = {-1, 1, 0, 0};
-    int dy[4] = {0, 0, -1, 1};
+    int dx[PathDirection] = {-1, 1, 0, 0};
+    int dy[PathDirection] = {0, 0, -1, 1};
 
     //四方向をforで調べる
-    for (int j = 0; j < 4; j++) {
+    for (int j = 0; j < PathDirection; j++) {
         //dx,dy方向のルート移動
         int next_x = eX_ + dx[j];
         int next_y = eY_ + dy[j];
 
 
-        if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == 6){
-			easingEndPos_ = skelton_->world.translation + Vector3{dx[j]*2.0f, 0.f, -dy[j]*2.0f};
+        if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == RootPathPlayerNumber){
+			easingEndPos_ = skelton_->world.translation + Vector3{dx[j]*AreaBlockSize, 0.f, -dy[j]*AreaBlockSize};
 			eX_ = next_x;
 			eY_ = next_y;
 
 			//回転
 			if(j == 0){//Left
-				skelton_->world.rotation.y = XMConvertToRadians(-90);
+				skelton_->world.rotation.y = LeftAngle;
 			}
 			else if(j == 1){//Right
-				skelton_->world.rotation.y = XMConvertToRadians(90);
+				skelton_->world.rotation.y = RightAngle;
 			}
 			else if(j == 2){//down
-				skelton_->world.rotation.y = 0;
+				skelton_->world.rotation.y = DownAngle;
 			}
 			else if(j == 3){//up
-				skelton_->world.rotation.y = XMConvertToRadians(180);
+				skelton_->world.rotation.y = UpAngle;
 			}
 
-			if(mapPath_[next_y][next_x] == 6) {
-				pathRoot_ = 10;
+			if(mapPath_[next_y][next_x] == RootPathPlayerNumber) {
+				pathRoot_ = RootPathGoalNumber;
 
 			}
 			else if(mapPath_[next_y][next_x] == pathRoot_){
@@ -110,7 +114,7 @@ void TrackSkeltonState::Update()
 	skelton_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//移動完了時
-	if(easingMoveTime_ >= 1.0f){
+	if(easingMoveTime_ >= EasingFrameMax){
 		skelton_->world.translation = easingEndPos_;
 		easigStartPos_ = {};
 		easingEndPos_ = {};
@@ -120,11 +124,16 @@ void TrackSkeltonState::Update()
 	}
 }
 
+void TrackSkeltonState::ParticleDraw()
+{
+}
+
+
 
 
 void DeadSkeltonState::UpdateTrigger()
 {
-	particlePos_ = skelton_->GetPosition();
+	skelton_->particlePos_ = skelton_->GetPosition();
 	skelton_->SetPosition(deadPos_);
 
 	App();
@@ -133,39 +142,110 @@ void DeadSkeltonState::UpdateTrigger()
 void DeadSkeltonState::Update()
 {
 	//更新処理
-	skelton_->particle_->Update(skelton_->camera);
-	particleAliveFrame++;
+	skelton_->deadParticle_->Update(skelton_->camera);
+	skelton_->particleAliveFrame++;
 
-	//距離計算
-	Vector3 sub = (skelton_->playerPos_ - particlePos_);
-	skelton_->distance_ = sub.length();
 
-	//出現
-	if(particleAliveFrame < ParticleAliveFrameMax) return;
-	particleAliveFrame = ParticleAliveFrameMax;
+	if(skelton_->particleAliveFrame < ParticleAliveFrameMax) return;
 
-	if(skelton_->distance_ < PopDistance) return;
-	//再出現
-	stateManager_->SetNextState(new IdelSkeltonState);
-	skelton_->isDead_ = false;	
 	skelton_->isPosImposibble_ = true;	
+	skelton_->particleAliveFrame = 0;
+
+	skelton_->world.UpdateMatrix();
+	stateManager_->SetNextState(new PopSkeltonState);
+}
+
+void DeadSkeltonState::ParticleDraw()
+{
+	skelton_->deadParticle_->Draw();
 }
 
 void DeadSkeltonState::App()
 {
-	for (int i = 0; i < 10; i++) {
-		const float rnd_vel = 0.08f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = 0.06f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+	for (int i = 0; i < CreateNum; i++) {
+		//速度
+		vel.x = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel_Half;
+		vel.y = VelY;
+		vel.z = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel_Half;
 
-		Vector3 acc{};
-		acc.y = -0.005f;
+		//加速度
+		acc.y = AccY;
 
-		skelton_->particle_->ParticleSet(ParticleAliveFrameMax,particlePos_,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
-		skelton_->particle_->ParticleAppearance();
+		//生成
+		skelton_->deadParticle_->ParticleSet(
+			ParticleAliveFrameMax,
+			skelton_->particlePos_,
+			vel,
+			acc,
+			SizeStart,
+			SizeEnd,
+			TextureNumber,
+			Color
+		);
+		skelton_->deadParticle_->ParticleAppearance();
 	}
 }
 
 
+
+
+void PopSkeltonState::UpdateTrigger()
+{
+}
+
+void PopSkeltonState::Update()
+{
+	//更新処理
+	App();
+	skelton_->popParticle_->Update(skelton_->camera);
+	skelton_->particleAliveFrame++;
+
+
+	if(skelton_->particleAliveFrame < ParticleCreateFrameMax) return;
+
+	skelton_->isDead_ = false;
+	skelton_->world.translation = skelton_->particlePos_;
+	skelton_->particleAliveFrame = 0;
+
+	skelton_->world.UpdateMatrix();
+	stateManager_->SetNextState(new IdelSkeltonState);
+}
+
+void PopSkeltonState::ParticleDraw()
+{
+	if(skelton_->particleAliveFrame < ParticleCreateWaitFrameMax) return;
+	skelton_->popParticle_->Draw();
+}
+
+void PopSkeltonState::App()
+{
+	for (int i = 0; i < CreateNum; i++) {
+
+		//座標
+		pos.x = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos_Half;
+		pos.y = PosY;
+		pos.z = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos_Half;
+		pos += skelton_->particlePos_;
+
+		//速度
+		vel.x = (float)rand()/RAND_MAX*Rand_Vel - Rand_Vel_Half;
+		vel.y = VelY;
+		vel.z = (float)rand()/RAND_MAX*Rand_Vel - Rand_Vel_Half;
+
+		//加速度
+		acc.y = -(float)rand()/RAND_MAX*Rand_Acc;
+
+		//生成
+		skelton_->popParticle_->ParticleSet(
+			ParticleAliveFrameMax,
+			pos,
+			vel,
+			acc,
+			SizeStart,
+			SizeEnd,
+			TextureNumber,
+			Color
+		);
+		skelton_->popParticle_->ParticleAppearance();
+	}
+}
