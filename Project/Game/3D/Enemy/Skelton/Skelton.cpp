@@ -2,7 +2,10 @@
 #include "SkeltonStateManager.h"
 #include "SkeltonState.h"
 
+#include "CollisionManager.h"
+#include "CollisionAttribute.h"
 
+using namespace DirectX;
 using namespace std;
 
 void Skelton::Initialize(std::string filePath, bool IsSmoothing)
@@ -14,6 +17,12 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 
 	state_ = SkeltonStateManager::GetInstance();
 	state_->SetNextState(new IdelSkeltonState);
+
+    //コライダー
+    ColliderInitialize();
+
+    //パーティクル
+    ParticleInitialize();
 }
 
 void Skelton::Update(Camera *camera, const Vector3& playerPos)
@@ -21,7 +30,6 @@ void Skelton::Update(Camera *camera, const Vector3& playerPos)
 	this->camera = camera;
 	playerPos_ = playerPos;
 
-	if(isDead_) return;
 	//距離に応じた更新
 	DistanceUpdate();
 	//アクション更新
@@ -35,27 +43,34 @@ void Skelton::Update(Camera *camera, const Vector3& playerPos)
 
 void Skelton::Draw()
 {
-	if(isDead_ || isInvisible_) return;
+	if(isPosImposibble_ || isInvisible_ || isDead_) return;
 
 	BaseObjObject::Draw();
 }
 
 void Skelton::ParticleDraw()
 {
+    particle_->Draw();
 }
 
 void Skelton::Finalize()
 {
+    particle_->Finalize();
+
 	BaseObjObject::Finalize();
 }
 
 void Skelton::OnCollision(const CollisionInfo &info)
 {
+    if(isDead_) return;
+    if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+        isDead_ = true;
+    }
 }
 
 void Skelton::Pop(Vector3 pos)
 {
-	isDead_ = false;
+	isPosImposibble_ = false;
 	world.translation = pos;
 }
 
@@ -67,6 +82,11 @@ void Skelton::ActionUpdate()
 	if(isScaleChange_ && ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
 		isScaleChange_ = false;
 	}
+
+    //コライダー
+    if(collider){
+        sphereCollider_->Update();
+    }
 }
 
 void Skelton::BeatUpdate()
@@ -107,6 +127,7 @@ void Skelton::DistanceUpdate()
 	}
 }
 
+
 vector<MapNode*> Skelton::PathSearch(vector<vector<int>> &grid, int start_x, int start_y, int end_x, int end_y)
 {
 	//パス
@@ -117,7 +138,7 @@ vector<MapNode*> Skelton::PathSearch(vector<vector<int>> &grid, int start_x, int
     vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
 
     //スタートノード設定
-    MapNode* start_node = new MapNode(start_x, start_y, 0, Heuristic(start_x, start_y, end_x, end_y), nullptr);
+    MapNode* start_node = new MapNode(start_x,start_y, 0,Heuristic(start_x, start_y, end_x, end_y), nullptr);
     //未探索エリアの追加
     frontier.push(start_node);
 
@@ -153,7 +174,7 @@ vector<MapNode*> Skelton::PathSearch(vector<vector<int>> &grid, int start_x, int
             int next_y = current_node->y + dy[i];
 
             //マップ範囲外
-            if (next_x < 0 || next_y < 0 || next_x >= grid[0].size()|| next_y >= grid[0].size()) {
+            if (next_x < 0 || next_y < 0 || next_x >= grid[0].size() || next_y >= grid[0].size()) {
                 continue;
             }
 
@@ -180,7 +201,31 @@ vector<MapNode*> Skelton::PathSearch(vector<vector<int>> &grid, int start_x, int
     return path;
 }
 
-
-void Skelton::ColliderUpdate()
+void Skelton::ColliderInitialize()
 {
+    SetCollider(new SphereCollider(XMVECTOR{0,0,0,0}, colliderRadius_));
+    collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+    //球コライダー取得
+	sphereCollider_ = dynamic_cast<SphereCollider*>(collider);
+	assert(sphereCollider_);
+    collider->Update();
 }
+
+void Skelton::ColliderSet()
+{
+    collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+}
+
+void Skelton::ColliderRemove()
+{
+    //コリジョンマネージャーから登録を解除する
+	CollisionManager::GetInstance()->RemoveCollider(collider);
+}
+
+
+void Skelton::ParticleInitialize()
+{
+    particle_ = make_unique<ParticleObject>();
+    particle_->Initialize();
+}
+

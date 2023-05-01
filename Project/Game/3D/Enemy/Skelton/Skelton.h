@@ -1,9 +1,11 @@
 ﻿#pragma once
 #include "BaseObjObject.h"
-#include "ParticleObject.h"
+#include "SphereCollider.h"
 
 #include "MapNode.h"
 #include <vector>
+
+#include "ParticleObject.h"
 
 //前方宣言
 class SkeltonStateManager;
@@ -14,11 +16,13 @@ public:
 	//フレンド関数
 	friend class IdelSkeltonState;
 	friend class TrackSkeltonState;
+	friend class DeadSkeltonState;
 	friend class PopSkeltonState;
 
 //エイリアス
 private:
 	template <class T> using vector = std::vector<T>;
+	template <class T> using unique_ptr = std::unique_ptr<T>;
 
 //定数
 private:
@@ -66,6 +70,7 @@ public:
 
 	//Getter
 	inline bool GetIsDead() {return isDead_;}
+	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
 
 	//Setter
 	inline void SetMapInfo(vector<vector<int>> info) {mapInfo_ = info;}
@@ -91,8 +96,14 @@ private:
 		return abs(x1-x2) + abs(y1-y2);
 	}
 
-	//コライダー更新
-	void ColliderUpdate();
+	//コライダー
+	void ColliderInitialize();
+	void ColliderSet();
+	void ColliderRemove();
+
+	//パーティクル
+	void ParticleInitialize();
+
 
 private:
 	//借り物
@@ -102,8 +113,11 @@ private:
 	//状態
 	SkeltonStateManager* state_ = nullptr;
 
+	//生成可能
+	bool isPosImposibble_ = true;
+
 	//死亡
-	bool isDead_ = true;
+	bool isDead_ = false;
 
 	//非表示
 	bool isInvisible_ = false;
@@ -117,4 +131,11 @@ private:
 
 	//経路探索
 	vector<vector<int>> mapInfo_;
+
+	//コライダー
+	SphereCollider* sphereCollider_ = nullptr;
+	float colliderRadius_ = 1.0f;
+
+	//パーティクル
+	unique_ptr<ParticleObject> particle_;
 };

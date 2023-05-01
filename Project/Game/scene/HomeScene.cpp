@@ -99,7 +99,7 @@ void HomeScene::AddBeatEndUpdate()
 	Vector3 lpos;
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
-		if((*it)->GetIsDead()){
+		if((*it)->GetIsPosImposibble_()){
 			if(areaManager->GetCSVObjectPopActive(index)) {
 				lpos = areaManager->GetCSVObjectPopPosition(index);
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});

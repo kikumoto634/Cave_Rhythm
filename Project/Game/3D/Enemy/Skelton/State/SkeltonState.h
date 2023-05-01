@@ -31,7 +31,7 @@ private:
 
 private:
 	//待機カウント最大数
-	const int WaltCountMax = 2;
+	const int WaltCountMax = 1;
 
 	//待機カウント
 	int waitCount_ = 0;
@@ -64,8 +64,6 @@ private:
 	Vector3 easingEndPos_ = {};
 	//イージングの移動タイム
 	float easingMoveTime_ = 0;
-	//移動ベクトル
-	Vector3 addVector3_ = {};
 
 	int eX_ = 0;
 	int eY_ = 0;
@@ -83,8 +81,22 @@ private:
 //死亡
 class DeadSkeltonState : public SkeltonState{
 private:
+	//パーティクル発生時間
+	const int ParticleAliveFrameMax = 50;
+	//生成するときのプレイヤーとの距離
+	const float PopDistance = 3.f;
+
+private:
 	void UpdateTrigger() override;
 	void Update() override;
+
+	void App();
+
+private:
+	Vector3 deadPos_ = {0,-50,0};
+	Vector3 particlePos_ = {};
+
+	int particleAliveFrame = 0;
 };
 
 //出現

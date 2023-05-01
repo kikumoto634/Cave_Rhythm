@@ -5,6 +5,7 @@
 
 #include <cassert>
 
+using namespace DirectX;
 using namespace std;
 
 void SkeltonState::Initialize(Skelton *skelton)
@@ -100,6 +101,11 @@ void TrackSkeltonState::UpdateTrigger()
 
 void TrackSkeltonState::Update()
 {
+	//死亡時
+	if(skelton_->isDead_){
+		stateManager_->SetNextState(new DeadSkeltonState);
+	}
+
 	//移動処理
 	skelton_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
@@ -128,16 +134,55 @@ void AttackSkeltonState::Update()
 
 void DeadSkeltonState::UpdateTrigger()
 {
+	particlePos_ = skelton_->GetPosition();
+	skelton_->SetPosition(deadPos_);
+
+	App();
 }
 
 void DeadSkeltonState::Update()
 {
+	//更新処理
+	skelton_->particle_->Update(skelton_->camera);
+	particleAliveFrame++;
+
+	//距離計算
+	Vector3 sub = (skelton_->playerPos_ - particlePos_);
+	skelton_->distance_ = sub.length();
+
+	//出現
+	if(particleAliveFrame < ParticleAliveFrameMax) return;
+	particleAliveFrame = ParticleAliveFrameMax;
+
+	if(skelton_->distance_ < PopDistance) return;
+	//再出現
+	stateManager_->SetNextState(new IdelSkeltonState);
+	skelton_->isDead_ = false;	
+	skelton_->isPosImposibble_ = true;	
+}
+
+void DeadSkeltonState::App()
+{
+	for (int i = 0; i < 10; i++) {
+		const float rnd_vel = 0.08f;
+		Vector3 vel{};
+		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		vel.y = 0.06f;
+		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+		Vector3 acc{};
+		acc.y = -0.005f;
+
+		skelton_->particle_->ParticleSet(ParticleAliveFrameMax,particlePos_,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
+		skelton_->particle_->ParticleAppearance();
+	}
 }
 
 
 
 void PopSkeltonState::UpdateTrigger()
 {
+	skelton_->ColliderRemove();
 }
 
 void PopSkeltonState::Update()
