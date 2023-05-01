@@ -122,16 +122,6 @@ void TrackSkeltonState::Update()
 
 
 
-void AttackSkeltonState::UpdateTrigger()
-{
-}
-
-void AttackSkeltonState::Update()
-{
-}
-
-
-
 void DeadSkeltonState::UpdateTrigger()
 {
 	particlePos_ = skelton_->GetPosition();
@@ -178,14 +168,4 @@ void DeadSkeltonState::App()
 	}
 }
 
-
-
-void PopSkeltonState::UpdateTrigger()
-{
-	skelton_->ColliderRemove();
-}
-
-void PopSkeltonState::Update()
-{
-}
 

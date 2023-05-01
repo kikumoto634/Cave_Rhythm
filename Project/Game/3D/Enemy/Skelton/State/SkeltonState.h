@@ -71,12 +71,6 @@ private:
 	int pY_ = 0;
 };
 
-//攻撃
-class AttackSkeltonState : public SkeltonState{
-private:
-	void UpdateTrigger() override;
-	void Update() override;
-};
 
 //死亡
 class DeadSkeltonState : public SkeltonState{
@@ -97,12 +91,5 @@ private:
 	Vector3 particlePos_ = {};
 
 	int particleAliveFrame = 0;
-};
-
-//出現
-class PopSkeltonState : public SkeltonState{
-private:
-	void UpdateTrigger() override;
-	void Update() override;
 };
 
