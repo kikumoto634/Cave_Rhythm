@@ -214,6 +214,7 @@ void Player::ActionUpdate()
 		RaycastHit rayCastHit_;
 		//壁判定
 		if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_LANDSHAPE, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
+			blockBreakPos_ = Vector2(world.translation.x, world.translation.z) + Vector2(rayCastDir_.x*MoveLength, rayCastDir_.z*MoveLength);
 			state_->SetNextState(new DigPlayerState);
 			return ;
 		}

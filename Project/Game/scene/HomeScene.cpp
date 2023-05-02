@@ -67,10 +67,10 @@ void HomeScene::AddCommonUpdate()
 void HomeScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
-		/*if((*it)->GetIsDeadAudio()){
+		if((*it)->GetIsDeadAudio()){
 			gameManager->AudioPlay(2, 0.5f);
-		}*/
-		(*it)->SetMapInfo(areaManager->GetMapInfo());
+		}
+		//(*it)->SetMapInfo(areaManager->GetMapInfo());
 		(*it)->Update(camera,player->GetPosition());
 	}
 }
@@ -99,7 +99,7 @@ void HomeScene::AddBeatEndUpdate()
 	Vector3 lpos;
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
-		if((*it)->GetIsPosImposibble_()){
+		if((*it)->GetIsDeadAudio()){
 			if(areaManager->GetCSVObjectPopActive(index)) {
 				lpos = areaManager->GetCSVObjectPopPosition(index);
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
@@ -154,7 +154,7 @@ void HomeScene::AddCommonFinalize()
 void HomeScene::ActorCreateInitialize()
 {
 	for(int i = 0; i < slimePopNumMax; i++){
-		unique_ptr<Skelton> newObj = make_unique<Skelton>();
+		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
 		newObj->Initialize("Slime");
 		slime.push_back(move(newObj));
 	}

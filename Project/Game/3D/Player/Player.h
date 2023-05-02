@@ -4,6 +4,8 @@
 #include "SphereCollider.h"
 #include "PlayerWeapon.h"
 
+#include "AreaManager.h"
+
 //前方宣言
 class PlayerStateManager;
 
@@ -20,7 +22,7 @@ friend class DeadPlayerState;
 //定数
 private:
 	//移動距離
-	const float MoveLength = 2.0f;
+	const float MoveLength = AreaManager::Block_Size;
 	//レイキャストの長さ
 	const float adsDistance = 1.0f;
 
@@ -64,6 +66,8 @@ public:
 	bool GetIsDamage();
 	//死亡
 	bool GetIsDead();
+	//破壊ブロック位置
+	Vector2 GetBlockBreakPos()	{return blockBreakPos_;}
 	//体力
 	inline int GetHp()	{return hp_;}
 	//入力確認
@@ -154,5 +158,8 @@ private:
 	//レイキャスト
 	Ray ray_;
 	Vector3 rayCastDir_ = {0,0,-1};
+
+	//破壊ブロック位置
+	Vector2 blockBreakPos_ = {-100,-100};
 };
 

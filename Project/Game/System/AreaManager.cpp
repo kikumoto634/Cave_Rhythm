@@ -166,6 +166,17 @@ void AreaManager::CommonFinalize()
 	DigParticle->Finalize();
 }
 
+void AreaManager::BreakBlock(Vector2 pos)
+{
+	int blockNumX = +int(pos.x/Block_Size) + DIV_NUM_HALF;
+	int blockNumZ = -int(pos.y/Block_Size) + DIV_NUM_HALF;
+
+	if(blockNumX < 0 || blockNumZ < 0) return;
+	//if(mapInfo[blockNumZ][blockNumX] != 1) return;
+	mapInfo[blockNumZ][blockNumX] = 1;
+}
+
+
 #pragma region 地面
 void AreaManager::AreaPlaneInitialize(bool IsLighting)
 {

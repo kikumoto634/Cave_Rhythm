@@ -73,8 +73,9 @@ public:
 	inline void CaveLightOff()	{isLightCal = false;}
 
 	//Getter
-	inline bool GetIsDead() {return isDead_;}
+	bool GetIsDead();
 	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
+	inline Vector3 GetParticlePos()	{return particlePos_;}
 
 	//Setter
 	inline void SetMapInfo(vector<vector<int>> info) {mapInfo_ = info;}
@@ -122,6 +123,7 @@ private:
 
 	//死亡
 	bool isDead_ = true;
+	bool isDeadTrigger_ = false;
 
 	//非表示
 	bool isInvisible_ = false;

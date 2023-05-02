@@ -153,7 +153,7 @@ private:
 	//パーティクル生成時間
 	const int ParticleCreateFrameMax = 180;
 	//パーティクル生成待機時間
-	const int ParticleCreateWaitFrameMax = 40;
+	const int ParticleCreateWaitFrameMax = 60;
 	//パーティクル生存時間
 	const int ParticleAliveFrameMax = 40;
 

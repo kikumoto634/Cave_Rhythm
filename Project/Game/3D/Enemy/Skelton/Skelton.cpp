@@ -76,6 +76,16 @@ void Skelton::Pop(Vector3 pos)
 	isPosImposibble_ = false;
 }
 
+bool Skelton::GetIsDead()
+{
+    //Trigger
+    if(isDeadTrigger_){
+        isDeadTrigger_ = false;
+        return true;
+    }
+    return false;
+}
+
 
 
 void Skelton::ActionUpdate()

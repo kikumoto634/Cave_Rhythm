@@ -11,9 +11,9 @@
 class AreaManager
 {
 public:
-	static const int DIV_NUM = 7;
+	static const int DIV_NUM = 11;
 	static const float DIV_NUM_FLOAT;
-	static const int DIV_NUM_HALF = 3;
+	static const int DIV_NUM_HALF = 5;
 	static const float DIV_NUM_HALF_FLOAT;
 	static const float Block_Size;
 
@@ -62,6 +62,9 @@ public:
 	void CSVAreaFinalize();
 
 	void CommonFinalize();
+
+	//ブロック破壊
+	void BreakBlock(Vector2 pos);
 
 	//ランダム用
 	Vector3 GetExitPosition()	{return exitPosition;}

@@ -68,7 +68,7 @@ void TrackSkeltonState::UpdateTrigger()
         //dx,dy方向のルート移動
         int next_x = eX_ + dx[j];
         int next_y = eY_ + dy[j];
-
+		if(next_x < 0 || next_y < 0) return;
 
         if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == RootPathPlayerNumber){
 			easingEndPos_ = skelton_->world.translation + Vector3{dx[j]*AreaBlockSize, 0.f, -dy[j]*AreaBlockSize};
@@ -135,6 +135,8 @@ void DeadSkeltonState::UpdateTrigger()
 {
 	skelton_->particlePos_ = skelton_->GetPosition();
 	skelton_->SetPosition(deadPos_);
+
+	skelton_->isDeadTrigger_ = true;
 
 	App();
 }

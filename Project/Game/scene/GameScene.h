@@ -18,7 +18,7 @@ public:
 
 //定数
 private:
-	FloorInfo one	= {3,  0,1};
+	FloorInfo one	= {3,  0, 1};
 	FloorInfo two	= {5,  8, 7};
 	FloorInfo three = {7,  5,10};
 	FloorInfo four	= {10, 2,13};
@@ -70,7 +70,7 @@ private:
 	int popCount = 0;
 
 	int slimePopNumMax = 5;
-	std::vector<std::unique_ptr<BlueSlime>> slime;
+	//std::vector<std::unique_ptr<BlueSlime>> slime;
 
 	int skeltonPopNumMax = 5;
 	std::vector<std::unique_ptr<Skelton>> skelton;
