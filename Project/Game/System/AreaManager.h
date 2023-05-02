@@ -11,9 +11,9 @@
 class AreaManager
 {
 public:
-	static const int DIV_NUM = 31;
+	static const int DIV_NUM = 7;
 	static const float DIV_NUM_FLOAT;
-	static const int DIV_NUM_HALF = 15;
+	static const int DIV_NUM_HALF = 3;
 	static const float DIV_NUM_HALF_FLOAT;
 	static const float Block_Size;
 

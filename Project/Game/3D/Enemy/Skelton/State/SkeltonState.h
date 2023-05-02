@@ -66,7 +66,7 @@ private:
 	//角度
 	const float LeftAngle  = DirectX::XMConvertToRadians(-90);
 	const float RightAngle = DirectX::XMConvertToRadians(+90);
-	const float DownAngle  = DirectX::XMConvertToRadians(-180);
+	const float DownAngle  = 0;
 	const float UpAngle    = DirectX::XMConvertToRadians(+180);
 
 	//イージング完了フレーム

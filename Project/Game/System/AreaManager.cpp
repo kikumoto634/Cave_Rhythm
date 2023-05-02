@@ -5,8 +5,8 @@
 
 using namespace std;
 
-const float AreaManager::DIV_NUM_FLOAT = 31.f;
-const float AreaManager::DIV_NUM_HALF_FLOAT = 15.f;
+const float AreaManager::DIV_NUM_FLOAT = (float)DIV_NUM;
+const float AreaManager::DIV_NUM_HALF_FLOAT = (float)DIV_NUM_HALF;
 const float AreaManager::Block_Size = 2.f;
 
 
@@ -522,7 +522,7 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			mapInfo[divline-i][X1] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline + i != 30; i++){
+		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline + i != DIV_NUM-1; i++){
 			mapInfo[divline+i][X2] = 1;
 		}
 	}
@@ -545,7 +545,7 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 			mapInfo[Y1][divline-i] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline + i != 30; i++){
+		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline + i != DIV_NUM-1; i++){
 			mapInfo[Y2][divline+i] = 1;
 		}
 	}

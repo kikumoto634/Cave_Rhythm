@@ -68,6 +68,10 @@ public:
 	//出現
 	void Pop(Vector3 pos);
 
+	//光計算
+	inline void CaveLightOn()	{isLightCal = true;}
+	inline void CaveLightOff()	{isLightCal = false;}
+
 	//Getter
 	inline bool GetIsDead() {return isDead_;}
 	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
