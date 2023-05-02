@@ -67,10 +67,9 @@ void HomeScene::AddCommonUpdate()
 void HomeScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
-		if((*it)->GetIsDeadAudio()){
+		if((*it)->GetIsDeadTrigger()){
 			gameManager->AudioPlay(2, 0.5f);
 		}
-		//(*it)->SetMapInfo(areaManager->GetMapInfo());
 		(*it)->Update(camera,player->GetPosition());
 	}
 }
@@ -99,7 +98,7 @@ void HomeScene::AddBeatEndUpdate()
 	Vector3 lpos;
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
-		if((*it)->GetIsDeadAudio()){
+		if((*it)->GetIsPosImposibble_()){
 			if(areaManager->GetCSVObjectPopActive(index)) {
 				lpos = areaManager->GetCSVObjectPopPosition(index);
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});

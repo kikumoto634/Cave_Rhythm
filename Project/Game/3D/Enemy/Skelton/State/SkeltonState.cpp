@@ -106,9 +106,9 @@ void TrackSkeltonState::UpdateTrigger()
 void TrackSkeltonState::Update()
 {
 	//死亡時
-	/*if(skelton_->isDead_){
+	if(skelton_->isDead_){
 		stateManager_->SetNextState(new DeadSkeltonState);
-	}*/
+	}
 
 	//移動処理
 	skelton_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
@@ -135,6 +135,8 @@ void DeadSkeltonState::UpdateTrigger()
 {
 	skelton_->particlePos_ = skelton_->GetPosition();
 	skelton_->SetPosition(deadPos_);
+	skelton_->world.UpdateMatrix();
+	skelton_->collider->Update();
 
 	skelton_->isDeadTrigger_ = true;
 

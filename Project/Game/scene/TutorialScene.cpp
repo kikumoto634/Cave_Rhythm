@@ -69,11 +69,11 @@ void TutorialScene::AddCommonUpdate()
 void TutorialScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
-		if((*it)->GetIsDeadAudio()){
+		if((*it)->GetIsDeadTrigger()){
 			gameManager->AudioPlay(2, 0.5f);
 			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
 				if((*it2)->PopPossible()){
-					(*it2)->Pop({(*it)->GetDeadParticlepos().x, -5, (*it)->GetDeadParticlepos().z});
+					(*it2)->Pop({(*it)->GetParticlePos().x, -5, (*it)->GetParticlePos().z});
 					break;
 				}
 			}
@@ -114,7 +114,7 @@ void TutorialScene::AddBeatEndUpdate()
 	int index = 0;
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
-		if(!(*it)->GetIsNotApp()){
+		if((*it)->GetIsPosImposibble_()){
 			Vector3 lpos;
 
 			if(areaManager->GetCSVObjectPopActive(index,false)) {

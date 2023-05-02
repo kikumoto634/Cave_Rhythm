@@ -1,82 +1,134 @@
 ﻿#pragma once
 #include "BaseObjObject.h"
+#include "SphereCollider.h"
+
+#include "MapNode.h"
+#include <vector>
+
 #include "ParticleObject.h"
+
+//前方宣言
+class BlueSlimeStateManager;
+
 class BlueSlime : public BaseObjObject
 {
-//定数
-	//ビートx回数終了時にPOP
-	const int POP_COUNT = 6;
-	//死亡後のリセット時間
-	const int AppearanceResetFrame = 50;
+public:
+	//フレンド関数
+	friend class IdelBlueSlimeState;
+	friend class DeadBlueSlimeState;
+	friend class PopBlueSlimeState;
 
+//エイリアス
+private:
+	template <class T> using unique_ptr = std::unique_ptr<T>;
+
+//定数
+private:
 	//描画範囲(非表示)
 	const int DrawingRange_Not = 11;
 	//描画範囲(暗めの表示)
 	const int DrawingRange_Half = 7;
 
+
 public:
-	~BlueSlime();
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize(std::string filePath, bool IsSmoothing = false) override;
-	void Update(Camera* camera, Vector3 playerPos);
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update(Camera* camera, const Vector3& playerPos);
+
+	/// <summary>
+	/// 3D描画
+	/// </summary>
 	void Draw() override;
+
+	/// <summary>
+	/// パーティクル描画
+	/// </summary>
 	void ParticleDraw();
+
+	/// <summary>
+	/// 後処理
+	/// </summary>
 	void Finalize() override;
+
+	/// <summary>
+	/// 衝突時コールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+
+	//出現
 	void Pop(Vector3 pos);
 
-	inline void CaveLightOn()	{IsCaveLight = true;}
-	inline void CaveLightOff()	{IsCaveLight = false;}
+	//光計算
+	inline void CaveLightOn()	{isLightCal = true;}
+	inline void CaveLightOff()	{isLightCal = false;}
 
 	//Getter
-	inline bool GetIsNotApp()	{return IsNotApp;}
-	inline bool GetIsDeadAudio()	{return IsDeadOnceAudio;}
-	inline Vector3 GetDeadParticlepos()	{return DeadParticlePos;}
-	inline bool GetIsInvisible() {return IsInvisible;}
+	bool GetIsDeadTrigger();
+	inline bool GetIsDead()	{return isDead_;}
+	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
+	inline Vector3 GetParticlePos()	{return particlePos_;}
+
+	//Setter
 
 private:
-	void Reset();
+	//アクション更新
+	void ActionUpdate();
 
-	//出現予定エフェクト
-	void PopParticleApp();
-	//死亡エフェクト
-	void DeadParticleApp();
+	//ビート更新
+	void BeatUpdate();
 
-private:
-
-	//未出現
-	bool IsNotApp = false;
-
-	Vector3 NotAlivePos = {50,50,50};
-	//死亡
-	bool IsDead = false;
-	bool IsDeadOnceAudio = false;
-	bool IsDeadOnceParticle = false;
-	Vector3 DeadParticlePos = {};
+	//距離に応じた処理
+	void DistanceUpdate();
 
 	//コライダー
-	bool IsCollision = false;
-
-	//復活
-	int appearancePopFrame = 0;
-
-	//ポップ
-	bool IsPop = false;
-	int popCount = 0;
-	Vector3 PopParticlePos = {};
-
-	//距離に応じた非表示
-	bool IsInvisible = false;
-	float distance = 0.f;
-
-	//スケール
-	bool IsScaleEasing = false;
+	void ColliderInitialize();
+	void ColliderSet();
+	void ColliderRemove();
 
 	//パーティクル
-	std::unique_ptr<ParticleObject> PopParticle;
-	std::unique_ptr<ParticleObject> DeadParticle;
+	void ParticleInitialize();
 
-	//ライティング
-	bool IsCaveLight = false;
+
+private:
+	//借り物
+	//プレイヤー座標
+	Vector3 playerPos_;
+
+	//状態
+	BlueSlimeStateManager* state_ = nullptr;
+
+	//生成可能
+	bool isPosImposibble_ = true;
+
+	//死亡
+	bool isDead_ = true;
+	bool isDeadTrigger_ = false;
+
+	//非表示
+	bool isInvisible_ = false;
+
+	//ビート時の拡縮
+	bool isScaleChange_ = false;
+
+	//プレイヤーとの距離
+	float distance_ = 0.f;
+	bool isLightCal = false;
+
+	//コライダー
+	SphereCollider* sphereCollider_ = nullptr;
+	float colliderRadius_ = 1.0f;
+
+	//パーティクル
+	unique_ptr<ParticleObject> deadParticle_;
+	unique_ptr<ParticleObject> popParticle_;
+	Vector3 particlePos_ = {0,-10,0};
+	int particleAliveFrame = 0;
 };
-

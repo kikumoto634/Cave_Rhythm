@@ -1,245 +1,178 @@
 #include "BlueSlime.h"
-#include "SphereCollider.h"
-#include "ParticleManager.h"
+#include "BlueSlimeStateManager.h"
+#include "BlueSlimeState.h"
 
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 
-#include "Easing.h"
-
+using namespace DirectX;
 using namespace std;
-
-BlueSlime::~BlueSlime()
-{
-}
 
 void BlueSlime::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
-	ScaleMin = {0.7f,0.7f,0.7f};
 
-	SetPosition(NotAlivePos);
-	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
-	world.UpdateMatrix();
+	//拡縮最小値
+	ScaleMin = {0.7f, 0.7f, 0.7f};
 
-	//パーティクル
-	DeadParticle = make_unique<ParticleObject>();
-	DeadParticle->Initialize();
-	PopParticle = make_unique<ParticleObject>();
-	PopParticle->Initialize();
+	state_ = new BlueSlimeStateManager();
+	//state_->SetNextState(new IdelSkeltonState);
+	state_->SetNextState(new PopBlueSlimeState);
+
+    //コライダー
+    ColliderInitialize();
+
+    //パーティクル
+    ParticleInitialize();
 }
 
-void BlueSlime::Update(Camera *camera, Vector3 playerPos)
+void BlueSlime::Update(Camera *camera, const Vector3& playerPos)
 {
 	this->camera = camera;
-	if(!IsNotApp) return;
+	playerPos_ = playerPos;
 
-	//距離計測
-	Vector3 pos = playerPos - world.translation;
-	distance = pos.length();
-	//距離に応じたライト表現
-	if(IsCaveLight){
-		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
-			object->OnLighting();
-		}
-		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
-			object->OffLighting();
-		}
-	}
-	else if(!IsCaveLight){
-		object->OnLighting();
-	}
+    state_->Update(this);
 
-	//距離に応じたコライダーの削除
-	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not)		{
-		IsInvisible = false;
+    if(isDead_) return;
+	//距離に応じた更新
+	DistanceUpdate();
+	//アクション更新
+	ActionUpdate();
+	//ビート更新
+	BeatUpdate();
 
-		if(!IsCollision){
-			//コライダー
-			float radius = 1.0f;
-			SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
-			collider->SetAttribute(COLLISION_ATTR_ENEMYS);
-			collider->Update();
-			IsCollision = true;
-		}
-	}
-	else if(-DrawingRange_Not > distance || distance > DrawingRange_Not)	{
-		IsInvisible = true;
-
-		if(IsCollision){
-			if(collider){
-				//コリジョンマネージャーから登録を解除する
-				CollisionManager::GetInstance()->RemoveCollider(collider);
-			}
-			IsCollision = false;
-		}
-	}
-
-	//出現
-	if(IsPop){
-		if(IsBeatEnd){
-			popCount++;
-			IsBeatEnd = false;
-
-			if(popCount >= POP_COUNT){
-				SetPosition(PopParticlePos);
-				PopParticlePos = {0,50,0};
-				popCount = 0;
-				IsPop = false;
-				IsDead = false;
-				return;
-			}
-		}
-	}
-	PopParticleApp();
-	PopParticle->Update(this->camera);
-
-	//死亡
-	if(IsDead && !IsPop){
-		if(IsDeadOnceAudio){
-			IsDeadOnceAudio = false;
-			appearancePopFrame = 0;
-		}
-		DeadParticleApp();
-
-		if(appearancePopFrame >= AppearanceResetFrame){
-			Reset();
-			return;
-		}
-		appearancePopFrame++;
-	}
-	DeadParticle->Update(this->camera);
-
-	if(IsInvisible) return;
-	//生存
-	if(!IsDead && !IsPop){
-		//拍終了
-		if(IsBeatEnd){
-			//スケール
-			IsScaleEasing  = true;
-			//拍終了
-			IsBeatEnd = false;
-		}
-		//スケール遷移
-		if(IsScaleEasing){
-			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
-				IsScaleEasing = false;
-			}
-		}
-	}
-	BaseObjObject::Update(this->camera);
+	BaseObjObject::Update(camera);
 }
 
 void BlueSlime::Draw()
 {
-	if(IsDead) return;
-	if(IsPop) return;
-	if(IsInvisible) return;
+	if(isPosImposibble_ || isInvisible_ || isDead_) return;
 
 	BaseObjObject::Draw();
 }
 
 void BlueSlime::ParticleDraw()
 {
-	if(IsDead){
-		DeadParticle->Draw();
-	}
-	else if(IsPop){
-		PopParticle->Draw();
-	}
+    state_->ParticleDraw();
 }
 
 void BlueSlime::Finalize()
 {
-	DeadParticle->Finalize();
-	PopParticle->Finalize();
+    deadParticle_->Finalize();
+    popParticle_->Finalize();
+	
+	delete state_;
+	state_ = nullptr;
 
 	BaseObjObject::Finalize();
 }
 
 void BlueSlime::OnCollision(const CollisionInfo &info)
 {
-	if(IsDead) return;
-	if(IsPop) return;
-	if(IsInvisible) return;
-
-	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		IsDead = true;
-		IsDeadOnceAudio = true;
-		IsDeadOnceParticle = true;
-
-		SetPosition(NotAlivePos);
-		world.UpdateMatrix();
-		collider->Update();
-
-		DeadParticlePos = info.objObject->GetPosition();
-	}
-	else if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-		SetPosition(NotAlivePos);
-		world.UpdateMatrix();
-		collider->Update();
-		IsDead = true;
-	}
+    if(isDead_) return;
+    if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
+        isDead_ = true;
+    }
 }
 
 void BlueSlime::Pop(Vector3 pos)
 {
-	PopParticlePos = pos;
-	IsNotApp = true;
-	IsPop = true;
+    particlePos_ = pos;
+	isPosImposibble_ = false;
 }
 
-void BlueSlime::Reset()
+bool BlueSlime::GetIsDeadTrigger()
 {
-	IsNotApp = false;
-	IsDead = false;
+    //Trigger
+    if(isDeadTrigger_){
+        isDeadTrigger_ = false;
+        return true;
+    }
+    return false;
 }
 
-void BlueSlime::PopParticleApp()
+
+
+void BlueSlime::ActionUpdate()
 {
-	for (int i = 0; i < 10; i++) {
+    //拡縮
+	if(isScaleChange_ && ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+		isScaleChange_ = false;
+	}
 
-		//自身の座標を軸に[-1, 1]ランダム
-		const Vector3 rnd_pos = PopParticlePos;
-		const float range = 1.5f;
-		Vector3 pos{};
-		pos.x = (float)rand() / RAND_MAX * range - range/2.0f;
-		pos.y = -0.5f;
-		pos.z = (float)rand() / RAND_MAX * range - range/2.0f;
-		pos += rnd_pos;
+    //コライダー
+    if(collider){
+        sphereCollider_->Update();
+    }
+}
 
-		const float rnd_vel = 0.025f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = 0.05f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+void BlueSlime::BeatUpdate()
+{
+	if(!IsBeatEnd) return;
+    IsBeatEnd = false;
 
-		Vector3 acc{};
-		const float rnd_acc = 0.001f;
-		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+    //拡縮
+    isScaleChange_ = true;
+}
 
-		PopParticle->ParticleSet(40,pos,vel,acc,0.4f,0.0f,1,{0.6f,0.3f,0.2f,0.4f});
-		PopParticle->ParticleAppearance();
+void BlueSlime::DistanceUpdate()
+{
+	//距離
+	Vector3 sub = playerPos_ - world.translation;
+	distance_ = sub.length();
+
+	//光計算
+	if(isLightCal){
+		//距離範囲内
+		if(-DrawingRange_Half <= distance_ && distance_ <= DrawingRange_Half){
+			object->OnLighting();
+		}
+		else if(-DrawingRange_Half > distance_ || distance_ > DrawingRange_Half){
+			object->OffLighting();
+		}
+	}
+	else if(!isLightCal){
+		object->OnLighting();
+	}
+
+	//範囲が非表示
+	if(-DrawingRange_Not <= distance_ && distance_ <= DrawingRange_Not)		{
+		isInvisible_ = false;
+	}
+	else if(-DrawingRange_Not > distance_ || distance_ > DrawingRange_Not)	{
+		isInvisible_ = true;
 	}
 }
 
-void BlueSlime::DeadParticleApp()
+
+void BlueSlime::ColliderInitialize()
 {
-	if(!IsDeadOnceParticle) return;
-
-	for (int i = 0; i < 10; i++) {
-		const float rnd_vel = 0.08f;
-		Vector3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = 0.06f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-
-		Vector3 acc{};
-		acc.y = -0.005f;
-
-		DeadParticle->ParticleSet(AppearanceResetFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
-		DeadParticle->ParticleAppearance();
-	}
-
-	IsDeadOnceParticle = false;
+    SetCollider(new SphereCollider(XMVECTOR{0,0,0,0}, colliderRadius_));
+    collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+    //球コライダー取得
+	sphereCollider_ = dynamic_cast<SphereCollider*>(collider);
+	assert(sphereCollider_);
+    collider->Update();
 }
+
+void BlueSlime::ColliderSet()
+{
+    collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+}
+
+void BlueSlime::ColliderRemove()
+{
+    //コリジョンマネージャーから登録を解除する
+	CollisionManager::GetInstance()->RemoveCollider(collider);
+}
+
+
+void BlueSlime::ParticleInitialize()
+{
+    deadParticle_ = make_unique<ParticleObject>();
+    deadParticle_->Initialize();
+
+    popParticle_ = make_unique<ParticleObject>();
+    popParticle_->Initialize();
+}
+

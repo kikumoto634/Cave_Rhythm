@@ -373,6 +373,12 @@
     <Filter Include="ソース ファイル\Game\3D\Enemy\Skelton\State">
       <UniqueIdentifier>{c43fc8a7-dee3-4e76-83eb-09774008f206}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\BlueSlime\State">
+      <UniqueIdentifier>{345ef061-f3e5-4310-a061-db154c1cbd0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\BlueSlime\State">
+      <UniqueIdentifier>{575d2c1d-27b3-4d88-a570-f849bef56dc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -572,6 +578,12 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Enemy\Skelton\State\SkeltonStateManager.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy\Skelton\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\BlueSlime\State\BlueSlimeState.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\BlueSlime\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\BlueSlime\State\BlueSlimeStateManager.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\BlueSlime\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -799,6 +811,12 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Skelton\State\SkeltonStateManager.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy\Skelton\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\BlueSlime\State\BlueSlimeState.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\BlueSlime\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\BlueSlime\State\BlueSlimeStateManager.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\BlueSlime\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

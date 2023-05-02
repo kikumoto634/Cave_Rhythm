@@ -118,6 +118,18 @@ void GameScene::AddCommonUpdate()
 
 void GameScene::AddObject3DUpdate()
 {
+	for(auto it = slime.begin(); it != slime.end(); ++it){
+		/*if((*it)->GetIsDead()){
+			gameManager->AudioPlay(2, 0.5f);
+			for(auto it2 = coin.begin(); it2!= coin.end(); ++it2){
+				if((*it2)->PopPossible()){
+					(*it2)->Pop({(*it)->GetParticlePos().x, -5, (*it)->GetParticlePos().z});
+					break;
+				}
+			}
+		}*/
+		(*it)->Update(camera,player->GetPosition());
+	}
 	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		/*if((*it)->GetIsDead()){
 			gameManager->AudioPlay(2, 0.5f);
@@ -150,6 +162,15 @@ void GameScene::AddObject2DUpdate()
 void GameScene::AddBeatEndUpdate()
 {
 	if(popCount >= PopCount){
+		for(auto it = slime.begin(); it != slime.end(); ++it){
+			if((*it)->GetIsPosImposibble_()){
+				Vector3 lpos = areaManager->GetObjectPopPosition();
+				(*it)->Pop({lpos.x, -3.5f,lpos.z});
+				(*it)->CaveLightOn();
+				break;
+			}
+		}
+
 		for(auto it = skelton.begin(); it != skelton.end(); ++it){
 			if((*it)->GetIsPosImposibble_()){
 				Vector3 lpos = areaManager->GetObjectPopPosition();
@@ -165,6 +186,9 @@ void GameScene::AddBeatEndUpdate()
 	}
 
 
+	for(auto it = slime.begin(); it != slime.end(); ++it){
+		(*it)->IsBeatEndOn();
+	}
 	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->IsBeatEndOn();
 	}
@@ -180,6 +204,9 @@ void GameScene::AddObject3DDraw()
 {
 	areaManager->RandamAreaDraw();
 
+	for(auto it = slime.begin(); it != slime.end(); ++it){
+		(*it)->Draw();
+	}
 	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->Draw();
 	}
@@ -190,6 +217,9 @@ void GameScene::AddObject3DDraw()
 
 void GameScene::AddParticleDraw()
 {
+	for(auto it = slime.begin(); it != slime.end(); ++it){
+		(*it)->ParticleDraw();
+	}
 	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->ParticleDraw();
 	}
@@ -210,6 +240,9 @@ void GameScene::AddObjectFinalize()
 	floorDepth->Finalize();
 	floorValueTex->Finalize();
 
+	for(auto it = slime.begin(); it != slime.end(); ++it){
+		(*it)->Finalize();
+	}
 	for(auto it = skelton.begin(); it != skelton.end(); ++it){
 		(*it)->Finalize();
 	}
@@ -226,6 +259,12 @@ void GameScene::AddCommonFinalize()
 
 void GameScene::ActorCreateInitialize()
 {
+	for(int i = 0; i < skeltonPopNumMax; i++){
+		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
+		newObj->Initialize("slime");
+		slime.push_back(move(newObj));
+	}
+
 	for(int i = 0; i < skeltonPopNumMax; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Skeleton");

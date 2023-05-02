@@ -15,7 +15,7 @@ void Skelton::Initialize(std::string filePath, bool IsSmoothing)
 	//拡縮最小値
 	ScaleMin = {0.7f, 0.7f, 0.7f};
 
-	state_ = SkeltonStateManager::GetInstance();
+	state_ = new SkeltonStateManager();
 	//state_->SetNextState(new IdelSkeltonState);
 	state_->SetNextState(new PopSkeltonState);
 
@@ -60,6 +60,9 @@ void Skelton::Finalize()
 {
     deadParticle_->Finalize();
     popParticle_->Finalize();
+
+    delete state_;
+    state_ = nullptr;
 
 	BaseObjObject::Finalize();
 }

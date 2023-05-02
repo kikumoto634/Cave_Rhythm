@@ -2,30 +2,9 @@
 #include "SkeltonState.h"
 #include "Skelton.h"
 
-
-//静的
-SkeltonStateManager* SkeltonStateManager::instance = nullptr;
-
 SkeltonStateManager::~SkeltonStateManager()
 {
 	delete state_;
-}
-
-SkeltonStateManager* SkeltonStateManager::GetInstance()
-{
-	if(!instance)
-	{
-		instance = new SkeltonStateManager();
-	}
-	return instance;
-}
-
-void SkeltonStateManager::Delete()
-{
-	if(instance){
-		delete instance;
-		instance = nullptr;
-	}
 }
 
 void SkeltonStateManager::Update(Skelton* skelton)
