@@ -18,7 +18,7 @@ public:
 
 //定数
 private:
-	FloorInfo one	= {3,  0, 1};
+	FloorInfo one	= {3,  0, 2};
 	FloorInfo two	= {5,  8, 7};
 	FloorInfo three = {7,  5,10};
 	FloorInfo four	= {10, 2,13};

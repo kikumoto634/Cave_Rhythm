@@ -32,6 +32,8 @@ void Skelton::Update(Camera *camera, const Vector3& playerPos)
 	playerPos_ = playerPos;
 
     state_->Update(this);
+
+    if(isDead_) return;
 	//距離に応じた更新
 	DistanceUpdate();
 	//アクション更新
@@ -76,7 +78,7 @@ void Skelton::Pop(Vector3 pos)
 	isPosImposibble_ = false;
 }
 
-bool Skelton::GetIsDead()
+bool Skelton::GetIsDeadTrigger()
 {
     //Trigger
     if(isDeadTrigger_){

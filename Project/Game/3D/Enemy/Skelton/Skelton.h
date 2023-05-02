@@ -73,7 +73,8 @@ public:
 	inline void CaveLightOff()	{isLightCal = false;}
 
 	//Getter
-	bool GetIsDead();
+	bool GetIsDeadTrigger();
+	inline bool GetIsDead()	{return isDead_;}
 	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
 	inline Vector3 GetParticlePos()	{return particlePos_;}
 
