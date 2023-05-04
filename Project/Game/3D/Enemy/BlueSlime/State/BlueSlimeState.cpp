@@ -99,6 +99,7 @@ void PopBlueSlimeState::UpdateTrigger()
 
 void PopBlueSlimeState::Update()
 {
+	if(blueSlime_->isPosImposibble_) return;
 	//更新処理
 	App();
 	blueSlime_->popParticle_->Update(blueSlime_->camera);

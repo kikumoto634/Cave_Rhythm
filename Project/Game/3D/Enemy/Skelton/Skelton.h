@@ -77,6 +77,7 @@ public:
 	inline bool GetIsDead()	{return isDead_;}
 	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
 	inline Vector3 GetParticlePos()	{return particlePos_;}
+	inline Vector3 GetEasingStartPos()	{return easigStartPos_;}
 
 	//Setter
 	inline void SetMapInfo(vector<vector<int>> info) {mapInfo_ = info;}
@@ -135,6 +136,9 @@ private:
 	//プレイヤーとの距離
 	float distance_ = 0.f;
 	bool isLightCal = false;
+
+	//イージングの移動開始座標
+	Vector3 easigStartPos_ = {};
 
 	//経路探索
 	vector<vector<int>> mapInfo_;

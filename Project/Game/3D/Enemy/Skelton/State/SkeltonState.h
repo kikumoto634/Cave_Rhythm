@@ -37,7 +37,7 @@ private:
 
 private:
 	//待機カウント最大数
-	const int WaltCountMax = 1;
+	const int WaltCountMax = 2;
 
 	//待機カウント
 	int waitCount_ = 0;
@@ -92,8 +92,6 @@ private:
 	int pathRoot_ = 10;
 
 	//移動
-	//イージングの移動開始座標
-	Vector3 easigStartPos_ = {};
 	//イージングの移動終了座標
 	Vector3 easingEndPos_ = {};
 	//イージングの移動タイム

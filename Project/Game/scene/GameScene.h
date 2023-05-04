@@ -5,6 +5,8 @@
 #include "Skelton.h"
 #include "Coins.h"
 
+#include <queue>
+
 class GameScene : public BaseBattleScene
 {
 public:
@@ -22,10 +24,6 @@ private:
 	FloorInfo two	= {5,  8, 7};
 	FloorInfo three = {7,  5,10};
 	FloorInfo four	= {10, 2,13};
-
-
-	//ポップカウント
-	const int PopCount = 1;
 
 public:
 	~GameScene();
@@ -66,17 +64,15 @@ private:
 	//必要コイン
 	int needCoin = 10;
 
-	//ポップカウント
-	int popCount = 0;
-
 	int slimePopNumMax = 5;
 	std::vector<std::unique_ptr<BlueSlime>> slime;
 
 	int skeltonPopNumMax = 5;
 	std::vector<std::unique_ptr<Skelton>> skelton;
 
-	int coinPopNumMax = 5;
+	int coinPopNumMax = 10;
 	std::vector<std::unique_ptr<Coins>> coin;
+	std::queue<Vector3> coinDropPos = {};
 
 
 	std::unique_ptr<BaseSprites> floorDepth;

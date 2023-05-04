@@ -1,4 +1,4 @@
-﻿#include "Coins.h"
+#include "Coins.h"
 #include "SphereCollider.h"
 
 #include "CollisionManager.h"
@@ -64,6 +64,7 @@ void Coins::Pop(Vector3 pos)
 {
 	SetPosition(pos);
 	IsAlive = true;
+	lostBeat = 0;
 }
 
 bool Coins::PopPossible()

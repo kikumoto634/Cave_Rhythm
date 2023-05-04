@@ -114,41 +114,50 @@ void GameScene::AddCommonUpdate()
 	if(player == nullptr) return;
 	areaManager->RandamAreaUpdate(camera, player->GetPosition());
 	areaManager->BreakBlock(player->GetBlockBreakPos());
+
+	if(input->Trigger(DIK_RETURN)){
+		/*for(auto it = slime.begin(); it != slime.end(); ++it){
+			if((*it)->GetIsPosImposibble_()){
+				Vector3 lpos = areaManager->GetObjectPopPosition();
+				(*it)->Pop({lpos.x, -3.5f,lpos.z});
+				(*it)->CaveLightOn();
+				break;
+			}
+		}*/
+		gameManager->AudioPlay(7,0.5f);
+	}
 }
 
 void GameScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); ++it){
-		/*if((*it)->GetIsDead()){
+		if((*it)->GetIsDeadTrigger()){
 			gameManager->AudioPlay(2, 0.5f);
-			for(auto it2 = coin.begin(); it2!= coin.end(); ++it2){
-				if((*it2)->PopPossible()){
-					(*it2)->Pop({(*it)->GetParticlePos().x, -5, (*it)->GetParticlePos().z});
-					break;
-				}
-			}
-		}*/
-		(*it)->Update(camera,player->GetPosition());
-	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
-		/*if((*it)->GetIsDead()){
-			gameManager->AudioPlay(2, 0.5f);
-			for(auto it2 = coin.begin(); it2!= coin.end(); ++it2){
-				if((*it2)->PopPossible()){
-					(*it2)->Pop({(*it)->GetParticlePos().x, -5, (*it)->GetParticlePos().z});
-					break;
-				}
-			}
-		}*/
-		(*it)->SetMapInfo(areaManager->GetMapInfo());
+			coinDropPos.push({(*it)->GetParticlePos().x, -5.0f, (*it)->GetParticlePos().z});
+		}
 		(*it)->Update(camera,player->GetPosition());
 	}
 
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+		if((*it)->GetIsDeadTrigger()){
+			gameManager->AudioPlay(2, 0.5f);
+			coinDropPos.push({(*it)->GetEasingStartPos().x, -5.0f, (*it)->GetEasingStartPos().z});
+		}
+		(*it)->SetMapInfo(areaManager->GetMapInfo());
+		(*it)->Update(camera,player->GetPosition());
+	}
+	
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		if((*it)->GetCoin()){
 			gameManager->CoinIncrement();
 			gameManager->AudioPlay(7,0.5f);
 		}
+
+		if(!coinDropPos.empty() && (*it)->PopPossible()){
+			(*it)->Pop(coinDropPos.front());
+			coinDropPos.pop();
+		}
+
 		(*it)->Update(this->camera);
 	}
 }
@@ -161,28 +170,21 @@ void GameScene::AddObject2DUpdate()
 
 void GameScene::AddBeatEndUpdate()
 {
-	if(popCount >= PopCount){
-		for(auto it = slime.begin(); it != slime.end(); ++it){
-			if((*it)->GetIsPosImposibble_()){
-				Vector3 lpos = areaManager->GetObjectPopPosition();
-				(*it)->Pop({lpos.x, -3.5f,lpos.z});
-				(*it)->CaveLightOn();
-				break;
-			}
+	for(auto it = slime.begin(); it != slime.end(); ++it){
+		if((*it)->GetIsPosImposibble_()){
+			Vector3 lpos = areaManager->GetObjectPopPosition();
+			(*it)->Pop({lpos.x, -3.5f,lpos.z});
+			(*it)->CaveLightOn();
+			break;
 		}
-
-		for(auto it = skelton.begin(); it != skelton.end(); ++it){
-			if((*it)->GetIsPosImposibble_()){
-				Vector3 lpos = areaManager->GetObjectPopPosition();
-				(*it)->Pop({lpos.x, -3.5f,lpos.z});
-				(*it)->CaveLightOn();
-				break;
-			}
-		}
-		popCount = 0;
 	}
-	else{
-		popCount++;
+	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+		if((*it)->GetIsPosImposibble_()){
+			Vector3 lpos = areaManager->GetObjectPopPosition();
+			(*it)->Pop({lpos.x, -3.5f,lpos.z});
+			(*it)->CaveLightOn();
+			break;
+		}
 	}
 
 
@@ -259,12 +261,11 @@ void GameScene::AddCommonFinalize()
 
 void GameScene::ActorCreateInitialize()
 {
-	for(int i = 0; i < skeltonPopNumMax; i++){
+	for(int i = 0; i < slimePopNumMax; i++){
 		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
 		newObj->Initialize("slime");
 		slime.push_back(move(newObj));
 	}
-
 	for(int i = 0; i < skeltonPopNumMax; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Skeleton");

@@ -73,6 +73,9 @@ void Skelton::OnCollision(const CollisionInfo &info)
     if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
         isDead_ = true;
     }
+    else if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
+		isDead_ = true;
+	}
 }
 
 void Skelton::Pop(Vector3 pos)

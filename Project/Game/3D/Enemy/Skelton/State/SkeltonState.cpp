@@ -42,7 +42,7 @@ void IdelSkeltonState::ParticleDraw()
 
 void TrackSkeltonState::UpdateTrigger()
 {
-	easigStartPos_ = skelton_->world.translation;
+	skelton_->easigStartPos_ = skelton_->world.translation;
 	//移動先計算
 	mapPath_ = skelton_->mapInfo_;
 	eX_ = +int(skelton_->world.translation.x/AreaBlockSize)+AreaBlocksHalfNum;
@@ -111,12 +111,12 @@ void TrackSkeltonState::Update()
 	}
 
 	//移動処理
-	skelton_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
+	skelton_->world.translation = Easing_Linear_Point2(skelton_->easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//移動完了時
 	if(easingMoveTime_ >= EasingFrameMax){
 		skelton_->world.translation = easingEndPos_;
-		easigStartPos_ = {};
+		skelton_->easigStartPos_ = {};
 		easingEndPos_ = {};
 		easingMoveTime_ = 0.f;
 		

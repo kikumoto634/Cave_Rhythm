@@ -101,9 +101,9 @@ protected:
 
 	//サイズ変更用
 	//スケール
-	Vector3 scale = {ScaleMax};
 	Vector3 ScaleMax = {1, 1, 1};
 	Vector3 ScaleMin = {0.7f, 1, 0.7f};
+	Vector3 scale = {ScaleMax};
 	//現在時間
 	float scaleCurrentTime = 0.f;
 	//終了時間(x(s/秒))
