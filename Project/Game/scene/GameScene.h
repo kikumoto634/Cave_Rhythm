@@ -78,5 +78,11 @@ private:
 	std::unique_ptr<BaseSprites> floorDepth;
 	int numberTextBase = 3;
 	std::unique_ptr<BaseSprites> floorValueTex;
+
+	//ToDo
+	//・アイテム(BaseObjObject)
+	//・敵 (BaseEnemyObject)
+	//・敵 (BaseEnemyObject)
+	//
 };
 
