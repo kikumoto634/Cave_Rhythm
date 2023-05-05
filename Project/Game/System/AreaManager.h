@@ -72,7 +72,7 @@ public:
 
 	//ランダム用
 	Vector3 GetExitPosition()	{return exitPosition_;}
-	Vector3 GetPlayerPosition()	{return PlayerPopPosition_;}
+	Vector3 GetPlayerPosition()	{return playerPopPosition_;}
 	Vector3 GetObjectPopPosition();
 	
 	//CSV用
@@ -175,7 +175,7 @@ private:
 	Vector3 exitPosition_ = {0,-5,0};
 
 	//プレイヤー
-	Vector3 PlayerPopPosition_ = {0,-3,0};
+	Vector3 playerPopPosition_ = {0,-3,0};
 
 	//生成オブジェクト
 	Vector3 objectPopPosition_ = {0,0,0};

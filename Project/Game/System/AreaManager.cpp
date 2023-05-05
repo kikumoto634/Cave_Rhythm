@@ -50,17 +50,17 @@ void AreaManager::CommonInitialize()
 		wallColliderModel_->CreateModel("GroundBlock2_Collider");
 	}
 
-	if(!IndestructibleWallModel){
-		IndestructibleWallModel = new ObjModelManager();
-		IndestructibleWallModel->CreateModel("GroundBlock3");
+	if(!indestructibleWallModel_){
+		indestructibleWallModel_ = new ObjModelManager();
+		indestructibleWallModel_->CreateModel("GroundBlock3");
 	}
-	if(!IndestructibleWallColliderModel){
-		IndestructibleWallColliderModel = new ObjModelManager();
-		IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
+	if(!indestructibleWallColliderModel_){
+		indestructibleWallColliderModel_ = new ObjModelManager();
+		indestructibleWallColliderModel_->CreateModel("GroundBlock2_Collider");
 	}
 
-	DigParticle = make_unique<ParticleObject>();
-	DigParticle->Initialize();
+	digParticle_ = make_unique<ParticleObject>();
+	digParticle_->Initialize();
 }
 
 void AreaManager::RandamAreaUpdate(Camera *camera, Vector3 PlayerPos)
@@ -70,7 +70,7 @@ void AreaManager::RandamAreaUpdate(Camera *camera, Vector3 PlayerPos)
 	this->camera_ = camera;
 	this->playerPos_ = PlayerPos;
 
-	IsDigSound = false;
+	isDigSound_ = false;
 
 	WallUpdate();
 	IndestructibleWallUpdate();
@@ -83,7 +83,7 @@ void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 {
 	assert(camera);
 
-	IsDigSound = false;
+	isDigSound_ = false;
 
 	this->camera_ = camera;
 	this->playerPos_ = PlayerPos;
@@ -97,17 +97,17 @@ void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 
 void AreaManager::CommonUpdate()
 {
-	if(IsDig && !isAlive_){
+	if(isDig_ && !isAlive_){
 		DigParticlePop();
-		IsDig = false;
+		isDig_ = false;
 	}
-	else if(IsDigApp){
-		if(paricleApperanceFrame >= DigAppearanceFrame){
-			IsDigApp = false;
-			paricleApperanceFrame = 0;
+	else if(isDigApp_){
+		if(paricleApperanceFrame_ >= DigAppearanceFrame){
+			isDigApp_ = false;
+			paricleApperanceFrame_ = 0;
 		}
-		paricleApperanceFrame++;
-		DigParticle->Update(this->camera_);
+		paricleApperanceFrame_++;
+		digParticle_->Update(this->camera_);
 	}
 }
 
@@ -136,8 +136,8 @@ void AreaManager::CSVAreaDraw()
 
 void AreaManager::ParticleDraw()
 {
-	if(IsDigApp){
-		DigParticle->Draw();
+	if(isDigApp_){
+		digParticle_->Draw();
 	}
 }
 
@@ -163,7 +163,7 @@ void AreaManager::CSVAreaFinalize()
 
 void AreaManager::CommonFinalize()
 {
-	DigParticle->Finalize();
+	digParticle_->Finalize();
 }
 
 void AreaManager::BreakBlock(Vector2 pos)
@@ -173,7 +173,7 @@ void AreaManager::BreakBlock(Vector2 pos)
 
 	if(blockNumX < 0 || blockNumZ < 0) return;
 	//if(mapInfo[blockNumZ][blockNumX] != 1) return;
-	mapInfo[blockNumZ][blockNumX] = 1;
+	mapInfo_[blockNumZ][blockNumX] = 1;
 }
 
 
@@ -186,7 +186,7 @@ void AreaManager::AreaPlaneInitialize(bool IsLighting)
 	for(int i = 0; i < DIV_NUM; i++){
 		plane_.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
-			if(mapInfo[i][j] == 0){
+			if(mapInfo_[i][j] == 0){
 				continue;
 			}
 			unique_ptr<Planes> obj = make_unique<Planes>();
@@ -263,7 +263,7 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 		wall_.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			
-			if(mapInfo[i][j] != 3){
+			if(mapInfo_[i][j] != 3){
 				continue;
 			}
 
@@ -290,9 +290,9 @@ void AreaManager::WallUpdate()
 		for(auto it = wall_[i].begin(); it != wall_[i].end(); ++it){
 			(*it)->SetPlayerPos(playerPos_);
 			if((*it)->GetIsDIg()){
-				IsDigSound = true;
-				IsDig =true;
-				DigParticlePos = (*it)->GetDigPosition();
+				isDigSound_ = true;
+				isDig_ =true;
+				digParticlePos_ = (*it)->GetDigPosition();
 				gameManager_->AudioPlay(10);
 			}
 			(*it)->Update(camera_);
@@ -333,10 +333,10 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 	Vector2 pos = {};
 
 	for(int i = 0; i < 4; i++){
-		indestructibleWalls.resize(i + 1);
+		indestructibleWalls_.resize(i + 1);
 		for(int j = 0; j < DIV_NUM; j++){
 			unique_ptr<IndestructibleWall> obj = make_unique<IndestructibleWall>();
-			obj->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
+			obj->Initialize(indestructibleWallModel_, indestructibleWallColliderModel_);
 
 			if(i == 0){
 				pos = {startPos + j, startPos - 1};
@@ -357,7 +357,7 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 			obj->SetPosition({pos.x, -3,pos.y});
 			obj->CaveLightOn();
 
-			indestructibleWalls[i].push_back(move(obj));
+			indestructibleWalls_[i].push_back(move(obj));
 		}
 	}
 }
@@ -367,27 +367,27 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
-		indestructibleWalls.resize(i+1);
+		indestructibleWalls_.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
-			if(mapInfo[i][j] != 2){
+			if(mapInfo_[i][j] != 2){
 				continue;
 			}
 
 			unique_ptr<IndestructibleWall> obj = make_unique<IndestructibleWall>();
-			obj->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
+			obj->Initialize(indestructibleWallModel_, indestructibleWallColliderModel_);
 			pos = {startPos + j ,startPos + i};
 			pos *= Block_Size;
 			obj->SetPosition({pos.x,-3,-pos.y});
 
-			indestructibleWalls[i].push_back(move(obj));
+			indestructibleWalls_[i].push_back(move(obj));
 		}
 	}
 }
 void AreaManager::IndestructibleWallUpdate()
 {
 	//地面
-	for(size_t i = 0; i < indestructibleWalls.size(); i++){
-		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
+	for(size_t i = 0; i < indestructibleWalls_.size(); i++){
+		for(auto it = indestructibleWalls_[i].begin(); it != indestructibleWalls_[i].end(); ++it){
 			(*it)->SetPlayerPos(playerPos_);
 			if((*it)->GetIsReflect()){
 				gameManager_->AudioPlay(13,0.5f);
@@ -398,22 +398,22 @@ void AreaManager::IndestructibleWallUpdate()
 }
 void AreaManager::IndestructibleWallDraw()
 {
-	for(size_t i = 0; i < indestructibleWalls.size(); i++){
-		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
+	for(size_t i = 0; i < indestructibleWalls_.size(); i++){
+		for(auto it = indestructibleWalls_[i].begin(); it != indestructibleWalls_[i].end(); ++it){
 			(*it)->Draw();
 		}
 	}
 }
 void AreaManager::IndestructibleWallFinalize()
 {
-	delete IndestructibleWallModel;
-	IndestructibleWallModel = nullptr;
+	delete indestructibleWallModel_;
+	indestructibleWallModel_ = nullptr;
 
-	delete IndestructibleWallColliderModel;
-	IndestructibleWallColliderModel = nullptr;
+	delete indestructibleWallColliderModel_;
+	indestructibleWallColliderModel_ = nullptr;
 
-	for(size_t i = 0; i < indestructibleWalls.size(); i++){
-		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
+	for(size_t i = 0; i < indestructibleWalls_.size(); i++){
+		for(auto it = indestructibleWalls_[i].begin(); it != indestructibleWalls_[i].end(); ++it){
 			(*it)->Finalize();
 		}
 	}
@@ -424,9 +424,9 @@ void AreaManager::IndestructibleWallFinalize()
 void AreaManager::CreateMap()
 {
 	for(int y = 0; y < DIV_NUM; y++){
-		mapInfo.resize(y+1);
+		mapInfo_.resize(y+1);
 		for(int x = 0; x < DIV_NUM; x++){
-			mapInfo[y].push_back(3);
+			mapInfo_[y].push_back(3);
 		}
 	}
 
@@ -501,12 +501,12 @@ AreaManager::Room AreaManager::CreateRoom(Area area)
 	int H = abs(Y1 - Y2) + 2;
 
 	Room room = {X,Y,W,H};
-	rooms.push_back(room);
+	rooms_.push_back(room);
 
 	//マップに反映
 	for(int y = 0; y < H-1; y++){
 		for(int x = 0; x < W-1; x++){
-			mapInfo[Y+y][X+x] = 1;
+			mapInfo_[Y+y][X+x] = 1;
 		}
 	}
 
@@ -526,15 +526,15 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 
 		//マップに分割ライン上の通路作成
 		for(int i = 0; minX + i < maxX; i++){
-			mapInfo[divline][minX + i] = 1;
+			mapInfo_[divline][minX + i] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; mapInfo[divline-i][X1] == 3 && divline - i != 0; i++){
-			mapInfo[divline-i][X1] = 1;
+		for(int i = 1; mapInfo_[divline-i][X1] == 3 && divline - i != 0; i++){
+			mapInfo_[divline-i][X1] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[divline+i][X2] == 3 && divline + i != DIV_NUM-1; i++){
-			mapInfo[divline+i][X2] = 1;
+		for(int i = 1; mapInfo_[divline+i][X2] == 3 && divline + i != DIV_NUM-1; i++){
+			mapInfo_[divline+i][X2] = 1;
 		}
 	}
 	else if(!hr){
@@ -549,15 +549,15 @@ void AreaManager::ConnectRoom(Room parent, Room childRoom, int divline, bool hr)
 
 		//マップに分割ライン上の通路作成
 		for(int i = 0; minY + i < maxY; i++){
-			mapInfo[minY + i][divline] = 1;
+			mapInfo_[minY + i][divline] = 1;
 		}
 		//分割ラインから親部屋への通路
-		for(int i = 1; mapInfo[Y1][divline-i] == 3 && divline - i != 0; i++){
-			mapInfo[Y1][divline-i] = 1;
+		for(int i = 1; mapInfo_[Y1][divline-i] == 3 && divline - i != 0; i++){
+			mapInfo_[Y1][divline-i] = 1;
 		}
 		//子部屋へ
-		for(int i = 1; mapInfo[Y2][divline+i] == 3 && divline + i != DIV_NUM-1; i++){
-			mapInfo[Y2][divline+i] = 1;
+		for(int i = 1; mapInfo_[Y2][divline+i] == 3 && divline + i != DIV_NUM-1; i++){
+			mapInfo_[Y2][divline+i] = 1;
 		}
 	}
 }
@@ -575,7 +575,7 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 	assert(file.is_open());
 
 	//file培養を文字列ストリームにコピー
-	csvCommands << file.rdbuf();
+	csvCommands_ << file.rdbuf();
 	file.close();
 
 	//一行分の文字列を入れる変数
@@ -587,7 +587,7 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 	Vector2 pos = {};
 
 	//コマンドループ
-	while(getline(csvCommands, line)){
+	while(getline(csvCommands_, line)){
 		//一行分のっ文字列をストリームに変換して解析しやすく
 		istringstream line_stream(line);
 
@@ -598,56 +598,56 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 		getline(line_stream, word, ',');
 
 		x = 0;
-		mapInfo.resize(y+1);
+		mapInfo_.resize(y+1);
 		for(int i = 0; i < DIV_NUM*DIV_NUM; i++){
 
 			if(word.find("0") == 0){
-				mapInfo[y].push_back(0);
+				mapInfo_[y].push_back(0);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("1") == 0){
-				mapInfo[y].push_back(1);
+				mapInfo_[y].push_back(1);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("2") == 0){
-				mapInfo[y].push_back(2);
+				mapInfo_[y].push_back(2);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("3") == 0){
-				mapInfo[y].push_back(3);
+				mapInfo_[y].push_back(3);
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("4") == 0){
-				mapInfo[y].push_back(1);
+				mapInfo_[y].push_back(1);
 
 				pos = {start + x, start + y};
 				pos *= Block_Size;
-				PlayerPopPosition = {pos.x, -3, -pos.y};
+				playerPopPosition_ = {pos.x, -3, -pos.y};
 
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("5") == 0){
-				mapInfo[y].push_back(1);
+				mapInfo_[y].push_back(1);
 
 				pos = {start + x, start + y};
 				pos *= Block_Size;
-				ObjectPos.push_back({pos.x,0,-pos.y});
-				ObjectPopActive.push_back(true);
+				objectPos_.push_back({pos.x,0,-pos.y});
+				objectPopActive_.push_back(true);
 
 				getline(line_stream, word, ',');
 				x++;
 			}
 			else if(word.find("6") == 0){
-				mapInfo[y].push_back(1);
+				mapInfo_[y].push_back(1);
 
 				pos = {start + x, start + y};
 				pos *= Block_Size;
-				exitPosition = {pos.x,-5,-pos.y};
+				exitPosition_ = {pos.x,-5,-pos.y};
 
 				getline(line_stream, word, ',');
 				x++;
@@ -662,12 +662,12 @@ void AreaManager::CSVMapDataLoad(string fullPath)
 
 Vector3 AreaManager::GetCSVObjectPopPosition(int index)
 {
-	return ObjectPos[index];
+	return objectPos_[index];
 }
 bool AreaManager::GetCSVObjectPopActive(int index, bool IsFlag)
 {
-	if(ObjectPopActive[index]){
-		ObjectPopActive[index] = IsFlag;
+	if(objectPopActive_[index]){
+		objectPopActive_[index] = IsFlag;
 		return true;
 	}
 
@@ -678,7 +678,7 @@ bool AreaManager::GetCSVObjectPopActive(int index, bool IsFlag)
 #pragma region ランダム生成
 void AreaManager::ObjectRandomPop()
 {
-	int roomSize = (int)rooms.size();
+	int roomSize = (int)rooms_.size();
 	Vector2 areaPos;
 	Vector2 areaWH;
 
@@ -686,43 +686,43 @@ void AreaManager::ObjectRandomPop()
 
 	//exit
 	int exitRoomsNum = rand()%roomSize;
-	areaPos = {(start+rooms[exitRoomsNum].X), (start+rooms[exitRoomsNum].Y)};
-	areaWH = {float(rand()%(rooms[exitRoomsNum].Width-1)),float(rand()%(rooms[exitRoomsNum].Height-1))};
+	areaPos = {(start+rooms_[exitRoomsNum].X), (start+rooms_[exitRoomsNum].Y)};
+	areaWH = {float(rand()%(rooms_[exitRoomsNum].Width-1)),float(rand()%(rooms_[exitRoomsNum].Height-1))};
 	areaPos*= Block_Size;
 	areaWH *= Block_Size;
-	exitPosition = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
+	exitPosition_ = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
 
 	//player
 	int playerRoomsNum = rand()%roomSize;
-	areaPos = {(start+rooms[playerRoomsNum].X),(start+rooms[playerRoomsNum].Y)};
-	areaWH = {float(rand()%(rooms[playerRoomsNum].Width-1)),float(rand()%(rooms[playerRoomsNum].Height-1))};
+	areaPos = {(start+rooms_[playerRoomsNum].X),(start+rooms_[playerRoomsNum].Y)};
+	areaWH = {float(rand()%(rooms_[playerRoomsNum].Width-1)),float(rand()%(rooms_[playerRoomsNum].Height-1))};
 	areaPos*= Block_Size;
 	areaWH *= Block_Size;
-	PlayerPopPosition = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
+	playerPopPosition_ = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
 }
 
 Vector3 AreaManager::GetObjectPopPosition()
 {
-	int roomSize = (int)rooms.size();
+	int roomSize = (int)rooms_.size();
 	Vector2 areaPos;
 	Vector2 areaWH;
 
 	float start = -DIV_NUM_HALF_FLOAT;
 	int RoomsNum = rand()%roomSize;
 
-	areaPos = {(start+rooms[RoomsNum].X),(start+rooms[RoomsNum].Y)};
-	areaWH = {float(rand()%(rooms[RoomsNum].Width-1)),float(rand()%(rooms[RoomsNum].Height-1))};
+	areaPos = {(start+rooms_[RoomsNum].X),(start+rooms_[RoomsNum].Y)};
+	areaWH = {float(rand()%(rooms_[RoomsNum].Width-1)),float(rand()%(rooms_[RoomsNum].Height-1))};
 	areaPos*= Block_Size;
 	areaWH *= Block_Size;
-	ObjectPopPosition = {areaPos.x+areaWH.x,0.f,-(areaPos.y+areaWH.y)};
+	objectPopPosition_ = {areaPos.x+areaWH.x,0.f,-(areaPos.y+areaWH.y)};
 
-	return ObjectPopPosition;
+	return objectPopPosition_;
 }
 #pragma endregion
 
 void AreaManager::DigParticlePop()
 {
-	IsDigApp = true;
+	isDigApp_ = true;
 	for (int i = 0; i < 3; i++) {
 		const float rnd_vel = 0.08f;
 		Vector3 vel{};
@@ -733,7 +733,7 @@ void AreaManager::DigParticlePop()
 		Vector3 acc{};
 		acc.y = -0.005f;
 
-		DigParticle->ParticleSet(DigAppearanceFrame,DigParticlePos,vel,acc,0.4f,0.0f,1,{0.5f,0.3f,0.2f,1.f});
-		DigParticle->ParticleAppearance();
+		digParticle_->ParticleSet(DigAppearanceFrame,digParticlePos_,vel,acc,0.4f,0.0f,1,{0.5f,0.3f,0.2f,1.f});
+		digParticle_->ParticleAppearance();
 	}
 }
