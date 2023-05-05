@@ -68,7 +68,7 @@ void TrackSkeltonState::UpdateTrigger()
         //dx,dy方向のルート移動
         int next_x = eX_ + dx[j];
         int next_y = eY_ + dy[j];
-		if(next_x < 0 || next_y < 0) return;
+		if(next_x < 0 || next_y < 0 || 31 <= next_x || 31 <= next_y) return;
 
         if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == RootPathPlayerNumber){
 			easingEndPos_ = skelton_->world.translation + Vector3{dx[j]*AreaBlockSize, 0.f, -dy[j]*AreaBlockSize};
@@ -147,13 +147,13 @@ void DeadSkeltonState::Update()
 {
 	//更新処理
 	skelton_->deadParticle_->Update(skelton_->camera);
-	skelton_->particleAliveFrame++;
+	skelton_->particleAliveFrame_++;
 
 
-	if(skelton_->particleAliveFrame < ParticleAliveFrameMax) return;
+	if(skelton_->particleAliveFrame_ < ParticleAliveFrameMax) return;
 
 	skelton_->isPosImposibble_ = true;	
-	skelton_->particleAliveFrame = 0;
+	skelton_->particleAliveFrame_ = 0;
 
 	skelton_->world.UpdateMatrix();
 	stateManager_->SetNextState(new PopSkeltonState);
@@ -203,14 +203,14 @@ void PopSkeltonState::Update()
 	//更新処理
 	App();
 	skelton_->popParticle_->Update(skelton_->camera);
-	skelton_->particleAliveFrame++;
+	skelton_->particleAliveFrame_++;
 
 
-	if(skelton_->particleAliveFrame < ParticleCreateFrameMax) return;
+	if(skelton_->particleAliveFrame_ < ParticleCreateFrameMax) return;
 
 	skelton_->isDead_ = false;
 	skelton_->world.translation = skelton_->particlePos_;
-	skelton_->particleAliveFrame = 0;
+	skelton_->particleAliveFrame_ = 0;
 
 	skelton_->world.UpdateMatrix();
 	stateManager_->SetNextState(new IdelSkeltonState);
@@ -218,7 +218,7 @@ void PopSkeltonState::Update()
 
 void PopSkeltonState::ParticleDraw()
 {
-	if(skelton_->particleAliveFrame < ParticleCreateWaitFrameMax) return;
+	if(skelton_->particleAliveFrame_ < ParticleCreateWaitFrameMax) return;
 	skelton_->popParticle_->Draw();
 }
 

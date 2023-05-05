@@ -379,6 +379,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Enemy\BlueSlime\State">
       <UniqueIdentifier>{575d2c1d-27b3-4d88-a570-f849bef56dc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\_Base">
+      <UniqueIdentifier>{cefa15d4-7bf0-4bb5-ad59-8e4cd0279f63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\_Base">
+      <UniqueIdentifier>{ee438522-440c-4612-88cc-714f5e4e3d3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -584,6 +590,9 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Enemy\BlueSlime\State\BlueSlimeStateManager.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy\BlueSlime\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\_Base\BaseEnemy.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\_Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -817,6 +826,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\BlueSlime\State\BlueSlimeStateManager.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy\BlueSlime\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\_Base\BaseEnemy.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\_Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

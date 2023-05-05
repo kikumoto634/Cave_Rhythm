@@ -17,8 +17,8 @@ BaseBattleScene::BaseBattleScene(DirectXCommon *dxCommon, Window *window, int sa
 		dxCommon,
 		window)
 {
-	this->saveHP = saveHP;
-	this->floorValue = floorValue;
+	this->saveHP_ = saveHP;
+	this->floorValue_ = floorValue_;
 }
 
 BaseBattleScene::~BaseBattleScene()
@@ -72,7 +72,7 @@ void BaseBattleScene::Update()
 	SceneChange();
 
 	//リズム
-	rhythmManager->PreUpdate();
+	rhythmManager_->PreUpdate();
 	RhythmJudgeUpdate();
 	BeatEndUpdate();
 
@@ -87,7 +87,7 @@ void BaseBattleScene::Update()
 	CommonUpdate();
 	AddCommonUpdate();
 
-	rhythmManager->PostUpdate();
+	rhythmManager_->PostUpdate();
 
 #ifdef _DEBUG
 	{
@@ -113,12 +113,12 @@ void BaseBattleScene::Update()
 		ImGui::Begin("SCENE");
 
 		ImGui::Text("Now:Home   Next:Game");
-		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
-			IsNextSceneChange = true;
+		if(!isPrevSceneChange_ && ImGui::Button("NextScene")){
+			isNextSceneChange_ = true;
 		}
 		ImGui::Text("Now:Home   Next:Title");
-		if(!IsPrevSceneChange && ImGui::Button("GameEnd")){
-			IsGameEnd = true;
+		if(!isPrevSceneChange_ && ImGui::Button("GameEnd")){
+			isGameEnd_ = true;
 		}
 
 		ImGui::End();
@@ -149,14 +149,14 @@ void BaseBattleScene::Draw()
 	debugText->Printf(0,420,1.f,"Camera Eye  X:%f, Y:%f, Z:%f", camera->GetEye().x, camera->GetEye().y, camera->GetEye().z);
 
 
-	debugText->Printf(0,560,1.f,"Player Pos X:%f, Y:%f, Z:%f", player->GetPosition().x, player->GetPosition().y,player->GetPosition().z);
+	debugText->Printf(0,560,1.f,"Player Pos X:%f, Y:%f, Z:%f", player_->GetPosition().x, player_->GetPosition().y,player_->GetPosition().z);
 
-	debugText->Printf(0,580, 1.f,  "Time				: %lf[ms]", rhythmManager->GetCalTime());
-	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager->GetInputTimeTarget());
-	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager->GetInputTimet());
+	debugText->Printf(0,580, 1.f,  "Time				: %lf[ms]", rhythmManager_->GetCalTime());
+	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager_->GetInputTimeTarget());
+	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager_->GetInputTimet());
 	
-	debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager->GetComboNum());
-	debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager->GetCoinNum());
+	debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager_->GetComboNum());
+	debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager_->GetCoinNum());
 
 
 	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
@@ -181,17 +181,17 @@ void BaseBattleScene::Finalize()
 void BaseBattleScene::CommonInitialize()
 {
 	//衝突マネージャー
-	collisionManager = CollisionManager::GetInstance();
+	collisionManager_ = CollisionManager::GetInstance();
 
 	//リズムマネージャー
-	rhythmManager = make_unique<RhythmManager>();
-	rhythmManager->Initialize();
+	rhythmManager_ = make_unique<RhythmManager>();
+	rhythmManager_->Initialize();
 
 	//ゲームマネージャー
-	gameManager = make_unique<GameManager>();
-	gameManager->Initialize();
+	gameManager_ = make_unique<GameManager>();
+	gameManager_->Initialize();
 
-	areaManager = make_unique<AreaManager>();
+	areaManager_ = make_unique<AreaManager>();
 
 	//カメラ
 	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
@@ -201,33 +201,33 @@ void BaseBattleScene::CommonInitialize()
 void BaseBattleScene::Object3DInitialize()
 {
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
-	player = make_unique<Player>();
-	player->Initialize("human1");
-	player->SetPosition(areaManager->GetPlayerPosition());
-	player->SetWeaponModelPos({0,0,-2.f});
-	player->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
-	player->SetHp(saveHP);
-	gameManager->InitializeSetHp(player->GetHp());
+	player_ = make_unique<Player>();
+	player_->Initialize("human1");
+	player_->SetPosition(areaManager_->GetPlayerPosition());
+	player_->SetWeaponModelPos({0,0,-2.f});
+	player_->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
+	player_->SetHp(saveHP_);
+	gameManager_->InitializeSetHp(player_->GetHp());
 
 	//出口
-	exit = make_unique<Exit>();
-	exit->Initialize("Exit");
-	exit->SetPosition(areaManager->GetExitPosition());
-	exit->SetExitOpenNeedCoin(0);
-	exit->NeedCoinSpriteUpdate();
+	exit_ = make_unique<Exit>();
+	exit_->Initialize("Exit");
+	exit_->SetPosition(areaManager_->GetExitPosition());
+	exit_->SetExitOpenNeedCoin(0);
+	exit_->NeedCoinSpriteUpdate();
 }
 
 void BaseBattleScene::Object2DInitialize()
 {
 	//シーン遷移(FadeOut)
-	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
-	fade = make_unique<BaseSprites>();
-	fade->Initialize(1);
-	fade->SetColor(fadeColor);
-	fade->SetSize({fadeInSize});
+	fadeInSize_ = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
+	fade_ = make_unique<BaseSprites>();
+	fade_->Initialize(1);
+	fade_->SetColor(fadeColor_);
+	fade_->SetSize({fadeInSize_});
 
-	judgeLoca = make_unique<JudgeLocation>();
-	judgeLoca->Initialize();
+	judgeLoca_ = make_unique<JudgeLocation>();
+	judgeLoca_->Initialize();
 
 }
 
@@ -235,109 +235,109 @@ void BaseBattleScene::Object3DUpdate()
 {
 	//プレイヤー
 	//小節終了時に入力可能状態に変更
-	if(rhythmManager->GetIsMeasureUp()){
-		player->InputPossible();
+	if(rhythmManager_->GetIsMeasureUp()){
+		player_->InputPossible();
 	}
-	if(player->GetIsInput()){
-		rhythmManager->InputTime();
-		IsRhythmInput = true;
-		IsNoteInput = true;
+	if(player_->GetIsInput()){
+		rhythmManager_->InputTime();
+		isRhythmInput_ = true;
+		isNoteInput_ = true;
 	}
-	if(player->GetIsDamage())	{
-		gameManager->AudioPlay(2,0.2f);
-		gameManager->HpDecrement();
+	if(player_->GetIsDamage())	{
+		gameManager_->AudioPlay(2,0.2f);
+		gameManager_->HpDecrement();
 	}
-	if(player->GetIsDead())	{
-		gameManager->AudioPlay(2,0.5f);
-		IsGameEnd = true;
+	if(player_->GetIsDead())	{
+		gameManager_->AudioPlay(2,0.5f);
+		isGameEnd_ = true;
 	}
-	player->Update(camera);
+	player_->Update(camera);
 	//player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
 	//出口
-	exit->Update(camera);
+	exit_->Update(camera);
 	{
-		Vector3 target = player->GetPosition() + Vector3{-1, 2, 0};
-		Vector2 pos = exit->GetCoinSp()->ChangeTransformation(target, this->camera);
-		exit->SetCoinSpPosition(pos);
+		Vector3 target = player_->GetPosition() + Vector3{-1, 2, 0};
+		Vector2 pos = exit_->GetCoinSp()->ChangeTransformation(target, this->camera);
+		exit_->SetCoinSpPosition(pos);
 	}
 }
 
 void BaseBattleScene::Object2DUpdate()
 {
-	gameManager->SpriteUpdate();
+	gameManager_->SpriteUpdate();
 
-	judgeLoca->Update(IsNoteInput);
+	judgeLoca_->Update(isNoteInput_);
 }
 
 void BaseBattleScene::CommonUpdate()
 {
-	gameManager->PlayerCircleShadowSet(player->GetPosition());
+	gameManager_->PlayerCircleShadowSet(player_->GetPosition());
 	//地面
-	gameManager->LightUpdate(player->GetIsDead());
+	gameManager_->LightUpdate(player_->GetIsDead());
 
 	//出口
-	if(gameManager->GetCoinNum() >= exit->GetExitNeedCoinNum() && exit->GetIsPlayerContact()){
-		exit->ExitOpen();
-		player->SetIsExitOpen(true);
+	if(gameManager_->GetCoinNum() >= exit_->GetExitNeedCoinNum() && exit_->GetIsPlayerContact()){
+		exit_->ExitOpen();
+		player_->SetIsExitOpen(true);
 	}
-	else if(!exit->GetIsPlayerContact()){
-		exit->ExitClose();
-		player->SetIsExitOpen(false);
+	else if(!exit_->GetIsPlayerContact()){
+		exit_->ExitClose();
+		player_->SetIsExitOpen(false);
 	}
 
 	//カメラ追従
-	camera->Tracking(player->GetPosition());
+	camera->Tracking(player_->GetPosition());
 
 	//シーン遷移
-	if(player->GetIsNextScene())	{
-		IsNextSceneChange = true;
-		if(!exit->GetIsOpenAudioOnce()){
-			gameManager->AudioPlay(6, 0.5f);
+	if(player_->GetIsNextScene())	{
+		isNextSceneChange_ = true;
+		if(!exit_->GetIsOpenAudioOnce()){
+			gameManager_->AudioPlay(6, 0.5f);
 			camera->ShakeStart();
-			exit->ModelChange();
+			exit_->ModelChange();
 		}
 	}
 
 	//すべての衝突をチェック
-	collisionManager->CheckAllCollisions();
+	collisionManager_->CheckAllCollisions();
 }
 
 void BaseBattleScene::RhythmJudgeUpdate()
 {
-	if(IsPrevSceneChange) return;
+	if(isPrevSceneChange_) return;
 
 	//リズム判別
-	if(IsRhythmInput){
-		IsRhythmInput = false;
+	if(isRhythmInput_){
+		isRhythmInput_ = false;
 
-		if(rhythmManager->IsInputRhythmJudge()){
-			gameManager->ComboIncrement();
-			player->SetInputJudge(true);
+		if(rhythmManager_->IsInputRhythmJudge()){
+			gameManager_->ComboIncrement();
+			player_->SetInputJudge(true);
 		}
-		else if(!rhythmManager->IsInputRhythmJudge()){
-			gameManager->ComboReset();
-			player->SetInputJudge(false);
+		else if(!rhythmManager_->IsInputRhythmJudge()){
+			gameManager_->ComboReset();
+			player_->SetInputJudge(false);
 		}
 	}
 }
 
 void BaseBattleScene::BeatEndUpdate()
 {
-	if(IsPrevSceneChange) return;
+	if(isPrevSceneChange_) return;
 
 	//リズム終了時処理
-	if(rhythmManager->GetIsJustRhythm() && !IsGameEnd){
+	if(rhythmManager_->GetIsJustRhythm() && !isGameEnd_){
 		
 		//SE
-		gameManager->AudioPlay(0,0.25f);
+		gameManager_->AudioPlay(0,0.25f);
 
 		//各オブジェクト処理
-		if(!player->GetIsDead())player->IsBeatEndOn();
+		if(!player_->GetIsDead())player_->IsBeatEndOn();
 
-		areaManager->BeatEndUpdate(gameManager.get());
+		areaManager_->BeatEndUpdate(gameManager_.get());
 
-		exit->IsBeatEndOn();
-		gameManager->IsBeatEndOn();
+		exit_->IsBeatEndOn();
+		gameManager_->IsBeatEndOn();
 		
 
 		AddBeatEndUpdate();
@@ -346,26 +346,26 @@ void BaseBattleScene::BeatEndUpdate()
 
 void BaseBattleScene::Object3DDraw()
 {
-	player->Draw();
-	exit->Draw();
+	player_->Draw();
+	exit_->Draw();
 }
 
 void BaseBattleScene::ParticleDraw()
 {
-	areaManager->ParticleDraw();
+	areaManager_->ParticleDraw();
 }
 
 void BaseBattleScene::UIDraw()
 {
 	//出口
-	exit->Draw2D();
+	exit_->Draw2D();
 
-	judgeLoca->Draw();
+	judgeLoca_->Draw();
 
-	gameManager->SpriteDraw();
+	gameManager_->SpriteDraw();
 
 	//シーン遷移
-	fade->Draw();
+	fade_->Draw();
 }
 
 void BaseBattleScene::SceneGameEnd()
@@ -376,58 +376,58 @@ void BaseBattleScene::SceneGameEnd()
 void BaseBattleScene::SceneChange()
 {
 	//PrevSceneからの移動後処理
-	if(IsPrevSceneChange){
+	if(isPrevSceneChange_){
 
 		//画面が開く
 		{
-			if(fadeColor.w <= 0){
-				IsPrevSceneChange = false;
-				fadeCurrentFrame = 0;
+			if(fadeColor_.w <= 0){
+				isPrevSceneChange_ = false;
+				fadeCurrentFrame_ = 0;
 				//リズム
-				rhythmManager->TimeStart();
-				gameManager->AudioPlay(8, 0.5f, true);
+				rhythmManager_->TimeStart();
+				gameManager_->AudioPlay(8, 0.5f, true);
 				return;
 			}
 
-			fadeColor.w = 
-				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond/2));
-			fade->SetColor(fadeColor);
-			fade->Update();
+			fadeColor_.w = 
+				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, FadeSecond/2));
+			fade_->SetColor(fadeColor_);
+			fade_->Update();
 		}
 	}
 	//NextSceneへの移動
-	else if(IsNextSceneChange || IsGameEnd){
+	else if(isNextSceneChange_ || isGameEnd_){
 
-		if(fadeColor.w >= 1){
+		if(fadeColor_.w >= 1){
 			camera->Reset();
-			if(IsNextSceneChange)NextSceneChange();
-			else if(IsGameEnd)	SceneGameEnd();
+			if(isNextSceneChange_)NextSceneChange();
+			else if(isGameEnd_)	SceneGameEnd();
 		}
 
-		fadeColor.w = 
-			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame, FadeSecond));
-		fade->SetColor(fadeColor);
-		fade->Update();
+		fadeColor_.w = 
+			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+		fade_->SetColor(fadeColor_);
+		fade_->Update();
 	}
 }
 
 void BaseBattleScene::ObjectFinaize()
 {
 #pragma region _3D解放
-	player->Finalize();
-	exit->Finalize();
+	player_->Finalize();
+	exit_->Finalize();
 #pragma endregion _3D解放
 
 #pragma region _2D解放
-	judgeLoca->Finalize();
-	fade->Finalize();
+	judgeLoca_->Finalize();
+	fade_->Finalize();
 #pragma endregion _2D解放
 }
 
 void BaseBattleScene::CommonFinalize()
 {
-	gameManager->Finalize();
+	gameManager_->Finalize();
 
-	rhythmManager = nullptr;
+	rhythmManager_ = nullptr;
 }
 

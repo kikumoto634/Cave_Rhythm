@@ -10,6 +10,10 @@
 
 class AreaManager
 {
+private:
+	template <class T> using unique_ptr = std::unique_ptr<T>;
+	template <class T> using vector = std::vector<T>;
+
 public:
 	static const int DIV_NUM = 31;
 	static const float DIV_NUM_FLOAT;
@@ -67,17 +71,17 @@ public:
 	void BreakBlock(Vector2 pos);
 
 	//ランダム用
-	Vector3 GetExitPosition()	{return exitPosition;}
-	Vector3 GetPlayerPosition()	{return PlayerPopPosition;}
+	Vector3 GetExitPosition()	{return exitPosition_;}
+	Vector3 GetPlayerPosition()	{return PlayerPopPosition_;}
 	Vector3 GetObjectPopPosition();
 	
 	//CSV用
 	Vector3 GetCSVObjectPopPosition(int index);
 	bool GetCSVObjectPopActive(int index, bool IsFlag = true);
-	int GetCSVObjectSize()	{return (int)ObjectPos.size();}
+	int GetCSVObjectSize()	{return (int)objectPos_.size();}
 
 	//Getter
-	inline std::vector<std::vector<int>> GetMapInfo()	{return mapInfo;}
+	inline std::vector<std::vector<int>> GetMapInfo()	{return mapInfo_;}
 
 private:
 	//地面
@@ -119,25 +123,25 @@ private:
 
 private:
 	//借りもの
-	Camera* camera = nullptr;
-	GameManager* gameManager = nullptr;
-	Vector3 PlayerPos={};
+	Camera* camera_ = nullptr;
+	GameManager* gameManager_ = nullptr;
+	Vector3 playerPos_={};
 
 	//Plane
-	ObjModelManager* PlaneModel = nullptr;
-	std::vector<std::vector<std::unique_ptr<Planes>>> plane;
-	bool IsComboColorChange = false;
+	ObjModelManager* planeModel_ = nullptr;
+	vector<vector<unique_ptr<Planes>>> plane_;
+	bool isComboColorChange_ = false;
 
 	//Wall
-	ObjModelManager* WallModel = nullptr;
-	ObjModelManager* WallColliderModel = nullptr;
-	bool IsAlive = false;
-	std::vector<std::vector<std::unique_ptr<Walls>>> wall;
+	ObjModelManager* wallModel_ = nullptr;
+	ObjModelManager* wallColliderModel_ = nullptr;
+	bool isAlive_ = false;
+	vector<vector<unique_ptr<Walls>>> wall_;
 
 	//破壊不可能壁
-	ObjModelManager* IndestructibleWallModel = nullptr;
-	ObjModelManager* IndestructibleWallColliderModel = nullptr;
-	std::vector<std::vector<std::unique_ptr<IndestructibleWall>>> indestructibleWalls;
+	ObjModelManager* indestructibleWallModel_ = nullptr;
+	ObjModelManager* indestructibleWallColliderModel_ = nullptr;
+	vector<vector<unique_ptr<IndestructibleWall>>> indestructibleWalls_;
 
 	//部屋情報
 	/*
@@ -146,34 +150,34 @@ private:
 	* 2:不可壁
 	* 3:可能壁
 	*/
-	std::vector<std::vector<int>> mapInfo;
+	vector<vector<int>> mapInfo_;
 
 	//ランダム生成部屋
-	std::vector<Room> rooms;
+	vector<Room> rooms_;
 
 
 	//CSVコマンド
-	std::stringstream csvCommands;
-	std::vector<Vector3> ObjectPos;
-	std::vector<bool> ObjectPopActive;
+	std::stringstream csvCommands_;
+	vector<Vector3> objectPos_;
+	vector<bool> objectPopActive_;
 
 
 	//壁破壊パーティクル
-	bool IsDig = false;
-	bool IsDigApp = false;
-	int paricleApperanceFrame = 0;
-	Vector3 DigParticlePos = {};
-	std::unique_ptr<ParticleObject> DigParticle;
-	bool IsDigSound = false;
+	bool isDig_ = false;
+	bool isDigApp_ = false;
+	int paricleApperanceFrame_ = 0;
+	Vector3 digParticlePos_ = {};
+	unique_ptr<ParticleObject> digParticle_;
+	bool isDigSound_ = false;
 
 	//座標
 	//出口
-	Vector3 exitPosition = {0,-5,0};
+	Vector3 exitPosition_ = {0,-5,0};
 
 	//プレイヤー
-	Vector3 PlayerPopPosition = {0,-3,0};
+	Vector3 PlayerPopPosition_ = {0,-3,0};
 
 	//生成オブジェクト
-	Vector3 ObjectPopPosition = {0,0,0};
+	Vector3 objectPopPosition_ = {0,0,0};
 };
 

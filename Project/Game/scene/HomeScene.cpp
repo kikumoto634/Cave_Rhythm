@@ -25,13 +25,13 @@ void HomeScene::NextSceneChange()
 void HomeScene::AddCommonInitialize()
 {
 	//ダンジョン
-	areaManager->CSVAreaInitialize("Home");
+	areaManager_->CSVAreaInitialize("Home");
 }
 
 void HomeScene::AddObject3DInitialize()
 {
-	exit->SetExitOpenNeedCoin(0);
-	exit->NeedCoinSpriteUpdate();
+	exit_->SetExitOpenNeedCoin(0);
+	exit_->NeedCoinSpriteUpdate();
 
 	ActorCreateInitialize();
 }
@@ -61,16 +61,16 @@ void HomeScene::AddObject2DInitialize()
 
 void HomeScene::AddCommonUpdate()
 {
-	areaManager->CSVAreaUpdate(camera, player->GetPosition());
+	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 }
 
 void HomeScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		if((*it)->GetIsDeadTrigger()){
-			gameManager->AudioPlay(2, 0.5f);
+			gameManager_->AudioPlay(2, 0.5f);
 		}
-		(*it)->Update(camera,player->GetPosition());
+		(*it)->Update(camera,player_->GetPosition());
 	}
 }
 
@@ -80,14 +80,14 @@ void HomeScene::AddObject2DUpdate()
 		Vector3 ltarget = exitTextPos;
 		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
 		exitText->SetPosition(lpos);
-		exitText->SetPlayerPos(player->GetPosition());
+		exitText->SetPlayerPos(player_->GetPosition());
 		exitText->Update();
 	}
 	{
 		Vector3 ltarget = trainingTextPos;
 		Vector2 lpos = trainingText->ChangeTransformation(ltarget, this->camera);
 		trainingText->SetPosition(lpos);
-		trainingText->SetPlayerPos(player->GetPosition());
+		trainingText->SetPlayerPos(player_->GetPosition());
 		trainingText->Update();
 	}
 }
@@ -99,8 +99,8 @@ void HomeScene::AddBeatEndUpdate()
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
 		if((*it)->GetIsPosImposibble_()){
-			if(areaManager->GetCSVObjectPopActive(index)) {
-				lpos = areaManager->GetCSVObjectPopPosition(index);
+			if(areaManager_->GetCSVObjectPopActive(index)) {
+				lpos = areaManager_->GetCSVObjectPopPosition(index);
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
 			}
 			index++;
@@ -110,7 +110,7 @@ void HomeScene::AddBeatEndUpdate()
 
 void HomeScene::AddObject3DDraw()
 {
-	areaManager->CSVAreaDraw();
+	areaManager_->CSVAreaDraw();
 
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
@@ -147,7 +147,7 @@ void HomeScene::AddObjectFinalize()
 
 void HomeScene::AddCommonFinalize()
 {
-	areaManager->CSVAreaFinalize();
+	areaManager_->CSVAreaFinalize();
 }
 
 void HomeScene::ActorCreateInitialize()

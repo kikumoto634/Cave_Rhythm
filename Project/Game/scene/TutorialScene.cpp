@@ -26,7 +26,7 @@ void TutorialScene::NextSceneChange()
 void TutorialScene::AddCommonInitialize()
 {
 	//ダンジョン
-	areaManager->CSVAreaInitialize("Tutorial");
+	areaManager_->CSVAreaInitialize("Tutorial");
 }
 
 void TutorialScene::AddObject3DInitialize()
@@ -63,28 +63,28 @@ void TutorialScene::AddObject2DInitialize()
 
 void TutorialScene::AddCommonUpdate()
 {
-	areaManager->CSVAreaUpdate(camera, player->GetPosition());
+	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 }
 
 void TutorialScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		if((*it)->GetIsDeadTrigger()){
-			gameManager->AudioPlay(2, 0.5f);
+			gameManager_->AudioPlay(2, 0.5f);
 			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
 				if((*it2)->PopPossible()){
-					(*it2)->Pop({(*it)->GetParticlePos().x, -5, (*it)->GetParticlePos().z});
+					(*it2)->Pop({(*it)->GetPopPosition().x, -5, (*it)->GetPopPosition().z});
 					break;
 				}
 			}
 		}
-		(*it)->Update(camera,player->GetPosition());
+		(*it)->Update(camera,player_->GetPosition());
 	}
 
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		if((*it)->GetCoin()){
-			gameManager->CoinIncrement();
-			gameManager->AudioPlay(7,0.5f);
+			gameManager_->CoinIncrement();
+			gameManager_->AudioPlay(7,0.5f);
 		}
 		(*it)->Update(this->camera);
 	}
@@ -96,7 +96,7 @@ void TutorialScene::AddObject2DUpdate()
 		Vector3 ltarget = moveSpPos;
 		Vector2 lpos = moveSp->ChangeTransformation(ltarget, this->camera);
 		moveSp->SetPosition(lpos);
-		moveSp->SetPlayerPos(player->GetPosition());
+		moveSp->SetPlayerPos(player_->GetPosition());
 		moveSp->Update();
 	}
 
@@ -117,8 +117,8 @@ void TutorialScene::AddBeatEndUpdate()
 		if((*it)->GetIsPosImposibble_()){
 			Vector3 lpos;
 
-			if(areaManager->GetCSVObjectPopActive(index,false)) {
-				lpos = areaManager->GetCSVObjectPopPosition(index);
+			if(areaManager_->GetCSVObjectPopActive(index,false)) {
+				lpos = areaManager_->GetCSVObjectPopPosition(index);
 				(*it)->Pop({lpos.x, -3.5f,lpos.z});
 			}
 			index++;
@@ -134,7 +134,7 @@ void TutorialScene::AddBeatEndUpdate()
 
 void TutorialScene::AddObject3DDraw()
 {
-	areaManager->CSVAreaDraw();
+	areaManager_->CSVAreaDraw();
 
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
@@ -177,7 +177,7 @@ void TutorialScene::AddObjectFinalize()
 
 void TutorialScene::AddCommonFinalize()
 {
-	areaManager->CSVAreaFinalize();
+	areaManager_->CSVAreaFinalize();
 }
 
 

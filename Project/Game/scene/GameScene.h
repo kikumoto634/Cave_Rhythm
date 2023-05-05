@@ -6,6 +6,7 @@
 #include "Coins.h"
 
 #include <queue>
+#include <list>
 
 class GameScene : public BaseBattleScene
 {
@@ -17,6 +18,10 @@ public:
 		int slimne;
 		int skelton;
 	};
+
+private:
+	template <class T> using list = std::list<T>;
+	template <class T> using queue = std::queue<T>;
 
 //定数
 private:
@@ -62,27 +67,24 @@ private:
 
 private:
 	//必要コイン
-	int needCoin = 10;
+	int needCoin_ = 10;
 
-	int slimePopNumMax = 5;
-	std::vector<std::unique_ptr<BlueSlime>> slime;
+	int slimePopNumMax_ = 5;
+	int skeltonPopNumMax_ = 5;
+	list<unique_ptr<BaseEnemy>> enemys_;
 
-	int skeltonPopNumMax = 5;
-	std::vector<std::unique_ptr<Skelton>> skelton;
-
-	int coinPopNumMax = 10;
-	std::vector<std::unique_ptr<Coins>> coin;
-	std::queue<Vector3> coinDropPos = {};
+	int coinPopNumMax_ = 10;
+	list<unique_ptr<Coins>> coin_;
+	queue<Vector3> coinDropPos_ = {};
 
 
-	std::unique_ptr<BaseSprites> floorDepth;
-	int numberTextBase = 3;
-	std::unique_ptr<BaseSprites> floorValueTex;
+	unique_ptr<BaseSprites> floorDepth_;
+	int numberTextBase_ = 3;
+	unique_ptr<BaseSprites> floorValueTex_;
 
 	//ToDo
 	//・アイテム(BaseObjObject)
 	//・敵 (BaseEnemyObject)
-	//・敵 (BaseEnemyObject)
-	//
+	//・Player
 };
 

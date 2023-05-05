@@ -44,7 +44,7 @@ private:
 
 private:
 	int slimePopNumMax = 10;
-	std::vector<std::unique_ptr<BlueSlime>> slime;
+	std::vector<std::unique_ptr<BaseEnemy>> slime;
 
 	int coinPopNumMax = 10;
 	std::vector<std::unique_ptr<Coins>> coin;

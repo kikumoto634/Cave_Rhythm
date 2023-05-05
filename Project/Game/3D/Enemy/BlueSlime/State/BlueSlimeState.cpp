@@ -47,13 +47,13 @@ void DeadBlueSlimeState::Update()
 {
 	//更新処理
 	blueSlime_->deadParticle_->Update(blueSlime_->camera);
-	blueSlime_->particleAliveFrame++;
+	blueSlime_->particleAliveFrame_++;
 
 
-	if(blueSlime_->particleAliveFrame < ParticleAliveFrameMax) return;
+	if(blueSlime_->particleAliveFrame_ < ParticleAliveFrameMax) return;
 
 	blueSlime_->isPosImposibble_ = true;	
-	blueSlime_->particleAliveFrame = 0;
+	blueSlime_->particleAliveFrame_ = 0;
 
 	blueSlime_->world.UpdateMatrix();
 	stateManager_->SetNextState(new PopBlueSlimeState);
@@ -103,14 +103,14 @@ void PopBlueSlimeState::Update()
 	//更新処理
 	App();
 	blueSlime_->popParticle_->Update(blueSlime_->camera);
-	blueSlime_->particleAliveFrame++;
+	blueSlime_->particleAliveFrame_++;
 
 
-	if(blueSlime_->particleAliveFrame < ParticleCreateFrameMax) return;
+	if(blueSlime_->particleAliveFrame_ < ParticleCreateFrameMax) return;
 
 	blueSlime_->isDead_ = false;
 	blueSlime_->world.translation = blueSlime_->particlePos_;
-	blueSlime_->particleAliveFrame = 0;
+	blueSlime_->particleAliveFrame_ = 0;
 
 	blueSlime_->world.UpdateMatrix();
 	stateManager_->SetNextState(new IdelBlueSlimeState);
@@ -118,7 +118,7 @@ void PopBlueSlimeState::Update()
 
 void PopBlueSlimeState::ParticleDraw()
 {
-	if(blueSlime_->particleAliveFrame < ParticleCreateWaitFrameMax) return;
+	if(blueSlime_->particleAliveFrame_ < ParticleCreateWaitFrameMax) return;
 	blueSlime_->popParticle_->Draw();
 }
 

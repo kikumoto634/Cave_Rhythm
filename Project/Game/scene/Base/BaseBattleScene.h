@@ -24,7 +24,10 @@ protected:
 	const float FadeSecond = 1.f;
 
 	//ノーツ数
-	const int notesNum= 7;
+	const int NotesNum= 7;
+
+protected:
+	template <class T> using unique_ptr = std::unique_ptr<T>;
 
 public:
 	
@@ -114,52 +117,49 @@ protected:
 protected:
 	//共通
 	//衝突マネージャー
-	CollisionManager* collisionManager = nullptr;
+	CollisionManager* collisionManager_ = nullptr;
 
 	//持ち越し
 	//セーブ体力
-	int saveHP = 0;
+	int saveHP_ = 0;
 	//階層
-	int floorValue = 1;
+	int floorValue_ = 1;
 
 	//player
-	std::unique_ptr<Player> player;
+	unique_ptr<Player> player_;
 	//リズムカウント
-	std::unique_ptr<RhythmManager> rhythmManager;
+	unique_ptr<RhythmManager> rhythmManager_;
 	//ゲームマネージャー
-	std::unique_ptr<GameManager> gameManager;
+	unique_ptr<GameManager> gameManager_;
 	//リズム入力
-	bool IsRhythmInput = false;
+	bool isRhythmInput_ = false;
 	//出口
-	std::unique_ptr<Exit> exit;
+	unique_ptr<Exit> exit_;
 	//エリアマネージャー
-	std::unique_ptr<AreaManager> areaManager;
+	unique_ptr<AreaManager> areaManager_;
 
-#ifdef _DEBUG
-
-#endif // _DEBUG
 
 	//シーン遷移
-	std::unique_ptr<BaseSprites> fade;
-	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
-	Vector2 fadeInSize = {};
-	float fadeCurrentFrame = 0;
+	unique_ptr<BaseSprites> fade_;
+	DirectX::XMFLOAT4 fadeColor_ = {0,0,0,1};
+	Vector2 fadeInSize_ = {};
+	float fadeCurrentFrame_ = 0;
 	//Prev
-	bool IsPrevSceneChange = true;
+	bool isPrevSceneChange_ = true;
 	//Next
-	bool IsNextSceneChange = false;
+	bool isNextSceneChange_ = false;
 
 	//GameOver
-	bool IsGameEnd = false;
+	bool isGameEnd_ = false;
 
 	//BGM再生フラグ
-	bool IsBGMStart = true;
+	bool isBGMStart_ = true;
 
 	//リズム目視確認用SP
-	std::unique_ptr<JudgeLocation> judgeLoca;
+	unique_ptr<JudgeLocation> judgeLoca_;
 
 	/*std::vector<std::unique_ptr<Notes>> lNotes;
 	std::vector<std::unique_ptr<Notes>> rNotes;*/
 
-	bool IsNoteInput = false;
+	bool isNoteInput_ = false;
 };

@@ -30,44 +30,44 @@ void Boss1Area::NextSceneChange()
 void Boss1Area::SceneChange()
 {
 	//PrevSceneからの移動後処理
-	if(IsPrevSceneChange){
+	if(isPrevSceneChange_){
 
 		//画面が開く
 		{
-			if(fadeColor.w <= 0){
-				IsPrevSceneChange = false;
-				fadeCurrentFrame = 0;
+			if(fadeColor_.w <= 0){
+				isPrevSceneChange_ = false;
+				fadeCurrentFrame_ = 0;
 				//リズム
-				rhythmManager->TimeStart();
+				rhythmManager_->TimeStart();
 				return;
 			}
 
-			fadeColor.w = 
-				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame, FadeSecond));
-			fade->SetColor(fadeColor);
-			fade->Update();
+			fadeColor_.w = 
+				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+			fade_->SetColor(fadeColor_);
+			fade_->Update();
 		}
 	}
 	//NextSceneへの移動
-	else if(IsNextSceneChange || IsGameEnd){
+	else if(isNextSceneChange_ || isGameEnd_){
 
-		if(fadeColor.w >= 1){
+		if(fadeColor_.w >= 1){
 			camera->Reset();
-			if(IsNextSceneChange)NextSceneChange();
-			else if(IsGameEnd)	SceneGameEnd();
+			if(isNextSceneChange_)NextSceneChange();
+			else if(isGameEnd_)	SceneGameEnd();
 		}
 
-		fadeColor.w = 
-			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame, FadeSecond));
-		fade->SetColor(fadeColor);
-		fade->Update();
+		fadeColor_.w = 
+			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+		fade_->SetColor(fadeColor_);
+		fade_->Update();
 	}
 }
 
 void Boss1Area::AddCommonInitialize()
 {
 	//ダンジョン
-	areaManager->CSVAreaInitialize("Boss1");
+	areaManager_->CSVAreaInitialize("Boss1");
 }
 
 void Boss1Area::AddObject3DInitialize()
@@ -75,7 +75,7 @@ void Boss1Area::AddObject3DInitialize()
 	//ボス
 	boss = make_unique<Boss1>();
 	boss->Initialize("Skeleton");
-	Vector3 lpos = areaManager->GetCSVObjectPopPosition(0);
+	Vector3 lpos = areaManager_->GetCSVObjectPopPosition(0);
 	boss->Pop({lpos.x, -3.f,lpos.z});
 
 	ActorCreateInitialize();
@@ -107,7 +107,7 @@ void Boss1Area::AddObject2DInitialize()
 
 void Boss1Area::AddCommonUpdate()
 {
-	areaManager->CSVAreaUpdate(camera, player->GetPosition());
+	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 
 	if(IsBossStart && !IsCutInHide){
 		if(input->Trigger(DIK_Z) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_UP) || input->Trigger(DIK_LEFT) || input->Trigger(DIK_RIGHT)){
@@ -122,13 +122,13 @@ void Boss1Area::AddObject3DUpdate()
 	//ボス
 	if(IsEnterClose){
 		if(boss->GetIsDeadAudio()){
-			gameManager->AudioPlay(2, 1.5f);
+			gameManager_->AudioPlay(2, 1.5f);
 		}
 		else if(boss->GetIsDead() && !IsExitOpen){
 			IsExitOpen = true;
-			gameManager->AudioPlay(11, 0.5f);
+			gameManager_->AudioPlay(11, 0.5f);
 		}
-		boss->Update(camera,player->GetPosition());
+		boss->Update(camera,player_->GetPosition());
 		ActorSummon();
 		boss->ParticleUpdate();
 	}
@@ -145,7 +145,7 @@ void Boss1Area::AddObject3DUpdate()
 		if(IsEnterClose){
 			for(int i = 0; i < 3; i++){
 				enterWall[i]->Update(this->camera);
-				enterWall[i]->SetPlayerPos(player->GetPosition());
+				enterWall[i]->SetPlayerPos(player_->GetPosition());
 			}
 		}
 		else if(!IsEnterClose){
@@ -153,10 +153,10 @@ void Boss1Area::AddObject3DUpdate()
 				enterWall[i]->ColliderRemove();
 			}
 			//場所に応じて閉じる
-			if(player->GetPosition().z >= enterBorderLineZ){
+			if(player_->GetPosition().z >= enterBorderLineZ){
 				IsEnterClose = true;
 				camera->ShakeStart();
-				gameManager->AudioPlay(11);
+				gameManager_->AudioPlay(11);
 			}
 		}
 	}
@@ -171,12 +171,12 @@ void Boss1Area::AddObject3DUpdate()
 		else if(!IsExitOpen){
 			for(int i = 0; i < 3; i++){
 				exitWall[i]->Update(this->camera);
-				exitWall[i]->SetPlayerPos(player->GetPosition());
+				exitWall[i]->SetPlayerPos(player_->GetPosition());
 			}
 		}
 	}
-	exit->SetExitOpenNeedCoin(0);
-	exit->NeedCoinSpriteUpdate();
+	exit_->SetExitOpenNeedCoin(0);
+	exit_->NeedCoinSpriteUpdate();
 }
 
 void Boss1Area::AddObject2DUpdate()
@@ -196,7 +196,7 @@ void Boss1Area::AddBeatEndUpdate()
 
 void Boss1Area::AddObject3DDraw()
 {
-	areaManager->CSVAreaDraw();
+	areaManager_->CSVAreaDraw();
 
 	if(!IsExitOpen){
 		for(int i = 0; i < 3; i++){
@@ -260,7 +260,7 @@ void Boss1Area::AddObjectFinalize()
 
 void Boss1Area::AddCommonFinalize()
 {
-	areaManager->CSVAreaFinalize();
+	areaManager_->CSVAreaFinalize();
 }
 
 #pragma region カットイン
@@ -302,7 +302,7 @@ void Boss1Area::cutinUpdate()
 	{
 		//音声
 		if(!IsCutInAudio){
-			gameManager->AudioPlay(12, 0.5f);
+			gameManager_->AudioPlay(12, 0.5f);
 			IsCutInAudio = true;
 		}
 

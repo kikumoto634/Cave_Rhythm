@@ -18,18 +18,18 @@ GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP,int flo
 		saveHP,
 		floorValue)
 {
-	this->saveHP = saveHP;
-	this->floorValue = floorValue;
+	this->saveHP_ = saveHP;
+	this->floorValue_ = floorValue;
 }
 
 void GameScene::NextSceneChange()
 {
-	if(floorValue >= 5){
+	if(floorValue_ >= 5){
 		//sceneManager->SetNextScene(new Boss1Area(dxCommon,window,player->GetHP()));
-		sceneManager->SetNextScene(new HomeScene(dxCommon,window,player->GetHp()));
+		sceneManager->SetNextScene(new HomeScene(dxCommon,window,player_->GetHp()));
 	}
 	else{
-		sceneManager->SetNextScene(new GameScene(dxCommon,window,player->GetHp(), floorValue));
+		sceneManager->SetNextScene(new GameScene(dxCommon,window,player_->GetHp(), floorValue_));
 	}
 }
 
@@ -44,35 +44,35 @@ void GameScene::AddCommonInitialize()
 	srand( (unsigned int)time(NULL) );
 
 	//ダンジョン
-	areaManager->RandamAreaInitialize();
+	areaManager_->RandamAreaInitialize();
 
 	//階層に応じた生成数
-	switch (floorValue)
+	switch (floorValue_)
 	{
 	case 1:
-		needCoin= one.needCoin;
-		slimePopNumMax = one.slimne;
-		skeltonPopNumMax = one.skelton;
+		needCoin_= one.needCoin;
+		slimePopNumMax_ = one.slimne;
+		skeltonPopNumMax_ = one.skelton;
 		break;
 	case 2:
-		needCoin= two.needCoin;
-		slimePopNumMax = two.slimne;
-		skeltonPopNumMax = two.skelton;
+		needCoin_= two.needCoin;
+		slimePopNumMax_ = two.slimne;
+		skeltonPopNumMax_ = two.skelton;
 		break;
 	case 3:
-		needCoin= three.needCoin;
-		slimePopNumMax = three.slimne;
-		skeltonPopNumMax = three.skelton;
+		needCoin_= three.needCoin;
+		slimePopNumMax_ = three.slimne;
+		skeltonPopNumMax_ = three.skelton;
 		break;
 	case 4:
-		needCoin= four.needCoin;
-		slimePopNumMax = four.slimne;
-		skeltonPopNumMax = four.skelton;
+		needCoin_= four.needCoin;
+		slimePopNumMax_ = four.slimne;
+		skeltonPopNumMax_ = four.skelton;
 		break;
 	default:
-		needCoin= four.needCoin;
-		slimePopNumMax = four.slimne;
-		skeltonPopNumMax = four.skelton;
+		needCoin_= four.needCoin;
+		slimePopNumMax_ = four.slimne;
+		skeltonPopNumMax_ = four.skelton;
 		break;
 	}
 }
@@ -81,39 +81,39 @@ void GameScene::AddObject3DInitialize()
 {
 	ActorCreateInitialize();
 
-	player->SetHp(saveHP);
+	player_->SetHp(saveHP_);
 
-	exit->SetExitOpenNeedCoin(needCoin);
-	exit->NeedCoinSpriteUpdate();
+	exit_->SetExitOpenNeedCoin(needCoin_);
+	exit_->NeedCoinSpriteUpdate();
 }
 
 void GameScene::AddObject2DInitialize()
 {
 	//階層テキスト
 	{
-		floorDepth = make_unique<BaseSprites>();
-		floorDepth->Initialize(27);
-		floorDepth->SetPosition({1100, 700});
-		floorDepth->SetSize({100,25});
-		floorDepth->SetAnchorPoint({0.5f,0.5f});
+		floorDepth_ = make_unique<BaseSprites>();
+		floorDepth_->Initialize(27);
+		floorDepth_->SetPosition({1100, 700});
+		floorDepth_->SetSize({100,25});
+		floorDepth_->SetAnchorPoint({0.5f,0.5f});
 	}
 	//階層値
 	{
-		floorValueTex = make_unique<BaseSprites>();
-		int value = floorValue + numberTextBase;
-		floorValueTex->Initialize(value);
-		floorValueTex->SetPosition({1170, 700});
-		floorValueTex->SetSize({15,25});
-		floorValueTex->SetAnchorPoint({0.5f,0.5f});
-		floorValue += 1;
+		floorValueTex_ = make_unique<BaseSprites>();
+		int value = floorValue_ + numberTextBase_;
+		floorValueTex_->Initialize(value);
+		floorValueTex_->SetPosition({1170, 700});
+		floorValueTex_->SetSize({15,25});
+		floorValueTex_->SetAnchorPoint({0.5f,0.5f});
+		floorValue_ += 1;
 	}
 }
 
 void GameScene::AddCommonUpdate()
 {
-	if(player == nullptr) return;
-	areaManager->RandamAreaUpdate(camera, player->GetPosition());
-	areaManager->BreakBlock(player->GetBlockBreakPos());
+	if(player_ == nullptr) return;
+	areaManager_->RandamAreaUpdate(camera, player_->GetPosition());
+	areaManager_->BreakBlock(player_->GetBlockBreakPos());
 
 	if(input->Trigger(DIK_RETURN)){
 		/*for(auto it = slime.begin(); it != slime.end(); ++it){
@@ -124,38 +124,30 @@ void GameScene::AddCommonUpdate()
 				break;
 			}
 		}*/
-		gameManager->AudioPlay(7,0.5f);
+		gameManager_->AudioPlay(7,0.5f);
 	}
 }
 
 void GameScene::AddObject3DUpdate()
 {
-	for(auto it = slime.begin(); it != slime.end(); ++it){
+	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		if((*it)->GetIsDeadTrigger()){
-			gameManager->AudioPlay(2, 0.5f);
-			coinDropPos.push({(*it)->GetParticlePos().x, -5.0f, (*it)->GetParticlePos().z});
+			gameManager_->AudioPlay(2, 0.5f);
+			coinDropPos_.push({(*it)->GetPopPosition().x, -5.0f, (*it)->GetPopPosition().z});
 		}
-		(*it)->Update(camera,player->GetPosition());
-	}
-
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
-		if((*it)->GetIsDeadTrigger()){
-			gameManager->AudioPlay(2, 0.5f);
-			coinDropPos.push({(*it)->GetEasingStartPos().x, -5.0f, (*it)->GetEasingStartPos().z});
-		}
-		(*it)->SetMapInfo(areaManager->GetMapInfo());
-		(*it)->Update(camera,player->GetPosition());
+		(*it)->SetMapInfo(areaManager_->GetMapInfo());
+		(*it)->Update(camera,player_->GetPosition());
 	}
 	
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = coin_.begin(); it != coin_.end(); it++){
 		if((*it)->GetCoin()){
-			gameManager->CoinIncrement();
-			gameManager->AudioPlay(7,0.5f);
+			gameManager_->CoinIncrement();
+			gameManager_->AudioPlay(7,0.5f);
 		}
 
-		if(!coinDropPos.empty() && (*it)->PopPossible()){
-			(*it)->Pop(coinDropPos.front());
-			coinDropPos.pop();
+		if(!coinDropPos_.empty() && (*it)->PopPossible()){
+			(*it)->Pop(coinDropPos_.front());
+			coinDropPos_.pop();
 		}
 
 		(*it)->Update(this->camera);
@@ -164,23 +156,15 @@ void GameScene::AddObject3DUpdate()
 
 void GameScene::AddObject2DUpdate()
 {
-	floorDepth->Update();
-	floorValueTex->Update();
+	floorDepth_->Update();
+	floorValueTex_->Update();
 }
 
 void GameScene::AddBeatEndUpdate()
 {
-	for(auto it = slime.begin(); it != slime.end(); ++it){
+	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		if((*it)->GetIsPosImposibble_()){
-			Vector3 lpos = areaManager->GetObjectPopPosition();
-			(*it)->Pop({lpos.x, -3.5f,lpos.z});
-			(*it)->CaveLightOn();
-			break;
-		}
-	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
-		if((*it)->GetIsPosImposibble_()){
-			Vector3 lpos = areaManager->GetObjectPopPosition();
+			Vector3 lpos = areaManager_->GetObjectPopPosition();
 			(*it)->Pop({lpos.x, -3.5f,lpos.z});
 			(*it)->CaveLightOn();
 			break;
@@ -188,14 +172,11 @@ void GameScene::AddBeatEndUpdate()
 	}
 
 
-	for(auto it = slime.begin(); it != slime.end(); ++it){
-		(*it)->IsBeatEndOn();
-	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		(*it)->IsBeatEndOn();
 	}
 
-	for(auto it = coin.begin(); it != coin.end(); ++it){
+	for(auto it = coin_.begin(); it != coin_.end(); ++it){
 		if((*it)->GetIsAlive()){
 			(*it)->IsBeatEndOn();
 		}
@@ -204,33 +185,28 @@ void GameScene::AddBeatEndUpdate()
 
 void GameScene::AddObject3DDraw()
 {
-	areaManager->RandamAreaDraw();
+	areaManager_->RandamAreaDraw();
 
-	for(auto it = slime.begin(); it != slime.end(); ++it){
+	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		(*it)->Draw();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
-		(*it)->Draw();
-	}
-	for(auto it = coin.begin(); it != coin.end(); ++it){
+
+	for(auto it = coin_.begin(); it != coin_.end(); ++it){
 		(*it)->Draw();
 	}
 }
 
 void GameScene::AddParticleDraw()
 {
-	for(auto it = slime.begin(); it != slime.end(); ++it){
-		(*it)->ParticleDraw();
-	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
+	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		(*it)->ParticleDraw();
 	}
 }
 
 void GameScene::AddFrontUIDraw()
 {
-	floorDepth->Draw();
-	floorValueTex->Draw();
+	floorDepth_->Draw();
+	floorValueTex_->Draw();
 }
 
 void GameScene::AddBackUIDraw()
@@ -239,42 +215,40 @@ void GameScene::AddBackUIDraw()
 
 void GameScene::AddObjectFinalize()
 {
-	floorDepth->Finalize();
-	floorValueTex->Finalize();
+	floorDepth_->Finalize();
+	floorValueTex_->Finalize();
 
-	for(auto it = slime.begin(); it != slime.end(); ++it){
+	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		(*it)->Finalize();
 	}
-	for(auto it = skelton.begin(); it != skelton.end(); ++it){
-		(*it)->Finalize();
-	}
-	for(auto it = coin.begin(); it != coin.end(); ++it){
+
+	for(auto it = coin_.begin(); it != coin_.end(); ++it){
 		(*it)->Finalize();
 	}
 }
 
 void GameScene::AddCommonFinalize()
 {
-	areaManager->RandamAreaFinalize();
+	areaManager_->RandamAreaFinalize();
 }
 
 
 void GameScene::ActorCreateInitialize()
 {
-	for(int i = 0; i < slimePopNumMax; i++){
+	for(int i = 0; i < slimePopNumMax_; i++){
 		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
 		newObj->Initialize("slime");
-		slime.push_back(move(newObj));
+		enemys_.push_back(move(newObj));
 	}
-	for(int i = 0; i < skeltonPopNumMax; i++){
+	for(int i = 0; i < skeltonPopNumMax_; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Skeleton");
-		skelton.push_back(move(newObj));
+		enemys_.push_back(move(newObj));
 	}
 
-	for(int i = 0; i < coinPopNumMax; i++){
+	for(int i = 0; i < coinPopNumMax_; i++){
 		unique_ptr<Coins> newObj = make_unique<Coins>();
 		newObj->Initialize("Coins");
-		coin.push_back(move(newObj));
+		coin_.push_back(move(newObj));
 	}
 }

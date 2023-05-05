@@ -36,18 +36,18 @@ void AreaManager::CSVAreaInitialize(string name)
 
 void AreaManager::CommonInitialize()
 {
-	if(!PlaneModel){
-		PlaneModel = new ObjModelManager();
-		PlaneModel->CreateModel("GroundBlock");
+	if(!planeModel_){
+		planeModel_ = new ObjModelManager();
+		planeModel_->CreateModel("GroundBlock");
 	}
 
-	if(!WallModel){
-		WallModel = new ObjModelManager();
-		WallModel->CreateModel("GroundBlock2");
+	if(!wallModel_){
+		wallModel_ = new ObjModelManager();
+		wallModel_->CreateModel("GroundBlock2");
 	}
-	if(!WallColliderModel){
-		WallColliderModel = new ObjModelManager();
-		WallColliderModel->CreateModel("GroundBlock2_Collider");
+	if(!wallColliderModel_){
+		wallColliderModel_ = new ObjModelManager();
+		wallColliderModel_->CreateModel("GroundBlock2_Collider");
 	}
 
 	if(!IndestructibleWallModel){
@@ -67,8 +67,8 @@ void AreaManager::RandamAreaUpdate(Camera *camera, Vector3 PlayerPos)
 {
 	assert(camera);
 
-	this->camera = camera;
-	this->PlayerPos = PlayerPos;
+	this->camera_ = camera;
+	this->playerPos_ = PlayerPos;
 
 	IsDigSound = false;
 
@@ -85,8 +85,8 @@ void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 
 	IsDigSound = false;
 
-	this->camera = camera;
-	this->PlayerPos = PlayerPos;
+	this->camera_ = camera;
+	this->playerPos_ = PlayerPos;
 
 	WallUpdate();
 	IndestructibleWallUpdate();
@@ -97,7 +97,7 @@ void AreaManager::CSVAreaUpdate(Camera* camera, Vector3 PlayerPos)
 
 void AreaManager::CommonUpdate()
 {
-	if(IsDig && !IsAlive){
+	if(IsDig && !isAlive_){
 		DigParticlePop();
 		IsDig = false;
 	}
@@ -107,7 +107,7 @@ void AreaManager::CommonUpdate()
 			paricleApperanceFrame = 0;
 		}
 		paricleApperanceFrame++;
-		DigParticle->Update(this->camera);
+		DigParticle->Update(this->camera_);
 	}
 }
 
@@ -115,7 +115,7 @@ void AreaManager::BeatEndUpdate(GameManager* gameManager)
 {
 	assert(gameManager);
 
-	this->gameManager = gameManager;
+	this->gameManager_ = gameManager;
 
 	PlaneBeatEndUpdate();
 }
@@ -152,7 +152,7 @@ void AreaManager::RandamAreaFinalize()
 
 void AreaManager::CSVAreaFinalize()
 {
-	PlayerPos = {};
+	playerPos_ = {};
 
 	CommonFinalize();
 
@@ -184,49 +184,49 @@ void AreaManager::AreaPlaneInitialize(bool IsLighting)
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
-		plane.resize(i+1);
+		plane_.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			if(mapInfo[i][j] == 0){
 				continue;
 			}
 			unique_ptr<Planes> obj = make_unique<Planes>();
-			obj->Initialize(PlaneModel);
+			obj->Initialize(planeModel_);
 			pos = {startPos + j, startPos + i};
 			pos *= Block_Size;
 			obj->SetPosition({pos.x,-5,-pos.y});
 
 			if(!IsLighting) {
-				plane[i].push_back(move(obj));
+				plane_[i].push_back(move(obj));
 				continue;
 			}
 			obj->CaveLightOn();
-			plane[i].push_back(move(obj));
+			plane_[i].push_back(move(obj));
 		}
 	}
 }
 void AreaManager::PlaneUpdate()
 {
 	//地面
-	for(size_t i = 0; i < plane.size(); i++){
-		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
-			(*it)->SetPlayerPos(PlayerPos);
-			(*it)->Update(camera);
+	for(size_t i = 0; i < plane_.size(); i++){
+		for(auto it = plane_[i].begin(); it != plane_[i].end(); ++it){
+			(*it)->SetPlayerPos(playerPos_);
+			(*it)->Update(camera_);
 		}
 	}
 }
 void AreaManager::PlaneBeatEndUpdate()
 {
-	IsComboColorChange = !IsComboColorChange;
+	isComboColorChange_ = !isComboColorChange_;
 	bool IsChange = false;
 
-	for(size_t i = 0; i < plane.size(); i++){
-		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+	for(size_t i = 0; i < plane_.size(); i++){
+		for(auto it = plane_[i].begin(); it != plane_[i].end(); ++it){
 			//コンボ数に応じて色変化
-			if(gameManager->GetComboNum() >= gameManager->GetPlaneColorChangeCombo()){
-				(*it)->PlaneColorChange(IsChange, IsComboColorChange);
+			if(gameManager_->GetComboNum() >= gameManager_->GetPlaneColorChangeCombo()){
+				(*it)->PlaneColorChange(IsChange, isComboColorChange_);
 				IsChange = !IsChange;
 			}
-			else if(gameManager->GetComboNum() < 10){
+			else if(gameManager_->GetComboNum() < 10){
 				(*it)->PlaneColorReset();
 			}
 
@@ -236,17 +236,17 @@ void AreaManager::PlaneBeatEndUpdate()
 }
 void AreaManager::PlaneDraw()
 {
-	for(size_t i = 0; i < plane.size(); i++){
-		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+	for(size_t i = 0; i < plane_.size(); i++){
+		for(auto it = plane_[i].begin(); it != plane_[i].end(); ++it){
 			(*it)->Draw();
 		}
 	}
 }
 void AreaManager::PlaneFinalize()
 {
-	delete PlaneModel;
-	for(size_t i = 0; i < plane.size(); i++){
-		for(auto it = plane[i].begin(); it != plane[i].end(); ++it){
+	delete planeModel_;
+	for(size_t i = 0; i < plane_.size(); i++){
+		for(auto it = plane_[i].begin(); it != plane_[i].end(); ++it){
 			(*it)->Finalize();
 		}
 	}
@@ -260,7 +260,7 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 	Vector2 pos = {};
 
 	for(int i = 0; i < DIV_NUM; i++){
-		wall.resize(i+1);
+		wall_.resize(i+1);
 		for(int j = 0; j < DIV_NUM; j++){
 			
 			if(mapInfo[i][j] != 3){
@@ -268,34 +268,34 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 			}
 
 			unique_ptr<Walls> obj = make_unique<Walls>();
-			obj->Initialize(WallModel,WallColliderModel);
+			obj->Initialize(wallModel_,wallColliderModel_);
 
 			pos = {startPos + j, startPos + i};
 			pos*= Block_Size;
 			obj->SetPosition({pos.x,-3,-pos.y});
 
 			if(!IsLigthing) {
-				wall[i].push_back(move(obj));
+				wall_[i].push_back(move(obj));
 				continue;
 			}
 			obj->CaveLightOn();
-			wall[i].push_back(move(obj));
+			wall_[i].push_back(move(obj));
 		}
 	}
 }
 void AreaManager::WallUpdate()
 {
 	//地面
-	for(size_t i = 0; i < wall.size(); i++){
-		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
-			(*it)->SetPlayerPos(PlayerPos);
+	for(size_t i = 0; i < wall_.size(); i++){
+		for(auto it = wall_[i].begin(); it != wall_[i].end(); ++it){
+			(*it)->SetPlayerPos(playerPos_);
 			if((*it)->GetIsDIg()){
 				IsDigSound = true;
 				IsDig =true;
 				DigParticlePos = (*it)->GetDigPosition();
-				gameManager->AudioPlay(10);
+				gameManager_->AudioPlay(10);
 			}
-			(*it)->Update(camera);
+			(*it)->Update(camera_);
 		}
 	}
 }
@@ -304,8 +304,8 @@ void AreaManager::WallBeatEndUpdate()
 }
 void AreaManager::WallDraw()
 {
-	for(size_t i = 0; i < wall.size(); i++){
-		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
+	for(size_t i = 0; i < wall_.size(); i++){
+		for(auto it = wall_[i].begin(); it != wall_[i].end(); ++it){
 			(*it)->Draw();
 		}
 	}
@@ -313,13 +313,13 @@ void AreaManager::WallDraw()
 void AreaManager::WallFinalize()
 {
 
-	delete WallModel;
-	WallModel = nullptr;
-	delete WallColliderModel;
-	WallColliderModel = nullptr;
+	delete wallModel_;
+	wallModel_ = nullptr;
+	delete wallColliderModel_;
+	wallColliderModel_ = nullptr;
 
-	for(size_t i = 0; i < wall.size(); i++){
-		for(auto it = wall[i].begin(); it != wall[i].end(); ++it){
+	for(size_t i = 0; i < wall_.size(); i++){
+		for(auto it = wall_[i].begin(); it != wall_[i].end(); ++it){
 			(*it)->Finalize();
 		}
 	}
@@ -388,11 +388,11 @@ void AreaManager::IndestructibleWallUpdate()
 	//地面
 	for(size_t i = 0; i < indestructibleWalls.size(); i++){
 		for(auto it = indestructibleWalls[i].begin(); it != indestructibleWalls[i].end(); ++it){
-			(*it)->SetPlayerPos(PlayerPos);
+			(*it)->SetPlayerPos(playerPos_);
 			if((*it)->GetIsReflect()){
-				gameManager->AudioPlay(13,0.5f);
+				gameManager_->AudioPlay(13,0.5f);
 			}
-			(*it)->Update(camera);
+			(*it)->Update(camera_);
 		}
 	}
 }
