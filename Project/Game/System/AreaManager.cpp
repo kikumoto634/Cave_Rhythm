@@ -3,6 +3,8 @@
 #include <fstream>
 #include <cassert>
 
+#include "AudioUtility.h"
+
 using namespace std;
 
 const float AreaManager::DIV_NUM_FLOAT = (float)DIV_NUM;
@@ -293,7 +295,7 @@ void AreaManager::WallUpdate()
 				isDigSound_ = true;
 				isDig_ =true;
 				digParticlePos_ = (*it)->GetDigPosition();
-				gameManager_->AudioPlay(10);
+				gameManager_->AudioPlay(dig_audio.number, dig_audio.volume);
 			}
 			(*it)->Update(camera_);
 		}
@@ -390,7 +392,7 @@ void AreaManager::IndestructibleWallUpdate()
 		for(auto it = indestructibleWalls_[i].begin(); it != indestructibleWalls_[i].end(); ++it){
 			(*it)->SetPlayerPos(playerPos_);
 			if((*it)->GetIsReflect()){
-				gameManager_->AudioPlay(13,0.5f);
+				gameManager_->AudioPlay(reflected_audio.number,reflected_audio.volume);
 			}
 			(*it)->Update(camera_);
 		}

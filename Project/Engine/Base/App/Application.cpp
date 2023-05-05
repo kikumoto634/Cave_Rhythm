@@ -4,6 +4,7 @@
 #include "HomeScene.h"
 #include "GameScene.h"
 #include "Boss1Area.h"
+#include "AudioUtility.h"
 
 Application* Application::app = nullptr;
 
@@ -100,20 +101,20 @@ void Application::Initialize()
 
 	//音声
 	Audio::GetInstance()->Initialize();
-	Audio::Load(0,"rhythm.wav");
-	Audio::Load(1,"miss.wav");
-	Audio::Load(2,"damage.wav");
-	Audio::Load(3,"ex)_BPM90.wav");
-	Audio::Load(4,"ex)_BPM120.wav");
-	Audio::Load(5,"ex)_BPM180.wav");
-	Audio::Load(6,"OpenExit.wav");
-	Audio::Load(7,"coinGet.wav");
-	Audio::Load(8,"BPM120_Game.wav");
-	Audio::Load(9,"BPM120_Home.wav");
-	Audio::Load(10,"dig.wav");
-	Audio::Load(11,"Enter.wav");
-	Audio::Load(12,"cutin.wav");
-	Audio::Load(13,"reflected.wav");
+	Audio::Load(rhythm_audio.number		,"rhythm.wav");
+	Audio::Load(miss_audio.number		,"miss.wav");
+	Audio::Load(damage_audio.number		,"damage.wav");
+	Audio::Load(exBPM90_audio.number	,"ex)_BPM90.wav");
+	Audio::Load(exBPM120_audio.number	,"ex)_BPM120.wav");
+	Audio::Load(exBPM180_audio.number	,"ex)_BPM180.wav");
+	Audio::Load(openExit_audio.number	,"OpenExit.wav");
+	Audio::Load(coinGet_audio.number	,"coinGet.wav");
+	Audio::Load(bpm120Game_audio.number	,"BPM120_Game.wav");
+	Audio::Load(bpm120Home_audio.number	,"BPM120_Home.wav");
+	Audio::Load(dig_audio.number		,"dig.wav");
+	Audio::Load(gateEnter_audio.number	,"Enter.wav");
+	Audio::Load(cutIn_audio.number		,"cutin.wav");
+	Audio::Load(reflected_audio.number	,"reflected.wav");
 
 #pragma endregion
 

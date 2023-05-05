@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "ObjModelObject.h"
+#include "AudioUtility.h"
 
 using namespace std;
 
@@ -37,7 +38,7 @@ void GameManager::ComboIncrement()
 
 void GameManager::ComboReset()
 {
-	AudioPlay(1,0.7f);
+	AudioPlay(miss_audio.number,miss_audio.volume);
 	combo->Reset();
 }
 

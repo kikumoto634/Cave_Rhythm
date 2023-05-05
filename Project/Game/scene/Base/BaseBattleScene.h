@@ -17,6 +17,8 @@
 #include "GameManager.h"
 #include "AreaManager.h"
 
+#include "AudioUtility.h"
+
 class BaseBattleScene : public BaseScene
 {
 protected:

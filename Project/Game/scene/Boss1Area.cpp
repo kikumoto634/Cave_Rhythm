@@ -122,11 +122,11 @@ void Boss1Area::AddObject3DUpdate()
 	//ボス
 	if(IsEnterClose){
 		if(boss->GetIsDeadAudio()){
-			gameManager_->AudioPlay(2, 1.5f);
+			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 		}
 		else if(boss->GetIsDead() && !IsExitOpen){
 			IsExitOpen = true;
-			gameManager_->AudioPlay(11, 0.5f);
+			gameManager_->AudioPlay(gateEnter_audio.number, gateEnter_audio.volume);
 		}
 		boss->Update(camera,player_->GetPosition());
 		ActorSummon();
@@ -156,7 +156,7 @@ void Boss1Area::AddObject3DUpdate()
 			if(player_->GetPosition().z >= enterBorderLineZ){
 				IsEnterClose = true;
 				camera->ShakeStart();
-				gameManager_->AudioPlay(11);
+				gameManager_->AudioPlay(gateEnter_audio.number);
 			}
 		}
 	}
@@ -302,7 +302,7 @@ void Boss1Area::cutinUpdate()
 	{
 		//音声
 		if(!IsCutInAudio){
-			gameManager_->AudioPlay(12, 0.5f);
+			gameManager_->AudioPlay(reflected_audio.number, reflected_audio.volume);
 			IsCutInAudio = true;
 		}
 

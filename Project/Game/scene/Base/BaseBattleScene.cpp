@@ -244,11 +244,11 @@ void BaseBattleScene::Object3DUpdate()
 		isNoteInput_ = true;
 	}
 	if(player_->GetIsDamage())	{
-		gameManager_->AudioPlay(2,0.2f);
+		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);
 		gameManager_->HpDecrement();
 	}
 	if(player_->GetIsDead())	{
-		gameManager_->AudioPlay(2,0.5f);
+		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);
 		isGameEnd_ = true;
 	}
 	player_->Update(camera);
@@ -292,7 +292,7 @@ void BaseBattleScene::CommonUpdate()
 	if(player_->GetIsNextScene())	{
 		isNextSceneChange_ = true;
 		if(!exit_->GetIsOpenAudioOnce()){
-			gameManager_->AudioPlay(6, 0.5f);
+			gameManager_->AudioPlay(openExit_audio.number, openExit_audio.volume);
 			camera->ShakeStart();
 			exit_->ModelChange();
 		}
@@ -329,7 +329,7 @@ void BaseBattleScene::BeatEndUpdate()
 	if(rhythmManager_->GetIsJustRhythm() && !isGameEnd_){
 		
 		//SE
-		gameManager_->AudioPlay(0,0.25f);
+		gameManager_->AudioPlay(rhythm_audio.number, rhythm_audio.volume);
 
 		//各オブジェクト処理
 		if(!player_->GetIsDead())player_->IsBeatEndOn();
@@ -385,7 +385,7 @@ void BaseBattleScene::SceneChange()
 				fadeCurrentFrame_ = 0;
 				//リズム
 				rhythmManager_->TimeStart();
-				gameManager_->AudioPlay(8, 0.5f, true);
+				gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
 				return;
 			}
 

@@ -124,7 +124,7 @@ void GameScene::AddCommonUpdate()
 				break;
 			}
 		}*/
-		gameManager_->AudioPlay(7,0.5f);
+		gameManager_->AudioPlay(coinGet_audio.number,coinGet_audio.volume);
 	}
 }
 
@@ -132,7 +132,7 @@ void GameScene::AddObject3DUpdate()
 {
 	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		if((*it)->GetIsDeadTrigger()){
-			gameManager_->AudioPlay(2, 0.5f);
+			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 			coinDropPos_.push({(*it)->GetPopPosition().x, -5.0f, (*it)->GetPopPosition().z});
 		}
 		(*it)->SetMapInfo(areaManager_->GetMapInfo());
@@ -142,7 +142,7 @@ void GameScene::AddObject3DUpdate()
 	for(auto it = coin_.begin(); it != coin_.end(); it++){
 		if((*it)->GetCoin()){
 			gameManager_->CoinIncrement();
-			gameManager_->AudioPlay(7,0.5f);
+			gameManager_->AudioPlay(coinGet_audio.number,coinGet_audio.volume);
 		}
 
 		if(!coinDropPos_.empty() && (*it)->PopPossible()){

@@ -1,9 +1,11 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 
 #include "SceneManager.h"
 #include "TutorialScene.h"
 #include "GameScene.h"
 #include "Easing.h"
+
+#include "AudioUtility.h"
 
 using namespace std;
 using namespace DirectX;
@@ -93,7 +95,7 @@ void TitleScene::Update()
 
 	if(input->Trigger(DIK_Z) && !IsNextSceneChange){
 		IsNextSceneChange = true;
-		audio->PlayWave(7,0.8f);
+		audio->PlayWave(coinGet_audio.number,coinGet_audio.volume);
 	}
 
 #pragma region _3DObj Update

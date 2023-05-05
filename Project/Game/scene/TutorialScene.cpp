@@ -70,7 +70,7 @@ void TutorialScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		if((*it)->GetIsDeadTrigger()){
-			gameManager_->AudioPlay(2, 0.5f);
+			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
 				if((*it2)->PopPossible()){
 					(*it2)->Pop({(*it)->GetPopPosition().x, -5, (*it)->GetPopPosition().z});
@@ -84,7 +84,7 @@ void TutorialScene::AddObject3DUpdate()
 	for(auto it = coin.begin(); it != coin.end(); it++){
 		if((*it)->GetCoin()){
 			gameManager_->CoinIncrement();
-			gameManager_->AudioPlay(7,0.5f);
+			gameManager_->AudioPlay(coinGet_audio.number,coinGet_audio.volume);
 		}
 		(*it)->Update(this->camera);
 	}

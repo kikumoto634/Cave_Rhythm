@@ -6,7 +6,7 @@
 
 #include "ParticleManager.h"
 
-#include "../audio/Audio.h"
+#include "Audio.h"
 
 #include "FbxLoader.h"
 #include "FbxModelManager.h"
@@ -16,7 +16,6 @@
 #include "ObjModelObject.h"
 
 #include "DirectionalLight.h"
-
 
 #include "BaseScene.h"
 #include "SceneManager.h"

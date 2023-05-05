@@ -68,7 +68,7 @@ void HomeScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		if((*it)->GetIsDeadTrigger()){
-			gameManager_->AudioPlay(2, 0.5f);
+			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 		}
 		(*it)->Update(camera,player_->GetPosition());
 	}

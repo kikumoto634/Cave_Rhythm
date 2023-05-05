@@ -118,9 +118,6 @@
     <Filter Include="ソース ファイル\Game\Struct">
       <UniqueIdentifier>{dab8ceee-7f84-4444-a953-0fbed9000e7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Struct">
-      <UniqueIdentifier>{4eaa2358-a61a-449d-b83a-d41c5582a998}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engine\Collision">
       <UniqueIdentifier>{ed55e1b5-df43-439c-91b9-e4f1cecb5398}</UniqueIdentifier>
     </Filter>
@@ -384,6 +381,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Game\3D\Enemy\_Base">
       <UniqueIdentifier>{ee438522-440c-4612-88cc-714f5e4e3d3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Utility">
+      <UniqueIdentifier>{9283fdeb-94e9-45d6-978b-517f2e0853b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Node">
+      <UniqueIdentifier>{4eaa2358-a61a-449d-b83a-d41c5582a998}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -668,9 +671,6 @@
     <ClInclude Include="Game\3D\Coins\Coins.h">
       <Filter>ヘッダー ファイル\Game\3D\Coins</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Struct\MapNode.h">
-      <Filter>ヘッダー ファイル\Game\Struct</Filter>
-    </ClInclude>
     <ClInclude Include="Game\scene\Boss1Area.h">
       <Filter>ヘッダー ファイル\Game\Scene</Filter>
     </ClInclude>
@@ -829,6 +829,12 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\_Base\BaseEnemy.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy\_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Utility\AudioUtility.h">
+      <Filter>ヘッダー ファイル\Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Node\MapNode.h">
+      <Filter>ヘッダー ファイル\Game\Node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
