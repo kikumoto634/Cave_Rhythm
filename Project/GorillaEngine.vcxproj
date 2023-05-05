@@ -312,6 +312,7 @@
     <ClInclude Include="Game\System\GameManager.h" />
     <ClInclude Include="Game\System\RhythmManager.h" />
     <ClInclude Include="Game\Utility\AudioUtility.h" />
+    <ClInclude Include="Game\Utility\TextureUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

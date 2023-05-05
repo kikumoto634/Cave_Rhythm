@@ -836,6 +836,9 @@
     <ClInclude Include="Game\Node\MapNode.h">
       <Filter>ヘッダー ファイル\Game\Node</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Utility\TextureUtility.h">
+      <Filter>ヘッダー ファイル\Game\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\SpritePS.hlsl">

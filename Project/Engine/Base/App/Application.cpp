@@ -101,20 +101,20 @@ void Application::Initialize()
 
 	//音声
 	Audio::GetInstance()->Initialize();
-	Audio::Load(rhythm_audio.number		,"rhythm.wav");
-	Audio::Load(miss_audio.number		,"miss.wav");
-	Audio::Load(damage_audio.number		,"damage.wav");
-	Audio::Load(exBPM90_audio.number	,"ex)_BPM90.wav");
-	Audio::Load(exBPM120_audio.number	,"ex)_BPM120.wav");
-	Audio::Load(exBPM180_audio.number	,"ex)_BPM180.wav");
-	Audio::Load(openExit_audio.number	,"OpenExit.wav");
-	Audio::Load(coinGet_audio.number	,"coinGet.wav");
-	Audio::Load(bpm120Game_audio.number	,"BPM120_Game.wav");
-	Audio::Load(bpm120Home_audio.number	,"BPM120_Home.wav");
-	Audio::Load(dig_audio.number		,"dig.wav");
-	Audio::Load(gateEnter_audio.number	,"Enter.wav");
-	Audio::Load(cutIn_audio.number		,"cutin.wav");
-	Audio::Load(reflected_audio.number	,"reflected.wav");
+	Audio::Load(rhythm_audio.number		,rhythm_audio.path);
+	Audio::Load(miss_audio.number		,miss_audio.path);
+	Audio::Load(damage_audio.number		,damage_audio.path);
+	Audio::Load(exBPM90_audio.number	,exBPM90_audio.path);
+	Audio::Load(exBPM120_audio.number	,exBPM120_audio.path);
+	Audio::Load(exBPM180_audio.number	,exBPM180_audio.path);
+	Audio::Load(openExit_audio.number	,openExit_audio.path);
+	Audio::Load(coinGet_audio.number	,coinGet_audio.path);
+	Audio::Load(bpm120Game_audio.number	,bpm120Game_audio.path);
+	Audio::Load(bpm120Home_audio.number	,bpm120Home_audio.path);
+	Audio::Load(dig_audio.number		,dig_audio.path);
+	Audio::Load(gateEnter_audio.number	,gateEnter_audio.path);
+	Audio::Load(cutIn_audio.number		,cutIn_audio.path);
+	Audio::Load(reflected_audio.number	,reflected_audio.path);
 
 #pragma endregion
 
