@@ -79,7 +79,7 @@ private:
 
 
 	unique_ptr<BaseSprites> floorDepth_;
-	int numberTextBase_ = 3;
+	int numberTextBase_ = number0_tex.number;
 	unique_ptr<BaseSprites> floorValueTex_;
 
 	//ToDo

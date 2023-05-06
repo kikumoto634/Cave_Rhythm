@@ -1,4 +1,4 @@
-﻿#include "Combo.h"
+#include "Combo.h"
 
 #include "Easing.h"
 
@@ -8,7 +8,7 @@ void Combo::Initialize()
 {
 	//コンボテキスト
 	comboSp = make_unique<BaseSprites>();
-	comboSp->Initialize(2);
+	comboSp->Initialize(combo_tex.number);
 	comboSp->SetPosition({50,300});
 	comboSp->SetSize({150,75});
 	comboSp->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});

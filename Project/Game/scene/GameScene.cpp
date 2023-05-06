@@ -92,7 +92,7 @@ void GameScene::AddObject2DInitialize()
 	//階層テキスト
 	{
 		floorDepth_ = make_unique<BaseSprites>();
-		floorDepth_->Initialize(27);
+		floorDepth_->Initialize(depthValue_tex.number);
 		floorDepth_->SetPosition({1100, 700});
 		floorDepth_->SetSize({100,25});
 		floorDepth_->SetAnchorPoint({0.5f,0.5f});

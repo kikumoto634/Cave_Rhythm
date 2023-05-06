@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include "BaseSprites.h"
-
+#include "TextureUtility.h"
 class Combo
 {
 private:
 	//2Dテキスト
 	const int NumberSpSize = 3;
-	const int TexNumberBegin = 3;
+	const int TexNumberBegin = number0_tex.number;
 
 	//色変化時間
 	const float ComboResetColorSecond = 0.5f;

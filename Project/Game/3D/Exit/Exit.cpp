@@ -1,4 +1,5 @@
-﻿#include "Exit.h"
+#include "Exit.h"
+#include "TextureUtility.h"
 
 using namespace std;
 
@@ -18,20 +19,20 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 
 	//スプライト
 	coinSp = make_unique<BaseSprites>();
-	coinSp->Initialize(13);
+	coinSp->Initialize(coin_tex.number);
 	coinSp->SetSize({40,40});
 	coinSp->SetAnchorPoint({0.5f,0.5f});
 
 	for(int i = 0; i < CoinSpNumSize; i++){
 		coinSpNum[i] = make_unique<BaseSprites>();
-		coinSpNum[i]->Initialize(16);
+		coinSpNum[i]->Initialize(cross_tex.number);
 		coinSpNum[i]->SetSize({40,40});
 		coinSpNum[i]->SetAnchorPoint({0.5f,0.5f});
 	}
 	NeedCoinSpriteUpdate();
 
 	exitOpenSp = make_unique<BaseSprites>();
-	exitOpenSp->Initialize(17);
+	exitOpenSp->Initialize(buttonZ_tex.number);
 	exitOpenSp->SetSize({30,30});
 	exitOpenSp->SetAnchorPoint({0.5f,0.5f});
 

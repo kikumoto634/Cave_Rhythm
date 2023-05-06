@@ -222,7 +222,7 @@ void BaseBattleScene::Object2DInitialize()
 	//シーン遷移(FadeOut)
 	fadeInSize_ = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
 	fade_ = make_unique<BaseSprites>();
-	fade_->Initialize(1);
+	fade_->Initialize(white1x1_tex.number);
 	fade_->SetColor(fadeColor_);
 	fade_->SetSize({fadeInSize_});
 

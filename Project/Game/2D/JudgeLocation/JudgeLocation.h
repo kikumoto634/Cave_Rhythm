@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "BaseSprites.h"
+#include "TextureUtility.h"
 
 class JudgeLocation : public BaseSprites
 {
@@ -10,9 +11,9 @@ private:
 	const Vector2 AnchorPoint = {0.5f,0.5f};
 
 	//最大サイズテクスチャ番号
-	const int SizeMaxTextureNumber = 31;
+	const int SizeMaxTextureNumber = rhythmHeart2_tex.number;
 	//最小サイズテクスチャ番号
-	const int SizeMinTextureNumber = 22;
+	const int SizeMinTextureNumber = rhythmHeart_tex.number;
 
 public:
 	void Initialize();

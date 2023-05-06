@@ -6,6 +6,7 @@
 #include "Easing.h"
 
 #include "AudioUtility.h"
+#include "TextureUtility.h"
 
 using namespace std;
 using namespace DirectX;
@@ -84,7 +85,7 @@ void TitleScene::Initialize()
 	//シーン遷移(FadeOut)
 	fadeInSize = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
 	fade = make_unique<BaseSprites>();
-	fade->Initialize(1);
+	fade->Initialize(white1x1_tex.number);
 	fade->SetColor(fadeColor);
 	fade->SetSize({fadeInSize});
 }

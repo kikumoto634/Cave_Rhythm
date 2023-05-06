@@ -42,7 +42,7 @@ void TutorialScene::AddObject2DInitialize()
 	Vector2 lancher = {0.5f,0.5f};
 	{
 		moveSp = make_unique<TutorialSp>();
-		moveSp->Initialize(23);
+		moveSp->Initialize(tutorialText1_tex.number);
 		Vector3 ltarget = moveSpPos;
 		Vector2 lpos = moveSp->ChangeTransformation(ltarget, this->camera);
 		moveSp->SetPosition(lpos);

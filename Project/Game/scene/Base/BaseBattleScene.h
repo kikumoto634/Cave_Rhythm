@@ -18,6 +18,7 @@
 #include "AreaManager.h"
 
 #include "AudioUtility.h"
+#include "TextureUtility.h"
 
 class BaseBattleScene : public BaseScene
 {

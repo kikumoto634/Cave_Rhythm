@@ -1,6 +1,5 @@
 #include "GameManager.h"
 #include "ObjModelObject.h"
-#include "AudioUtility.h"
 
 using namespace std;
 
@@ -64,11 +63,11 @@ void GameManager::InitializeSetHp(int _hp)
 	for(int i = 0; i < HpSpSize; i++){
 		std::unique_ptr<BaseSprites> Sp = make_unique<BaseSprites>();
 		if(i <= DamageHpSpriteIndex){
-			Sp->Initialize(14);
+			Sp->Initialize(heart_tex.number);
 			Sp->SetSize({75,75});
 		}
 		else if(i > DamageHpSpriteIndex){
-			Sp->Initialize(15);
+			Sp->Initialize(heartEmpty_tex.number);
 			Sp->SetSize({50,50});
 		}
 		Sp->SetPosition({float(900 + (i*80)), 55});
@@ -271,7 +270,7 @@ void GameManager::SpriteInitialize()
 
 	//コインテキスト
 	coinSp = make_unique<BaseSprites>();
-	coinSp->Initialize(13);
+	coinSp->Initialize(coin_tex.number);
 	coinSp->SetPosition({50,175});
 	coinSp->SetSize({75,75});
 

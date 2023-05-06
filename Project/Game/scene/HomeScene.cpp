@@ -40,7 +40,7 @@ void HomeScene::AddObject2DInitialize()
 {
 	{
 		exitText = make_unique<TutorialSp>();
-		exitText->Initialize(25);
+		exitText->Initialize(goText.number);
 		Vector3 ltarget = exitTextPos;
 		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
 		exitText->SetPosition(lpos);
@@ -50,7 +50,7 @@ void HomeScene::AddObject2DInitialize()
 	
 	{
 		trainingText = make_unique<TutorialSp>();
-		trainingText->Initialize(26);
+		trainingText->Initialize(training_tex.number);
 		Vector3 ltarget = trainingTextPos;
 		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
 		trainingText->SetPosition(lpos);

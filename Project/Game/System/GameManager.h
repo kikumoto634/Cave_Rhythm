@@ -8,6 +8,9 @@
 #include <string>
 #include <vector>
 
+#include "AudioUtility.h"
+#include "TextureUtility.h"
+
 class GameManager
 {
 private:
@@ -21,7 +24,7 @@ private:
 
 	//2Dテキスト
 	const int NumberSpSize = 3;
-	const int TexNumberBegin = 3;
+	const int TexNumberBegin = number0_tex.number;
 
 public:
 	//初期化

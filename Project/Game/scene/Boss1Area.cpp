@@ -268,28 +268,28 @@ void Boss1Area::cutinInitialize()
 {
 	{
 		cutInSpMain = make_unique<BaseSprites>();
-		cutInSpMain->Initialize(28);
+		cutInSpMain->Initialize(cutInBoss_tex.number);
 		cutInSpMain->SetPosition(cutInPos);
 		cutInSpMain->SetAnchorPoint({0.5,0.5});
 		cutInSpMain->SetSize({1280, 360});
 	}
 	{
 		cutInSpPart1 = make_unique<BaseSprites>();
-		cutInSpPart1->Initialize(29);
+		cutInSpPart1->Initialize(cutInParts1_tex.number);
 		cutInSpPart1->SetPosition(cutInPartPos1);
 		cutInSpPart1->SetAnchorPoint({0.5,0.5});
 		cutInSpPart1->SetSize({800, 180});
 	}
 	{
 		cutInSpPart2 = make_unique<BaseSprites>();
-		cutInSpPart2->Initialize(30);
+		cutInSpPart2->Initialize(cutInParts2_tex.number);
 		cutInSpPart2->SetPosition(cutInPartPos2);
 		cutInSpPart2->SetAnchorPoint({0.5,0.5});
 		cutInSpPart2->SetSize({800, 180});
 	}
 	{
 		bossName = make_unique<BaseSprites>();
-		bossName->Initialize(20);
+		bossName->Initialize(bossName_tex.number);
 		bossName->SetPosition(bossNamePos);
 		bossName->SetAnchorPoint({0.5f,0.5f});
 		bossName->SetSize({650, 150});

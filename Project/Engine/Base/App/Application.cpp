@@ -4,7 +4,9 @@
 #include "HomeScene.h"
 #include "GameScene.h"
 #include "Boss1Area.h"
+
 #include "AudioUtility.h"
+#include "TextureUtility.h"
 
 Application* Application::app = nullptr;
 
@@ -66,38 +68,38 @@ void Application::Initialize()
 
 	//テクスチャ
 	TextureManager::GetInstance()->Initialize(dxCommon);
-	TextureManager::Load(0, "texfont.png");
-	TextureManager::Load(1, "white1x1.png");
-	TextureManager::Load(2, "2DText/combo.png");
-	TextureManager::Load(3, "2DText/number0.png");
-	TextureManager::Load(4, "2DText/number1.png");
-	TextureManager::Load(5, "2DText/number2.png");
-	TextureManager::Load(6, "2DText/number3.png");
-	TextureManager::Load(7, "2DText/number4.png");
-	TextureManager::Load(8, "2DText/number5.png");
-	TextureManager::Load(9, "2DText/number6.png");
-	TextureManager::Load(10, "2DText/number7.png");
-	TextureManager::Load(11, "2DText/number8.png");
-	TextureManager::Load(12, "2DText/number9.png");
-	TextureManager::Load(13, "2DText/Coin.png");
-	TextureManager::Load(14, "2DText/Heart.png");
-	TextureManager::Load(15, "2DText/HeartEmpty.png");
-	TextureManager::Load(16, "2DText/cross.png");
-	TextureManager::Load(17, "2DText/buttonZ.png");
-	TextureManager::Load(18, "2DText/TitleLog.png");
-	TextureManager::Load(19, "2DText/pushText.png");
-	TextureManager::Load(20, "2DText/Boss1Name.png");
-	TextureManager::Load(21, "2DText/note.png");
-	TextureManager::Load(22, "2DText/RhythmHeart.png");
-	TextureManager::Load(23, "2DText/TutorialFont1.png");
-	TextureManager::Load(24, "2DText/TutorialFont2.png");
-	TextureManager::Load(25, "2DText/GOText.png");
-	TextureManager::Load(26, "2DText/Training.png");
-	TextureManager::Load(27, "2DText/DepthValue.png");
-	TextureManager::Load(28, "2DText/CutIN_Boss.png");
-	TextureManager::Load(29, "2DText/CutIN_Part1_Boss.png");
-	TextureManager::Load(30, "2DText/CutIN_Part2_Boss.png");
-	TextureManager::Load(31, "2DText/RhythmHeart2.png");
+	TextureManager::Load(texFont_tex.number			,texFont_tex.path);
+	TextureManager::Load(white1x1_tex.number		,white1x1_tex.path);
+	TextureManager::Load(combo_tex.number			,combo_tex.path);
+	TextureManager::Load(number0_tex.number			,number0_tex.path);
+	TextureManager::Load(number1_tex.number			,number1_tex.path);
+	TextureManager::Load(number2_tex.number			,number2_tex.path);
+	TextureManager::Load(number3_tex.number			,number3_tex.path);
+	TextureManager::Load(number4_tex.number			,number4_tex.path);
+	TextureManager::Load(number5_tex.number			,number5_tex.path);
+	TextureManager::Load(number6_tex.number			,number6_tex.path);
+	TextureManager::Load(number7_tex.number			,number7_tex.path);
+	TextureManager::Load(number8_tex.number			,number8_tex.path);
+	TextureManager::Load(number9_tex.number			,number9_tex.path);
+	TextureManager::Load(coin_tex.number			,coin_tex.path);
+	TextureManager::Load(heart_tex.number			,heart_tex.path);
+	TextureManager::Load(heartEmpty_tex.number		,heartEmpty_tex.path);
+	TextureManager::Load(cross_tex.number			,cross_tex.path);
+	TextureManager::Load(buttonZ_tex.number			,buttonZ_tex.path);
+	TextureManager::Load(titleLogo_tex.number		,titleLogo_tex.path);
+	TextureManager::Load(pushText_tex.number		,pushText_tex.path);
+	TextureManager::Load(bossName_tex.number		,bossName_tex.path);
+	TextureManager::Load(notes_tex.number			,notes_tex.path);
+	TextureManager::Load(rhythmHeart_tex.number		,rhythmHeart_tex.path);
+	TextureManager::Load(tutorialText1_tex.number	,tutorialText1_tex.path);
+	TextureManager::Load(tutorialText2_tex.number	,tutorialText2_tex.path);
+	TextureManager::Load(goText.number				,goText.path);
+	TextureManager::Load(training_tex.number		,training_tex.path);
+	TextureManager::Load(depthValue_tex.number		,depthValue_tex.path);
+	TextureManager::Load(cutInBoss_tex.number		,cutInBoss_tex.path);
+	TextureManager::Load(cutInParts1_tex.number		,cutInParts1_tex.path);
+	TextureManager::Load(cutInParts2_tex.number		,cutInParts2_tex.path);
+	TextureManager::Load(rhythmHeart2_tex.number	,rhythmHeart2_tex.path);
 
 	//音声
 	Audio::GetInstance()->Initialize();
@@ -144,7 +146,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new HomeScene(dxCommon, window);
+	BaseScene* scene = new TitleScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
