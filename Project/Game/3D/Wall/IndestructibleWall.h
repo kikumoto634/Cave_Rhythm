@@ -37,8 +37,6 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-	void ColliderRemove();
-
 	inline void IsNotAlive()	{IsAlive = false;}
 
 	inline void CaveLightOn()	{IsCaveLight = true;}
@@ -50,6 +48,12 @@ public:
 
 	//Setter
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
+
+	void ColliderRemove();
+
+private:
+	void ColliderInitialize();
+	void ColliderSet();
 
 private:
 	Vector3 PlayerPos;
@@ -69,5 +73,7 @@ private:
 
 	//ライティング
 	bool IsCaveLight = false;
+
+	MeshCollider* collider = nullptr;
 };
 

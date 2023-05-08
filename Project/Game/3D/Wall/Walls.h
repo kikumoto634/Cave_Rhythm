@@ -51,6 +51,11 @@ public:
 	void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
 
 private:
+	void ColliderInitialize();
+	void ColliderSet();
+	void ColliderRemove();
+
+private:
 	Vector3 PlayerPos;
 	float distance = 0;
 
@@ -68,5 +73,7 @@ private:
 
 	//ライティング
 	bool IsCaveLight = false;
+
+	MeshCollider* collider = nullptr;
 };
 

@@ -1,4 +1,4 @@
-﻿#include "Walls.h"
+#include "Walls.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
@@ -13,6 +13,7 @@ void Walls::Initialize(ObjModelManager* model, ObjModelManager* collider)
 	BaseObjObject::Initialize(model);
 
 	colliderModel = collider;
+	ColliderInitialize();
 }
 
 void Walls::Update(Camera *camera)
@@ -40,12 +41,7 @@ void Walls::Update(Camera *camera)
 		IsHide = true;
 
 		if(!IsCollision){
-			//コライダー追加
-			MeshCollider* collider = new MeshCollider;
-			SetCollider(collider);
-			//属性セット
-			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-			collider->ConstructTriangles(colliderModel);
+			ColliderSet();
 			IsCollision = true;
 		}
 	}
@@ -53,10 +49,7 @@ void Walls::Update(Camera *camera)
 		IsHide = false;
 
 		if(IsCollision){
-			if(collider){
-				//コリジョンマネージャーから登録を解除する
-				CollisionManager::GetInstance()->RemoveCollider(collider);
-			}
+			ColliderRemove();
 			IsCollision = false;
 		}
 	}
@@ -86,5 +79,26 @@ void Walls::OnCollision(const CollisionInfo &info)
 		world.UpdateMatrix();
 		collider->Update();
 	}
+}
+
+void Walls::ColliderInitialize()
+{
+	//コライダー追加
+	collider = new MeshCollider;
+}
+
+void Walls::ColliderSet()
+{
+	SetCollider(collider);
+	//属性セット
+	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
+	collider->ConstructTriangles(colliderModel);
+}
+
+void Walls::ColliderRemove()
+{
+	if(!collider) return;
+	//コリジョンマネージャーから登録を解除する
+	CollisionManager::GetInstance()->RemoveCollider(collider);
 }
 

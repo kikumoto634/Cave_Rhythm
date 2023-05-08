@@ -14,6 +14,7 @@ void IndestructibleWall::Initialize(ObjModelManager* model, ObjModelManager* col
 	BaseObjObject::Initialize(model);
 
 	colliderModel = collider;
+	ColliderInitialize();
 }
 
 void IndestructibleWall::Update(Camera *camera)
@@ -41,12 +42,8 @@ void IndestructibleWall::Update(Camera *camera)
 		IsHide = true;
 
 		if(!IsCollision){
-			//コライダー追加
-			MeshCollider* collider = new MeshCollider;
-			SetCollider(collider);
-			//属性セット
-			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-			collider->ConstructTriangles(colliderModel);
+			
+			ColliderSet();
 			IsCollision = true;
 		}
 	}
@@ -54,10 +51,7 @@ void IndestructibleWall::Update(Camera *camera)
 		IsHide = false;
 
 		if(IsCollision){
-			if(collider){
-				//コリジョンマネージャーから登録を解除する
-				CollisionManager::GetInstance()->RemoveCollider(collider);
-			}
+			ColliderRemove();
 			IsCollision = false;
 		}
 	}
@@ -86,8 +80,23 @@ void IndestructibleWall::OnCollision(const CollisionInfo &info)
 	}
 }
 
+void IndestructibleWall::ColliderInitialize()
+{
+	//コライダー追加
+	collider = new MeshCollider;
+}
+
+void IndestructibleWall::ColliderSet()
+{
+	//属性セット
+	SetCollider(collider);
+	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
+	collider->ConstructTriangles(colliderModel);
+}
+
 void IndestructibleWall::ColliderRemove()
 {
+	if(!collider) return;
 	if(!IsCollision) return;
 
 	//コリジョンマネージャーから登録を解除する
