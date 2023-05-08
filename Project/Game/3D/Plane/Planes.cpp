@@ -1,4 +1,4 @@
-﻿#include "Planes.h"
+#include "Planes.h"
 #include "CollisionManager.h"
 
 
@@ -7,51 +7,15 @@ void Planes::Initialize(ObjModelManager *model)
 	BaseObjObject::Initialize(model);
 
 	object->OffLighting();
+	ColliderInitialize();
 }
 
 void Planes::Update(Camera *camera)
 {
 	this->camera = camera;
 	if(!IsAlive) return;
-	Vector3 pos = PlayerPos - world.translation;
-	distance = pos.length();
-
-	if(IsCaveLight){
-		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
-			object->OnLighting();
-		}
-		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
-			object->OffLighting();
-		}
-	}
-	else if(!IsCaveLight){
-		object->OnLighting();
-	}
-
-	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not)		{
-		IsHide = true;
-
-		if(!IsCollision){
-			//コライダー追加
-			MeshCollider* collider = new MeshCollider;
-			SetCollider(collider);
-			//属性セット
-			collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-			collider->ConstructTriangles(model);
-			IsCollision = true;
-		}
-	}
-	else if(-DrawingRange_Not > distance || distance > DrawingRange_Not){
-		IsHide = false;
-
-		if(IsCollision){
-			if(collider){
-				//コリジョンマネージャーから登録を解除する
-				CollisionManager::GetInstance()->RemoveCollider(collider);
-			}
-			IsCollision = false;
-		}
-	}
+	//距離
+	DistanceUpdate();
 	
 	if(!IsHide) return;
 
@@ -87,23 +51,84 @@ void Planes::OnCollision(const CollisionInfo &info)
 	}	
 }
 
+
+void Planes::DistanceUpdate()
+{
+	Vector3 pos = PlayerPos - world.translation;
+	distance = pos.length();
+
+	if(IsCaveLight){
+		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
+			object->OnLighting();
+		}
+		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
+			object->OffLighting();
+		}
+	}
+	else if(!IsCaveLight){
+		object->OnLighting();
+	}
+
+	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not)		{
+		IsHide = true;
+
+		if(!IsCollision){
+			
+			ColliderSet();
+			IsCollision = true;
+		}
+	}
+	else if(-DrawingRange_Not > distance || distance > DrawingRange_Not){
+		IsHide = false;
+
+		if(IsCollision){
+			if(collider){
+				ColliderRemove();
+			}
+			IsCollision = false;
+		}
+	}
+}
+
+
+void Planes::ColliderInitialize()
+{
+	//コライダー追加
+	collider = new MeshCollider;
+}
+
+void Planes::ColliderSet()
+{
+	//属性セット
+	SetCollider(collider);
+	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
+	collider->ConstructTriangles(model);
+}
+
+void Planes::ColliderRemove()
+{
+	//コリジョンマネージャーから登録を解除する
+	CollisionManager::GetInstance()->RemoveCollider(collider);
+}
+
+
 void Planes::PlaneColorChange(bool IsSwitch,  bool IsColorChange)
 {
 	if(!IsAlive) return;
 	if(IsSwitch){
 		if(IsColorChange){
-			object->SetColor({0.0f, 0.8f, 0.0f,1.0f});
+			object->SetColor(GreenColor);
 		}
 		else if(!IsColorChange){
-			object->SetColor({1.f,1.f,1.f,1.f});
+			object->SetColor(IniColor);
 		}
 	}
 	else if(!IsSwitch){
 		if(IsColorChange){
-			object->SetColor({1.f,1.f,1.f,1.f});
+			object->SetColor(IniColor);
 		}
 		else if(!IsColorChange){
-			object->SetColor({0.8f, 0.0f, 0.0f,1.0f});
+			object->SetColor(RedColor);
 		}
 	}
 }

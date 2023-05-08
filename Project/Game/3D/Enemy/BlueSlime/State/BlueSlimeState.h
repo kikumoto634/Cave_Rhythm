@@ -28,14 +28,15 @@ protected:
 //待機
 class IdelBlueSlimeState : public BlueSlimeState{
 private:
+	//待機カウント最大数
+	const int WaltCountMax = 1;
+
+private:
 	void UpdateTrigger() override;
 	void Update() override;
 	void ParticleDraw() override;
 
 private:
-	//待機カウント最大数
-	const int WaltCountMax = 1;
-
 	//待機カウント
 	int waitCount_ = 0;
 };
@@ -63,6 +64,9 @@ private:
 	//色
 	Vector4 Color = {1.0f,0.0f,0.0f,1.0f};
 
+	//死亡時に一時保存場所
+	Vector3 DeadPos = {0,-50,0};
+
 private:
 	void UpdateTrigger() override;
 	void Update() override;
@@ -71,9 +75,6 @@ private:
 	void App();
 
 private:
-	//死亡時に一時保存場所
-	Vector3 deadPos_ = {0,-50,0};
-
 	//パーティクル生成
 	//速度
 	Vector3 vel{};

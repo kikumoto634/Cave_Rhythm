@@ -25,7 +25,7 @@ public:
 	void AddFinalize() override;
 
 	//Getter
-	inline Vector3 GetPopPosition() override {return easigStartPos_;}
+	inline Vector3 GetPopPosition() override {return popPosition_;}
 
 private:
 
@@ -43,7 +43,6 @@ private:
 private:
 	//状態
 	SkeltonStateManager* state_ = nullptr;
-
-	//イージングの移動開始座標
-	Vector3 easigStartPos_ = {};
+	//死亡位置
+	Vector3 popPosition_ = {};
 };

@@ -1,4 +1,4 @@
-﻿#include "TutorialSp.h"
+#include "TutorialSp.h"
 
 void TutorialSp::Update()
 {
@@ -6,8 +6,8 @@ void TutorialSp::Update()
 	distance = lpos.length();
 
 	//距離に応じたハイド
-	if(-13 <= distance && distance <= 13) IsHide = false;
-	else if(-13 > distance || distance > 13) IsHide = true;
+	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not) IsHide = false;
+	else if(-DrawingRange_Not > distance || distance > DrawingRange_Not) IsHide = true;
 
 	if(IsHide) return;
 	BaseSprites::Update();

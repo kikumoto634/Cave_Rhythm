@@ -3,6 +3,10 @@
 
 class TutorialSp : public BaseSprites
 {
+private:
+	//描画範囲(非表示)
+	const int DrawingRange_Not = 13;
+
 public:
 	void Update() override;
 	void Draw() override;

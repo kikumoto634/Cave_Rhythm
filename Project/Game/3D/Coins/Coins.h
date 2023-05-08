@@ -4,7 +4,14 @@
 class Coins : public BaseObjObject
 {
 private:
-	const int LostMaxBeat = 8;
+	//消失時の座標
+	Vector3 DeadPos = {50,50,50};
+
+	//一定ビート数に応じて消滅
+	const int LostCountMax = 8;
+
+	//コライダー
+	const float SphereColliderRadius = 0.6f;
 
 public:
 	/// <summary>
@@ -27,6 +34,7 @@ public:
 	/// </summary>
 	void OnCollision(const CollisionInfo& info) override;
 
+
 	/// <summary>
 	/// 出現
 	/// </summary>
@@ -43,19 +51,20 @@ public:
 	bool GetCoin();
 
 	//Getter
-	bool GetIsAlive() {return IsAlive;}
+	bool GetIsAlive() {return isAlive_;}
+
+private:
+	//コライダーセット
+	void ColliderSet();
 
 private:
 	//出現
-	bool IsAlive = false;
+	bool isAlive_ = false;
 
 	//獲得
-	bool IsGet = false;
-
-	//消失時の座標
-	Vector3 DeadPos = {50,50,50};
+	bool isGet_ = false;
 
 	//ロスト時間(ビート数で処理)
-	int lostBeat = 0;
+	int loatCount_ = 0;
 };
 

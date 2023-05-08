@@ -92,6 +92,8 @@ private:
 	int pathRoot_ = 10;
 
 	//移動
+	//イージングの移動開始座標
+	Vector3 easigStartPos_ = {};
 	//イージングの移動終了座標
 	Vector3 easingEndPos_ = {};
 	//イージングの移動タイム
@@ -126,6 +128,9 @@ private:
 	//色
 	Vector4 Color = {1.0f,0.0f,0.0f,1.0f};
 
+	//死亡時に一時保存場所
+	const Vector3 DeadPos = {0,-50,0};
+
 private:
 	void UpdateTrigger() override;
 	void Update() override;
@@ -134,9 +139,6 @@ private:
 	void App();
 
 private:
-	//死亡時に一時保存場所
-	Vector3 deadPos_ = {0,-50,0};
-
 	//パーティクル生成
 	//速度
 	Vector3 vel{};

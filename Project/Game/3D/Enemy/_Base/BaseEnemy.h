@@ -7,7 +7,7 @@
 class BaseEnemy : public BaseObjObject
 {
 //エイリアス
-private:
+protected:
 	template <class T> using unique_ptr = std::unique_ptr<T>;
 	template <class T> using vector = std::vector<T>;
 
@@ -17,6 +17,9 @@ private:
 	const int DrawingRange_Not = 11;
 	//描画範囲(暗めの表示)
 	const int DrawingRange_Half = 7;
+
+	//拡縮最小サイズ
+	const Vector3 SizeMin = {0.7f, 0.7f, 0.7f};
 
 public:
 	/// <summary>

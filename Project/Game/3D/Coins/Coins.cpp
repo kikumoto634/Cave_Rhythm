@@ -12,27 +12,25 @@ void Coins::Initialize(std::string filePath, bool IsSmoothing)
 	SetPosition(DeadPos);
 	
 	//コライダー
-	float radius = 0.6f;
-	SetCollider(new SphereCollider(DirectX::XMVECTOR{0,radius,0,0}, radius));
-	collider->SetAttribute(COLLISION_ATTR_ITEMS);
+	ColliderSet();
 }
 
 void Coins::Update(Camera *camera)
 {
 	this->camera = camera;
 
-	if(!IsAlive)return;
+	if(!isAlive_)return;
 
 	//ビート処理
 	if(IsBeatEnd){
 		
-		if(lostBeat >= LostMaxBeat){
-			lostBeat = 0;
-			IsAlive = false;
-			IsGet = false;
+		if(loatCount_ >= LostCountMax){
+			loatCount_ = 0;
+			isAlive_ = false;
+			isGet_ = false;
 		}
 
-		lostBeat++;
+		loatCount_++;
 		IsBeatEnd = false;
 	}
 
@@ -43,7 +41,7 @@ void Coins::Update(Camera *camera)
 
 void Coins::Draw()
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 
 	BaseObjObject::Draw();
 }
@@ -51,35 +49,43 @@ void Coins::Draw()
 
 void Coins::OnCollision(const CollisionInfo &info)
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-		IsAlive = false;
-		IsGet = true;
+		isAlive_ = false;
+		isGet_ = true;
 		SetPosition(DeadPos);
 	}
 }
 
+
 void Coins::Pop(Vector3 pos)
 {
 	SetPosition(pos);
-	IsAlive = true;
-	lostBeat = 0;
+	isAlive_ = true;
+	loatCount_ = 0;
 }
 
 bool Coins::PopPossible()
 {
-	if(!IsAlive) return true;
+	if(!isAlive_) return true;
 
 	return false;
 }
 
 bool Coins::GetCoin()
 {
-	if(IsGet)	{
-		IsGet = false;
+	if(isGet_)	{
+		isGet_ = false;
 		return true;
 	}
 
 	return false;
+}
+
+
+void Coins::ColliderSet()
+{
+	SetCollider(new SphereCollider(DirectX::XMVECTOR{0,SphereColliderRadius,0,0}, SphereColliderRadius));
+	collider->SetAttribute(COLLISION_ATTR_ITEMS);
 }

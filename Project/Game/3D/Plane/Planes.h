@@ -11,6 +11,13 @@ private:
 	//描画範囲(暗めの表示)
 	const int DrawingRange_Half = 7;
 
+	//色
+	const Vector4 IniColor = {1.0f, 1.0f, 1.0f, 1.0f};
+	//緑
+	const Vector4 GreenColor = {0.0f, 0.8f, 0.0f, 1.0f};
+	//赤
+	const Vector4 RedColor = {0.8f, 0.0f, 0.0f, 1.0f};
+
 public:
 	/// <summary>
 	/// 初期化
@@ -53,6 +60,15 @@ public:
 	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
 
 private:
+	//距離計算
+	void DistanceUpdate();
+
+	//コライダー
+	void ColliderInitialize();
+	void ColliderSet();
+	void ColliderRemove();
+
+private:
 	bool IsPlayerContact = false;
 
 	Vector3 PlayerPos;
@@ -67,5 +83,8 @@ private:
 
 	//ライティング
 	bool IsCaveLight = false;
+
+	//コライダー
+	MeshCollider* collider = nullptr;
 };
 

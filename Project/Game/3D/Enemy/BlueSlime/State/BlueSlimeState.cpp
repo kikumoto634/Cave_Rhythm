@@ -34,7 +34,7 @@ void IdelBlueSlimeState::ParticleDraw()
 void DeadBlueSlimeState::UpdateTrigger()
 {
 	blueSlime_->particlePos_ = blueSlime_->GetPosition();
-	blueSlime_->SetPosition(deadPos_);
+	blueSlime_->SetPosition(DeadPos);
 	blueSlime_->world.UpdateMatrix();
 	blueSlime_->collider->Update();
 

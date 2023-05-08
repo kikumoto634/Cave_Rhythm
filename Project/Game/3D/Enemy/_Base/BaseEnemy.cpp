@@ -9,7 +9,7 @@ void BaseEnemy::Initialize(std::string filePath, bool IsSmoothing)
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
 	//拡縮最小値
-	ScaleMin = {0.7f, 0.7f, 0.7f};
+	ScaleMin = SizeMin;
 
     //コライダー
     ColliderInitialize();

@@ -21,6 +21,12 @@ void IdelSkeltonState::UpdateTrigger()
 
 void IdelSkeltonState::Update()
 {
+	//死亡時
+	if(skelton_->isDead_){
+		skelton_->popPosition_ = skelton_->world.translation;
+		stateManager_->SetNextState(new DeadSkeltonState);
+	}
+
 	//ビート時
 	if(!skelton_->IsBeatEnd) return;
 
@@ -42,7 +48,7 @@ void IdelSkeltonState::ParticleDraw()
 
 void TrackSkeltonState::UpdateTrigger()
 {
-	skelton_->easigStartPos_ = skelton_->world.translation;
+	easigStartPos_ = skelton_->world.translation;
 	//移動先計算
 	mapPath_ = skelton_->mapInfo_;
 	eX_ = +int(skelton_->world.translation.x/AreaBlockSize)+AreaBlocksHalfNum;
@@ -107,16 +113,17 @@ void TrackSkeltonState::Update()
 {
 	//死亡時
 	if(skelton_->isDead_){
+		skelton_->popPosition_ = easigStartPos_;
 		stateManager_->SetNextState(new DeadSkeltonState);
 	}
 
 	//移動処理
-	skelton_->world.translation = Easing_Linear_Point2(skelton_->easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
+	skelton_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//移動完了時
 	if(easingMoveTime_ >= EasingFrameMax){
 		skelton_->world.translation = easingEndPos_;
-		skelton_->easigStartPos_ = {};
+		easigStartPos_ = {};
 		easingEndPos_ = {};
 		easingMoveTime_ = 0.f;
 		
@@ -134,7 +141,7 @@ void TrackSkeltonState::ParticleDraw()
 void DeadSkeltonState::UpdateTrigger()
 {
 	skelton_->particlePos_ = skelton_->GetPosition();
-	skelton_->SetPosition(deadPos_);
+	skelton_->SetPosition(DeadPos);
 	skelton_->world.UpdateMatrix();
 	skelton_->collider->Update();
 
@@ -200,6 +207,7 @@ void PopSkeltonState::UpdateTrigger()
 
 void PopSkeltonState::Update()
 {
+	if(skelton_->isPosImposibble_) return;
 	//更新処理
 	App();
 	skelton_->popParticle_->Update(skelton_->camera);

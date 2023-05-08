@@ -7,49 +7,49 @@ using namespace std;
 void Combo::Initialize()
 {
 	//コンボテキスト
-	comboSp = make_unique<BaseSprites>();
-	comboSp->Initialize(combo_tex.number);
-	comboSp->SetPosition({50,300});
-	comboSp->SetSize({150,75});
-	comboSp->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
+	comboSp_ = make_unique<BaseSprites>();
+	comboSp_->Initialize(combo_tex.number);
+	comboSp_->SetPosition(PositionText);
+	comboSp_->SetSize(SizeText);
+	comboSp_->SetColor({comboSpColor_.x,comboSpColor_.y,comboSpColor_.z,1});
 
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_combo[i] = make_unique<BaseSprites>();
-		numberSp_combo[i]->Initialize(TexNumberBegin + 0);
-		numberSp_combo[i]->SetPosition({float(50+(i*50)),375});
-		numberSp_combo[i]->SetSize({50,75});
+		numberSp_combo_[i] = make_unique<BaseSprites>();
+		numberSp_combo_[i]->Initialize(TexNumberBegin + 0);
+		numberSp_combo_[i]->SetPosition({float(PositionNumber.x+(i*SizeNumber.x)),PositionNumber.y});
+		numberSp_combo_[i]->SetSize(SizeNumber);
 	}
 }
 
 void Combo::Update()
 {
-	comboSp->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
-	comboSp->Update();
+	comboSp_->SetColor({comboSpColor_.x,comboSpColor_.y,comboSpColor_.z,1});
+	comboSp_->Update();
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_combo[i]->SetColor({comboSpColor.x,comboSpColor.y,comboSpColor.z,1});
-		numberSp_combo[i]->Update();
+		numberSp_combo_[i]->SetColor({comboSpColor_.x,comboSpColor_.y,comboSpColor_.z,1});
+		numberSp_combo_[i]->Update();
 	}
 
 	//リセット色変化
-	if(IsReset){
-		comboSpColor.x = Easing_Linear_Point2(0,1,Time_OneWay(curColorChangeFrame,ComboResetColorSecond));
-		comboSpColor.y = comboSpColor.x;
+	if(isReset_){
+		comboSpColor_.x = Easing_Linear_Point2(0,1,Time_OneWay(curColorChangeFrame_,ComboResetColorSecond));
+		comboSpColor_.y = comboSpColor_.x;
 
-		if(comboSpColor.x >= 1){
-			IsReset = false;
-			curColorChangeFrame = 0;
+		if(comboSpColor_.x >= 1){
+			isReset_ = false;
+			curColorChangeFrame_ = 0;
 		}
 	}
 }
 
 void Combo::Draw()
 {
-	comboSp->Draw();
+	comboSp_->Draw();
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_combo[i]->Draw();
+		numberSp_combo_[i]->Draw();
 	}
 }
 
@@ -57,34 +57,34 @@ void Combo::Finalize()
 {
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_combo[i]->Finalize();
+		numberSp_combo_[i]->Finalize();
 	}
-	comboSp->Finalize();
+	comboSp_->Finalize();
 }
 
 void Combo::Increment()
 {
-	comboNum += 1;
+	comboNum_ += IncrementValue;
 
 	//スプライト更新
-	int hundred = comboNum/100;
-	int ten = (comboNum - (hundred*100))/10;
-	int one = (comboNum - (hundred*100) - (ten*10))/1;
-	numberSp_combo[0]->SetTexNumber(hundred + TexNumberBegin);
-	numberSp_combo[1]->SetTexNumber(ten + TexNumberBegin);
-	numberSp_combo[2]->SetTexNumber(one + TexNumberBegin);
+	int hundred = comboNum_/ValueHundred;
+	int ten = (comboNum_ - (hundred*ValueHundred))/ValueTen;
+	int one = (comboNum_ - (hundred*ValueHundred) - (ten*ValueTen))/ValueOne;
+	numberSp_combo_[0]->SetTexNumber(hundred + TexNumberBegin);
+	numberSp_combo_[1]->SetTexNumber(ten + TexNumberBegin);
+	numberSp_combo_[2]->SetTexNumber(one + TexNumberBegin);
 }
 
 void Combo::Reset()
 {
-	comboNum = 0;
+	comboNum_ = 0;
 	//スプライト更新
 	for(int i = 0; i <NumberSpSize; i++){
-		numberSp_combo[i]->SetTexNumber(TexNumberBegin);
+		numberSp_combo_[i]->SetTexNumber(TexNumberBegin);
 	}
 
 	//色変更
-	if(IsReset) return;
-	IsReset = true;
-	comboSpColor = {0,0,1};
+	if(isReset_) return;
+	isReset_ = true;
+	comboSpColor_ = ResetColor;
 }

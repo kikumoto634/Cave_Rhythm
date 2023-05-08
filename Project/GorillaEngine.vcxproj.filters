@@ -388,6 +388,12 @@
     <Filter Include="ヘッダー ファイル\Game\Node">
       <UniqueIdentifier>{4eaa2358-a61a-449d-b83a-d41c5582a998}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Exit\Sprite">
+      <UniqueIdentifier>{8881a212-cfdf-4cfa-b983-452f68020eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Exit\Sprite">
+      <UniqueIdentifier>{c838cf88-1478-44c9-b4fc-5eb142b65cd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -596,6 +602,9 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Enemy\_Base\BaseEnemy.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy\_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Exit\Sprite\ExitSprite.cpp">
+      <Filter>ソース ファイル\Game\3D\Exit\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -838,6 +847,9 @@
     </ClInclude>
     <ClInclude Include="Game\Utility\TextureUtility.h">
       <Filter>ヘッダー ファイル\Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Exit\Sprite\ExitSprite.h">
+      <Filter>ヘッダー ファイル\Game\3D\Exit\Sprite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
