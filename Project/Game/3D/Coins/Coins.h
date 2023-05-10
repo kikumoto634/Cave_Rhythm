@@ -58,9 +58,6 @@ private:
 	void ColliderSet();
 
 private:
-	//出現
-	bool isAlive_ = false;
-
 	//獲得
 	bool isGet_ = false;
 

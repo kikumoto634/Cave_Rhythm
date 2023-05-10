@@ -12,6 +12,8 @@ void Walls::Initialize(ObjModelManager* model, ObjModelManager* collider)
 {
 	BaseObjObject::Initialize(model);
 
+	isAlive_ = true;
+
 	colliderModel = collider;
 	ColliderInitialize();
 }
@@ -21,7 +23,7 @@ void Walls::Update(Camera *camera)
 	this->camera = camera;
 
 	IsDig = false;
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
@@ -61,18 +63,18 @@ void Walls::Update(Camera *camera)
 
 void Walls::Draw()
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(!IsHide) return;
 	BaseObjObject::Draw();
 }
 
 void Walls::OnCollision(const CollisionInfo &info)
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(!IsHide) return;
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		IsAlive = false;
+		isAlive_ = false;
 		IsDig = true;
 		digPosition = GetPosition();
 		world.translation = {0,0,0};

@@ -37,13 +37,12 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-	inline void IsNotAlive()	{IsAlive = false;}
 
 	inline void CaveLightOn()	{IsCaveLight = true;}
 	inline void CaveLightOff()	{IsCaveLight = false;}
 
 	//Getter
-	inline bool GetIsAlive()	{return IsAlive;}
+	inline bool GetIsAlive()	{return isAlive_;}
 	inline bool GetIsReflect()	{return IsReflect;}
 
 	//Setter
@@ -59,8 +58,6 @@ private:
 	Vector3 PlayerPos;
 	float distance = 0;
 
-	//エリアで使用しない
-	bool IsAlive = true;
 	//距離に応じた非表示
 	bool IsHide = false;
 

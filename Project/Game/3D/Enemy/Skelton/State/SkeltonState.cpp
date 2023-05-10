@@ -22,7 +22,7 @@ void IdelSkeltonState::UpdateTrigger()
 void IdelSkeltonState::Update()
 {
 	//死亡時
-	if(skelton_->isDead_){
+	if(!skelton_->isAlive_){
 		skelton_->popPosition_ = skelton_->world.translation;
 		stateManager_->SetNextState(new DeadSkeltonState);
 	}
@@ -112,7 +112,7 @@ void TrackSkeltonState::UpdateTrigger()
 void TrackSkeltonState::Update()
 {
 	//死亡時
-	if(skelton_->isDead_){
+	if(!skelton_->isAlive_){
 		skelton_->popPosition_ = easigStartPos_;
 		stateManager_->SetNextState(new DeadSkeltonState);
 	}
@@ -145,7 +145,7 @@ void DeadSkeltonState::UpdateTrigger()
 	skelton_->world.UpdateMatrix();
 	skelton_->collider->Update();
 
-	skelton_->isDeadTrigger_ = true;
+	skelton_->isAliveTrigger_ = true;
 
 	App();
 }
@@ -216,7 +216,7 @@ void PopSkeltonState::Update()
 
 	if(skelton_->particleAliveFrame_ < ParticleCreateFrameMax) return;
 
-	skelton_->isDead_ = false;
+	skelton_->isAlive_ = true;
 	skelton_->world.translation = skelton_->particlePos_;
 	skelton_->particleAliveFrame_ = 0;
 

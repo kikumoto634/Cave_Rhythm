@@ -131,7 +131,7 @@ void GameScene::AddCommonUpdate()
 void GameScene::AddObject3DUpdate()
 {
 	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
-		if((*it)->GetIsDeadTrigger()){
+		if((*it)->GetIsAliveTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 			coinDropPos_.push({(*it)->GetPopPosition().x, -5.0f, (*it)->GetPopPosition().z});
 		}

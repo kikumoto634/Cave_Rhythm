@@ -69,7 +69,7 @@ void TutorialScene::AddCommonUpdate()
 void TutorialScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
-		if((*it)->GetIsDeadTrigger()){
+		if(!(*it)->GetIsAliveTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
 				if((*it2)->PopPossible()){

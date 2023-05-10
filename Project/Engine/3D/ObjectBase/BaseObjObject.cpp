@@ -1,4 +1,4 @@
-﻿#include "BaseObjObject.h"
+#include "BaseObjObject.h"
 #include "BaseCollider.h"
 #include "CollisionManager.h"
 #include "Easing.h"
@@ -71,6 +71,15 @@ void BaseObjObject::Finalize()
 	object = nullptr;
 
 	world = {};
+}
+
+bool BaseObjObject::GetIsContactTrigger()
+{
+	if(isContactTrigger_){
+		isContactTrigger_ = false;
+		return false;
+	}
+	return false;
 }
 
 void BaseObjObject::SetPosition(const Vector3 &position)

@@ -6,6 +6,8 @@ void Planes::Initialize(ObjModelManager *model)
 {
 	BaseObjObject::Initialize(model);
 
+	isAlive_ = true;
+
 	object->OffLighting();
 	ColliderInitialize();
 }
@@ -13,7 +15,7 @@ void Planes::Initialize(ObjModelManager *model)
 void Planes::Update(Camera *camera)
 {
 	this->camera = camera;
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	//距離
 	DistanceUpdate();
 	
@@ -37,14 +39,14 @@ void Planes::Update(Camera *camera)
 
 void Planes::Draw()
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(!IsHide) return;
 	BaseObjObject::Draw();
 }
 
 void Planes::OnCollision(const CollisionInfo &info)
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(!IsHide) return;
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		IsPlayerContact = true;
@@ -114,7 +116,7 @@ void Planes::ColliderRemove()
 
 void Planes::PlaneColorChange(bool IsSwitch,  bool IsColorChange)
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(IsSwitch){
 		if(IsColorChange){
 			object->SetColor(GreenColor);

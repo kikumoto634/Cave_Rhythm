@@ -54,6 +54,8 @@ public:
 	inline void IsBeatEndOn()	{IsBeatEnd = true;}
 
 	//Getter
+	bool GetIsContactTrigger();
+	inline bool GetIsAlive()	{return isAlive_;}
 	inline const Vector3& GetPosition()	{return world.translation;}
 	inline const Vector3& GetRotation()	{return world.rotation;}
 	inline const Vector3& GetScale()		{return world.scale;}
@@ -93,6 +95,12 @@ protected:
 
 	//カメラ(借り物)
 	Camera* camera = nullptr;
+
+	//生存フラグ
+	bool isAlive_ = false;
+
+	//接触
+	bool isContactTrigger_ = false;
 
 
 	//リズム更新用

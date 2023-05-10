@@ -8,6 +8,8 @@ void BaseEnemy::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
+	isAlive_ = false;
+
 	//拡縮最小値
 	ScaleMin = SizeMin;
 
@@ -27,7 +29,7 @@ void BaseEnemy::Update(Camera *camera, const Vector3 &playerPos)
 
 	AddUpdate();
 
-    if(isDead_) return;
+    if(!isAlive_) return;
 	//距離に応じた更新
 	DistanceUpdate();
 	//アクション更新
@@ -40,7 +42,7 @@ void BaseEnemy::Update(Camera *camera, const Vector3 &playerPos)
 
 void BaseEnemy::Draw()
 {
-	if(isPosImposibble_ || isInvisible_ || isDead_) return;
+	if(isPosImposibble_ || isInvisible_ || !isAlive_) return;
 
 	AddDraw();
 
@@ -64,12 +66,12 @@ void BaseEnemy::Finalize()
 
 void BaseEnemy::OnCollision(const CollisionInfo &info)
 {
-	if(isDead_) return;
+	if(!isAlive_) return;
     if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-        isDead_ = true;
+        isAlive_ = false;
     }
 	else if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		isDead_ = true;
+		isAlive_ = false;
 	}
 }
 
@@ -79,11 +81,11 @@ void BaseEnemy::Pop(Vector3 pos)
 	isPosImposibble_ = false;
 }
 
-bool BaseEnemy::GetIsDeadTrigger()
+bool BaseEnemy::GetIsAliveTrigger()
 {
 	//Trigger
-    if(isDeadTrigger_){
-        isDeadTrigger_ = false;
+    if(isAliveTrigger_){
+        isAliveTrigger_ = false;
         return true;
     }
     return false;

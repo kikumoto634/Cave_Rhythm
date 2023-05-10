@@ -13,6 +13,8 @@ void IndestructibleWall::Initialize(ObjModelManager* model, ObjModelManager* col
 {
 	BaseObjObject::Initialize(model);
 
+	isAlive_ = true;
+
 	colliderModel = collider;
 	ColliderInitialize();
 }
@@ -22,7 +24,7 @@ void IndestructibleWall::Update(Camera *camera)
 	this->camera = camera;
 
 	IsReflect = false;
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	Vector3 pos = PlayerPos - world.translation;
 	distance = pos.length();
 
@@ -63,14 +65,14 @@ void IndestructibleWall::Update(Camera *camera)
 
 void IndestructibleWall::Draw()
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(!IsHide) return;
 	BaseObjObject::Draw();
 }
 
 void IndestructibleWall::OnCollision(const CollisionInfo &info)
 {
-	if(!IsAlive) return;
+	if(!isAlive_) return;
 	if(!IsHide) return;
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){

@@ -19,7 +19,7 @@ void IdelBlueSlimeState::UpdateTrigger()
 void IdelBlueSlimeState::Update()
 {
 	//死亡時
-	if(blueSlime_->isDead_){
+	if(!blueSlime_->isAlive_){
 		stateManager_->SetNextState(new DeadBlueSlimeState);
 	}
 }
@@ -38,7 +38,7 @@ void DeadBlueSlimeState::UpdateTrigger()
 	blueSlime_->world.UpdateMatrix();
 	blueSlime_->collider->Update();
 
-	blueSlime_->isDeadTrigger_ = true;
+	blueSlime_->isAliveTrigger_ = true;
 
 	App();
 }
@@ -108,7 +108,7 @@ void PopBlueSlimeState::Update()
 
 	if(blueSlime_->particleAliveFrame_ < ParticleCreateFrameMax) return;
 
-	blueSlime_->isDead_ = false;
+	blueSlime_->isAlive_ = true;
 	blueSlime_->world.translation = blueSlime_->particlePos_;
 	blueSlime_->particleAliveFrame_ = 0;
 

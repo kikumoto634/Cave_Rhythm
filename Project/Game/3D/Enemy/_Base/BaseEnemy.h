@@ -62,8 +62,7 @@ public:
 	inline void CaveLightOff()	{isLightCal = false;}
 
 	//Getter
-	bool GetIsDeadTrigger();
-	inline bool GetIsDead()	{return isDead_;}
+	bool GetIsAliveTrigger();
 	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
 
 	//Setter
@@ -104,9 +103,8 @@ protected:
 	//生成可能
 	bool isPosImposibble_ = true;
 
-	//死亡
-	bool isDead_ = true;
-	bool isDeadTrigger_ = false;
+	//生存
+	bool isAliveTrigger_ = false;
 
 	//非表示
 	bool isInvisible_ = false;

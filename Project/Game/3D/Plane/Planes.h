@@ -47,7 +47,6 @@ public:
 	void PlaneColorChange(bool IsSwitch,  bool IsColorChange);
 	inline void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
 
-	inline void IsNotAlive()	{IsAlive = false;}
 
 	inline void CaveLightOn()	{IsCaveLight = true;}
 	inline void CaveLightOff()	{IsCaveLight = false;}
@@ -74,8 +73,6 @@ private:
 	Vector3 PlayerPos;
 	float distance = 0;
 
-	//エリアで使用しない
-	bool IsAlive = true;
 	//距離に応じた非表示
 	bool IsHide = false;
 
