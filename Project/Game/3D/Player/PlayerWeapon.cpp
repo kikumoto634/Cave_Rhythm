@@ -1,4 +1,4 @@
-﻿#include "PlayerWeapon.h"
+#include "PlayerWeapon.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 

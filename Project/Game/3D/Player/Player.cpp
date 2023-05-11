@@ -26,11 +26,14 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	deadModel_->CreateModel("human3");
 
 	//拡縮最小値
-	ScaleMin = {0.7f, 0.7f, 0.7f};
+	ScaleMin = SizeMin;
 
 	//状態
 	state_ = PlayerStateManager::GetInstance();
 	state_->SetNextState(new IdelPlayerState);
+
+	//生存
+	isAlive_ = true;
 
 	//コライダー
 	SphereColliderSet();
@@ -100,7 +103,7 @@ void Player::OnCollision(const CollisionInfo &info)
 
 bool Player::GetIsDamage()
 {
-	if(isDead_) return false;
+	if(!isAlive_) return false;
 	//(サウンド管理をするのでトリガー)
 	if(damageFrame_ == 0 && isDamage_){
 		return true;
@@ -111,7 +114,7 @@ bool Player::GetIsDamage()
 bool Player::GetIsDead()
 {
 	//(サウンド管理をするのでトリガー)
-	if(damageFrame_ == 0 && isDead_){
+	if(damageFrame_ == 0 && !isAlive_){
 		return true;
 	}
 	return false;
@@ -120,8 +123,7 @@ bool Player::GetIsDead()
 void Player::SphereColliderSet()
 {
 	//コライダーの追加
-	float radius = 0.6f;
-	SetCollider(new SphereCollider(XMVECTOR{0,-0.2f,0,0}, radius));
+	SetCollider(new SphereCollider(SphereColliderOffSet, SphereColliderRadius));
 	//当たり判定属性
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
 	//球コライダー取得
@@ -134,7 +136,7 @@ void Player::InputUpdate()
 	isInput_ = false;
 
 	//死亡
-	if(isDead_) return;
+	if(!isAlive_) return;
 	//シーン遷移
 	if(isNextScene_) return ;
 	//重複
@@ -231,7 +233,7 @@ void Player::ActionUpdate()
 void Player::DamageUpdate()
 {
 	if(!isDamage_) return;
-	if(isDead_) return;
+	if(!isAlive_) return;
 
 	if(damageFrame_ == 0){
 		hp_-= 1;
@@ -241,21 +243,21 @@ void Player::DamageUpdate()
 			state_->SetNextState(new DeadPlayerState);
 
 			isDamage_ = false;
-			isDead_ = true;
+			isAlive_ = false;
 			return ;
 		}
 
-		camera->ShakeStart(3);
+		camera->ShakeStart(ShakeValue);
 	}
 
 	//無敵時間内
-	Vector4 color = (damageFrame_ % 6 == 1) ? color = {0.0f, 0.0f, 0.0f, 0.0f} : color = {1.0f, 0.0f, 0.0f, 1.0f};
+	Vector4 color = (damageFrame_ % damageFrameInterval == 1) ? color = Damage1Color : color = Damage2Color;
 	object->SetColor(color);
 	damageFrame_ ++;
 
 	//無敵時間終了
 	if(damageFrame_ < DamageFrameMax) return;
 	damageFrame_ = 0;
-	object->SetColor({1.0f,1.0f,1.0f, 1.0f});
+	object->SetColor(NormalColor);
 	isDamage_ = false;
 }

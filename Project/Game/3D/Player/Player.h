@@ -21,13 +21,34 @@ friend class DeadPlayerState;
 
 //定数
 private:
+	//拡縮の最小サイズ
+	const Vector3 SizeMin = {0.7f,0.7f,0.7f};
+
 	//移動距離
 	const float MoveLength = AreaManager::Block_Size;
 	//レイキャストの長さ
 	const float adsDistance = 1.0f;
 
+	//ダメージ
+	//カメラのシェイク強さ
+	const int ShakeValue = 3;
 	//ダメージ状態の総フレーム
 	const int DamageFrameMax = 150;
+	//色変化の間隔
+	const int damageFrameInterval = 6;
+	//通常色
+	const Vector4 NormalColor = {1.0f,1.0f,1.0f,1.0f};
+	//ダメージ色1
+	const Vector4 Damage1Color = {0.0f,0.0f,0.0f,0.0f};
+	//ダメージ色2
+	const Vector4 Damage2Color = {1.0f,0.0f,0.0f,1.0f};
+	
+
+	//コライダー
+	//オフセット
+	XMVECTOR SphereColliderOffSet = {0.f,-0.2f,0.f,0.f};
+	//半径
+	const float SphereColliderRadius = 0.6f;
 
 //メンバ関数
 public:
@@ -135,9 +156,6 @@ private:
 	//ダメージ
 	bool isDamage_ = false;
 	int damageFrame_ = 0;
-
-	//死亡
-	bool isDead_ = false;
 	
 	//移動ベクトル
 	Vector3 addVector3_;

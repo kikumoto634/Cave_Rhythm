@@ -83,8 +83,8 @@ void DeadPlayerState::UpdateTrigger()
 void DeadPlayerState::Update()
 {
 	//初回のみ
-	if(player_->isDead_) player_->damageFrame_ ++;
-	player_->isDead_ = true;
+	if(!player_->isAlive_) player_->damageFrame_ ++;
+	player_->isAlive_ = false;
 
 	player_->object->SetModel(player_->deadModel_);
 }
