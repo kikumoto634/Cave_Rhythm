@@ -77,7 +77,7 @@ void Walls::OnCollision(const CollisionInfo &info)
 		isAlive_ = false;
 		IsDig = true;
 		digPosition = GetPosition();
-		world.translation = {0,0,0};
+		world.translation = NotAlivePos;
 		world.UpdateMatrix();
 		collider->Update();
 	}

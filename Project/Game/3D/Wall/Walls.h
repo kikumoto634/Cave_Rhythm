@@ -12,6 +12,9 @@ private:
 	//描画範囲(暗めの表示)
 	const int DrawingRange_Half = 7;
 
+	//削除後の位置
+	const Vector3 NotAlivePos = {0,-50,0};
+
 public:
 	~Walls();
 

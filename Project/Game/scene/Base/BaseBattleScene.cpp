@@ -194,7 +194,7 @@ void BaseBattleScene::CommonInitialize()
 	areaManager_ = make_unique<AreaManager>();
 
 	//カメラ
-	camera->RotVector({XMConvertToRadians(-60.f), 0.f, 0.f});
+	camera->RotVector(CameraRotValueIni);
 	camera->Update();
 }
 
@@ -204,8 +204,8 @@ void BaseBattleScene::Object3DInitialize()
 	player_ = make_unique<Player>();
 	player_->Initialize("human1");
 	player_->Pop(areaManager_->GetPlayerPosition());
-	player_->SetWeaponModelPos({0,0,-2.f});
-	player_->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
+	player_->SetWeaponModelPos(WeaponOffsetValueIni);
+	player_->SetRotation(PlayerRotValueIni);
 	player_->SetHp(saveHP_);
 	gameManager_->InitializeSetHp(player_->GetHp());
 
@@ -213,7 +213,7 @@ void BaseBattleScene::Object3DInitialize()
 	exit_ = make_unique<Exit>();
 	exit_->Initialize("Exit");
 	exit_->SetPosition(areaManager_->GetExitPosition());
-	exit_->SetExitOpenNeedCoin(0);
+	exit_->SetExitOpenNeedCoin(needCoin_);
 	exit_->NeedCoinSpriteUpdate();
 }
 
@@ -252,7 +252,6 @@ void BaseBattleScene::Object3DUpdate()
 		isGameEnd_ = true;
 	}
 	player_->Update(camera);
-	//player->SetMoveEasingMaxTime(static_cast<float>(rhythmManager->GetBPMTimeSub()));
 	//出口
 	exit_->Update(camera);
 	{

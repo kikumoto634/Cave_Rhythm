@@ -22,6 +22,16 @@
 
 class BaseBattleScene : public BaseScene
 {
+private:
+	//カメラ初期回転値
+	const Vector3 CameraRotValueIni = {DirectX::XMConvertToRadians(-60.f),0.f,0.f};
+	
+	//プレイヤー
+	//初期回転値
+	const Vector3 PlayerRotValueIni = {0.f,DirectX::XMConvertToRadians(180),0.f};
+	//初期武器オフセット位置
+	const Vector3 WeaponOffsetValueIni = {0.f,0.f,-2.f};
+
 protected:
 	//シーン遷移
 	const float FadeSecond = 1.f;
@@ -138,6 +148,9 @@ protected:
 	bool isRhythmInput_ = false;
 	//出口
 	unique_ptr<Exit> exit_;
+	//必要コイン
+	int needCoin_ = 0;
+
 	//エリアマネージャー
 	unique_ptr<AreaManager> areaManager_;
 

@@ -66,9 +66,6 @@ private:
 	void ActorCreateInitialize();
 
 private:
-	//必要コイン
-	int needCoin_ = 10;
-
 	//エネミー
 	int slimePopNumMax_ = 5;
 	int skeltonPopNumMax_ = 5;
