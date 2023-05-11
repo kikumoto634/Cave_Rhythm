@@ -81,16 +81,6 @@ void BaseEnemy::Pop(Vector3 pos)
 	isPopsPosibble_ = false;
 }
 
-bool BaseEnemy::GetIsAliveTrigger()
-{
-	//Trigger
-    if(isAliveTrigger_){
-        isAliveTrigger_ = false;
-        return true;
-    }
-    return false;
-}
-
 
 void BaseEnemy::ActionUpdate()
 {

@@ -38,7 +38,7 @@ void DeadBlueSlimeState::UpdateTrigger()
 	blueSlime_->world.UpdateMatrix();
 	blueSlime_->collider->Update();
 
-	blueSlime_->isAliveTrigger_ = true;
+	blueSlime_->isContactTrigger_ = true;
 
 	App();
 }

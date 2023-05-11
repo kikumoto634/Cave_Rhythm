@@ -57,13 +57,7 @@ public:
 	//出現
 	void Pop(Vector3 pos) override;
 
-	//光計算
-	inline void CaveLightOn()	{isLightCal = true;}
-	inline void CaveLightOff()	{isLightCal = false;}
-
 	//Getter
-	bool GetIsAliveTrigger();
-	inline bool GetIsPopsPmposibble_() {return isPopsPosibble_;}
 
 	//Setter
 	inline void SetMapInfo(vector<vector<int>> info) {mapInfo_ = info;}
@@ -85,7 +79,7 @@ private:
 	void BeatUpdate();
 
 	//距離に応じた処理
-	void DistanceUpdate();
+	void DistanceUpdate() override;
 
 	//コライダー
 	void ColliderInitialize();
@@ -100,12 +94,6 @@ protected:
 	//プレイヤー座標
 	Vector3 playerPos_;
 
-	//生成可能
-	bool isPopsPosibble_ = true;
-
-	//生存
-	bool isAliveTrigger_ = false;
-
 	//非表示
 	bool isInvisible_ = false;
 
@@ -114,7 +102,6 @@ protected:
 
 	//プレイヤーとの距離
 	float distance_ = 0.f;
-	bool isLightCal = false;
 
 	//経路探索
 	vector<vector<int>> mapInfo_;

@@ -51,13 +51,19 @@ public:
 	/// <param name="info">衝突情報</param>
 	virtual void OnCollision(const CollisionInfo& info){};
 
+	virtual void Pop(Vector3 pos);
+
+
 	inline void IsBeatEndOn()	{IsBeatEnd = true;}
 
-	virtual void Pop(Vector3 pos);
+	//光計算
+	inline void CaveLightOn()	{isLightCal = true;}
+	inline void CaveLightOff()	{isLightCal = false;}
 
 	//Getter
 	bool GetIsContactTrigger();
 	inline bool GetIsAlive()	{return isAlive_;}
+	inline bool GetIsPopsPmposibble_() {return isPopsPosibble_;}
 	inline const Vector3& GetPosition()	{return world.translation;}
 	inline const Vector3& GetRotation()	{return world.rotation;}
 	inline const Vector3& GetScale()		{return world.scale;}
@@ -67,9 +73,9 @@ public:
 
 	//Setter
 	void SetPosition(const Vector3& position);
+	void SetCollider(BaseCollider* collider);
 	inline void SetRotation(const Vector3& rotation)	{world.rotation = rotation, world.UpdateMatrix();}
 	inline void SetScale(const Vector3& scale)			{world.scale = scale, world.UpdateMatrix();}
-	void SetCollider(BaseCollider* collider);
 	inline void SetObject(ObjModelObject* object)	{this->object = object;}
 	inline void SetModel(ObjModelManager* model)	{this->model = model;}
 
@@ -82,6 +88,9 @@ protected:
 	/// <param name="EndTime">終了時間 (x:秒)</param>
 	/// <returns></returns>
 	bool ScaleChange(Vector3& sizeMax, Vector3& sizeMin, float& EndTime);
+
+	//距離計算
+	virtual void DistanceUpdate();
 
 protected:
 	//クラス名(デバック用)
@@ -101,9 +110,14 @@ protected:
 	//生存フラグ
 	bool isAlive_ = false;
 
+	//生成可能
+	bool isPopsPosibble_ = true;
+
 	//接触
 	bool isContactTrigger_ = false;
 
+	//光計算
+	bool isLightCal = false;
 
 	//リズム更新用
 	//拍終了フラグ

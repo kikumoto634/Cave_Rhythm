@@ -53,6 +53,7 @@ void Coins::OnCollision(const CollisionInfo &info)
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		isAlive_ = false;
 		isContactTrigger_ = true;
+		isPopsPosibble_ = true;
 		SetPosition(DeadPos);
 	}
 }

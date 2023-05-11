@@ -69,22 +69,23 @@ private:
 	//必要コイン
 	int needCoin_ = 10;
 
+	//エネミー
 	int slimePopNumMax_ = 5;
 	int skeltonPopNumMax_ = 5;
 	list<unique_ptr<BaseEnemy>> enemys_;
 
+	//コイン
 	int coinPopNumMax_ = 10;
 	queue<Vector3> coinDropPos_ = {};
+
+	//オブジェクト
 	list<unique_ptr<BaseObjObject>> obj_;
 
 
-	unique_ptr<BaseSprites> floorDepth_;
+	//数字の画像番号
 	int numberTextBase_ = number0_tex.number;
-	unique_ptr<BaseSprites> floorValueTex_;
-
-	//ToDo
-	//・アイテム(BaseObjObject)
-	//・敵 (BaseEnemyObject)
-	//・Player
+	
+	//画像
+	list<unique_ptr<BaseSprites>> sp_;
 };
 

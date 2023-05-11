@@ -69,7 +69,7 @@ void TutorialScene::AddCommonUpdate()
 void TutorialScene::AddObject3DUpdate()
 {
 	for(auto it = slime.begin(); it != slime.end(); it++){
-		if(!(*it)->GetIsAliveTrigger()){
+		if(!(*it)->GetIsContactTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 			for(auto it2 = obj_.begin(); it2!= obj_.end(); it2++){
 				if(!(*it2)->GetIsAlive()){

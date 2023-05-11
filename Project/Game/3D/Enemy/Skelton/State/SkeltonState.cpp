@@ -145,7 +145,7 @@ void DeadSkeltonState::UpdateTrigger()
 	skelton_->world.UpdateMatrix();
 	skelton_->collider->Update();
 
-	skelton_->isAliveTrigger_ = true;
+	skelton_->isContactTrigger_ = true;
 
 	App();
 }

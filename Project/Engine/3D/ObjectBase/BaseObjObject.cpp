@@ -76,6 +76,7 @@ void BaseObjObject::Finalize()
 void BaseObjObject::Pop(Vector3 pos)
 {
 	SetPosition(pos);
+	isPopsPosibble_ = false;
 }
 
 bool BaseObjObject::GetIsContactTrigger()
@@ -119,4 +120,14 @@ bool BaseObjObject::ScaleChange(Vector3 &sizeMax, Vector3 &sizeMin, float &EndTi
 
 	scaleCurrentTime += 1.f/(60*EndTime);
 	return false;
+}
+
+void BaseObjObject::DistanceUpdate()
+{
+	if(isLightCal){
+		object->OnLighting();
+		return;
+	}
+	
+	object->OffLighting();
 }
