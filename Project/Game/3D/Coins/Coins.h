@@ -38,18 +38,8 @@ public:
 	/// <summary>
 	/// 出現
 	/// </summary>
-	void Pop(Vector3 pos);
-
-	/// <summary>
-	/// 出現可能
-	/// </summary>
-	bool PopPossible();
+	void Pop(Vector3 pos) override;
 	
-	/// <summary>
-	/// コイン獲得
-	/// </summary>
-	bool GetCoin();
-
 	//Getter
 	bool GetIsAlive() {return isAlive_;}
 
@@ -58,9 +48,6 @@ private:
 	void ColliderSet();
 
 private:
-	//獲得
-	bool isGet_ = false;
-
 	//ロスト時間(ビート数で処理)
 	int loatCount_ = 0;
 };

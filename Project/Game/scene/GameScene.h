@@ -74,8 +74,8 @@ private:
 	list<unique_ptr<BaseEnemy>> enemys_;
 
 	int coinPopNumMax_ = 10;
-	list<unique_ptr<Coins>> coin_;
 	queue<Vector3> coinDropPos_ = {};
+	list<unique_ptr<BaseObjObject>> obj_;
 
 
 	unique_ptr<BaseSprites> floorDepth_;

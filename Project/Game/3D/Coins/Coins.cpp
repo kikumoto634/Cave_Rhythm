@@ -27,7 +27,6 @@ void Coins::Update(Camera *camera)
 		if(loatCount_ >= LostCountMax){
 			loatCount_ = 0;
 			isAlive_ = false;
-			isGet_ = false;
 		}
 
 		loatCount_++;
@@ -53,7 +52,7 @@ void Coins::OnCollision(const CollisionInfo &info)
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
 		isAlive_ = false;
-		isGet_ = true;
+		isContactTrigger_ = true;
 		SetPosition(DeadPos);
 	}
 }
@@ -61,26 +60,9 @@ void Coins::OnCollision(const CollisionInfo &info)
 
 void Coins::Pop(Vector3 pos)
 {
-	SetPosition(pos);
+	BaseObjObject::Pop(pos);
 	isAlive_ = true;
 	loatCount_ = 0;
-}
-
-bool Coins::PopPossible()
-{
-	if(!isAlive_) return true;
-
-	return false;
-}
-
-bool Coins::GetCoin()
-{
-	if(isGet_)	{
-		isGet_ = false;
-		return true;
-	}
-
-	return false;
 }
 
 

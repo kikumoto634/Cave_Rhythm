@@ -71,8 +71,8 @@ void TutorialScene::AddObject3DUpdate()
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		if(!(*it)->GetIsAliveTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
-			for(auto it2 = coin.begin(); it2!= coin.end(); it2++){
-				if((*it2)->PopPossible()){
+			for(auto it2 = obj_.begin(); it2!= obj_.end(); it2++){
+				if(!(*it2)->GetIsAlive()){
 					(*it2)->Pop({(*it)->GetPopPosition().x, -5, (*it)->GetPopPosition().z});
 					break;
 				}
@@ -81,8 +81,8 @@ void TutorialScene::AddObject3DUpdate()
 		(*it)->Update(camera,player_->GetPosition());
 	}
 
-	for(auto it = coin.begin(); it != coin.end(); it++){
-		if((*it)->GetCoin()){
+	for(auto it = obj_.begin(); it != obj_.end(); it++){
+		if((*it)->GetIsContactTrigger()){
 			gameManager_->CoinIncrement();
 			gameManager_->AudioPlay(coinGet_audio.number,coinGet_audio.volume);
 		}
@@ -114,7 +114,7 @@ void TutorialScene::AddBeatEndUpdate()
 	int index = 0;
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->IsBeatEndOn();
-		if((*it)->GetIsPosImposibble_()){
+		if((*it)->GetIsPopsPmposibble_()){
 			Vector3 lpos;
 
 			if(areaManager_->GetCSVObjectPopActive(index,false)) {
@@ -125,7 +125,7 @@ void TutorialScene::AddBeatEndUpdate()
 		}
 	}
 
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = obj_.begin(); it != obj_.end(); it++){
 		if((*it)->GetIsAlive()){
 			(*it)->IsBeatEndOn();
 		}
@@ -139,7 +139,7 @@ void TutorialScene::AddObject3DDraw()
 	for(auto it = slime.begin(); it != slime.end(); it++){
 		(*it)->Draw();
 	}
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = obj_.begin(); it != obj_.end(); it++){
 		(*it)->Draw();
 	}
 }
@@ -170,7 +170,7 @@ void TutorialScene::AddObjectFinalize()
 		(*it)->Finalize();
 	}
 
-	for(auto it = coin.begin(); it != coin.end(); it++){
+	for(auto it = obj_.begin(); it != obj_.end(); it++){
 		(*it)->Finalize();
 	}
 }
@@ -192,6 +192,6 @@ void TutorialScene::ActorCreateInitialize()
 	for(int i = 0; i < coinPopNumMax; i++){
 		unique_ptr<Coins> newObj = make_unique<Coins>();
 		newObj->Initialize("Coins");
-		coin.push_back(move(newObj));
+		obj_.push_back(move(newObj));
 	}
 }

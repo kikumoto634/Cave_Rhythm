@@ -203,7 +203,7 @@ void BaseBattleScene::Object3DInitialize()
 	//blenderでの保存スケールは 2/10(0.2)でのエクスポート
 	player_ = make_unique<Player>();
 	player_->Initialize("human1");
-	player_->SetPosition(areaManager_->GetPlayerPosition());
+	player_->Pop(areaManager_->GetPlayerPosition());
 	player_->SetWeaponModelPos({0,0,-2.f});
 	player_->SetRotation({0, DirectX::XMConvertToRadians(180),0.f});
 	player_->SetHp(saveHP_);

@@ -41,6 +41,7 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+
 	/// <summary>
 	/// 色変化
 	/// </summary>

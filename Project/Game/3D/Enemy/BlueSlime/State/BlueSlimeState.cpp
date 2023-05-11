@@ -52,7 +52,7 @@ void DeadBlueSlimeState::Update()
 
 	if(blueSlime_->particleAliveFrame_ < ParticleAliveFrameMax) return;
 
-	blueSlime_->isPosImposibble_ = true;	
+	blueSlime_->isPopsPosibble_ = true;	
 	blueSlime_->particleAliveFrame_ = 0;
 
 	blueSlime_->world.UpdateMatrix();
@@ -99,7 +99,7 @@ void PopBlueSlimeState::UpdateTrigger()
 
 void PopBlueSlimeState::Update()
 {
-	if(blueSlime_->isPosImposibble_) return;
+	if(blueSlime_->isPopsPosibble_) return;
 	//更新処理
 	App();
 	blueSlime_->popParticle_->Update(blueSlime_->camera);

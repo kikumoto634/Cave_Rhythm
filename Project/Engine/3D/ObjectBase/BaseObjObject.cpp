@@ -73,11 +73,16 @@ void BaseObjObject::Finalize()
 	world = {};
 }
 
+void BaseObjObject::Pop(Vector3 pos)
+{
+	SetPosition(pos);
+}
+
 bool BaseObjObject::GetIsContactTrigger()
 {
 	if(isContactTrigger_){
 		isContactTrigger_ = false;
-		return false;
+		return true;
 	}
 	return false;
 }

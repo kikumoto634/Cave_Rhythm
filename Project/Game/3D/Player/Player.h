@@ -58,6 +58,9 @@ public:
 	void OnCollision(const CollisionInfo& info) override;
 
 
+	void Pop(Vector3 pos)	{SetPosition(pos);}
+
+
 	//入力可能状態
 	inline void InputPossible()	{isDuplicateLimit_ = false;}
 

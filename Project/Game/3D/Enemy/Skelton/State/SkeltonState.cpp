@@ -159,7 +159,7 @@ void DeadSkeltonState::Update()
 
 	if(skelton_->particleAliveFrame_ < ParticleAliveFrameMax) return;
 
-	skelton_->isPosImposibble_ = true;	
+	skelton_->isPopsPosibble_ = true;	
 	skelton_->particleAliveFrame_ = 0;
 
 	skelton_->world.UpdateMatrix();
@@ -207,7 +207,7 @@ void PopSkeltonState::UpdateTrigger()
 
 void PopSkeltonState::Update()
 {
-	if(skelton_->isPosImposibble_) return;
+	if(skelton_->isPopsPosibble_) return;
 	//更新処理
 	App();
 	skelton_->popParticle_->Update(skelton_->camera);

@@ -47,7 +47,7 @@ private:
 	std::vector<std::unique_ptr<BaseEnemy>> slime;
 
 	int coinPopNumMax = 10;
-	std::vector<std::unique_ptr<Coins>> coin;
+	std::vector<std::unique_ptr<BaseObjObject>> obj_;
 
 	//スプライト
 	std::unique_ptr<TutorialSp> moveSp;

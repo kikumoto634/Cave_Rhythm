@@ -195,7 +195,7 @@ void AreaManager::AreaPlaneInitialize(bool IsLighting)
 			obj->Initialize(planeModel_);
 			pos = {startPos + j, startPos + i};
 			pos *= Block_Size;
-			obj->SetPosition({pos.x,-5,-pos.y});
+			obj->Pop({pos.x,-5,-pos.y});
 
 			if(!IsLighting) {
 				plane_[i].push_back(move(obj));
@@ -274,7 +274,7 @@ void AreaManager::AreaWallsInitialize(bool IsLigthing)
 
 			pos = {startPos + j, startPos + i};
 			pos*= Block_Size;
-			obj->SetPosition({pos.x,-3,-pos.y});
+			obj->Pop({pos.x,-3,-pos.y});
 
 			if(!IsLigthing) {
 				wall_[i].push_back(move(obj));
@@ -356,7 +356,7 @@ void AreaManager::RandamAreaIndestructibleWallInitialize()
 				pos = {DIV_NUM_HALF_FLOAT+1, startPos + j};
 				pos*=Block_Size;
 			}
-			obj->SetPosition({pos.x, -3,pos.y});
+			obj->Pop({pos.x, -3,pos.y});
 			obj->CaveLightOn();
 
 			indestructibleWalls_[i].push_back(move(obj));
@@ -379,7 +379,7 @@ void AreaManager::CSVAreaIndestructibleWallInitialize()
 			obj->Initialize(indestructibleWallModel_, indestructibleWallColliderModel_);
 			pos = {startPos + j ,startPos + i};
 			pos *= Block_Size;
-			obj->SetPosition({pos.x,-3,-pos.y});
+			obj->Pop({pos.x,-3,-pos.y});
 
 			indestructibleWalls_[i].push_back(move(obj));
 		}

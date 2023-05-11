@@ -42,7 +42,7 @@ void BaseEnemy::Update(Camera *camera, const Vector3 &playerPos)
 
 void BaseEnemy::Draw()
 {
-	if(isPosImposibble_ || isInvisible_ || !isAlive_) return;
+	if(isPopsPosibble_ || isInvisible_ || !isAlive_) return;
 
 	AddDraw();
 
@@ -78,7 +78,7 @@ void BaseEnemy::OnCollision(const CollisionInfo &info)
 void BaseEnemy::Pop(Vector3 pos)
 {
 	particlePos_ = pos;
-	isPosImposibble_ = false;
+	isPopsPosibble_ = false;
 }
 
 bool BaseEnemy::GetIsAliveTrigger()

@@ -53,6 +53,8 @@ public:
 
 	inline void IsBeatEndOn()	{IsBeatEnd = true;}
 
+	virtual void Pop(Vector3 pos);
+
 	//Getter
 	bool GetIsContactTrigger();
 	inline bool GetIsAlive()	{return isAlive_;}

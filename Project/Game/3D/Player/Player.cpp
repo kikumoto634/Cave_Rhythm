@@ -61,7 +61,7 @@ void Player::Update(Camera *camera)
 
 
 	//武器更新
-	weapon_->SetPosition(world.translation + weaponOffset_);
+	weapon_->Pop(world.translation + weaponOffset_);
 	weapon_->SetRotation(GetRotation());
 	weapon_->Update(this->camera);
 

@@ -55,7 +55,7 @@ public:
 
 
 	//出現
-	void Pop(Vector3 pos);
+	void Pop(Vector3 pos) override;
 
 	//光計算
 	inline void CaveLightOn()	{isLightCal = true;}
@@ -63,7 +63,7 @@ public:
 
 	//Getter
 	bool GetIsAliveTrigger();
-	inline bool GetIsPosImposibble_() {return isPosImposibble_;}
+	inline bool GetIsPopsPmposibble_() {return isPopsPosibble_;}
 
 	//Setter
 	inline void SetMapInfo(vector<vector<int>> info) {mapInfo_ = info;}
@@ -101,7 +101,7 @@ protected:
 	Vector3 playerPos_;
 
 	//生成可能
-	bool isPosImposibble_ = true;
+	bool isPopsPosibble_ = true;
 
 	//生存
 	bool isAliveTrigger_ = false;

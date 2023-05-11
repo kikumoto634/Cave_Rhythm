@@ -139,13 +139,13 @@ void GameScene::AddObject3DUpdate()
 		(*it)->Update(camera,player_->GetPosition());
 	}
 	
-	for(auto it = coin_.begin(); it != coin_.end(); it++){
-		if((*it)->GetCoin()){
+	for(auto it = obj_.begin(); it != obj_.end(); it++){
+		if((*it)->GetIsContactTrigger()){
 			gameManager_->CoinIncrement();
 			gameManager_->AudioPlay(coinGet_audio.number,coinGet_audio.volume);
 		}
 
-		if(!coinDropPos_.empty() && (*it)->PopPossible()){
+		if(!coinDropPos_.empty() && !(*it)->GetIsAlive()){
 			(*it)->Pop(coinDropPos_.front());
 			coinDropPos_.pop();
 		}
@@ -163,7 +163,7 @@ void GameScene::AddObject2DUpdate()
 void GameScene::AddBeatEndUpdate()
 {
 	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
-		if((*it)->GetIsPosImposibble_()){
+		if((*it)->GetIsPopsPmposibble_()){
 			Vector3 lpos = areaManager_->GetObjectPopPosition();
 			(*it)->Pop({lpos.x, -3.5f,lpos.z});
 			(*it)->CaveLightOn();
@@ -176,7 +176,7 @@ void GameScene::AddBeatEndUpdate()
 		(*it)->IsBeatEndOn();
 	}
 
-	for(auto it = coin_.begin(); it != coin_.end(); ++it){
+	for(auto it = obj_.begin(); it != obj_.end(); ++it){
 		if((*it)->GetIsAlive()){
 			(*it)->IsBeatEndOn();
 		}
@@ -191,7 +191,7 @@ void GameScene::AddObject3DDraw()
 		(*it)->Draw();
 	}
 
-	for(auto it = coin_.begin(); it != coin_.end(); ++it){
+	for(auto it = obj_.begin(); it != obj_.end(); ++it){
 		(*it)->Draw();
 	}
 }
@@ -222,7 +222,7 @@ void GameScene::AddObjectFinalize()
 		(*it)->Finalize();
 	}
 
-	for(auto it = coin_.begin(); it != coin_.end(); ++it){
+	for(auto it = obj_.begin(); it != obj_.end(); ++it){
 		(*it)->Finalize();
 	}
 }
@@ -249,6 +249,6 @@ void GameScene::ActorCreateInitialize()
 	for(int i = 0; i < coinPopNumMax_; i++){
 		unique_ptr<Coins> newObj = make_unique<Coins>();
 		newObj->Initialize("Coins");
-		coin_.push_back(move(newObj));
+		obj_.push_back(move(newObj));
 	}
 }
