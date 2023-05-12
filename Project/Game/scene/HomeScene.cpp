@@ -26,11 +26,13 @@ void HomeScene::AddCommonInitialize()
 {
 	//ダンジョン
 	areaManager_->CSVAreaInitialize("Home");
+
+	needCoin_ = NeedCoinNum;
 }
 
 void HomeScene::AddObject3DInitialize()
 {
-	exit_->SetExitOpenNeedCoin(0);
+	exit_->SetExitOpenNeedCoin(needCoin_);
 	exit_->NeedCoinSpriteUpdate();
 
 	ActorCreateInitialize();
@@ -39,23 +41,23 @@ void HomeScene::AddObject3DInitialize()
 void HomeScene::AddObject2DInitialize()
 {
 	{
-		exitText = make_unique<TutorialSp>();
-		exitText->Initialize(goText.number);
-		Vector3 ltarget = exitTextPos;
-		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
-		exitText->SetPosition(lpos);
-		exitText->SetSize({200,40});
-		exitText->SetAnchorPoint({0.5f,0.5f});
+		exitText_ = make_unique<TutorialSp>();
+		exitText_->Initialize(goText.number);
+		Vector3 ltarget = ExitTextPos;
+		Vector2 lpos = exitText_->ChangeTransformation(ltarget, this->camera);
+		exitText_->SetPosition(lpos);
+		exitText_->SetSize(TrainingTextSize);
+		exitText_->SetAnchorPoint(TraningTextAnc);
 	}
 	
 	{
-		trainingText = make_unique<TutorialSp>();
-		trainingText->Initialize(training_tex.number);
-		Vector3 ltarget = trainingTextPos;
-		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
-		trainingText->SetPosition(lpos);
-		trainingText->SetSize({200,40});
-		trainingText->SetAnchorPoint({0.5f,0.5f});
+		trainingText_ = make_unique<TutorialSp>();
+		trainingText_->Initialize(training_tex.number);
+		Vector3 ltarget = TrainingTextPos;
+		Vector2 lpos = exitText_->ChangeTransformation(ltarget, this->camera);
+		trainingText_->SetPosition(lpos);
+		trainingText_->SetSize(ExitTextSize);
+		trainingText_->SetAnchorPoint(TrainingTextAnc);
 	}
 }
 
@@ -66,7 +68,7 @@ void HomeScene::AddCommonUpdate()
 
 void HomeScene::AddObject3DUpdate()
 {
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime_.begin(); it != slime_.end(); it++){
 		if((*it)->GetIsContactTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 		}
@@ -77,18 +79,18 @@ void HomeScene::AddObject3DUpdate()
 void HomeScene::AddObject2DUpdate()
 {
 	{
-		Vector3 ltarget = exitTextPos;
-		Vector2 lpos = exitText->ChangeTransformation(ltarget, this->camera);
-		exitText->SetPosition(lpos);
-		exitText->SetPlayerPos(player_->GetPosition());
-		exitText->Update();
+		Vector3 ltarget = ExitTextPos;
+		Vector2 lpos = exitText_->ChangeTransformation(ltarget, this->camera);
+		exitText_->SetPosition(lpos);
+		exitText_->SetPlayerPos(player_->GetPosition());
+		exitText_->Update();
 	}
 	{
-		Vector3 ltarget = trainingTextPos;
-		Vector2 lpos = trainingText->ChangeTransformation(ltarget, this->camera);
-		trainingText->SetPosition(lpos);
-		trainingText->SetPlayerPos(player_->GetPosition());
-		trainingText->Update();
+		Vector3 ltarget = TrainingTextPos;
+		Vector2 lpos = trainingText_->ChangeTransformation(ltarget, this->camera);
+		trainingText_->SetPosition(lpos);
+		trainingText_->SetPlayerPos(player_->GetPosition());
+		trainingText_->Update();
 	}
 }
 
@@ -96,12 +98,12 @@ void HomeScene::AddBeatEndUpdate()
 {
 	int index = 0;
 	Vector3 lpos;
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime_.begin(); it != slime_.end(); it++){
 		(*it)->IsBeatEndOn();
 		if((*it)->GetIsPopsPmposibble_()){
 			if(areaManager_->GetCSVObjectPopActive(index)) {
 				lpos = areaManager_->GetCSVObjectPopPosition(index);
-				(*it)->Pop({lpos.x, -3.5f,lpos.z});
+				(*it)->Pop(lpos);
 			}
 			index++;
 		}
@@ -112,7 +114,7 @@ void HomeScene::AddObject3DDraw()
 {
 	areaManager_->CSVAreaDraw();
 
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime_.begin(); it != slime_.end(); it++){
 		(*it)->Draw();
 	}
 
@@ -120,15 +122,15 @@ void HomeScene::AddObject3DDraw()
 
 void HomeScene::AddParticleDraw()
 {
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime_.begin(); it != slime_.end(); it++){
 		(*it)->ParticleDraw();
 	}
 }
 
 void HomeScene::AddFrontUIDraw()
 {
-	exitText->Draw();
-	trainingText->Draw();
+	exitText_->Draw();
+	trainingText_->Draw();
 }
 
 void HomeScene::AddBackUIDraw()
@@ -137,10 +139,10 @@ void HomeScene::AddBackUIDraw()
 
 void HomeScene::AddObjectFinalize()
 {
-	exitText->Finalize();
-	trainingText->Finalize();
+	exitText_->Finalize();
+	trainingText_->Finalize();
 
-	for(auto it = slime.begin(); it != slime.end(); it++){
+	for(auto it = slime_.begin(); it != slime_.end(); it++){
 		(*it)->Finalize();
 	}
 }
@@ -152,9 +154,9 @@ void HomeScene::AddCommonFinalize()
 
 void HomeScene::ActorCreateInitialize()
 {
-	for(int i = 0; i < slimePopNumMax; i++){
+	for(int i = 0; i < SlimePopNumMax; i++){
 		unique_ptr<BlueSlime> newObj = make_unique<BlueSlime>();
 		newObj->Initialize("Slime");
-		slime.push_back(move(newObj));
+		slime_.push_back(move(newObj));
 	}
 }

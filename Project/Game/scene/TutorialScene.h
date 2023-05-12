@@ -8,6 +8,18 @@
 
 class TutorialScene : public BaseBattleScene
 {
+private:
+	template <class T> using queue = std::queue<T>;
+
+private:
+	//テキストの情報
+	const Vector2 TextSize = {384,64};
+	const Vector2 TextAnc = {0.5f,0.5f};
+
+	//生成数
+	int SlimePopNumMax_ = 2;
+	int CoinPopNumMax_ = 2;
+
 public:
 	~TutorialScene();
 
@@ -43,17 +55,13 @@ private:
 	void ActorCreateInitialize();
 
 private:
-	int slimePopNumMax = 10;
-	std::vector<std::unique_ptr<BaseEnemy>> slime;
+	list<unique_ptr<BaseEnemy>> enemy_;
 
-	int coinPopNumMax = 10;
-	std::vector<std::unique_ptr<BaseObjObject>> obj_;
+	queue<Vector3> coinDropPos_ = {};
+	list<unique_ptr<BaseObjObject>> obj_;
 
 	//スプライト
-	std::unique_ptr<TutorialSp> moveSp;
-	const Vector3 moveSpPos = {-25,-3,30};
-
-	//std::unique_ptr<TutorialSp> attackSp;
-	//const Vector3 attackSpPos = {7,-3,20};
+	unique_ptr<TutorialSp> moveSp_;
+	const Vector3 moveSpPos_ = {-25,-3,30};
 };
 

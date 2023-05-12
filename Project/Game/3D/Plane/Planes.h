@@ -46,7 +46,7 @@ public:
 	/// 色変化
 	/// </summary>
 	void PlaneColorChange(bool IsSwitch,  bool IsColorChange);
-	inline void PlaneColorReset()	{object->SetColor({1.f,1.f,1.f,1.f});}
+	inline void PlaneColorReset()	{object_->SetColor({1.f,1.f,1.f,1.f});}
 
 
 	inline void CaveLightOn()	{IsCaveLight = true;}

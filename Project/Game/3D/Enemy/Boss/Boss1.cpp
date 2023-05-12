@@ -12,12 +12,12 @@ using namespace std;
 void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
-	ScaleMax = {1.3f,1.3f,1.3f};
-	ScaleMin = {1.f,1.f,1.f};
+	scaleMax_ = {1.3f,1.3f,1.3f};
+	scaleMin_ = {1.f,1.f,1.f};
 
 	SetPosition(NotAlivePos);
 	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
-	world.UpdateMatrix();
+	world_.UpdateMatrix();
 
 	hp = FullHP;
 
@@ -29,17 +29,17 @@ void Boss1::Initialize(std::string filePath, bool IsSmoothing)
 
 	//コライダー
 	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
-	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
-	collider->Update();
+	baseCollider_->SetAttribute(COLLISION_ATTR_ENEMYS);
+	baseCollider_->Update();
 }
 
 void Boss1::Update(Camera *camera, Vector3 playerPos)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 	if(!IsNotApp) return;
 
 	//距離計測
-	Vector3 pos = playerPos - world.translation;
+	Vector3 pos = playerPos - world_.translation;
 	distance = pos.length();
 	if(-13 <= distance && distance <= 13)		{
 		IsInvisible = false;
@@ -58,8 +58,8 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 			IsDeadOnceParticle = true;
 			DeadParticlePos = GetPosition();
 			SetPosition(NotAlivePos);
-			world.UpdateMatrix();
-			collider->Update();
+			world_.UpdateMatrix();
+			baseCollider_->Update();
 			return;
 		}
 
@@ -75,13 +75,13 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 		else{
 			color = {1.0f, 0.0f, 0.0f, 1.0f};
 		}
-		object->SetColor(color);
+		object_->SetColor(color);
 
 		//無敵時間
 		if(damageResetCurFrame >= DamageResetFrame){
 			damageResetCurFrame = 0;
 			color = {1.0f,1.0f,1.0f,1.0f};
-			object->SetColor(color);
+			object_->SetColor(color);
 			IsDamage = false;
 		}
 	}
@@ -90,11 +90,11 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 	//生存
 	if(!IsDead){
 		//拍終了
-		if(IsBeatEnd){
+		if(isBeatEnd_){
 			//スケール
 			IsScaleEasing  = true;
 			//拍終了
-			IsBeatEnd = false;
+			isBeatEnd_ = false;
 			//カウント
 			patternCount++;
 
@@ -128,14 +128,14 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 		}
 		//スケール遷移
 		if(IsScaleEasing){
-			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+			if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
 				IsScaleEasing = false;
 			}
 		}
 
 		//移動
 		if(IsMoveEasing){
-			world.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+			world_.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 		
 			Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
 			if(subVector.length() <= 1.f){
@@ -160,14 +160,14 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 
 			if(moveEasingFrame >= 1.f){
 				IsMoveEasing = false;
-				world.translation = movePosition;
+				world_.translation = movePosition;
 				currentPos = {};
 				movePosition = {};
 				moveEasingFrame = 0;
 			}
 		}
 	}
-	BaseObjObject::Update(this->camera);
+	BaseObjObject::Update(this->camera_);
 }
 
 void Boss1::ParticleUpdate()
@@ -187,7 +187,7 @@ void Boss1::ParticleUpdate()
 		appDeadParFrame++;
 
 		DeadParticleApp();
-		DeadParticle->Update(this->camera);
+		DeadParticle->Update(this->camera_);
 	}
 
 	//召喚
@@ -201,7 +201,7 @@ void Boss1::ParticleUpdate()
 		appSummonParFrame++;
 
 		SummonParticleApp();
-		SummonParticle->Update(this->camera);
+		SummonParticle->Update(this->camera_);
 	}
 }
 
@@ -250,8 +250,8 @@ void Boss1::OnCollision(const CollisionInfo &info)
 
 void Boss1::Pop(Vector3 pos)
 {
-	world.translation = pos;
-	world.UpdateMatrix();
+	world_.translation = pos;
+	world_.UpdateMatrix();
 	homePos = pos;
 	IsNotApp = true;
 }
@@ -271,12 +271,12 @@ void Boss1::Movement()
 
 	//右
 	if(sita >= 135){
-		movePosition = world.translation + Vector3{2.f,0,0};
+		movePosition = world_.translation + Vector3{2.f,0,0};
 		SetRotation({0,XMConvertToRadians(90),0});
 	}
 	//左
 	else if(45 >= sita){
-		movePosition = world.translation + Vector3{-2.f,0,0};
+		movePosition = world_.translation + Vector3{-2.f,0,0};
 		SetRotation({0,XMConvertToRadians(-90),0});
 	}
 	//下
@@ -284,12 +284,12 @@ void Boss1::Movement()
 
 		//下
 		if(subVector.y > 0){
-			movePosition = world.translation + Vector3{0,0,-2.f};
+			movePosition = world_.translation + Vector3{0,0,-2.f};
 			SetRotation({0,XMConvertToRadians(180),0});
 		}
 		//上
 		else if(subVector.y < 0){
-			movePosition = world.translation + Vector3{0,0,2.f};
+			movePosition = world_.translation + Vector3{0,0,2.f};
 			SetRotation({0,0,0});
 		}
 	}

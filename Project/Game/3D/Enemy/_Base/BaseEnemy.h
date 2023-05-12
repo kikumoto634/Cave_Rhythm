@@ -21,6 +21,9 @@ private:
 	//拡縮最小サイズ
 	const Vector3 SizeMin = {0.7f, 0.7f, 0.7f};
 
+	//Y座標固定
+	const float PositionY = -3.5f;
+
 public:
 	/// <summary>
 	/// 初期化

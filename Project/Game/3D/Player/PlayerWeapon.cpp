@@ -11,40 +11,36 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmoothing);
 
-	object->SetColor({1.0f,1.0f,1.0f,1.0f});
-
-	//コライダーの追加
-	float radius = 0.6f;
 	//半径文だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(XMVECTOR{0,radius,0,0}, radius));
+	SetCollider(new SphereCollider(ColliderOffSet, ColliderRadius));
 	//当たり判定属性
-	collider->SetAttribute(COLLISION_ATTR_WEAPONS);
+	baseCollider_->SetAttribute(COLLISION_ATTR_WEAPONS);
 }
 
 void PlayerWeapon::Update(Camera *camera)
 {
-	if(!IsAppear) return;
-	this->camera = camera;
+	if(!isAppear_) return;
+	this->camera_ = camera;
 	
 	//生存フレーム
-	if(aliveCurrentTime >= AliveTime) {
-		aliveCurrentTime = 0;
+	if(aliveCurrentTime_ >= AliveTime) {
+		aliveCurrentTime_ = 0;
 
-		world.translation = Vector3(0,-10,0);
-		BaseObjObject::Update(this->camera);
+		world_.translation = HidePos;
+		BaseObjObject::Update(this->camera_);
 
-		IsAppear = false;
+		isAppear_ = false;
 		return;
 	}
-	world.scale = Easing_Linear_Point2({1,1,1}, {0,0,0},Time_OneWay(aliveCurrentTime, AliveTime));
+	world_.scale = Easing_Linear_Point2(StartSize, EndSize,Time_OneWay(aliveCurrentTime_, AliveTime));
 
 	//ベース更新
-	BaseObjObject::Update(this->camera);
+	BaseObjObject::Update(this->camera_);
 }
 
 void PlayerWeapon::Draw()
 {
-	if(!IsAppear) return;
+	if(!isAppear_) return;
 
 	BaseObjObject::Draw();
 }
@@ -52,22 +48,14 @@ void PlayerWeapon::Draw()
 
 void PlayerWeapon::OnCollision(const CollisionInfo &info)
 {
-	if(!IsAppear) return;
+	if(!isAppear_) return;
 
-	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
-		camera->ShakeStart();
-	}
-	else if(info.collider->GetAttribute() == COLLISION_ATTR_DUMMY){
-		camera->ShakeStart();
-	}
-	else if(info.collider->GetAttribute() == COLLISION_ATTR_LANDSHAPE){
-		camera->ShakeStart();
-	}
-}
+	unsigned short coll = info.collider->GetAttribute();
+	unsigned short enemy = COLLISION_ATTR_ENEMYS;
+	unsigned short dummy = COLLISION_ATTR_DUMMY;
+	unsigned short land = COLLISION_ATTR_LANDSHAPE;
 
-void PlayerWeapon::Attack()
-{
-	IsAppear = true;
-	world.translation = Vector3(0,1,2);
-	SetScale({1,1,1});
+	if(coll == enemy || coll == dummy || coll == land){
+		camera_->ShakeStart();
+	}
 }

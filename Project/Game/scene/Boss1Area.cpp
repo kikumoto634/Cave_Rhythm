@@ -43,7 +43,7 @@ void Boss1Area::SceneChange()
 			}
 
 			fadeColor_.w = 
-				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
 			fade_->SetColor(fadeColor_);
 			fade_->Update();
 		}
@@ -58,7 +58,7 @@ void Boss1Area::SceneChange()
 		}
 
 		fadeColor_.w = 
-			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
 		fade_->SetColor(fadeColor_);
 		fade_->Update();
 	}

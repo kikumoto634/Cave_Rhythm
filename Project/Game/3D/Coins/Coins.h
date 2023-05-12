@@ -13,6 +13,9 @@ private:
 	//コライダー
 	const float SphereColliderRadius = 0.6f;
 
+	//Y座標固定
+	const float PositionY = -5.f;
+
 public:
 	/// <summary>
 	/// 初期化

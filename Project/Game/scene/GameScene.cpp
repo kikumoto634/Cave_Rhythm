@@ -24,7 +24,7 @@ GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP,int flo
 
 void GameScene::NextSceneChange()
 {
-	if(floorValue_ >= 5){
+	if(floorValue_ >= DenpthMaxNum){
 		//sceneManager->SetNextScene(new Boss1Area(dxCommon,window,player->GetHP()));
 		sceneManager->SetNextScene(new HomeScene(dxCommon,window,player_->GetHp()));
 	}
@@ -93,9 +93,9 @@ void GameScene::AddObject2DInitialize()
 	{
 		unique_ptr<BaseSprites> newSp = make_unique<BaseSprites>();
 		newSp->Initialize(depthValue_tex.number);
-		newSp->SetPosition({1100, 700});
-		newSp->SetSize({100,25});
-		newSp->SetAnchorPoint({0.5f,0.5f});
+		newSp->SetPosition(TextPos);
+		newSp->SetSize(TextSize);
+		newSp->SetAnchorPoint(TextAnc);
 
 		sp_.push_back(move(newSp));
 	}
@@ -104,10 +104,10 @@ void GameScene::AddObject2DInitialize()
 		unique_ptr<BaseSprites> newSp = make_unique<BaseSprites>();
 		int value = floorValue_ + numberTextBase_;
 		newSp->Initialize(value);
-		newSp->SetPosition({1170, 700});
-		newSp->SetSize({15,25});
-		newSp->SetAnchorPoint({0.5f,0.5f});
-		floorValue_ += 1;
+		newSp->SetPosition(ValuePos);
+		newSp->SetSize(ValueSize);
+		newSp->SetAnchorPoint(ValueAnc);
+		floorValue_ += DepthIncreValue;
 
 		sp_.push_back(move(newSp));
 	}
@@ -125,7 +125,7 @@ void GameScene::AddObject3DUpdate()
 	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		if((*it)->GetIsContactTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
-			coinDropPos_.push({(*it)->GetPopPosition().x, -5.0f, (*it)->GetPopPosition().z});
+			coinDropPos_.push((*it)->GetPopPosition());
 		}
 		(*it)->SetMapInfo(areaManager_->GetMapInfo());
 		(*it)->Update(camera,player_->GetPosition());
@@ -158,7 +158,7 @@ void GameScene::AddBeatEndUpdate()
 	for(auto it = enemys_.begin(); it != enemys_.end(); ++it){
 		if((*it)->GetIsPopsPmposibble_()){
 			Vector3 lpos = areaManager_->GetObjectPopPosition();
-			(*it)->Pop({lpos.x, -3.5f,lpos.z});
+			(*it)->Pop(lpos);
 			(*it)->CaveLightOn();
 			break;
 		}

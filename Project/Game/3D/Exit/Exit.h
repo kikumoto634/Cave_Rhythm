@@ -58,7 +58,7 @@ public:
 	void NeedCoinSpriteUpdate() {sp_->NeedCoinSpriteUpdate();}
 
 	//モデル変更
-	void ModelChange()	{this->object->SetModel(stairsModel_), isOpenAudioOnce_ = true;}
+	void ModelChange()	{this->object_->SetModel(stairsModel_), isOpenAudioOnce_ = true;}
 
 	//Getter
 	inline bool GetIsPlayerContact() {return isPlayerContact_;}

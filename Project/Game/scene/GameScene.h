@@ -5,9 +5,6 @@
 #include "Skelton.h"
 #include "Coins.h"
 
-#include <queue>
-#include <list>
-
 class GameScene : public BaseBattleScene
 {
 public:
@@ -19,16 +16,28 @@ public:
 		int skelton;
 	};
 
-private:
-	template <class T> using list = std::list<T>;
-	template <class T> using queue = std::queue<T>;
-
 //定数
 private:
+	//エリアごとの数(スライム/スケルトン/必要コイン)
 	FloorInfo one	= {3,  11,4};
 	FloorInfo two	= {5,  8, 7};
 	FloorInfo three = {7,  5,10};
 	FloorInfo four	= {10, 2,13};
+
+	//一回で階層上がる値
+	const int DepthIncreValue = 1;
+
+	//ボスエリア||クリアに必要な階層
+	const int DenpthMaxNum = 5;
+
+	//階層テキストの情報
+	const Vector2 TextPos = {1100,700};
+	const Vector2 TextSize = {100,25};
+	const Vector2 TextAnc = {0.5f,0.5f};
+
+	const Vector2 ValuePos = {1170,700};
+	const Vector2 ValueSize= {15,25};
+	const Vector2 ValueAnc = {0.5f,0.5f};
 
 public:
 	~GameScene();

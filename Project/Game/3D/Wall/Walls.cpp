@@ -14,93 +14,93 @@ void Walls::Initialize(ObjModelManager* model, ObjModelManager* collider)
 
 	isAlive_ = true;
 
-	colliderModel = collider;
+	colliderModel_ = collider;
 	ColliderInitialize();
 }
 
 void Walls::Update(Camera *camera)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 
-	IsDig = false;
+	isDig_ = false;
 	if(!isAlive_) return;
-	Vector3 pos = PlayerPos - world.translation;
-	distance = pos.length();
+	Vector3 pos = playerPos_ - world_.translation;
+	distance_ = pos.length();
 
-	if(IsCaveLight){
-		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
-			object->OnLighting();
+	if(isLightCal_){
+		if(-DrawingRange_Half <= distance_ && distance_ <= DrawingRange_Half){
+			object_->OnLighting();
 		}
-		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
-			object->OffLighting();
+		else if(-DrawingRange_Half > distance_ || distance_ > DrawingRange_Half){
+			object_->OffLighting();
 		}
 	}
-	else if(!IsCaveLight){
-		object->OnLighting();
+	else if(!isLightCal_){
+		object_->OnLighting();
 	}
 
-	if(-DrawingRange <= distance && distance <= DrawingRange)		{
-		IsHide = true;
+	if(-DrawingRange <= distance_ && distance_ <= DrawingRange)		{
+		isHide_ = true;
 
-		if(!IsCollision){
+		if(!isCollision_){
 			ColliderSet();
-			IsCollision = true;
+			isCollision_ = true;
 		}
 	}
-	else if(-DrawingRange > distance || distance > DrawingRange){
-		IsHide = false;
+	else if(-DrawingRange > distance_ || distance_ > DrawingRange){
+		isHide_ = false;
 
-		if(IsCollision){
+		if(isCollision_){
 			ColliderRemove();
-			IsCollision = false;
+			isCollision_ = false;
 		}
 	}
 	
 
-	if(!IsHide) return;
-	BaseObjObject::Update(this->camera);
+	if(!isHide_) return;
+	BaseObjObject::Update(this->camera_);
 }
 
 void Walls::Draw()
 {
 	if(!isAlive_) return;
-	if(!IsHide) return;
+	if(!isHide_) return;
 	BaseObjObject::Draw();
 }
 
 void Walls::OnCollision(const CollisionInfo &info)
 {
 	if(!isAlive_) return;
-	if(!IsHide) return;
+	if(!isHide_) return;
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
 		isAlive_ = false;
-		IsDig = true;
-		digPosition = GetPosition();
-		world.translation = NotAlivePos;
-		world.UpdateMatrix();
-		collider->Update();
+		isDig_ = true;
+		digPosition_ = GetPosition();
+		world_.translation = NotAlivePos;
+		world_.UpdateMatrix();
+		collider_->Update();
 	}
 }
 
 void Walls::ColliderInitialize()
 {
 	//コライダー追加
-	collider = new MeshCollider;
+	collider_ = new MeshCollider;
 }
 
 void Walls::ColliderSet()
 {
-	SetCollider(collider);
+	SetCollider(collider_);
 	//属性セット
-	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-	collider->ConstructTriangles(colliderModel);
+	collider_->SetAttribute(COLLISION_ATTR_LANDSHAPE);
+	collider_->ConstructTriangles(colliderModel_);
 }
 
 void Walls::ColliderRemove()
 {
-	if(!collider) return;
+	if(!collider_) return;
 	//コリジョンマネージャーから登録を解除する
-	CollisionManager::GetInstance()->RemoveCollider(collider);
+	CollisionManager::GetInstance()->RemoveCollider(collider_);
 }
 

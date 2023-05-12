@@ -8,13 +8,13 @@ void Planes::Initialize(ObjModelManager *model)
 
 	isAlive_ = true;
 
-	object->OffLighting();
+	object_->OffLighting();
 	ColliderInitialize();
 }
 
 void Planes::Update(Camera *camera)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 	if(!isAlive_) return;
 	//距離
 	DistanceUpdate();
@@ -22,19 +22,19 @@ void Planes::Update(Camera *camera)
 	if(!IsHide) return;
 
 	//拍終わり時
-	if(IsBeatEnd){
+	if(isBeatEnd_){
 		
 		//プレイヤー接触時
 		if(IsPlayerContact){
 			//サイズ変更
-			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+			if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
 				IsPlayerContact = false;
-				IsBeatEnd = false;
+				isBeatEnd_ = false;
 			}
 		}
 	}
 
-	BaseObjObject::Update(this->camera);
+	BaseObjObject::Update(this->camera_);
 }
 
 void Planes::Draw()
@@ -56,19 +56,19 @@ void Planes::OnCollision(const CollisionInfo &info)
 
 void Planes::DistanceUpdate()
 {
-	Vector3 pos = PlayerPos - world.translation;
+	Vector3 pos = PlayerPos - world_.translation;
 	distance = pos.length();
 
 	if(IsCaveLight){
 		if(-DrawingRange_Half <= distance && distance <= DrawingRange_Half){
-			object->OnLighting();
+			object_->OnLighting();
 		}
 		else if(-DrawingRange_Half > distance || distance > DrawingRange_Half){
-			object->OffLighting();
+			object_->OffLighting();
 		}
 	}
 	else if(!IsCaveLight){
-		object->OnLighting();
+		object_->OnLighting();
 	}
 
 	if(-DrawingRange_Not <= distance && distance <= DrawingRange_Not)		{
@@ -104,7 +104,7 @@ void Planes::ColliderSet()
 	//属性セット
 	SetCollider(collider);
 	collider->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-	collider->ConstructTriangles(model);
+	collider->ConstructTriangles(model_);
 }
 
 void Planes::ColliderRemove()
@@ -119,18 +119,18 @@ void Planes::PlaneColorChange(bool IsSwitch,  bool IsColorChange)
 	if(!isAlive_) return;
 	if(IsSwitch){
 		if(IsColorChange){
-			object->SetColor(GreenColor);
+			object_->SetColor(GreenColor);
 		}
 		else if(!IsColorChange){
-			object->SetColor(IniColor);
+			object_->SetColor(IniColor);
 		}
 	}
 	else if(!IsSwitch){
 		if(IsColorChange){
-			object->SetColor(IniColor);
+			object_->SetColor(IniColor);
 		}
 		else if(!IsColorChange){
-			object->SetColor(RedColor);
+			object_->SetColor(RedColor);
 		}
 	}
 }

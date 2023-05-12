@@ -11,7 +11,7 @@ void BaseEnemy::Initialize(std::string filePath, bool IsSmoothing)
 	isAlive_ = false;
 
 	//拡縮最小値
-	ScaleMin = SizeMin;
+	scaleMin_ = SizeMin;
 
     //コライダー
     ColliderInitialize();
@@ -24,7 +24,7 @@ void BaseEnemy::Initialize(std::string filePath, bool IsSmoothing)
 
 void BaseEnemy::Update(Camera *camera, const Vector3 &playerPos)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 	playerPos_ = playerPos;
 
 	AddUpdate();
@@ -77,7 +77,7 @@ void BaseEnemy::OnCollision(const CollisionInfo &info)
 
 void BaseEnemy::Pop(Vector3 pos)
 {
-	particlePos_ = pos;
+	particlePos_ = {pos.x, PositionY, pos.z};
 	isPopsPosibble_ = false;
 }
 
@@ -85,20 +85,20 @@ void BaseEnemy::Pop(Vector3 pos)
 void BaseEnemy::ActionUpdate()
 {
 	//拡縮
-	if(isScaleChange_ && ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
+	if(isScaleChange_ && ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
 		isScaleChange_ = false;
 	}
 
     //コライダー
-    if(collider){
+    if(baseCollider_){
         sphereCollider_->Update();
     }
 }
 
 void BaseEnemy::BeatUpdate()
 {
-	if(!IsBeatEnd) return;
-    IsBeatEnd = false;
+	if(!isBeatEnd_) return;
+    isBeatEnd_ = false;
 
     //拡縮
     isScaleChange_ = true;
@@ -107,21 +107,21 @@ void BaseEnemy::BeatUpdate()
 void BaseEnemy::DistanceUpdate()
 {
 	//距離
-	Vector3 sub = playerPos_ - world.translation;
+	Vector3 sub = playerPos_ - world_.translation;
 	distance_ = sub.length();
 
 	//光計算
-	if(isLightCal){
+	if(isLightCal_){
 		//距離範囲内
 		if(-DrawingRange_Half <= distance_ && distance_ <= DrawingRange_Half){
-			object->OnLighting();
+			object_->OnLighting();
 		}
 		else if(-DrawingRange_Half > distance_ || distance_ > DrawingRange_Half){
-			object->OffLighting();
+			object_->OffLighting();
 		}
 	}
-	else if(!isLightCal){
-		object->OnLighting();
+	else if(!isLightCal_){
+		object_->OnLighting();
 	}
 
 	//範囲が非表示
@@ -136,22 +136,22 @@ void BaseEnemy::DistanceUpdate()
 void BaseEnemy::ColliderInitialize()
 {
 	SetCollider(new SphereCollider(XMVECTOR{0,0,0,0}, colliderRadius_));
-    collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+    baseCollider_->SetAttribute(COLLISION_ATTR_ENEMYS);
     //球コライダー取得
-	sphereCollider_ = dynamic_cast<SphereCollider*>(collider);
+	sphereCollider_ = dynamic_cast<SphereCollider*>(baseCollider_);
 	assert(sphereCollider_);
-    collider->Update();
+    baseCollider_->Update();
 }
 
 void BaseEnemy::ColliderSet()
 {
-	collider->SetAttribute(COLLISION_ATTR_ENEMYS);
+	baseCollider_->SetAttribute(COLLISION_ATTR_ENEMYS);
 }
 
 void BaseEnemy::ColliderRemove()
 {
 	//コリジョンマネージャーから登録を解除する
-	CollisionManager::GetInstance()->RemoveCollider(collider);
+	CollisionManager::GetInstance()->RemoveCollider(baseCollider_);
 }
 
 void BaseEnemy::ParticleInitialize()

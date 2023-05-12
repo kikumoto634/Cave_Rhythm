@@ -35,8 +35,8 @@ void DeadBlueSlimeState::UpdateTrigger()
 {
 	blueSlime_->particlePos_ = blueSlime_->GetPosition();
 	blueSlime_->SetPosition(DeadPos);
-	blueSlime_->world.UpdateMatrix();
-	blueSlime_->collider->Update();
+	blueSlime_->world_.UpdateMatrix();
+	blueSlime_->baseCollider_->Update();
 
 	blueSlime_->isContactTrigger_ = true;
 
@@ -46,7 +46,7 @@ void DeadBlueSlimeState::UpdateTrigger()
 void DeadBlueSlimeState::Update()
 {
 	//更新処理
-	blueSlime_->deadParticle_->Update(blueSlime_->camera);
+	blueSlime_->deadParticle_->Update(blueSlime_->camera_);
 	blueSlime_->particleAliveFrame_++;
 
 
@@ -55,7 +55,7 @@ void DeadBlueSlimeState::Update()
 	blueSlime_->isPopsPosibble_ = true;	
 	blueSlime_->particleAliveFrame_ = 0;
 
-	blueSlime_->world.UpdateMatrix();
+	blueSlime_->world_.UpdateMatrix();
 	stateManager_->SetNextState(new PopBlueSlimeState);
 }
 
@@ -102,17 +102,17 @@ void PopBlueSlimeState::Update()
 	if(blueSlime_->isPopsPosibble_) return;
 	//更新処理
 	App();
-	blueSlime_->popParticle_->Update(blueSlime_->camera);
+	blueSlime_->popParticle_->Update(blueSlime_->camera_);
 	blueSlime_->particleAliveFrame_++;
 
 
 	if(blueSlime_->particleAliveFrame_ < ParticleCreateFrameMax) return;
 
 	blueSlime_->isAlive_ = true;
-	blueSlime_->world.translation = blueSlime_->particlePos_;
+	blueSlime_->world_.translation = blueSlime_->particlePos_;
 	blueSlime_->particleAliveFrame_ = 0;
 
-	blueSlime_->world.UpdateMatrix();
+	blueSlime_->world_.UpdateMatrix();
 	stateManager_->SetNextState(new IdelBlueSlimeState);
 }
 

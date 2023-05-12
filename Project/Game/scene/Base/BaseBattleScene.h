@@ -20,6 +20,9 @@
 #include "AudioUtility.h"
 #include "TextureUtility.h"
 
+#include <list>
+#include <queue>
+
 class BaseBattleScene : public BaseScene
 {
 private:
@@ -32,15 +35,21 @@ private:
 	//初期武器オフセット位置
 	const Vector3 WeaponOffsetValueIni = {0.f,0.f,-2.f};
 
+	//出口のスプライト出現位置
+	const Vector3 ExitSpLocalPos = {-1,2,0};
+
 protected:
 	//シーン遷移
-	const float FadeSecond = 1.f;
+	const float GameStartFadeSecond = 1.f;
+	const float GameEndFadeSecond = 0.5f;
 
 	//ノーツ数
 	const int NotesNum= 7;
 
 protected:
 	template <class T> using unique_ptr = std::unique_ptr<T>;
+	template <class T> using list = std::list<T>;
+	template <class T> using queue = std::queue<T>;
 
 public:
 	

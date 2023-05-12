@@ -8,11 +8,48 @@
 
 #include "GameManager.h"
 
+#include <list>
+
 class TitleScene : public BaseScene
 {
 private:
+	template <class T> using unique_ptr = std::unique_ptr<T>;
+	template <class T> using list = std::list<T>;
+
+private:
 	//シーン遷移
 	const float FadeSecond = 1.f;
+
+	//各オブジェクト情報
+	const Vector3 PlayerPos   = {-5.5f,-2.f,0.f};
+	const Vector3 PlayerRot   = {0.f, DirectX::XMConvertToRadians(121),0.f};
+	const Vector3 PlayerScale = {5,5,5};
+
+	const Vector3 SlimePos   = {9.f,-3.f,-1.f};
+	const Vector3 SlimeRot   = {DirectX::XMConvertToRadians(5), DirectX::XMConvertToRadians(220),0.f};
+	const Vector3 SlimeScale = {3,3,3};
+
+	const Vector3 SkeltonPos   = {7.f,-3.f,2.f};
+	const Vector3 SkeltonRot   = {DirectX::XMConvertToRadians(5), DirectX::XMConvertToRadians(230),0.f};
+	const Vector3 SkeltonScale = {5,5,5};
+
+	const Vector3 WallBackPos  = {0,0,7};
+
+
+	const Vector2 TitlePos  = {640,150};
+	const Vector2 TitleSize = {800,160};
+	const Vector2 TitleAnc  = {0.5f,0.5f};
+
+	const Vector2 PushTextPos  = {550,600};
+	const Vector2 PushTextSize = {180,60};
+	const Vector2 PushtextAnc  = {0.5f,0.5f};
+
+	const Vector2 ButtonPos  = {700,600};
+	const Vector2 ButtonSize = {60,60};
+	const Vector2 ButtonAnc  = {0.5f,0.5f};
+
+	//ライト色
+	const Vector3 LightColor = {0.15f,0.15f,0.15f};
 
 public:
 	
@@ -50,39 +87,35 @@ private:
 	void DebugSceneChange();
 	void SceneChange();
 
+	//オブジェクト生成
+	void ObjectInitialize();
+	//スプライト生成
+	void SpriteInitialize();
+
 private:
-	//プレイヤーObj
-	std::unique_ptr<BaseObjObject> playerobj;
+	//オブジェクト
+	list<unique_ptr<BaseObjObject>> objs_;
 
-	//エネミー
-	std::unique_ptr<BaseObjObject> enemyobj;
-	std::unique_ptr<BaseObjObject> enemyobj2;
-
-	//タイトル
-	std::unique_ptr<BaseSprites> title;
-	std::unique_ptr<BaseSprites> push;
-	std::unique_ptr<BaseSprites> button;
-
-	//背景
-	std::unique_ptr<BaseObjObject> back;
+	//スプライト
+	list<unique_ptr<BaseSprites>> sp_;
 
 	//音声
-	Audio* audio = nullptr;
+	Audio* audio_ = nullptr;
 
 	//ライト
-	LightGroup* lightGroup = nullptr;
+	LightGroup* lightGroup_ = nullptr;
 
 	//シーン遷移
-	std::unique_ptr<BaseSprites> fade;
-	DirectX::XMFLOAT4 fadeColor = {0,0,0,1};
-	Vector2 fadeInSize = {};
-	float fadeCurrentFrame = 0;
+	unique_ptr<BaseSprites> fade_;
+	Vector4 fadeColor_ = {0,0,0,1};
+	Vector2 fadeInSize_ = {};
+	float fadeCurrentFrame_ = 0;
 	//Prev
-	bool IsPrevSceneChange = true;
+	bool isPrevSceneChange_ = true;
 	//Next
-	bool IsNextSceneChange = false;
+	bool isNextSceneChange_ = false;
 
-	bool IsDebugScene= false;
+	bool isDebugScene_= false;
 
 };
 

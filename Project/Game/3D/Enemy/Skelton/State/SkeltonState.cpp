@@ -23,12 +23,12 @@ void IdelSkeltonState::Update()
 {
 	//死亡時
 	if(!skelton_->isAlive_){
-		skelton_->popPosition_ = skelton_->world.translation;
+		skelton_->popPosition_ = skelton_->world_.translation;
 		stateManager_->SetNextState(new DeadSkeltonState);
 	}
 
 	//ビート時
-	if(!skelton_->IsBeatEnd) return;
+	if(!skelton_->isBeatEnd_) return;
 
 	//待機カウント終了時
 	if(waitCount_ > WaltCountMax){
@@ -48,11 +48,11 @@ void IdelSkeltonState::ParticleDraw()
 
 void TrackSkeltonState::UpdateTrigger()
 {
-	easigStartPos_ = skelton_->world.translation;
+	easigStartPos_ = skelton_->world_.translation;
 	//移動先計算
 	mapPath_ = skelton_->mapInfo_;
-	eX_ = +int(skelton_->world.translation.x/AreaBlockSize)+AreaBlocksHalfNum;
-	eY_ = -int(skelton_->world.translation.z/AreaBlockSize)+AreaBlocksHalfNum;
+	eX_ = +int(skelton_->world_.translation.x/AreaBlockSize)+AreaBlocksHalfNum;
+	eY_ = -int(skelton_->world_.translation.z/AreaBlockSize)+AreaBlocksHalfNum;
 	pX_ = +int(skelton_->playerPos_.x/AreaBlockSize)+AreaBlocksHalfNum;
 	pY_ = -int(skelton_->playerPos_.z/AreaBlockSize)+AreaBlocksHalfNum;
 	path_ = skelton_->PathSearch(skelton_->mapInfo_, eX_,eY_, pX_,pY_);
@@ -77,22 +77,22 @@ void TrackSkeltonState::UpdateTrigger()
 		if(next_x < 0 || next_y < 0 || 31 <= next_x || 31 <= next_y) return;
 
         if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == RootPathPlayerNumber){
-			easingEndPos_ = skelton_->world.translation + Vector3{dx[j]*AreaBlockSize, 0.f, -dy[j]*AreaBlockSize};
+			easingEndPos_ = skelton_->world_.translation + Vector3{dx[j]*AreaBlockSize, 0.f, -dy[j]*AreaBlockSize};
 			eX_ = next_x;
 			eY_ = next_y;
 
 			//回転
 			if(j == 0){//Left
-				skelton_->world.rotation.y = LeftAngle;
+				skelton_->world_.rotation.y = LeftAngle;
 			}
 			else if(j == 1){//Right
-				skelton_->world.rotation.y = RightAngle;
+				skelton_->world_.rotation.y = RightAngle;
 			}
 			else if(j == 2){//down
-				skelton_->world.rotation.y = DownAngle;
+				skelton_->world_.rotation.y = DownAngle;
 			}
 			else if(j == 3){//up
-				skelton_->world.rotation.y = UpAngle;
+				skelton_->world_.rotation.y = UpAngle;
 			}
 
 			if(mapPath_[next_y][next_x] == RootPathPlayerNumber) {
@@ -105,7 +105,7 @@ void TrackSkeltonState::UpdateTrigger()
 			break;
 		}
 
-		easingEndPos_ = skelton_->world.translation;
+		easingEndPos_ = skelton_->world_.translation;
     }
 }
 
@@ -118,11 +118,11 @@ void TrackSkeltonState::Update()
 	}
 
 	//移動処理
-	skelton_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
+	skelton_->world_.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//移動完了時
 	if(easingMoveTime_ >= EasingFrameMax){
-		skelton_->world.translation = easingEndPos_;
+		skelton_->world_.translation = easingEndPos_;
 		easigStartPos_ = {};
 		easingEndPos_ = {};
 		easingMoveTime_ = 0.f;
@@ -142,8 +142,8 @@ void DeadSkeltonState::UpdateTrigger()
 {
 	skelton_->particlePos_ = skelton_->GetPosition();
 	skelton_->SetPosition(DeadPos);
-	skelton_->world.UpdateMatrix();
-	skelton_->collider->Update();
+	skelton_->world_.UpdateMatrix();
+	skelton_->baseCollider_->Update();
 
 	skelton_->isContactTrigger_ = true;
 
@@ -153,7 +153,7 @@ void DeadSkeltonState::UpdateTrigger()
 void DeadSkeltonState::Update()
 {
 	//更新処理
-	skelton_->deadParticle_->Update(skelton_->camera);
+	skelton_->deadParticle_->Update(skelton_->camera_);
 	skelton_->particleAliveFrame_++;
 
 
@@ -162,7 +162,7 @@ void DeadSkeltonState::Update()
 	skelton_->isPopsPosibble_ = true;	
 	skelton_->particleAliveFrame_ = 0;
 
-	skelton_->world.UpdateMatrix();
+	skelton_->world_.UpdateMatrix();
 	stateManager_->SetNextState(new PopSkeltonState);
 }
 
@@ -210,17 +210,17 @@ void PopSkeltonState::Update()
 	if(skelton_->isPopsPosibble_) return;
 	//更新処理
 	App();
-	skelton_->popParticle_->Update(skelton_->camera);
+	skelton_->popParticle_->Update(skelton_->camera_);
 	skelton_->particleAliveFrame_++;
 
 
 	if(skelton_->particleAliveFrame_ < ParticleCreateFrameMax) return;
 
 	skelton_->isAlive_ = true;
-	skelton_->world.translation = skelton_->particlePos_;
+	skelton_->world_.translation = skelton_->particlePos_;
 	skelton_->particleAliveFrame_ = 0;
 
-	skelton_->world.UpdateMatrix();
+	skelton_->world_.UpdateMatrix();
 	stateManager_->SetNextState(new IdelSkeltonState);
 }
 

@@ -26,7 +26,7 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 	deadModel_->CreateModel("human3");
 
 	//拡縮最小値
-	ScaleMin = SizeMin;
+	scaleMin_ = SizeMin;
 
 	//状態
 	state_ = PlayerStateManager::GetInstance();
@@ -41,7 +41,7 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 
 void Player::Update(Camera *camera)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 
 	//アクション更新
 	ActionUpdate();
@@ -64,12 +64,12 @@ void Player::Update(Camera *camera)
 
 
 	//武器更新
-	weapon_->Pop(world.translation + weaponOffset_);
+	weapon_->Pop(world_.translation + weaponOffset_);
 	weapon_->SetRotation(GetRotation());
-	weapon_->Update(this->camera);
+	weapon_->Update(this->camera_);
 
 	//ベース更新
-	BaseObjObject::Update(this->camera);
+	BaseObjObject::Update(this->camera_);
 }
 
 void Player::Draw()
@@ -125,9 +125,9 @@ void Player::SphereColliderSet()
 	//コライダーの追加
 	SetCollider(new SphereCollider(SphereColliderOffSet, SphereColliderRadius));
 	//当たり判定属性
-	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+	baseCollider_->SetAttribute(COLLISION_ATTR_ALLIES);
 	//球コライダー取得
-	sphereCollider_ = dynamic_cast<SphereCollider*>(collider);
+	sphereCollider_ = dynamic_cast<SphereCollider*>(baseCollider_);
 	assert(sphereCollider_);
 }
 
@@ -160,20 +160,20 @@ void Player::InputMovement()
 
 	//固有処理
 	if(isLEFT){
-		addVector3_ = {-MoveLength,0.f,0.f};
-		world.rotation.y = XMConvertToRadians(-90);
+		addVector3_ = LeftMove.moveAdd;
+		world_.rotation.y = LeftMove.Rot;
 	}
 	else if(isRIGHT){
-		addVector3_ = {MoveLength,0.f,0.f};
-		world.rotation.y = XMConvertToRadians(90);
+		addVector3_ = RightMove.moveAdd;
+		world_.rotation.y = RightMove.Rot;
 	}
 	else if(isUP){
-		addVector3_ = {0.f,0.f,MoveLength};
-		world.rotation.y = XMConvertToRadians(0);
+		addVector3_ = UpMove.moveAdd;
+		world_.rotation.y = UpMove.Rot;
 	}
 	else if(isDOWN){
-		addVector3_ = {0.f,0.f,-MoveLength};
-		world.rotation.y = XMConvertToRadians(180);
+		addVector3_ = DownMove.moveAdd;
+		world_.rotation.y = DownMove.Rot;
 	}
 	rayCastDir_ = {float(isRIGHT - isLEFT),0, float(isUP - isDOWN)};
 
@@ -195,11 +195,11 @@ void Player::InputDecision()
 
 void Player::BeatUpdate()
 {
-	if(!IsBeatEnd) return;
+	if(!isBeatEnd_) return;
 
 	//スケール
-	if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
-		IsBeatEnd = false;
+	if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
+		isBeatEnd_ = false;
 	}
 }
 
@@ -216,7 +216,7 @@ void Player::ActionUpdate()
 		RaycastHit rayCastHit_;
 		//壁判定
 		if(CollisionManager::GetInstance()->Raycast(ray_, COLLISION_ATTR_LANDSHAPE, &rayCastHit_, sphereCollider_->GetRadius() * 2.0f + adsDistance)){
-			blockBreakPos_ = Vector2(world.translation.x, world.translation.z) + Vector2(rayCastDir_.x*MoveLength, rayCastDir_.z*MoveLength);
+			blockBreakPos_ = Vector2(world_.translation.x, world_.translation.z) + Vector2(rayCastDir_.x*MoveLength, rayCastDir_.z*MoveLength);
 			state_->SetNextState(new DigPlayerState);
 			return ;
 		}
@@ -247,17 +247,17 @@ void Player::DamageUpdate()
 			return ;
 		}
 
-		camera->ShakeStart(ShakeValue);
+		camera_->ShakeStart(ShakeValue);
 	}
 
 	//無敵時間内
 	Vector4 color = (damageFrame_ % damageFrameInterval == 1) ? color = Damage1Color : color = Damage2Color;
-	object->SetColor(color);
+	object_->SetColor(color);
 	damageFrame_ ++;
 
 	//無敵時間終了
 	if(damageFrame_ < DamageFrameMax) return;
 	damageFrame_ = 0;
-	object->SetColor(NormalColor);
+	object_->SetColor(NormalColor);
 	isDamage_ = false;
 }

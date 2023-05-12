@@ -7,10 +7,23 @@
 
 #include "TutorialSp.h"
 
-#include <list>
-
 class HomeScene : public BaseBattleScene
 {
+private:
+	//テキスト情報
+	const Vector3 TrainingTextPos = {-8,-3,-1};
+	const Vector2 TrainingTextSize = {200, 40};
+	const Vector2 TraningTextAnc = {0.5f,0.5f};
+
+	const Vector3 ExitTextPos = {-0,-3,-7};
+	const Vector2 ExitTextSize= {200, 40};
+	const Vector2 TrainingTextAnc = {0.5f,0.5f};
+
+	//必要コイン
+	const int NeedCoinNum = 0;
+
+	const int SlimePopNumMax = 1;
+
 public:
 	~HomeScene();
 
@@ -47,13 +60,10 @@ private:
 
 private:
 	//ダンジョンテキスト
-	std::unique_ptr<TutorialSp> exitText;
-	const Vector3 exitTextPos = {-0,-3,-7};
+	unique_ptr<TutorialSp> exitText_;
 
-	std::unique_ptr<TutorialSp> trainingText;
-	const Vector3 trainingTextPos = {-8,-3,-1};
+	unique_ptr<TutorialSp> trainingText_;
 
-	int slimePopNumMax = 1;
-	std::list<std::unique_ptr<BaseEnemy>> slime;
+	list<std::unique_ptr<BaseEnemy>> slime_;
 };
 

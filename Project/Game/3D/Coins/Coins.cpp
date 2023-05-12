@@ -17,12 +17,12 @@ void Coins::Initialize(std::string filePath, bool IsSmoothing)
 
 void Coins::Update(Camera *camera)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 
 	if(!isAlive_)return;
 
 	//ビート処理
-	if(IsBeatEnd){
+	if(isBeatEnd_){
 		
 		if(loatCount_ >= LostCountMax){
 			loatCount_ = 0;
@@ -30,12 +30,12 @@ void Coins::Update(Camera *camera)
 		}
 
 		loatCount_++;
-		IsBeatEnd = false;
+		isBeatEnd_ = false;
 	}
 
 	//コライダー更新
-	collider->Update();
-	BaseObjObject::Update(this->camera);
+	baseCollider_->Update();
+	BaseObjObject::Update(this->camera_);
 }
 
 void Coins::Draw()
@@ -61,7 +61,7 @@ void Coins::OnCollision(const CollisionInfo &info)
 
 void Coins::Pop(Vector3 pos)
 {
-	BaseObjObject::Pop(pos);
+	BaseObjObject::Pop({pos.x,PositionY,pos.z});
 	isAlive_ = true;
 	loatCount_ = 0;
 }
@@ -70,5 +70,5 @@ void Coins::Pop(Vector3 pos)
 void Coins::ColliderSet()
 {
 	SetCollider(new SphereCollider(DirectX::XMVECTOR{0,SphereColliderRadius,0,0}, SphereColliderRadius));
-	collider->SetAttribute(COLLISION_ATTR_ITEMS);
+	baseCollider_->SetAttribute(COLLISION_ATTR_ITEMS);
 }

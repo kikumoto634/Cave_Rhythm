@@ -41,15 +41,12 @@ public:
 	void OnCollision(const CollisionInfo& info) override;
 
 
-	inline void CaveLightOn()	{IsCaveLight = true;}
-	inline void CaveLightOff()	{IsCaveLight = false;}
-
 	//Getter
-	inline bool GetIsDIg()	{return IsDig;}
-	inline Vector3 GetDigPosition()	{return digPosition;}
+	inline bool GetIsDIg()	{return isDig_;}
+	inline Vector3 GetDigPosition()	{return digPosition_;}
 
 	//Setter
-	void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
+	void SetPlayerPos(Vector3 pos)	{playerPos_ = pos;}
 
 private:
 	void ColliderInitialize();
@@ -57,22 +54,19 @@ private:
 	void ColliderRemove();
 
 private:
-	Vector3 PlayerPos;
-	float distance = 0;
+	Vector3 playerPos_;
+	float distance_ = 0;
 
-	bool IsDig = false;
-	Vector3 digPosition = {};
+	bool isDig_ = false;
+	Vector3 digPosition_ = {};
 
 	//距離に応じた非表示
-	bool IsHide = false;
+	bool isHide_ = false;
 
 	//メッシュコライダー用モデル
-	ObjModelManager* colliderModel = nullptr;
-	bool IsCollision = false;
+	ObjModelManager* colliderModel_ = nullptr;
+	bool isCollision_ = false;
 
-	//ライティング
-	bool IsCaveLight = false;
-
-	MeshCollider* collider = nullptr;
+	MeshCollider* collider_ = nullptr;
 };
 

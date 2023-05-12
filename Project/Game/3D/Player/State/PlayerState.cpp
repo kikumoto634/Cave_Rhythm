@@ -24,21 +24,21 @@ void IdelPlayerState::Update()
 
 void MovePlayerState::UpdateTrigger()
 {
-	easigStartPos_ = player_->world.translation;
-	easingEndPos_ = player_->world.translation + player_->addVector3_;
+	easigStartPos_ = player_->world_.translation;
+	easingEndPos_ = player_->world_.translation + player_->addVector3_;
 }
 
 void MovePlayerState::Update()
 {
 	//移動処理
-	player_->world.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
+	player_->world_.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//モデル変更
-	player_->object->SetModel(player_->model);
+	player_->object_->SetModel(player_->model_);
 
 	//移動完了時
 	if(easingMoveTime_ >= 1.0f){
-		player_->world.translation = easingEndPos_;
+		player_->world_.translation = easingEndPos_;
 		easigStartPos_ = {};
 		easingEndPos_ = {};
 		easingMoveTime_ = 0.f;
@@ -56,7 +56,7 @@ void AttackPlayerState::Update()
 {
 	player_->weapon_->Attack();
 	//モデル変更
-	player_->object->SetModel(player_->attackModel_);
+	player_->object_->SetModel(player_->attackModel_);
 
 	stateManager_->SetNextState(new IdelPlayerState);
 }
@@ -70,7 +70,7 @@ void DigPlayerState::Update()
 {
 	player_->weapon_->Attack();
 	//モデル変更
-	player_->object->SetModel(player_->attackModel_);
+	player_->object_->SetModel(player_->attackModel_);
 
 	stateManager_->SetNextState(new IdelPlayerState);
 }
@@ -86,5 +86,5 @@ void DeadPlayerState::Update()
 	if(!player_->isAlive_) player_->damageFrame_ ++;
 	player_->isAlive_ = false;
 
-	player_->object->SetModel(player_->deadModel_);
+	player_->object_->SetModel(player_->deadModel_);
 }

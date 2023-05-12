@@ -8,7 +8,7 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 {
 	BaseObjObject::Initialize(filePath, IsSmmothing);
 
-	SetModel(model);
+	SetModel(model_);
 
 	//コライダー
 	ColliderSet();
@@ -24,16 +24,16 @@ void Exit::Initialize(std::string filePath, bool IsSmmothing)
 
 void Exit::Update(Camera *camera)
 {
-	this->camera = camera;
+	this->camera_ = camera;
 
 	//拍終わり時
-	if(IsBeatEnd){
+	if(isBeatEnd_){
 		
 		//プレイヤー接触時
 		if(isPlayerContact_){
 			//サイズ変更
-			if(ScaleChange(ScaleMax, ScaleMin, scaleEndTime)){
-				IsBeatEnd = false;
+			if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
+				isBeatEnd_ = false;
 				isPlayerContact_ = false;
 			}
 		}
@@ -41,7 +41,7 @@ void Exit::Update(Camera *camera)
 
 	sp_->Update(isOpen_, isPlayerContact_);
 
-	BaseObjObject::Update(this->camera);
+	BaseObjObject::Update(this->camera_);
 }
 
 
@@ -74,6 +74,6 @@ void Exit::ColliderSet()
 	SetCollider(meshCollider_);
 	//属性セット
 	meshCollider_->SetAttribute(COLLISION_ATTR_LANDSHAPE);
-	meshCollider_->ConstructTriangles(model);
+	meshCollider_->ConstructTriangles(model_);
 }
 

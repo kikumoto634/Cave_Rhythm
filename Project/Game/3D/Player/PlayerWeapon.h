@@ -4,6 +4,21 @@
 
 class PlayerWeapon : public BaseObjObject
 {
+private:
+	//コライダー
+	const float ColliderRadius = 0.6f;
+	const DirectX::XMVECTOR ColliderOffSet = {0,ColliderRadius,0,0};
+
+	//非表示時の位置
+	const Vector3 HidePos = {0.f,-10.f,0.f};
+
+	//生存フレーム
+	const float AliveTime = 0.2f;
+
+	//出現から消滅までのサイズ変化
+	const Vector3 StartSize = {1,1,1};
+	const Vector3 EndSize = {1,1,1};
+
 //メンバ関数
 public:
 
@@ -30,15 +45,14 @@ public:
 	/// <summary>
 	/// 攻撃
 	/// </summary>
-	void Attack();
+	inline void Attack()	{isAppear_ = true;}
 
 
 private:
 	//武器出現
-	bool IsAppear = false;
+	bool isAppear_ = false;
 
 	//生存時間(フレーム)
-	float aliveCurrentTime = 0;
-	const float AliveTime = 0.2f;
+	float aliveCurrentTime_ = 0;
 };
 

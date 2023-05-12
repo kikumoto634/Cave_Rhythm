@@ -255,7 +255,7 @@ void BaseBattleScene::Object3DUpdate()
 	//出口
 	exit_->Update(camera);
 	{
-		Vector3 target = player_->GetPosition() + Vector3{-1, 2, 0};
+		Vector3 target = player_->GetPosition() + ExitSpLocalPos;
 		Vector2 pos = exit_->GetCoinSp()->ChangeTransformation(target, this->camera);
 		exit_->SetCoinSpPosition(pos);
 	}
@@ -389,7 +389,7 @@ void BaseBattleScene::SceneChange()
 			}
 
 			fadeColor_.w = 
-				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, FadeSecond/2));
+				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, GameEndFadeSecond));
 			fade_->SetColor(fadeColor_);
 			fade_->Update();
 		}
@@ -404,7 +404,7 @@ void BaseBattleScene::SceneChange()
 		}
 
 		fadeColor_.w = 
-			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
 		fade_->SetColor(fadeColor_);
 		fade_->Update();
 	}

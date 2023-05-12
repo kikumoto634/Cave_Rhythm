@@ -10,6 +10,10 @@ class BaseCollider;
 
 class BaseObjObject
 {
+protected:
+	//終了時間(x(s/秒))
+	const float ScaleEndTime = 0.25f;
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -54,30 +58,30 @@ public:
 	virtual void Pop(Vector3 pos);
 
 
-	inline void IsBeatEndOn()	{IsBeatEnd = true;}
+	inline void IsBeatEndOn()	{isBeatEnd_ = true;}
 
 	//光計算
-	inline void CaveLightOn()	{isLightCal = true;}
-	inline void CaveLightOff()	{isLightCal = false;}
+	inline void CaveLightOn()	{isLightCal_ = true;}
+	inline void CaveLightOff()	{isLightCal_ = false;}
 
 	//Getter
 	bool GetIsContactTrigger();
 	inline bool GetIsAlive()	{return isAlive_;}
 	inline bool GetIsPopsPmposibble_() {return isPopsPosibble_;}
-	inline const Vector3& GetPosition()	{return world.translation;}
-	inline const Vector3& GetRotation()	{return world.rotation;}
-	inline const Vector3& GetScale()		{return world.scale;}
-	inline WorldTransform& GetmatWorld()	{return world;}
-	inline const ObjModelObject* GetObjObject()	{return object;}
+	inline const Vector3& GetPosition()	{return world_.translation;}
+	inline const Vector3& GetRotation()	{return world_.rotation;}
+	inline const Vector3& GetScale()		{return world_.scale;}
+	inline WorldTransform& GetmatWorld()	{return world_;}
+	inline const ObjModelObject* GetObjObject()	{return object_;}
 	inline const char* GetName()	{return name;}
 
 	//Setter
 	void SetPosition(const Vector3& position);
 	void SetCollider(BaseCollider* collider);
-	inline void SetRotation(const Vector3& rotation)	{world.rotation = rotation, world.UpdateMatrix();}
-	inline void SetScale(const Vector3& scale)			{world.scale = scale, world.UpdateMatrix();}
-	inline void SetObject(ObjModelObject* object)	{this->object = object;}
-	inline void SetModel(ObjModelManager* model)	{this->model = model;}
+	inline void SetRotation(const Vector3& rotation)	{world_.rotation = rotation, world_.UpdateMatrix();}
+	inline void SetScale(const Vector3& scale)			{world_.scale = scale, world_.UpdateMatrix();}
+	inline void SetObject(ObjModelObject* object)	{this->object_ = object;}
+	inline void SetModel(ObjModelManager* model)	{this->model_ = model;}
 
 protected:
 	/// <summary>
@@ -87,7 +91,7 @@ protected:
 	/// <param name="sizeMin">最小サイズ</param>
 	/// <param name="EndTime">終了時間 (x:秒)</param>
 	/// <returns></returns>
-	bool ScaleChange(Vector3& sizeMax, Vector3& sizeMin, float& EndTime);
+	bool ScaleChange(Vector3& sizeMax, Vector3& sizeMin, const float& EndTime);
 
 	//距離計算
 	virtual void DistanceUpdate();
@@ -96,16 +100,16 @@ protected:
 	//クラス名(デバック用)
 	const char* name = nullptr;
 
-	bool IsLendModel = false;
-	ObjModelManager* model = nullptr;
-	ObjModelObject* object = nullptr;
-	WorldTransform world = {};
+	bool isLendModel_ = false;
+	ObjModelManager* model_ = nullptr;
+	ObjModelObject* object_ = nullptr;
+	WorldTransform world_ = {};
 
 	//コライダー
-	BaseCollider* collider = nullptr;
+	BaseCollider* baseCollider_ = nullptr;
 
 	//カメラ(借り物)
-	Camera* camera = nullptr;
+	Camera* camera_ = nullptr;
 
 	//生存フラグ
 	bool isAlive_ = false;
@@ -117,20 +121,18 @@ protected:
 	bool isContactTrigger_ = false;
 
 	//光計算
-	bool isLightCal = false;
+	bool isLightCal_ = false;
 
 	//リズム更新用
 	//拍終了フラグ
-	bool IsBeatEnd = false;
+	bool isBeatEnd_ = false;
 
 	//サイズ変更用
+	Vector3 scaleMax_ = {1, 1, 1};
+	Vector3 scaleMin_ = {0.7f, 1, 0.7f};
 	//スケール
-	Vector3 ScaleMax = {1, 1, 1};
-	Vector3 ScaleMin = {0.7f, 1, 0.7f};
-	Vector3 scale = {ScaleMax};
+	Vector3 scale_ = {scaleMax_};
 	//現在時間
-	float scaleCurrentTime = 0.f;
-	//終了時間(x(s/秒))
-	float scaleEndTime = 0.25f;
+	float scaleCurrentTime_ = 0.f;
 };
 

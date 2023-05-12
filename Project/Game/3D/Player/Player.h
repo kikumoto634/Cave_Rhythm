@@ -19,6 +19,12 @@ friend class AttackPlayerState;
 friend class DigPlayerState;
 friend class DeadPlayerState;
 
+private:
+	struct MoveInfo{
+		Vector3 moveAdd;
+		float Rot;
+	};
+
 //定数
 private:
 	//拡縮の最小サイズ
@@ -28,6 +34,12 @@ private:
 	const float MoveLength = AreaManager::Block_Size;
 	//レイキャストの長さ
 	const float adsDistance = 1.0f;
+	
+	//移動
+	MoveInfo LeftMove  = {{-MoveLength, 0.f ,0.f},		   DirectX::XMConvertToRadians(-90)};
+	MoveInfo RightMove = {{+MoveLength, 0.f ,0.f},		   DirectX::XMConvertToRadians(90)};
+	MoveInfo UpMove    = {{0.f        , 0.f ,+MoveLength}, DirectX::XMConvertToRadians(0)};
+	MoveInfo DownMove  = {{0.f        , 0.f ,-MoveLength}, DirectX::XMConvertToRadians(180)};
 
 	//ダメージ
 	//カメラのシェイク強さ

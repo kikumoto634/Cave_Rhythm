@@ -14,11 +14,11 @@ BaseObjObject::~BaseObjObject()
 
 void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
 {
-	model = new ObjModelManager();
-	model->CreateModel(filePath, IsSmmothing);
-	object = ObjModelObject::Create(model);
-	world.Initialize();
-	world.UpdateMatrix();
+	model_ = new ObjModelManager();
+	model_->CreateModel(filePath, IsSmmothing);
+	object_ = ObjModelObject::Create(model_);
+	world_.Initialize();
+	world_.UpdateMatrix();
 
 	//クラス名の文字列を取得
 	name = typeid(*this).name();
@@ -26,11 +26,11 @@ void BaseObjObject::Initialize(std::string filePath, bool IsSmmothing)
 
 void BaseObjObject::Initialize(ObjModelManager *model)
 {
-	IsLendModel = true;
-	this->model = model;
-	object = ObjModelObject::Create(model);
-	world.Initialize();
-	world.UpdateMatrix();
+	isLendModel_ = true;
+	this->model_ = model;
+	object_ = ObjModelObject::Create(model);
+	world_.Initialize();
+	world_.UpdateMatrix();
 
 	//クラス名の文字列を取得
 	name = typeid(*this).name();
@@ -39,38 +39,38 @@ void BaseObjObject::Initialize(ObjModelManager *model)
 
 void BaseObjObject::Update(Camera *camera)
 {
-	this->camera = camera;
-	world.UpdateMatrix();
-	object->Update(world, this->camera);
+	this->camera_ = camera;
+	world_.UpdateMatrix();
+	object_->Update(world_, this->camera_);
 
 	//当たり判定更新
-	if(collider){
-		collider->Update();
+	if(baseCollider_){
+		baseCollider_->Update();
 	}
 }
 
 void BaseObjObject::Draw()
 {
-	object->Draw();
+	object_->Draw();
 }
 
 void BaseObjObject::Finalize()
 {
-	if(collider){
+	if(baseCollider_){
 		//コリジョンマネージャーから登録を解除する
-		CollisionManager::GetInstance()->RemoveCollider(collider);
-		delete collider;
+		CollisionManager::GetInstance()->RemoveCollider(baseCollider_);
+		delete baseCollider_;
 	}
 
-	if(!IsLendModel){
-		delete model;
-		model = nullptr;
+	if(!isLendModel_){
+		delete model_;
+		model_ = nullptr;
 	}
 
-	delete object;
-	object = nullptr;
+	delete object_;
+	object_ = nullptr;
 
-	world = {};
+	world_ = {};
 }
 
 void BaseObjObject::Pop(Vector3 pos)
@@ -90,44 +90,44 @@ bool BaseObjObject::GetIsContactTrigger()
 
 void BaseObjObject::SetPosition(const Vector3 &position)
 {
-	world.translation = position;
-	world.UpdateMatrix();
+	world_.translation = position;
+	world_.UpdateMatrix();
 }
 
 void BaseObjObject::SetCollider(BaseCollider *collider)
 {
 	collider->SetObjObject(this);
-	this->collider = collider;
+	this->baseCollider_ = collider;
 	//コリジョンマネージャーに登録
 	CollisionManager::GetInstance()->AddCollider(collider);
 	//行列の更新
-	world.UpdateMatrix();
+	world_.UpdateMatrix();
 	//コライダーを更新しておく
 	collider->Update();
 }
 
-bool BaseObjObject::ScaleChange(Vector3 &sizeMax, Vector3 &sizeMin, float &EndTime)
+bool BaseObjObject::ScaleChange(Vector3 &sizeMax, Vector3 &sizeMin, const float &EndTime)
 {
-	float ease = -(cosf(3.14159265f * scaleCurrentTime) - 1.f)/2.f;
-	scale = Easing_Linear_Point2(sizeMin, sizeMax, ease);
-	SetScale(scale);
+	float ease = -(cosf(3.14159265f * scaleCurrentTime_) - 1.f)/2.f;
+	scale_ = Easing_Linear_Point2(sizeMin, sizeMax, ease);
+	SetScale(scale_);
 
-	if(scaleCurrentTime >= 1.0f){
-		scale = ScaleMax;
-		scaleCurrentTime = 0.f;
+	if(scaleCurrentTime_ >= 1.0f){
+		scale_ = scaleMax_;
+		scaleCurrentTime_ = 0.f;
 		return true;
 	}
 
-	scaleCurrentTime += 1.f/(60*EndTime);
+	scaleCurrentTime_ += 1.f/(60*EndTime);
 	return false;
 }
 
 void BaseObjObject::DistanceUpdate()
 {
-	if(isLightCal){
-		object->OnLighting();
+	if(isLightCal_){
+		object_->OnLighting();
 		return;
 	}
 	
-	object->OffLighting();
+	object_->OffLighting();
 }

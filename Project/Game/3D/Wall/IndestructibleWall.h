@@ -37,16 +37,12 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-
-	inline void CaveLightOn()	{IsCaveLight = true;}
-	inline void CaveLightOff()	{IsCaveLight = false;}
-
 	//Getter
 	inline bool GetIsAlive()	{return isAlive_;}
-	inline bool GetIsReflect()	{return IsReflect;}
+	inline bool GetIsReflect()	{return isReflect_;}
 
 	//Setter
-	inline void SetPlayerPos(Vector3 pos)	{PlayerPos = pos;}
+	inline void SetPlayerPos(Vector3 pos)	{PlayerPos_ = pos;}
 
 	void ColliderRemove();
 
@@ -55,22 +51,19 @@ private:
 	void ColliderSet();
 
 private:
-	Vector3 PlayerPos;
-	float distance = 0;
+	Vector3 PlayerPos_;
+	float distance_= 0;
 
 	//距離に応じた非表示
-	bool IsHide = false;
+	bool isHide_ = false;
 
 	//メッシュコライダー用モデル
-	ObjModelManager* colliderModel = nullptr;
-	bool IsCollision = false;
+	ObjModelManager* colliderModel_ = nullptr;
+	bool isCollision_ = false;
 
 	//反射音
-	bool IsReflect = false;
+	bool isReflect_ = false;
 
-	//ライティング
-	bool IsCaveLight = false;
-
-	MeshCollider* collider = nullptr;
+	MeshCollider* collider_ = nullptr;
 };
 
