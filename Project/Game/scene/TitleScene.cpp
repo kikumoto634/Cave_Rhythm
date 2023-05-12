@@ -90,12 +90,12 @@ void TitleScene::Update()
 		ImGui::Begin("SCENE");
 
 		ImGui::Text("Now:Title   Next:Home");
-		if(!IsPrevSceneChange && ImGui::Button("NextScene")){
-			IsNextSceneChange = true;
+		if(!isPrevSceneChange_ && ImGui::Button("NextScene")){
+			isNextSceneChange_ = true;
 		}
 		ImGui::Text("Now:Title   Next:Debug");
-		if(!IsPrevSceneChange && ImGui::Button("DebugScene")){
-			IsDebugScene = true;
+		if(!isPrevSceneChange_ && ImGui::Button("DebugScene")){
+			isDebugScene_ = true;
 		}
 
 		ImGui::End();
