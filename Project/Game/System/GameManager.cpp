@@ -13,110 +13,110 @@ void GameManager::Initialize()
 void GameManager::Finalize()
 {
 	for(int i = 0; i < HpSpSize; i++){
-		hpSp[i]->Finalize();
+		hpSp_[i]->Finalize();
 	}
 
-	combo->Finalize();
+	combo_->Finalize();
 
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_coin[i]->Finalize();
+		numberSp_coin_[i]->Finalize();
 	}
-	coinSp->Finalize();
+	coinSp_->Finalize();
 
-	delete lightGroup;
-	lightGroup = nullptr;
+	delete lightGroup_;
+	lightGroup_ = nullptr;
 
-	audio->Finalize();
+	audio_->Finalize();
 }
 
 void GameManager::ComboIncrement()
 {
-	combo->Increment();
+	combo_->Increment();
 }
 
 void GameManager::ComboReset()
 {
 	AudioPlay(miss_audio.number,miss_audio.volume);
-	combo->Reset();
+	combo_->Reset();
 }
 
 void GameManager::CoinIncrement()
 {
-	coinNum += 1;
+	coinNum_ += 1;
 
 	//スプライト更新
-	int hundred = coinNum/100;
-	int ten = (coinNum - (hundred*100))/10;
-	int one = (coinNum - (hundred*100) - (ten*10))/1;
-	numberSp_coin[0]->SetTexNumber(hundred + TexNumberBegin);
-	numberSp_coin[1]->SetTexNumber(ten + TexNumberBegin);
-	numberSp_coin[2]->SetTexNumber(one + TexNumberBegin);
+	int hundred = coinNum_/100;
+	int ten = (coinNum_ - (hundred*100))/10;
+	int one = (coinNum_ - (hundred*100) - (ten*10))/1;
+	numberSp_coin_[0]->SetTexNumber(hundred + TexNumberBegin);
+	numberSp_coin_[1]->SetTexNumber(ten + TexNumberBegin);
+	numberSp_coin_[2]->SetTexNumber(one + TexNumberBegin);
 }
 
 void GameManager::InitializeSetHp(int _hp)
 {
-	hp = _hp;
+	hp_ = _hp;
 
 	//体力
-	DamageHpSpriteIndex = hp-1;
+	damageHpSpriteIndex_ = hp_-1;
 	for(int i = 0; i < HpSpSize; i++){
 		std::unique_ptr<BaseSprites> Sp = make_unique<BaseSprites>();
-		if(i <= DamageHpSpriteIndex){
+		if(i <= damageHpSpriteIndex_){
 			Sp->Initialize(heart_tex.number);
 			Sp->SetSize({75,75});
 		}
-		else if(i > DamageHpSpriteIndex){
+		else if(i > damageHpSpriteIndex_){
 			Sp->Initialize(heartEmpty_tex.number);
 			Sp->SetSize({50,50});
 		}
 		Sp->SetPosition({float(900 + (i*80)), 55});
 		Sp->SetAnchorPoint({0.5f,0.5f});
-		hpSp.push_back(move(Sp));
+		hpSp_.push_back(move(Sp));
 	}
 }
 
 void GameManager::HpDecrement()
 {
-	if(DamageHpSpriteIndex < 0)	return;
+	if(damageHpSpriteIndex_ < 0)	return;
 
-	hpSp[DamageHpSpriteIndex]->SetTexNumber(15);
-	hpSp[DamageHpSpriteIndex]->SetSize({50,50});
-	DamageHpSpriteIndex--;
+	hpSp_[damageHpSpriteIndex_]->SetTexNumber(15);
+	hpSp_[damageHpSpriteIndex_]->SetSize({50,50});
+	damageHpSpriteIndex_--;
 }
 
 void GameManager::AudioPlay(int number, float volume, bool loop)
 {
-	audio->PlayWave(number, volume, loop);
+	audio_->PlayWave(number, volume, loop);
 }
 
 void GameManager::LightUpdate(bool IsPlayerShadowDead)
 {
-	if(!IsPlayerShadowAlive && !IsPlayerShadowDead){	
+	if(!isPlayerShadowAlive_ && !IsPlayerShadowDead){	
 		//丸影
-		lightGroup->SetCircleShadowDir(0, {circleShadowDir.x, circleShadowDir.y, circleShadowDir.z, 0});
-		lightGroup->SetCircleShadowAtten(0, circleShadowAtten);
-		lightGroup->SetCircleShadowFactorAngle(0, circleShadowFactorAngle);
+		lightGroup_->SetCircleShadowDir(0, {CircleShadowDir.x, CircleShadowDir.y, CircleShadowDir.z, 0});
+		lightGroup_->SetCircleShadowAtten(0, CircleShadowAtten);
+		lightGroup_->SetCircleShadowFactorAngle(0, CircleShadowFactorAngle);
 	}
 
 	if(IsPlayerShadowDead){
-		IsPlayerShadowAlive = true;
-		lightGroup->SetCircleShadowActive(0,false);
+		isPlayerShadowAlive_ = true;
+		lightGroup_->SetCircleShadowActive(0,false);
 	}
-	lightGroup->Update();
+	lightGroup_->Update();
 }
 
 void GameManager::PlayerCircleShadowSet(Vector3 pos)
 {
 	//プレイヤー、丸影座標
-	lightGroup->SetCircleShadowCasterPos(0, pos);
+	lightGroup_->SetCircleShadowCasterPos(0, pos);
 }
 
 int GameManager::EnemyPopTurnCount()
 {
-	currentEnemyPopBeatTurn++;
-	if(currentEnemyPopBeatTurn >= EnemyPopBeatTurn){
-		currentEnemyPopBeatTurn = 0;
+	currentEnemyPopBeatTurn_++;
+	if(currentEnemyPopBeatTurn_ >= EnemyPopBeatTurn){
+		currentEnemyPopBeatTurn_ = 0;
 		return EnemyPopCreateNum;
 	}
 
@@ -207,78 +207,78 @@ Vector2 GameManager::EnemyRandomDir(Vector2 pos)
 
 void GameManager::SpriteUpdate()
 {
-	combo->Update();
+	combo_->Update();
 
-	coinSp->Update();
+	coinSp_->Update();
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_coin[i]->Update();
+		numberSp_coin_[i]->Update();
 	}
 
-	if(IsHpScaleChange){
-		if(DamageHpSpriteIndex < 0) return;
-		if(hpSp[DamageHpSpriteIndex]->ScaleChange({75,75}, {50,50})){
-			IsHpScaleChange = false;
+	if(isHpScaleChange_){
+		if(damageHpSpriteIndex_ < 0) return;
+		if(hpSp_[damageHpSpriteIndex_]->ScaleChange({75,75}, {50,50})){
+			isHpScaleChange_ = false;
 		}
 	}
 	for(int i = 0; i < HpSpSize; i++){
-		hpSp[i]->Update();
+		hpSp_[i]->Update();
 	}
 }
 
 void GameManager::SpriteDraw()
 {
-	combo->Draw();
+	combo_->Draw();
 
-	coinSp->Draw();
+	coinSp_->Draw();
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_coin[i]->Draw();
+		numberSp_coin_[i]->Draw();
 	}
 
 	for(int i = 0; i < HpSpSize; i++){
-		hpSp[i]->Draw();
+		hpSp_[i]->Draw();
 	}
 }
 
 void GameManager::AudioInitialize()
 {
-	audio = Audio::GetInstance();
+	audio_ = Audio::GetInstance();
 }
 
 void GameManager::LightInitialize()
 {
 	//ライト
-	lightGroup = LightGroup::Create();
+	lightGroup_ = LightGroup::Create();
 	//色設定
-	lightGroup->SetAmbientColor({0.15f, 0.15f, 0.15f});
+	lightGroup_->SetAmbientColor({0.15f, 0.15f, 0.15f});
 	//3Dオブジェクト(.obj)にセット
-	ObjModelObject::SetLight(lightGroup);
+	ObjModelObject::SetLight(lightGroup_);
 
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
+	lightGroup_->SetDirLightActive(0, true);
+	lightGroup_->SetDirLightActive(1, true);
+	lightGroup_->SetDirLightActive(2, true);
 
 	//丸影
-	lightGroup->SetCircleShadowActive(0, true);
+	lightGroup_->SetCircleShadowActive(0, true);
 }
 
 void GameManager::SpriteInitialize()
 {
-	combo = make_unique<Combo>();
-	combo->Initialize();
+	combo_ = make_unique<Combo>();
+	combo_->Initialize();
 
 	//コインテキスト
-	coinSp = make_unique<BaseSprites>();
-	coinSp->Initialize(coin_tex.number);
-	coinSp->SetPosition({50,175});
-	coinSp->SetSize({75,75});
+	coinSp_ = make_unique<BaseSprites>();
+	coinSp_->Initialize(coin_tex.number);
+	coinSp_->SetPosition({50,175});
+	coinSp_->SetSize({75,75});
 
 	//数字
 	for(int i = 0;i < NumberSpSize; i++){
-		numberSp_coin[i] = make_unique<BaseSprites>();
-		numberSp_coin[i]->Initialize(TexNumberBegin + 0);
-		numberSp_coin[i]->SetPosition({float(125+(i*50)),175});
-		numberSp_coin[i]->SetSize({50,75});
+		numberSp_coin_[i] = make_unique<BaseSprites>();
+		numberSp_coin_[i]->Initialize(TexNumberBegin + 0);
+		numberSp_coin_[i]->SetPosition({float(125+(i*50)),175});
+		numberSp_coin_[i]->SetSize({50,75});
 	}
 }

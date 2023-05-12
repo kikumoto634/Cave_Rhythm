@@ -14,6 +14,11 @@
 class GameManager
 {
 private:
+	template <class T> using unique_ptr = std::unique_ptr<T>;
+	template <class T> using vector = std::vector<T>;
+
+private:
+	//地面の色変化
 	const int PlaneColorChangeConboNum = 10;
 
 	//XビートでPOPターン
@@ -26,6 +31,14 @@ private:
 	const int NumberSpSize = 3;
 	const int TexNumberBegin = number0_tex.number;
 
+	//影
+	const Vector3 CircleShadowDir = { 0,-1,0 };
+	const Vector3 CircleShadowAtten = { 0.5f,0.6f,0.0f };
+	const Vector2 CircleShadowFactorAngle = { 0.0f, 0.5f };
+
+	//体力
+	const int HpSpSize = 5;
+
 public:
 	//初期化
 	void Initialize();
@@ -37,19 +50,19 @@ public:
 	//コンボリセット
 	void ComboReset();
 	//コンボ数取得
-	inline int GetComboNum()	{return combo->GetComboNum();}
+	inline int GetComboNum()	{return combo_->GetComboNum();}
 	//地面色変化コンボ数
 	inline int GetPlaneColorChangeCombo()	{return PlaneColorChangeConboNum;}
 
 	//コイン加算
 	void CoinIncrement();
 	//コイン数取得
-	inline int GetCoinNum()	{return coinNum;}
+	inline int GetCoinNum()	{return coinNum_;}
 
 	//体力初期設定
 	void InitializeSetHp(int _hp);
 	//体力スプライトリズムフラグ
-	void IsBeatEndOn()	{IsHpScaleChange = true;}
+	void IsBeatEndOn()	{isHpScaleChange_ = true;}
 	//体力減少
 	void HpDecrement();
 
@@ -84,39 +97,32 @@ private:
 
 private:
 	
-	//コイン
-	int coinNum = 0;
-
-	//体力
-	int hp = 0;
-
 	//オーディオ
-	Audio* audio = nullptr;
+	Audio* audio_ = nullptr;
 
 	//ライト
-	LightGroup* lightGroup = nullptr;
+	LightGroup* lightGroup_ = nullptr;
 	//丸影
 	//プレイヤー
-	bool IsPlayerShadowAlive = false;
-	Vector3 circleShadowDir = { 0,-1,0 };
-	Vector3 circleShadowAtten = { 0.5f,0.6f,0.0f };
-	Vector2 circleShadowFactorAngle = { 0.0f, 0.5f };
+	bool isPlayerShadowAlive_ = false;
+
+	//コイン
+	unique_ptr<BaseSprites> coinSp_;
+	unique_ptr<BaseSprites> numberSp_coin_[3];
+	int coinNum_ = 0;
+
+	//体力
+	vector<unique_ptr<BaseSprites>> hpSp_;
+	int hp_ = 0;
+	int damageHpSpriteIndex_ = 0;
+	bool isHpScaleChange_ = false;
+
+	//コンボ
+	unique_ptr<Combo> combo_;
 
 	//敵のランダム生成
 	//XビートでPOPターン
-	int currentEnemyPopBeatTurn = 0;
+	int currentEnemyPopBeatTurn_ = 0;
 
-	//コンボ
-	std::unique_ptr<Combo> combo;
-
-	//獲得コイン
-	std::unique_ptr<BaseSprites> coinSp;
-	std::unique_ptr<BaseSprites> numberSp_coin[3];
-
-	//体力
-	const int HpSpSize = 5;
-	int DamageHpSpriteIndex = 0;
-	std::vector<std::unique_ptr<BaseSprites>> hpSp;
-	bool IsHpScaleChange = false;
 };
 
