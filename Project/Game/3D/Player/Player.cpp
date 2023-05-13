@@ -60,6 +60,11 @@ void Player::Update(Camera *camera)
 		isDamage_ = true;
 		//hp_ = 0;
 	}
+
+	if(input_->Trigger(DIK_Z)){
+		state_->SetNextState(new AttackPlayerState);
+	}
+
 #endif // _DEBUG
 
 
@@ -151,10 +156,10 @@ void Player::InputUpdate()
 void Player::InputMovement()
 {
 	//入力
-	bool isLEFT = input_->Trigger(DIK_LEFT);
-	bool isRIGHT = input_->Trigger(DIK_RIGHT);
-	bool isUP = input_->Trigger(DIK_UP);
-	bool isDOWN = input_->Trigger(DIK_DOWN);
+	bool isLEFT  = (input_->Trigger(DIK_LEFT)  || input_->Trigger(DIK_A));
+	bool isRIGHT = (input_->Trigger(DIK_RIGHT) || input_->Trigger(DIK_D));
+	bool isUP    = (input_->Trigger(DIK_UP)    || input_->Trigger(DIK_W));
+	bool isDOWN  = (input_->Trigger(DIK_DOWN)  || input_->Trigger(DIK_S));
 
 	if(!isLEFT && !isRIGHT && !isUP && !isDOWN) return;
 

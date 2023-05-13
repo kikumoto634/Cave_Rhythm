@@ -15,6 +15,9 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 	SetCollider(new SphereCollider(ColliderOffSet, ColliderRadius));
 	//当たり判定属性
 	baseCollider_->SetAttribute(COLLISION_ATTR_WEAPONS);
+	//球コライダー取得
+	sphereCollider_ = dynamic_cast<SphereCollider*>(baseCollider_);
+	assert(sphereCollider_);
 }
 
 void PlayerWeapon::Update(Camera *camera)

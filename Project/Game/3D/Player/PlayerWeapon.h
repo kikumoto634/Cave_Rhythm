@@ -54,5 +54,8 @@ private:
 
 	//生存時間(フレーム)
 	float aliveCurrentTime_ = 0;
+
+	//コライダー
+	SphereCollider* sphereCollider_ = nullptr;
 };
 

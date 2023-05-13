@@ -36,13 +36,10 @@ void BaseBattleScene::Initialize()
 	BaseScene::Initialize();
 
 	CommonInitialize();
-	AddCommonInitialize();
-
+	//オブジェクト3D
 	Object3DInitialize();
-	AddObject3DInitialize();
-
+	//2D
 	Object2DInitialize();
-	AddObject2DInitialize();
 }
 
 void BaseBattleScene::Update()
@@ -52,20 +49,21 @@ void BaseBattleScene::Update()
 #pragma region 入力処理
 
 #ifdef _DEBUG
-	if(input->Push(DIK_A)){
-		camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
-	}
-	else if(input->Push(DIK_D)){
-		camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
-	}
+	if(input->Push(DIK_LSHIFT)){
+		if(input->Push(DIK_A)){
+			camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
+		}
+		else if(input->Push(DIK_D)){
+			camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
+		}
 
-	if(input->Push(DIK_W)){
-		camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
+		if(input->Push(DIK_W)){
+			camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
+		}
+		else if(input->Push(DIK_S)){
+			camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
+		}
 	}
-	else if(input->Push(DIK_S)){
-		camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
-	}
-
 #endif // _DEBUG
 
 	//シーン更新
@@ -77,15 +75,7 @@ void BaseBattleScene::Update()
 	BeatEndUpdate();
 
 	//更新
-	Object3DUpdate();
-	AddObject3DUpdate();
-
-	Object2DUpdate();
-	AddObject2DUpdate();
-
-	//シーン、カメラ、汎用
 	CommonUpdate();
-	AddCommonUpdate();
 
 	rhythmManager_->PostUpdate();
 
@@ -134,15 +124,11 @@ void BaseBattleScene::Draw()
 	BaseScene::Draw();
 
 	Object3DDraw();
-	AddObject3DDraw();
 	
 	ParticleDraw();
-	AddParticleDraw();
 
 	Sprite::SetPipelineState();
-	AddFrontUIDraw();
 	UIDraw();
-	AddBackUIDraw();
 
 #ifdef _DEBUG
 	debugText->Printf(0,400,1.f,"Camera Target  X:%f, Y:%f, Z:%f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
@@ -169,10 +155,8 @@ void BaseBattleScene::Draw()
 void BaseBattleScene::Finalize()
 {
 	ObjectFinaize();
-	AddObjectFinalize();
 
 	CommonFinalize();
-	AddCommonFinalize();
 
 	BaseScene::Finalize();
 }
@@ -196,6 +180,9 @@ void BaseBattleScene::CommonInitialize()
 	//カメラ
 	camera->RotVector(CameraRotValueIni);
 	camera->Update();
+
+	//追加コモン初期化
+	AddCommonInitialize();
 }
 
 void BaseBattleScene::Object3DInitialize()
@@ -215,6 +202,8 @@ void BaseBattleScene::Object3DInitialize()
 	exit_->SetPosition(areaManager_->GetExitPosition());
 	exit_->SetExitOpenNeedCoin(needCoin_);
 	exit_->NeedCoinSpriteUpdate();
+
+	AddObject3DInitialize();
 }
 
 void BaseBattleScene::Object2DInitialize()
@@ -228,6 +217,8 @@ void BaseBattleScene::Object2DInitialize()
 
 	judgeLoca_ = make_unique<JudgeLocation>();
 	judgeLoca_->Initialize();
+
+	AddObject2DInitialize();
 
 }
 
@@ -270,6 +261,13 @@ void BaseBattleScene::Object2DUpdate()
 
 void BaseBattleScene::CommonUpdate()
 {
+	//オブジェクト3D
+	Object3DUpdate();
+	AddObject3DUpdate();
+	//2D
+	Object2DUpdate();
+	AddObject2DUpdate();
+
 	gameManager_->PlayerCircleShadowSet(player_->GetPosition());
 	//地面
 	gameManager_->LightUpdate(player_->GetIsDead());
@@ -299,6 +297,9 @@ void BaseBattleScene::CommonUpdate()
 
 	//すべての衝突をチェック
 	collisionManager_->CheckAllCollisions();
+
+	//追加コモン更新
+	AddCommonUpdate();
 }
 
 void BaseBattleScene::RhythmJudgeUpdate()
@@ -347,15 +348,21 @@ void BaseBattleScene::Object3DDraw()
 {
 	player_->Draw();
 	exit_->Draw();
+
+	AddObject3DDraw();
 }
 
 void BaseBattleScene::ParticleDraw()
 {
 	areaManager_->ParticleDraw();
+
+	AddParticleDraw();
 }
 
 void BaseBattleScene::UIDraw()
 {
+	AddFrontUIDraw();
+
 	//出口
 	exit_->Draw2D();
 
@@ -365,6 +372,8 @@ void BaseBattleScene::UIDraw()
 
 	//シーン遷移
 	fade_->Draw();
+
+	AddBackUIDraw();
 }
 
 void BaseBattleScene::SceneGameEnd()
@@ -421,6 +430,8 @@ void BaseBattleScene::ObjectFinaize()
 	judgeLoca_->Finalize();
 	fade_->Finalize();
 #pragma endregion _2D解放
+
+	AddObjectFinalize();
 }
 
 void BaseBattleScene::CommonFinalize()
@@ -428,5 +439,7 @@ void BaseBattleScene::CommonFinalize()
 	gameManager_->Finalize();
 
 	rhythmManager_ = nullptr;
+
+	AddCommonFinalize();
 }
 
