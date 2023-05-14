@@ -49,8 +49,13 @@ void Planes::OnCollision(const CollisionInfo &info)
 	if(!isAlive_) return;
 	if(!IsHide) return;
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-		IsPlayerContact = true;
+		ContactUpdate();
 	}	
+}
+
+void Planes::ContactUpdate()
+{
+	IsPlayerContact = true;
 }
 
 

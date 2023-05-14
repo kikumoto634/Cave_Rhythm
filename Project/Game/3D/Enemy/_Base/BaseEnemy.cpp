@@ -68,17 +68,19 @@ void BaseEnemy::OnCollision(const CollisionInfo &info)
 {
 	if(!isAlive_) return;
     if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-        isAlive_ = false;
+        ContactUpdate();
     }
-	else if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		isAlive_ = false;
-	}
 }
 
 void BaseEnemy::Pop(Vector3 pos)
 {
 	particlePos_ = {pos.x, PositionY, pos.z};
 	isPopsPosibble_ = false;
+}
+
+void BaseEnemy::ContactUpdate()
+{
+	isAlive_ = false;
 }
 
 

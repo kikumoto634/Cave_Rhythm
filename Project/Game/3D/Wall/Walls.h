@@ -12,9 +12,6 @@ private:
 	//描画範囲(暗めの表示)
 	const int DrawingRange_Half = 7;
 
-	//削除後の位置
-	const Vector3 NotAlivePos = {0,-50,0};
-
 public:
 	~Walls();
 
@@ -40,6 +37,8 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	//当たり判定時処理
+	void ContactUpdate() override;
 
 	//Getter
 	inline bool GetIsDIg()	{return isDig_;}

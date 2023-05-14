@@ -56,9 +56,11 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-
 	//出現
 	void Pop(Vector3 pos) override;
+
+	//当たり判定時処理
+	void ContactUpdate() override;
 
 	//Getter
 

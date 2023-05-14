@@ -71,16 +71,17 @@ void Walls::Draw()
 void Walls::OnCollision(const CollisionInfo &info)
 {
 	if(!isAlive_) return;
-	if(!isHide_) return;
+	if(!isHide_) return;	
+}
 
-	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		isAlive_ = false;
-		isDig_ = true;
-		digPosition_ = GetPosition();
-		world_.translation = NotAlivePos;
-		world_.UpdateMatrix();
-		collider_->Update();
-	}
+void Walls::ContactUpdate()
+{
+	isAlive_ = false;
+	isDig_ = true;
+	digPosition_ = GetPosition();
+	world_.translation = NotAlivePos;
+	world_.UpdateMatrix();
+	collider_->Update();
 }
 
 void Walls::ColliderInitialize()

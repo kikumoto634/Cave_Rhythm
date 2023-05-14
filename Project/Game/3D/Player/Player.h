@@ -93,6 +93,9 @@ public:
 
 	void Pop(Vector3 pos)	{SetPosition(pos);}
 
+	//当たり判定時処理
+	void ContactUpdate() override;
+
 
 	//入力可能状態
 	inline void InputPossible()	{isDuplicateLimit_ = false;}

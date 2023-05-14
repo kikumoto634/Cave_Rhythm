@@ -63,8 +63,13 @@ void Exit::Finalize()
 void Exit::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-		isPlayerContact_ = true;
+		ContactUpdate();
 	}
+}
+
+void Exit::ContactUpdate()
+{
+	isPlayerContact_ = true;
 }
 
 

@@ -42,6 +42,9 @@ public:
 	/// 出現
 	/// </summary>
 	void Pop(Vector3 pos) override;
+
+	//当たり判定時処理
+	void ContactUpdate() override;
 	
 	//Getter
 	bool GetIsAlive() {return isAlive_;}

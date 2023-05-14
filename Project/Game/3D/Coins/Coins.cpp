@@ -51,10 +51,7 @@ void Coins::OnCollision(const CollisionInfo &info)
 	if(!isAlive_) return;
 
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ALLIES){
-		isAlive_ = false;
-		isContactTrigger_ = true;
-		isPopsPosibble_ = true;
-		SetPosition(DeadPos);
+		ContactUpdate();
 	}
 }
 
@@ -71,4 +68,12 @@ void Coins::ColliderSet()
 {
 	SetCollider(new SphereCollider(DirectX::XMVECTOR{0,SphereColliderRadius,0,0}, SphereColliderRadius));
 	baseCollider_->SetAttribute(COLLISION_ATTR_ITEMS);
+}
+
+void Coins::ContactUpdate()
+{
+	isAlive_ = false;
+	isContactTrigger_ = true;
+	isPopsPosibble_ = true;
+	SetPosition(DeadPos);
 }

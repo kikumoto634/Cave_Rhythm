@@ -22,17 +22,17 @@ void PlayerWeapon::Initialize(std::string filePath, bool IsSmoothing)
 
 void PlayerWeapon::Update(Camera *camera)
 {
-	if(!isAppear_) return;
+	if(!isAlive_) return;
 	this->camera_ = camera;
-	
+
 	//生存フレーム
 	if(aliveCurrentTime_ >= AliveTime) {
 		aliveCurrentTime_ = 0;
 
-		world_.translation = HidePos;
+		world_.translation = NotAlivePos;
 		BaseObjObject::Update(this->camera_);
 
-		isAppear_ = false;
+		isAlive_ = false;
 		return;
 	}
 	world_.scale = Easing_Linear_Point2(StartSize, EndSize,Time_OneWay(aliveCurrentTime_, AliveTime));
@@ -43,7 +43,7 @@ void PlayerWeapon::Update(Camera *camera)
 
 void PlayerWeapon::Draw()
 {
-	if(!isAppear_) return;
+	if(!isAlive_) return;
 
 	BaseObjObject::Draw();
 }
@@ -51,7 +51,7 @@ void PlayerWeapon::Draw()
 
 void PlayerWeapon::OnCollision(const CollisionInfo &info)
 {
-	if(!isAppear_) return;
+	if(!isAlive_) return;
 
 	unsigned short coll = info.collider->GetAttribute();
 	unsigned short enemy = COLLISION_ATTR_ENEMYS;
@@ -59,6 +59,12 @@ void PlayerWeapon::OnCollision(const CollisionInfo &info)
 	unsigned short land = COLLISION_ATTR_LANDSHAPE;
 
 	if(coll == enemy || coll == dummy || coll == land){
-		camera_->ShakeStart();
+		info.objObject->ContactUpdate();
+		ContactUpdate();
 	}
+}
+
+void PlayerWeapon::ContactUpdate()
+{
+	camera_->ShakeStart();
 }

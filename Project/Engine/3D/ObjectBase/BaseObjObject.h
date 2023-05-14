@@ -14,6 +14,9 @@ protected:
 	//終了時間(x(s/秒))
 	const float ScaleEndTime = 0.25f;
 
+	//削除後の位置
+	const Vector3 NotAlivePos = {0,-50,0};
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -57,6 +60,8 @@ public:
 
 	virtual void Pop(Vector3 pos);
 
+	//当たり判定時処理
+	virtual void ContactUpdate();
 
 	inline void IsBeatEndOn()	{isBeatEnd_ = true;}
 

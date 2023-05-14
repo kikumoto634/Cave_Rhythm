@@ -75,11 +75,12 @@ void IndestructibleWall::OnCollision(const CollisionInfo &info)
 	if(!isAlive_) return;
 	if(!isHide_) return;
 
-	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
+}
 
-		if(isReflect_)return;
-		isReflect_ = true;
-	}
+void IndestructibleWall::ContactUpdate()
+{
+	if(isReflect_)return;
+	isReflect_ = true;
 }
 
 void IndestructibleWall::ColliderInitialize()

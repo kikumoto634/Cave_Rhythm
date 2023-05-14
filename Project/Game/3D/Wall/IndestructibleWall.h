@@ -37,6 +37,9 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	//当たり判定時処理
+	void ContactUpdate() override;
+
 	//Getter
 	inline bool GetIsAlive()	{return isAlive_;}
 	inline bool GetIsReflect()	{return isReflect_;}

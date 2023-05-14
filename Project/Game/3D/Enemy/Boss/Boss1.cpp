@@ -256,6 +256,10 @@ void Boss1::Pop(Vector3 pos)
 	IsNotApp = true;
 }
 
+void Boss1::ContactUpdate()
+{
+}
+
 void Boss1::Movement()
 {
 	Vector2 baseVector = {1,0};

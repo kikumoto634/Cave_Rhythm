@@ -252,7 +252,7 @@
     <ClInclude Include="Engine\Base\Manager\Texture\TextureManager.h" />
     <ClInclude Include="Engine\Base\Window\Window.h" />
     <ClInclude Include="Engine\camera\Camera.h" />
-    <ClInclude Include="Engine\Collision\BaseCollider\BaseCollider.h" />
+    <ClInclude Include="Engine\Collision\Base\BaseCollider.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\Collision.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionInfo.h" />
     <ClInclude Include="Engine\Collision\CollisionSystem\CollisionManager.h" />

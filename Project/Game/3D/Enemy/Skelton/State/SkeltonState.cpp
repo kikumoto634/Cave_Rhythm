@@ -141,7 +141,7 @@ void TrackSkeltonState::ParticleDraw()
 void DeadSkeltonState::UpdateTrigger()
 {
 	skelton_->particlePos_ = skelton_->GetPosition();
-	skelton_->SetPosition(DeadPos);
+	skelton_->SetPosition(skelton_->NotAlivePos);
 	skelton_->world_.UpdateMatrix();
 	skelton_->baseCollider_->Update();
 

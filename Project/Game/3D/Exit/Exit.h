@@ -44,6 +44,9 @@ public:
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	//当たり判定時処理
+	void ContactUpdate() override;
+
 	/// <summary>
 	/// 出口解放
 	/// </summary>

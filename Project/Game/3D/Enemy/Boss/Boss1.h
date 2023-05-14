@@ -40,6 +40,8 @@ public:
 	void OnCollision(const CollisionInfo& info) override;
 
 	void Pop(Vector3 pos);
+	//当たり判定時処理
+	void ContactUpdate() override;
 	void IsSummonEnemyPopNot()	{IsSummonEnemyPop = false;}
 
 	//Getter

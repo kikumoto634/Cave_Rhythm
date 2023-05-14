@@ -128,9 +128,6 @@ private:
 	//色
 	Vector4 Color = {1.0f,0.0f,0.0f,1.0f};
 
-	//死亡時に一時保存場所
-	const Vector3 DeadPos = {0,-50,0};
-
 private:
 	void UpdateTrigger() override;
 	void Update() override;

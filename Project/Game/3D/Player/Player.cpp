@@ -101,7 +101,7 @@ void Player::Finalize()
 void Player::OnCollision(const CollisionInfo &info)
 {
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
-		isDamage_ = true;
+		ContactUpdate();
 	}
 }
 
@@ -151,6 +151,11 @@ void Player::InputUpdate()
 	InputMovement();
 	//扉解放
 	InputDecision();
+}
+
+void Player::ContactUpdate()
+{
+	isDamage_ = true;
 }
 
 void Player::InputMovement()

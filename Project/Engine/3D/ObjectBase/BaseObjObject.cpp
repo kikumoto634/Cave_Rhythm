@@ -79,6 +79,10 @@ void BaseObjObject::Pop(Vector3 pos)
 	isPopsPosibble_ = false;
 }
 
+void BaseObjObject::ContactUpdate()
+{
+}
+
 bool BaseObjObject::GetIsContactTrigger()
 {
 	if(isContactTrigger_){
