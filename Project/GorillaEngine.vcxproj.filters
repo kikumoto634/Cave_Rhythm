@@ -394,6 +394,12 @@
     <Filter Include="ソース ファイル\Game\3D\Exit\Sprite">
       <UniqueIdentifier>{c838cf88-1478-44c9-b4fc-5eb142b65cd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Enemy\Boss\State">
+      <UniqueIdentifier>{00be9c70-6936-4244-ad57-0e1f6272f3af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Enemy\Boss\State">
+      <UniqueIdentifier>{7415d071-9b18-4db7-b548-f6dea39b7e67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -605,6 +611,12 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Exit\Sprite\ExitSprite.cpp">
       <Filter>ソース ファイル\Game\3D\Exit\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Boss\State\BossState.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\Boss\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Enemy\Boss\State\BossStateManager.cpp">
+      <Filter>ソース ファイル\Game\3D\Enemy\Boss\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -850,6 +862,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Collision\Base\BaseCollider.h">
       <Filter>ヘッダー ファイル\Engine\Collision\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Boss\State\BossState.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\Boss\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Enemy\Boss\State\BossStateManager.h">
+      <Filter>ヘッダー ファイル\Game\3D\Enemy\Boss\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
