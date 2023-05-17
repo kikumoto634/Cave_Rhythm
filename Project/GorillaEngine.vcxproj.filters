@@ -400,6 +400,12 @@
     <Filter Include="ヘッダー ファイル\Game\3D\Enemy\Boss\State">
       <UniqueIdentifier>{7415d071-9b18-4db7-b548-f6dea39b7e67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\PostEffect">
+      <UniqueIdentifier>{d38aa09f-d056-4a51-b37d-d08031e15e98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\PostEffect">
+      <UniqueIdentifier>{13873703-dd81-40c7-8f62-68df36efd5ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -617,6 +623,9 @@
     </ClCompile>
     <ClCompile Include="Game\3D\Enemy\Boss\State\BossStateManager.cpp">
       <Filter>ソース ファイル\Game\3D\Enemy\Boss\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\PostEffect\PostEffect.cpp">
+      <Filter>ソース ファイル\Engine\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -868,6 +877,9 @@
     </ClInclude>
     <ClInclude Include="Game\3D\Enemy\Boss\State\BossStateManager.h">
       <Filter>ヘッダー ファイル\Game\3D\Enemy\Boss\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PostEffect\PostEffect.h">
+      <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
