@@ -7,8 +7,6 @@
 
 #include "TutorialSp.h"
 
-#include "PostEffect.h"
-
 class HomeScene : public BaseBattleScene
 {
 private:
@@ -67,7 +65,5 @@ private:
 	unique_ptr<TutorialSp> trainingText_;
 
 	list<std::unique_ptr<BaseEnemy>> slime_;
-
-	PostEffect* postEffect_ = nullptr;
 };
 

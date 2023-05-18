@@ -59,10 +59,6 @@ void HomeScene::AddObject2DInitialize()
 		trainingText_->SetSize(ExitTextSize);
 		trainingText_->SetAnchorPoint(TrainingTextAnc);
 	}
-
-	//ポストエフェクト
-	//postEffect_ = new PostEffect();
-	postEffect_ = PostEffect::Create(white1x1_tex.number, {0,0});
 }
 
 
@@ -141,14 +137,11 @@ void HomeScene::AddFrontUIDraw()
 
 void HomeScene::AddBackUIDraw()
 {
-	//ポストエフェクト
-	postEffect_->Draw();
 }
 
 
 void HomeScene::AddObjectFinalize()
 {
-	delete postEffect_;
 
 	exitText_->Finalize();
 	trainingText_->Finalize();

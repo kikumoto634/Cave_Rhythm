@@ -35,10 +35,6 @@ public://サブクラス
 		//射影行列
 		XMMATRIX matProjection{};
 
-
-		//テクスチャマネージャー
-		//TextureManager* textureManager = nullptr;
-
 	public:
 		void InitializeGraphicsPipeline(const std::string& directoryPath);
 	};
