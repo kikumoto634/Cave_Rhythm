@@ -52,9 +52,7 @@ void TitleScene::Initialize()
 	fade_->SetSize({fadeInSize_});
 
 	//ポストエフェクト
-	postEffect_ = new PostEffect(1,{0,0,0},{500,500},{1,1,1,1},{0,0},false,false);
-	postEffect_->Initialize(1);
-	postEffect_->SetSize({500,500});
+	postEffect_ = PostEffect::Create(white1x1_tex.number, {0,0}, {500,500});
 
 }
 

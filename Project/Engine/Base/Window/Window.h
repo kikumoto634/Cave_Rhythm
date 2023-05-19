@@ -19,8 +19,8 @@ public:
 	const HWND& GetHwnd()	{return hwnd;}
 	const WNDCLASSEX& GetWndClass()	{return w;}
 
-	int GetWindowWidth()	{return window_width;}
-	int GetWindowHeight()	{return window_height;}
+	inline static int GetWindowWidth()		{return window_width;}
+	inline static int GetWindowHeight()	{return window_height;}
 
 public:
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
@@ -32,7 +32,7 @@ private:
 	static wchar_t kWindowClassName[];
 
 	std::string name;
-	int window_width;
-	int window_height;
+	inline static int window_width = 1280;
+	inline static int window_height = 720;
 };
 
