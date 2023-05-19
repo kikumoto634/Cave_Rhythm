@@ -1,6 +1,8 @@
 #include "PostEffect.h"
 #include "Window.h"
 
+const float PostEffect::clearColor[4] = {0.25f, 0.5f, 0.1f, 0.0f};
+
 PostEffect::PostEffect(UINT texnumber, Vector3 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY) 
 	: Sprite(
 		texnumber,
@@ -167,7 +169,7 @@ void PostEffect::TextureInitialize()
 			D3D12_HEAP_FLAG_NONE,
 			&texresDesc,
 			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-			nullptr,
+			&CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,clearColor),
 			IID_PPV_ARGS(&texbuff)
 		);
 		assert(SUCCEEDED(result));
@@ -314,4 +316,54 @@ void PostEffect::DSVInitialize()
 			descHeapDSV->GetCPUDescriptorHandleForHeapStart()
 		);
 	}
+}
+
+
+void PostEffect::PreDrawScene()
+{
+	//リソースバリア
+	common->dxCommon->GetCommandList()->ResourceBarrier(
+		1,
+		&CD3DX12_RESOURCE_BARRIER::Transition(
+			texbuff.Get(),
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			D3D12_RESOURCE_STATE_RENDER_TARGET
+		)
+	);
+
+	//レンダーターゲットビュー
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvH = 
+		descHeapRTV->GetCPUDescriptorHandleForHeapStart();
+	
+	//深度ステンシル
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvH = 
+		descHeapDSV->GetCPUDescriptorHandleForHeapStart();
+
+	//レンダーターゲットをセット
+	common->dxCommon->GetCommandList()->OMSetRenderTargets(1,&rtvH,false,&dsvH);
+
+	//ビューポート
+	common->dxCommon->GetCommandList()->RSSetViewports(1, &CD3DX12_VIEWPORT(0.0F,0.0F,(FLOAT)Window::GetWindowWidth(),(FLOAT)Window::GetWindowHeight()));
+
+	//シザー
+	common->dxCommon->GetCommandList()->RSSetScissorRects(1, &CD3DX12_RECT(0,0,Window::GetWindowWidth(),Window::GetWindowHeight()));
+
+	//画面クリア
+	common->dxCommon->GetCommandList()->ClearRenderTargetView(rtvH,clearColor,0,nullptr);
+
+	//深度バッファクリア
+	common->dxCommon->GetCommandList()->ClearDepthStencilView(dsvH,D3D12_CLEAR_FLAG_DEPTH,1.0f,0,0,nullptr);
+}
+
+void PostEffect::PostDrawScene()
+{
+	//リソースバリア
+	common->dxCommon->GetCommandList()->ResourceBarrier(
+		1,
+		&CD3DX12_RESOURCE_BARRIER::Transition(
+			texbuff.Get(),
+			D3D12_RESOURCE_STATE_RENDER_TARGET,
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE
+		)
+	);
 }

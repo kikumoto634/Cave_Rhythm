@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Sprite.h"
+
 class PostEffect : public Sprite
 {
 public://エイリアス
@@ -15,6 +16,11 @@ public:
 	bool Initialize();
 
 	void Draw();
+
+	//シーン描画前描画
+	void PreDrawScene();
+	//シーン描画後処理
+	void PostDrawScene();
 
 private:
 	//スプライト共通初期化
@@ -32,7 +38,9 @@ private:
 	void DSVInitialize();
 
 
-	//
+private:
+	//画面クリアカラー
+	static const float clearColor[4];
 
 private:
 	//テクスチャ

@@ -50,10 +50,6 @@ void TitleScene::Initialize()
 	fade_->Initialize(white1x1_tex.number);
 	fade_->SetColor({fadeColor_.x,fadeColor_.y,fadeColor_.z,fadeColor_.w});
 	fade_->SetSize({fadeInSize_});
-
-	//ポストエフェクト
-	postEffect_ = PostEffect::Create(white1x1_tex.number, {0,0}, {500,500});
-
 }
 
 void TitleScene::Update()
@@ -127,8 +123,6 @@ void TitleScene::Draw()
 		(*it)->Draw();
 	}
 	fade_->Draw();
-
-	postEffect_->Draw();
 #pragma endregion
 
 	BaseScene::EndDraw();
@@ -136,8 +130,6 @@ void TitleScene::Draw()
 
 void TitleScene::Finalize()
 {
-	delete postEffect_;
-
 	audio_->Finalize();
 
 	for(auto it = sp_.begin(); it != sp_.end(); it++){

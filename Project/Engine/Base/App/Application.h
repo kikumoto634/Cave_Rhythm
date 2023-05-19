@@ -21,6 +21,8 @@
 #include "SceneManager.h"
 #include "Sprite.h"
 
+#include "PostEffect.h"
+
 #ifdef _DEBUG
 
 #include "imguiManager.h"
@@ -63,4 +65,6 @@ private:
 	bool IsSceneChange_ImGui = false;
 #endif // _DEBUG
 
+	//ポストエフェクト
+	PostEffect* postEffect_ = nullptr;
 };

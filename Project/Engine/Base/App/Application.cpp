@@ -154,6 +154,10 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager->SetNextScene(scene);
+
+	
+	//ポストエフェクト
+	postEffect_ = PostEffect::Create(white1x1_tex.number, {0,0}, {500,500});
 }
 
 void Application::Update()
@@ -171,12 +175,18 @@ void Application::Update()
 
 void Application::Draw()
 {
+	//レンダーターゲットへの描画
+	postEffect_->PreDrawScene();
+	Sprite::SetPipelineState();
+	sceneManager->Draw();
+	postEffect_->PostDrawScene();
+
+
 	//描画前処理
 	dxCommon->BeginDraw();
 
-	Sprite::SetPipelineState();
-	//scene->Draw();
-	sceneManager->Draw();
+	//ポストエフェクト描画
+	postEffect_->Draw();
 
 #ifdef _DEBUG
 	debugText->DrawAll();
@@ -189,6 +199,8 @@ void Application::Draw()
 
 void Application::Finalize()
 {
+	delete postEffect_;
+
 #ifdef _DEBUG
 	imgui->Finalize();
 	delete imgui;

@@ -8,8 +8,6 @@
 
 #include "GameManager.h"
 
-#include "PostEffect.h"
-
 #include <list>
 
 class TitleScene : public BaseScene
@@ -118,9 +116,5 @@ private:
 	bool isNextSceneChange_ = false;
 
 	bool isDebugScene_= false;
-
-	//ポストエフェクト
-	PostEffect* postEffect_ = nullptr;
-
 };
 
