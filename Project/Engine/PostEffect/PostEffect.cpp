@@ -1,6 +1,9 @@
 #include "PostEffect.h"
 #include "Window.h"
 
+#include <d3dcompiler.h>
+#pragma comment(lib, "d3dcompiler.lib")
+
 const float PostEffect::clearColor[4] = {0.25f, 0.5f, 0.1f, 0.0f};
 
 PostEffect::PostEffect(UINT texnumber, Vector3 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY) 
@@ -44,6 +47,9 @@ bool PostEffect::Initialize()
 	DepthInitialize();
 	DSVInitialize();
 
+	//パイプライン
+	CreateGraphicsPipelineState();
+
 	return true;
 }
 
@@ -60,7 +66,7 @@ void PostEffect::Draw()
 	HRESULT result;
 	result = this->constBuffData->Map(0,nullptr, (void**)&constMap);
 	assert(SUCCEEDED(result));
-	constMap->mat = this->matWorld * common->matProjection;
+	constMap->mat = XMMatrixIdentity();
 	constMap->color = this->color;
 	this->constBuffData->Unmap(0, nullptr);
 
@@ -94,58 +100,53 @@ void PostEffect::Draw()
 void PostEffect::SpriteInitialize()
 {
 	HRESULT result;
+	
+	//頂点
 	{
-		// ヒーププロパティ
-		CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-		// リソース設定
-		CD3DX12_RESOURCE_DESC resourceDesc =
-		  CD3DX12_RESOURCE_DESC::Buffer(sizeof(VertexPosUv) * common->vertNum);
-
-		//頂点バッファ生成
+		//生成
 		result = common->dxCommon->GetDevice()->CreateCommittedResource(
-			&heapProps,
+			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 			D3D12_HEAP_FLAG_NONE,
-			&resourceDesc,
+			&CD3DX12_RESOURCE_DESC::Buffer(sizeof(VertexPosUv) * VertNum),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&this->vertBuff)
+			IID_PPV_ARGS(&vertBuff)
 		);
 		assert(SUCCEEDED(result));
+
+		//データ
+		VertexPosUv vertices[VertNum] = {
+			{{-1.0f, -1.0f, +0.0f}, {0.0f, 1.0f}},
+			{{-1.0f, +1.0f, +0.0f}, {0.0f, 0.0f}},
+			{{+1.0f, -1.0f, +0.0f}, {1.0f, 1.0f}},
+			{{+1.0f, +1.0f, +0.0f}, {1.0f, 0.0f}},
+		};
+
+		//転送
+		VertexPosUv* vertMap = nullptr;
+		result = vertBuff->Map(0,nullptr, (void**)&vertMap);
+		if(SUCCEEDED(result)){
+			memcpy(vertMap, vertices, sizeof(vertices));
+			vertBuff->Unmap(0, nullptr);
+		}
+
+		//VBV(頂点バッファビュー)
+		vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+		vbView.SizeInBytes = sizeof(VertexPosUv) * VertNum;
+		vbView.StrideInBytes = sizeof(VertexPosUv);
 	}
 
-	//頂点バッファへのデータ転送
-	SpriteTransferVertexBuffer();
-
-	//頂点バッファビューの作成
-	this->vbView.BufferLocation = this->vertBuff->GetGPUVirtualAddress();
-	this->vbView.SizeInBytes = sizeof(VertexPosUv) * common->vertNum;
-	this->vbView.StrideInBytes = sizeof(VertexPosUv);
-
+	//定数
 	{
-		// ヒーププロパティ
-		CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-		// リソース設定
-		CD3DX12_RESOURCE_DESC resourceDesc =
-		  CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
-
-		//定数バッファの生成
 		result = common->dxCommon->GetDevice()->CreateCommittedResource(
-			&heapProps,
+			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 			D3D12_HEAP_FLAG_NONE,
-			&resourceDesc,
+			&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff),
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&this->constBuffData)
+			IID_PPV_ARGS(&constBuffData)
 		);
 		assert(SUCCEEDED(result));
-	}
-
-	//定数バッファのデータ転送
-	result = this->constBuffData->Map(0, nullptr, (void**)&constMap);
-	if(SUCCEEDED(result)){
-		constMap->color = this->color;
-		constMap->mat = common->matProjection;
-		this->constBuffData->Unmap(0, nullptr);
 	}
 }
 
@@ -317,6 +318,168 @@ void PostEffect::DSVInitialize()
 		);
 	}
 }
+
+void PostEffect::CreateGraphicsPipelineState()
+{
+	HRESULT result;
+
+	///頂点シェーダーfileの読み込みとコンパイル
+	ID3DBlob* vsBlob ;			//頂点シェーダーオブジェクト
+	ID3DBlob* psBlob ;			//ピクセルシェーダーオブジェクト
+	ID3DBlob* errorBlob ;		//エラーオブジェクト
+
+	//頂点シェーダーの読み込みコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shader/PostEffectVS.hlsl",		//シェーダーファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
+		"main", "vs_5_0",					//エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,	//デバック用設定
+		0,
+		&vsBlob, &errorBlob);
+	//エラーなら
+	if(FAILED(result)){
+		//errorBlobからエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob->GetBufferSize());
+
+		std::copy_n((char*)errorBlob->GetBufferPointer(),
+					errorBlob->GetBufferSize(),
+					error.begin());
+		error += "\n";
+		//エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+
+	//ピクセルシェーダーの読み込みコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shader/PostEffectPS.hlsl",		//シェーダーファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
+		"main", "ps_5_0",					//エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,	//デバック用設定
+		0,
+		&psBlob, &errorBlob);
+	//エラーなら
+	if(FAILED(result)){
+		//errorBlobからエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob->GetBufferSize());
+
+		std::copy_n((char*)errorBlob->GetBufferPointer(),
+					errorBlob->GetBufferSize(),
+					error.begin());
+		error += "\n";
+		//エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+
+	///頂点レイアウト
+	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	
+		{//xyz座標
+			"POSITION",										//セマンティック名
+			0,												//同じセマンティック名が複数あるときに使うインデックス
+			DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す (XYZの3つでfloat型なのでR32G32B32_FLOAT)
+			0,												//入力スロットインデックス
+			D3D12_APPEND_ALIGNED_ELEMENT,					//データのオフセット値 (D3D12_APPEND_ALIGNED_ELEMENTだと自動設定)
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//入力データ種別 (標準はD3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA)
+			0												//一度に描画するインスタンス数
+		},
+		{//uv座標
+			"TEXCOORD",
+			0,
+			DXGI_FORMAT_R32G32_FLOAT,
+			0,
+			D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,
+			0
+		},
+	};
+
+	//グラフィックスパイプライン設定
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+	//シェーダー設定
+	pipelineDesc.VS = CD3DX12_SHADER_BYTECODE(vsBlob);
+	pipelineDesc.PS = CD3DX12_SHADER_BYTECODE(psBlob);
+	
+	//サンプルマスク設定
+	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
+	//ラスタライザ設定 背面カリング	ポリゴン内塗りつぶし	深度クリッピング有効
+	pipelineDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	//デプスステンシル
+	pipelineDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+
+	//レンダーターゲットのブレンド設定
+	D3D12_RENDER_TARGET_BLEND_DESC blenddesc{};
+	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBAすべてのチャンネルを描画
+	//共通設定
+	blenddesc.BlendEnable = true;						//ブレンドを有効にする
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;		//加算
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;			//ソースの値を100% 使う	(ソースカラー			 ： 今から描画しようとしている色)
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;		//デストの値を  0% 使う	(デスティネーションカラー： 既にキャンバスに描かれている色)
+	//各種設定
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//設定
+	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			//ソースの値を 何% 使う
+	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	//デストの値を 何% 使う
+
+	//ブレンドステート設定
+	pipelineDesc.BlendState.RenderTarget[0] = blenddesc;
+
+	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+
+	//頂点レイアウト設定
+	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
+	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+	//図形の形状設定 (プリミティブトポロジー)
+	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	//その他設定
+	pipelineDesc.NumRenderTargets = 1;		//描画対象は一つ
+	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
+
+	//デスクリプタレンジの設定
+	CD3DX12_DESCRIPTOR_RANGE descRangeSRV{};
+	descRangeSRV.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+
+	//設定
+	CD3DX12_ROOT_PARAMETER rootParam[2] = {};
+	rootParam[0].InitAsConstantBufferView(0,0,D3D12_SHADER_VISIBILITY_ALL);
+	rootParam[1].InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);
+
+	///スタティックサンプラー
+	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0,D3D12_FILTER_MIN_MAG_MIP_POINT);
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+
+	//ルートシグネチャ (テクスチャ、定数バッファなどシェーダーに渡すリソース情報をまとめたオブジェクト)
+	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Init_1_0(_countof(rootParam), rootParam,1, &samplerDesc,
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+
+	//シリアライズ
+	ID3DBlob* rootSigBlob;
+	result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, 
+		D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob,&errorBlob);
+	assert(SUCCEEDED(result));
+
+	//ルートシグネチャ
+	result = common->dxCommon->GetDevice()->CreateRootSignature(0,rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),IID_PPV_ARGS(&rootSignature));
+	assert(SUCCEEDED(result));
+
+	//パイプラインにルートシグネチャをセット
+	pipelineDesc.pRootSignature = rootSignature.Get();
+
+	//パイプラインステート (グラフィックスパイプラインの設定をまとめたのがパイプラインステートオブジェクト(PSO))
+	//パイプラインステートの生成
+	result = common->dxCommon->GetDevice()->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	assert(SUCCEEDED(result));
+}
+
 
 
 void PostEffect::PreDrawScene()

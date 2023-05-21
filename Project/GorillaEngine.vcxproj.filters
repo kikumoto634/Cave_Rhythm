@@ -406,6 +406,9 @@
     <Filter Include="ヘッダー ファイル\Engine\PostEffect">
       <UniqueIdentifier>{13873703-dd81-40c7-8f62-68df36efd5ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\PostEffect">
+      <UniqueIdentifier>{864dc63d-fd30-4a3a-b0d6-de1f2bc32c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -910,6 +913,12 @@
     <FxCompile Include="Resources\shader\ObjVS.hlsl">
       <Filter>リソース ファイル\Obj</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\shader\PostEffectVS.hlsl">
+      <Filter>リソース ファイル\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shader\PostEffectPS.hlsl">
+      <Filter>リソース ファイル\PostEffect</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shader\Sprite.hlsli">
@@ -932,6 +941,9 @@
     </None>
     <None Include="Resources\CSVData\Tutorial.csv">
       <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect.hlsli">
+      <Filter>リソース ファイル\PostEffect</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -109,23 +109,22 @@ void TitleScene::Update()
 
 void TitleScene::Draw()
 {
-
-	BaseScene::Draw();
-#pragma region _3DObj Draw
 	for(auto it = objs_.begin(); it != objs_.end(); ++it){
 		(*it)->Draw();
 	}
-#pragma endregion
+}
 
-#pragma region _2D_UIDraw
+void TitleScene::DrawBack()
+{
+}
+
+void TitleScene::DrawNear()
+{
 	Sprite::SetPipelineState();
 	for(auto it = sp_.begin(); it != sp_.end(); it++){
 		(*it)->Draw();
 	}
 	fade_->Draw();
-#pragma endregion
-
-	BaseScene::EndDraw();
 }
 
 void TitleScene::Finalize()

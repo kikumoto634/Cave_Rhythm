@@ -1,4 +1,4 @@
-﻿#include "SceneManager.h"
+#include "SceneManager.h"
 #include "Audio.h"
 
 SceneManager* SceneManager::instance = nullptr;
@@ -66,10 +66,19 @@ void SceneManager::Update()
 	}
 
 	scene->Update();
-	scene->EndDraw();
 }
 
 void SceneManager::Draw()
 {
 	scene->Draw();
+}
+
+void SceneManager::DrawBack()
+{
+	scene->DrawBack();
+}
+
+void SceneManager::DrawNear()
+{
+	scene->DrawNear();
 }

@@ -37,10 +37,17 @@ private:
 	//DSV初期化
 	void DSVInitialize();
 
+	/// <summary>
+	/// パイプライン生成
+	/// </summary>
+	void CreateGraphicsPipelineState();
+
 
 private:
 	//画面クリアカラー
 	static const float clearColor[4];
+
+	static const int VertNum = 4;
 
 private:
 	//テクスチャ
@@ -54,5 +61,10 @@ private:
 	ComPtr<ID3D12DescriptorHeap> descHeapRTV;
 	//DSV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> descHeapDSV;
+
+	//グラフィックスパイプライン
+	ComPtr<ID3D12PipelineState> pipelineState;
+	//ルートシグネチャ
+	ComPtr<ID3D12RootSignature> rootSignature;
 };
 

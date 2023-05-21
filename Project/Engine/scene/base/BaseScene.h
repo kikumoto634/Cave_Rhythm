@@ -47,14 +47,19 @@ public:
 	void EndUpdate();
 
 	/// <summary>
-	/// 描画
+	/// 3D描画
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// 後描画
+	/// 2D描画背景
 	/// </summary>
-	void EndDraw();
+	virtual void DrawBack();
+
+	/// <summary>
+	/// 2D描画UI
+	/// </summary>
+	virtual void DrawNear();
 
 	/// <summary>
 	/// 後処理

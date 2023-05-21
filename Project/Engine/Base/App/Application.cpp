@@ -177,7 +177,6 @@ void Application::Draw()
 {
 	//レンダーターゲットへの描画
 	postEffect_->PreDrawScene();
-	Sprite::SetPipelineState();
 	sceneManager->Draw();
 	postEffect_->PostDrawScene();
 
@@ -185,8 +184,10 @@ void Application::Draw()
 	//描画前処理
 	dxCommon->BeginDraw();
 
+	sceneManager->DrawBack();
 	//ポストエフェクト描画
 	postEffect_->Draw();
+	sceneManager->DrawNear();
 
 #ifdef _DEBUG
 	debugText->DrawAll();

@@ -1,4 +1,4 @@
-﻿#include "BaseScene.h"
+#include "BaseScene.h"
 
 using namespace std;
 
@@ -56,7 +56,11 @@ void BaseScene::Draw()
 {
 }
 
-void BaseScene::EndDraw()
+void BaseScene::DrawBack()
+{
+}
+
+void BaseScene::DrawNear()
 {
 }
 

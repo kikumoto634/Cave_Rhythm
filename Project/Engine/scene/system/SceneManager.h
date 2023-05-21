@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "BaseScene.h"
+#include "DirectXCommon.h"
 
 class SceneManager
 {
@@ -13,6 +14,8 @@ public:
 
 	void Update();
 	void Draw();
+	void DrawBack();
+	void DrawNear();
 
 private:
 	//シングルトン

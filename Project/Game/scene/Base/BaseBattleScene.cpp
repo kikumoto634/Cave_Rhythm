@@ -149,7 +149,6 @@ void BaseBattleScene::Draw()
 
 
 #endif // _DEBUG
-	BaseScene::EndDraw();
 }
 
 void BaseBattleScene::Finalize()
