@@ -116,10 +116,10 @@ void PostEffect::SpriteInitialize()
 
 		//データ
 		VertexPosUv vertices[VertNum] = {
-			{{-1.0f, -1.0f, +0.0f}, {0.0f, 1.0f}},
-			{{-1.0f, +1.0f, +0.0f}, {0.0f, 0.0f}},
-			{{+1.0f, -1.0f, +0.0f}, {1.0f, 1.0f}},
-			{{+1.0f, +1.0f, +0.0f}, {1.0f, 0.0f}},
+			{{-0.5f, -0.5f, +0.0f}, {0.0f, 1.0f}},
+			{{-0.5f, +0.5f, +0.0f}, {0.0f, 0.0f}},
+			{{+0.5f, -0.5f, +0.0f}, {1.0f, 1.0f}},
+			{{+0.5f, +0.5f, +0.0f}, {1.0f, 0.0f}},
 		};
 
 		//転送
@@ -324,9 +324,9 @@ void PostEffect::CreateGraphicsPipelineState()
 	HRESULT result;
 
 	///頂点シェーダーfileの読み込みとコンパイル
-	ID3DBlob* vsBlob ;			//頂点シェーダーオブジェクト
-	ID3DBlob* psBlob ;			//ピクセルシェーダーオブジェクト
-	ID3DBlob* errorBlob ;		//エラーオブジェクト
+	ID3DBlob* vsBlob = nullptr;			//頂点シェーダーオブジェクト
+	ID3DBlob* psBlob = nullptr;			//ピクセルシェーダーオブジェクト
+	ID3DBlob* errorBlob = nullptr;		//エラーオブジェクト
 
 	//頂点シェーダーの読み込みコンパイル
 	result = D3DCompileFromFile(
@@ -379,7 +379,7 @@ void PostEffect::CreateGraphicsPipelineState()
 	///頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 	
-		{//xyz座標
+		{//xy座標
 			"POSITION",										//セマンティック名
 			0,												//同じセマンティック名が複数あるときに使うインデックス
 			DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す (XYZの3つでfloat型なのでR32G32B32_FLOAT)
@@ -419,13 +419,14 @@ void PostEffect::CreateGraphicsPipelineState()
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBAすべてのチャンネルを描画
 	//共通設定
 	blenddesc.BlendEnable = true;						//ブレンドを有効にする
-	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;		//加算
-	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;			//ソースの値を100% 使う	(ソースカラー			 ： 今から描画しようとしている色)
-	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;		//デストの値を  0% 使う	(デスティネーションカラー： 既にキャンバスに描かれている色)
 	//各種設定
 	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//設定
 	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;			//ソースの値を 何% 使う
 	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	//デストの値を 何% 使う
+
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;		//加算
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;			//ソースの値を100% 使う	(ソースカラー			 ： 今から描画しようとしている色)
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;		//デストの値を  0% 使う	(デスティネーションカラー： 既にキャンバスに描かれている色)
 
 	//ブレンドステート設定
 	pipelineDesc.BlendState.RenderTarget[0] = blenddesc;
@@ -462,13 +463,14 @@ void PostEffect::CreateGraphicsPipelineState()
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
 	//シリアライズ
-	ID3DBlob* rootSigBlob;
+	ID3DBlob* rootSigBlob = nullptr;
 	result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, 
 		D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob,&errorBlob);
 	assert(SUCCEEDED(result));
 
 	//ルートシグネチャ
-	result = common->dxCommon->GetDevice()->CreateRootSignature(0,rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),IID_PPV_ARGS(&rootSignature));
+	result = common->dxCommon->GetDevice()->CreateRootSignature(0,rootSigBlob->GetBufferPointer(), 
+		rootSigBlob->GetBufferSize(),IID_PPV_ARGS(&rootSignature));
 	assert(SUCCEEDED(result));
 
 	//パイプラインにルートシグネチャをセット

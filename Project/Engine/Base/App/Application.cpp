@@ -185,7 +185,6 @@ void Application::Draw()
 	dxCommon->BeginDraw();
 
 	sceneManager->DrawBack();
-	//ポストエフェクト描画
 	postEffect_->Draw();
 	sceneManager->DrawNear();
 
