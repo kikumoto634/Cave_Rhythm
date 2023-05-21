@@ -121,12 +121,16 @@ void BaseBattleScene::Update()
 
 void BaseBattleScene::Draw()
 {
-	BaseScene::Draw();
-
 	Object3DDraw();
-	
-	ParticleDraw();
+}
 
+void BaseBattleScene::DrawBack()
+{
+	ParticleDraw();
+}
+
+void BaseBattleScene::DrawNear()
+{
 	Sprite::SetPipelineState();
 	UIDraw();
 

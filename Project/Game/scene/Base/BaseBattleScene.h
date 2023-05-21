@@ -74,9 +74,20 @@ public:
 	void Update() override;
 
 	/// <summary>
-	/// 描画
+	/// 3D描画
 	/// </summary>
 	void Draw() override;
+
+	/// <summary>
+	/// 背景描画
+	/// </summary>
+	void DrawBack() override;
+
+	/// <summary>
+	/// UI描画
+	/// </summary>
+	void DrawNear() override;
+
 
 	/// <summary>
 	/// 後処理
