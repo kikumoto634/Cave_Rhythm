@@ -70,6 +70,10 @@ bool PostEffect::Initialize()
 
 void PostEffect::Draw()
 {
+	//offset.x += 0.01f;
+	//color -= {0.01f,0.01f,0.01f};
+
+
 	//ワールド行列の更新
 	this->matWorld = XMMatrixIdentity();
 	//Z軸回転
@@ -84,6 +88,7 @@ void PostEffect::Draw()
 	assert(SUCCEEDED(result));
 	constMap->isActive = isActive;
 	constMap->offset = {offset.x, offset.y};
+	constMap->color = color;
 	constBuff->Unmap(0, nullptr);
 
 

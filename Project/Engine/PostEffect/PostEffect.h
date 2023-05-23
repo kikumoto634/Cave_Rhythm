@@ -9,8 +9,9 @@ public://エイリアス
 public:
 	struct ConstBufferDate{
 		bool isActive;
-		float pad1;
 		Vector2 offset;
+		float pad1;
+		Vector3 color;
 	};
 	
 public:
@@ -79,5 +80,6 @@ private:
 
 	bool isActive = true;
 	Vector2 offset = {0.0f, 0.0f};
+	Vector3 color = {1,1,1};
 };
 

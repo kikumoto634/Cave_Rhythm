@@ -7,19 +7,32 @@ float4 main(VSOutput input) : SV_TARGET
 {
 	float4 texcolor = tex.Sample(smp, input.uv);
 
-	if(!isActive) return float4(texcolor.rgb,1);
+	//円内判定
+	float2 center = float2(0.5f,0.5f);
+	float radius1 = 0.1f;
+	float radius2 = 0.2f;
+	float2 calValue = float2((input.uv.x-center.x)*(input.uv.x-center.x), (input.uv.y-center.y)*(input.uv.y-center.y));
 
+	//ぼかし
 	float2 texelSize = float2(1.0f/1280.0f, 1.0f/720.0f);
-	float4 color = (0,0,0,0);
+	float4 colorSum = (0,0,0,0);
 
     for (int x = 0; x < 16; x++)
     {
         for (int y = 0; y < 16; y++)
         {
-            color += tex.Sample(smp, (input.uv + offset) + float2(x, y) * texelSize);
+            colorSum += tex.Sample(smp, (input.uv + offset) + float2(x, y) * texelSize);
         }
     }
-    color /= (16.0f*16.0f);  // 周囲9ピクセルの平均値を計算
+    colorSum /= (16.0f*16.0f);  // 周囲9ピクセルの平均値を計算
 
-    return float4(color.rgb, 1);
+
+	if(calValue.x+calValue.y <= radius1*radius1){
+		return float4(texcolor.rgb,1);
+	}
+	else if(calValue.x+calValue.y <= radius2*radius2){
+		return float4(colorSum.rgb, 1);
+	}
+
+	return float4(texcolor.rgb,1);
 }
