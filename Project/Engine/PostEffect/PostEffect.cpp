@@ -72,9 +72,9 @@ void PostEffect::Draw()
 
 
 	//パイプラインステートの設定
-	common->dxCommon->GetCommandList()->SetPipelineState(common->pipelinestate.Get());
+	common->dxCommon->GetCommandList()->SetPipelineState(pipelineState.Get());
 	//ルートシグネチャの設定
-	common->dxCommon->GetCommandList()->SetGraphicsRootSignature(common->rootsignature.Get());
+	common->dxCommon->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 	//プリミティブ形状を設定
 	common->dxCommon->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
@@ -116,10 +116,10 @@ void PostEffect::SpriteInitialize()
 
 		//データ
 		VertexPosUv vertices[VertNum] = {
-			{{-0.5f, -0.5f, +0.0f}, {0.0f, 1.0f}},
-			{{-0.5f, +0.5f, +0.0f}, {0.0f, 0.0f}},
-			{{+0.5f, -0.5f, +0.0f}, {1.0f, 1.0f}},
-			{{+0.5f, +0.5f, +0.0f}, {1.0f, 0.0f}},
+			{{-1.0f, -1.0f, +0.0f}, {0.0f, 1.0f}},
+			{{-1.0f, +1.0f, +0.0f}, {0.0f, 0.0f}},
+			{{+1.0f, -1.0f, +0.0f}, {1.0f, 1.0f}},
+			{{+1.0f, +1.0f, +0.0f}, {1.0f, 0.0f}},
 		};
 
 		//転送
@@ -454,8 +454,9 @@ void PostEffect::CreateGraphicsPipelineState()
 
 	///スタティックサンプラー
 	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0,D3D12_FILTER_MIN_MAG_MIP_POINT);
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	//UVずらし防止
+	//samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	//samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 
 	//ルートシグネチャ (テクスチャ、定数バッファなどシェーダーに渡すリソース情報をまとめたオブジェクト)
 	CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc{};
