@@ -1,5 +1,7 @@
 cbuffer cbuff0 : register(b0)
 {
+	bool isActive;
+	float2 offset;
 };
 
 //頂点シェーダーからの出力構造体

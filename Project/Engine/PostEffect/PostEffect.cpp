@@ -4,7 +4,7 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
-const float PostEffect::clearColor[4] = {0.25f, 0.5f, 0.1f, 0.0f};
+const float PostEffect::clearColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 
 PostEffect::PostEffect(UINT texnumber, Vector3 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY) 
 	: Sprite(
@@ -47,6 +47,21 @@ bool PostEffect::Initialize()
 	DepthInitialize();
 	DSVInitialize();
 
+	// ヒーププロパティ
+	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+	// リソース設定
+	CD3DX12_RESOURCE_DESC resourceDescB0 =
+		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
+
+	HRESULT result;
+
+	// 定数バッファの生成
+	result = common->dxCommon->GetDevice()->CreateCommittedResource(
+		&heapProps, // アップロード可能
+		D3D12_HEAP_FLAG_NONE, &resourceDescB0, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+		IID_PPV_ARGS(&constBuff));
+	assert(SUCCEEDED(result));
+
 	//パイプライン
 	CreateGraphicsPipelineState();
 
@@ -64,11 +79,12 @@ void PostEffect::Draw()
 
 	//定数バッファの転送
 	HRESULT result;
-	result = this->constBuffData->Map(0,nullptr, (void**)&constMap);
+	ConstBufferDate* constMap = nullptr;
+	result = this->constBuff->Map(0,nullptr, (void**)&constMap);
 	assert(SUCCEEDED(result));
-	constMap->mat = XMMatrixIdentity();
-	constMap->color = this->color;
-	this->constBuffData->Unmap(0, nullptr);
+	constMap->isActive = isActive;
+	constMap->offset = {offset.x, offset.y};
+	constBuff->Unmap(0, nullptr);
 
 
 	//パイプラインステートの設定
@@ -85,7 +101,7 @@ void PostEffect::Draw()
 	//頂点バッファのセット
 	common->dxCommon->GetCommandList()->IASetVertexBuffers(0,1,&this->vbView);
 	//定数バッファをセット
-	common->dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, this->constBuffData->GetGPUVirtualAddress());
+	common->dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
 	//テスクチャ用デスクリプタヒープの設定
 	ID3D12DescriptorHeap* ppHeaps[] = {descHeapSRV.Get()};
 	common->dxCommon->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps),ppHeaps);

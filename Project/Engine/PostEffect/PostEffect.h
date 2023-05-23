@@ -5,6 +5,13 @@ class PostEffect : public Sprite
 {
 public://エイリアス
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+
+public:
+	struct ConstBufferDate{
+		bool isActive;
+		float pad1;
+		Vector2 offset;
+	};
 	
 public:
 	static PostEffect* Create(UINT texNumber, Vector2 pos, Vector2 size, XMFLOAT4 color = {1,1,1,1},
@@ -66,5 +73,11 @@ private:
 	ComPtr<ID3D12PipelineState> pipelineState;
 	//ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature;
+
+	//定数バッファ
+	ComPtr<ID3D12Resource> constBuff;
+
+	bool isActive = true;
+	Vector2 offset = {0.0f, 0.0f};
 };
 
