@@ -70,7 +70,7 @@ bool PostEffect::Initialize()
 
 void PostEffect::Draw()
 {
-	//offset.x += 0.01f;
+	offset.x += 0.001f;
 	//color -= {0.01f,0.01f,0.01f};
 
 

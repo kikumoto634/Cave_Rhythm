@@ -9,8 +9,8 @@ float4 main(VSOutput input) : SV_TARGET
 
 	//円内判定
 	float2 center = float2(0.5f,0.5f);
-	float radius1 = 0.1f;
-	float radius2 = 0.2f;
+	float radius1 = offset.x;
+	float radius2 = radius1+0.1f;
 	float2 calValue = float2((input.uv.x-center.x)*(input.uv.x-center.x), (input.uv.y-center.y)*(input.uv.y-center.y));
 
 	//ぼかし
@@ -21,7 +21,7 @@ float4 main(VSOutput input) : SV_TARGET
     {
         for (int y = 0; y < 16; y++)
         {
-            colorSum += tex.Sample(smp, (input.uv + offset) + float2(x, y) * texelSize);
+            colorSum += tex.Sample(smp, (input.uv) + float2(x, y) * texelSize);
         }
     }
     colorSum /= (16.0f*16.0f);  // 周囲9ピクセルの平均値を計算
