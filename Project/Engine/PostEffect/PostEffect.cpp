@@ -72,6 +72,20 @@ bool PostEffect::Initialize()
 
 void PostEffect::Draw()
 {
+	if(blurValue != 1){
+		if(frame > 3){
+			blurValue--;
+			frame = 0;
+			color += {0.2f/BlurValue, 0.2f/BlurValue, 0.2f/BlurValue};
+		}
+		frame++;
+	}
+	else
+	{
+		blurValue = 1;
+		frame = 0;
+	}
+
 	//ワールド行列の更新
 	this->matWorld = XMMatrixIdentity();
 	//Z軸回転
@@ -85,6 +99,7 @@ void PostEffect::Draw()
 	result = this->constBuff->Map(0,nullptr, (void**)&constMap);
 	assert(SUCCEEDED(result));
 	constMap->isActive = isActive;
+	constMap->value = blurValue;
 	constMap->offset = {offset.x, offset.y};
 	constMap->color = color;
 	constBuff->Unmap(0, nullptr);

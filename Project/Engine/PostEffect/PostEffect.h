@@ -9,8 +9,8 @@ public://エイリアス
 public:
 	struct ConstBufferDate{
 		bool isActive;
+		int value;
 		Vector2 offset;
-		float pad1;
 		Vector3 color;
 	};
 	
@@ -79,10 +79,11 @@ private:
 	ComPtr<ID3D12Resource> constBuff;
 
 	bool isActive = true;
+	const int BlurValue = 10;
+	int blurValue = BlurValue;
 	Vector2 offset = {0.0f, 0.0f};
-	Vector3 color = {1,1,1};
+	Vector3 color = {0.8f,0.8f,0.8f};
 
 	float frame = 0;
-	float frame2 = 0;
 };
 
