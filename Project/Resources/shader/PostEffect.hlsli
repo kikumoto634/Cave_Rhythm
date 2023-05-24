@@ -1,8 +1,9 @@
 cbuffer cbuff0 : register(b0)
 {
-	bool isActive;
-	int value;
+	bool isBlurActive;
+	int blurValue;
 };
+
 
 //頂点シェーダーからの出力構造体
 struct VSOutput

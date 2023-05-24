@@ -59,19 +59,20 @@ bool PostEffect::Initialize()
 	DepthInitialize();
 	DSVInitialize();
 
+
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDescB0 =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
+	CD3DX12_RESOURCE_DESC resourceDesc =
+		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData_Blur) + 0xff) & ~0xff);
 
 	HRESULT result;
 
 	// 定数バッファの生成
 	result = common->dxCommon->GetDevice()->CreateCommittedResource(
 		&heapProps, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDescB0, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuff));
+		D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+		IID_PPV_ARGS(&constBuff_Blur));
 	assert(SUCCEEDED(result));
 
 	//パイプライン
@@ -98,12 +99,14 @@ void PostEffect::Draw()
 
 	//定数バッファの転送
 	HRESULT result;
-	ConstBufferDate* constMap = nullptr;
-	result = this->constBuff->Map(0,nullptr, (void**)&constMap);
-	assert(SUCCEEDED(result));
-	constMap->isActive = isActive_;
-	constMap->value = blurValue_;
-	constBuff->Unmap(0, nullptr);
+	{
+		ConstBufferData_Blur* constMap = nullptr;
+		result = this->constBuff_Blur->Map(0,nullptr, (void**)&constMap);
+		assert(SUCCEEDED(result));
+		constMap->isActive = isBlurActive_;
+		constMap->value = blurValue_;
+		constBuff_Blur->Unmap(0, nullptr);
+	}
 
 
 	//パイプラインステートの設定
@@ -120,7 +123,7 @@ void PostEffect::Draw()
 	//頂点バッファのセット
 	common->dxCommon->GetCommandList()->IASetVertexBuffers(0,1,&this->vbView);
 	//定数バッファをセット
-	common->dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+	common->dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuff_Blur->GetGPUVirtualAddress());
 	//テスクチャ用デスクリプタヒープの設定
 	ID3D12DescriptorHeap* ppHeaps[] = {descHeapSRV.Get()};
 	common->dxCommon->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps),ppHeaps);
@@ -169,19 +172,6 @@ void PostEffect::SpriteInitialize()
 		vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 		vbView.SizeInBytes = sizeof(VertexPosUv) * VertNum;
 		vbView.StrideInBytes = sizeof(VertexPosUv);
-	}
-
-	//定数
-	{
-		result = common->dxCommon->GetDevice()->CreateCommittedResource(
-			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-			D3D12_HEAP_FLAG_NONE,
-			&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff),
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&constBuffData)
-		);
-		assert(SUCCEEDED(result));
 	}
 }
 
@@ -573,19 +563,19 @@ void PostEffect::PostDrawScene()
 
 void PostEffect::Blur()
 {
-	if(!isActive_) return;
+	if(!isBlurActive_) return;
 
 	if(blurValue_ != 1){
-		if(frame_ > 3){
+		if(blurFrame_ > 3){
 			blurValue_--;
-			frame_ = 0;
+			blurFrame_ = 0;
 		}
-		frame_++;
+		blurFrame_++;
 	}
 	else
 	{
 		blurValue_ = BlurValue;
-		frame_ = 0;
-		isActive_ = false;
+		blurFrame_ = 0;
+		isBlurActive_ = false;
 	}
 }

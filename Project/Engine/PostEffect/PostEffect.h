@@ -8,10 +8,14 @@ public://エイリアス
 
 public:
 	//ぼかし
-	struct ConstBufferDate{
+	struct ConstBufferData_Blur{
 		bool isActive;
 		int value;
 	};
+
+private:
+	//ぼかしの強さ
+	const int BlurValue = 10;
 	
 public:
 	static PostEffect* GetInstance();
@@ -36,14 +40,14 @@ public:
 
 
 	//ポストエフェクト開始
-	inline void PostEffectStart()	{isActive_ = true;}
+	inline void PostEffectStart()	{isBlurActive_ = true;}
 
 	//ブラー
 	void Blur();
 
 
 	//Getter
-	inline bool GetIsActive()	{return isActive_;}
+	inline bool GetIsActive()	{return isBlurActive_;}
 
 private:
 	//スプライト共通初期化
@@ -94,12 +98,11 @@ private:
 	ComPtr<ID3D12RootSignature> rootSignature;
 
 	//定数バッファ
-	ComPtr<ID3D12Resource> constBuff;
+	ComPtr<ID3D12Resource> constBuff_Blur;
 
-	bool isActive_ = false;
-	const int BlurValue = 10;
+	//ぼかし
+	bool isBlurActive_ = false;
 	int blurValue_ = BlurValue;
-
-	float frame_ = 0;
+	float blurFrame_ = 0;
 };
 
