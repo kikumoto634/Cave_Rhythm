@@ -6,38 +6,48 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
+PostEffect* PostEffect::instance = nullptr;
 const float PostEffect::clearColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 
-PostEffect::PostEffect(UINT texnumber, Vector3 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY) 
-	: Sprite(
-		texnumber,
-		pos,
-		size,
-		color,
-		anchorpoint,
-		isFlipX,
-		isFlipY
-	)
+
+PostEffect *PostEffect::GetInstance()
 {
+	if(!instance)
+	{
+		instance = new PostEffect();
+	}
+	return instance;
+}
+
+void PostEffect::Delete()
+{
+	if(instance){
+		delete instance;
+		instance = nullptr;
+	}
 }
 
 PostEffect *PostEffect::Create(UINT texNumber, Vector2 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY)
 {
-	// Spriteのインスタンスを生成
-	PostEffect* postEffect =
-		new PostEffect(texNumber, {pos.x,pos.y,0.f}, size, color, anchorpoint, isFlipX, isFlipY);
-	if (postEffect == nullptr) {
+	if (instance== nullptr) {
 		return nullptr;
 	}
+	instance->texNumber = texNumber;
+	instance->position = {pos.x,pos.y,0};
+	instance->size = size;
+	instance->anchorpoint = anchorpoint;
+	instance->color = color;
+	instance->IsFlipX = isFlipX;
+	instance->IsFlipY = isFlipY;
 
 	// 初期化
-	if (!postEffect->Initialize()) {
-		delete postEffect;
+	if (!instance->Initialize()) {
+		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	return postEffect;
+	return instance;
 }
 
 bool PostEffect::Initialize()
@@ -70,21 +80,14 @@ bool PostEffect::Initialize()
 	return true;
 }
 
+void PostEffect::Update()
+{
+	Blur();
+}
+
 void PostEffect::Draw()
 {
-	if(blurValue != 1){
-		if(frame > 3){
-			blurValue--;
-			frame = 0;
-			color += {0.2f/BlurValue, 0.2f/BlurValue, 0.2f/BlurValue};
-		}
-		frame++;
-	}
-	else
-	{
-		blurValue = 1;
-		frame = 0;
-	}
+	if(!instance) return;
 
 	//ワールド行列の更新
 	this->matWorld = XMMatrixIdentity();
@@ -98,10 +101,8 @@ void PostEffect::Draw()
 	ConstBufferDate* constMap = nullptr;
 	result = this->constBuff->Map(0,nullptr, (void**)&constMap);
 	assert(SUCCEEDED(result));
-	constMap->isActive = isActive;
-	constMap->value = blurValue;
-	constMap->offset = {offset.x, offset.y};
-	constMap->color = color;
+	constMap->isActive = isActive_;
+	constMap->value = blurValue_;
 	constBuff->Unmap(0, nullptr);
 
 
@@ -521,6 +522,7 @@ void PostEffect::CreateGraphicsPipelineState()
 
 void PostEffect::PreDrawScene()
 {
+	if(!instance) return;
 	//リソースバリア
 	common->dxCommon->GetCommandList()->ResourceBarrier(
 		1,
@@ -557,6 +559,7 @@ void PostEffect::PreDrawScene()
 
 void PostEffect::PostDrawScene()
 {
+	if(!instance) return;
 	//リソースバリア
 	common->dxCommon->GetCommandList()->ResourceBarrier(
 		1,
@@ -566,4 +569,23 @@ void PostEffect::PostDrawScene()
 			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE
 		)
 	);
+}
+
+void PostEffect::Blur()
+{
+	if(!isActive_) return;
+
+	if(blurValue_ != 1){
+		if(frame_ > 3){
+			blurValue_--;
+			frame_ = 0;
+		}
+		frame_++;
+	}
+	else
+	{
+		blurValue_ = BlurValue;
+		frame_ = 0;
+		isActive_ = false;
+	}
 }

@@ -2,8 +2,6 @@ cbuffer cbuff0 : register(b0)
 {
 	bool isActive;
 	int value;
-	float2 offset;
-	float3 color;
 };
 
 //頂点シェーダーからの出力構造体

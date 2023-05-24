@@ -60,6 +60,11 @@ void TitleScene::Update()
 		isNextSceneChange_ = true;
 		audio_->PlayWave(coinGet_audio.number,coinGet_audio.volume);
 	}
+
+	if(input->Trigger(DIK_SPACE)){
+		postEffect->PostEffectStart();
+	}
+
 #pragma region _3DObj Update
 	for(auto it = objs_.begin(); it != objs_.end(); ++it){
 		(*it)->Update(camera);
@@ -125,6 +130,7 @@ void TitleScene::DrawNear()
 	}
 	fade_->Draw();
 }
+
 
 void TitleScene::Finalize()
 {

@@ -157,7 +157,7 @@ void Application::Initialize()
 
 	
 	//ポストエフェクト
-	postEffect_ = PostEffect::Create(white1x1_tex.number, {0,0}, {500,500});
+	postEffect_ = PostEffect::GetInstance();
 }
 
 void Application::Update()
@@ -167,6 +167,7 @@ void Application::Update()
 #endif // _DEBUG
 
 	sceneManager->Update();
+	postEffect_->Update();
 
 #ifdef _DEBUG
 	imgui->End();

@@ -7,9 +7,11 @@ float4 main(VSOutput input) : SV_TARGET
 {
 	float4 texcolor = tex.Sample(smp, input.uv);
 
+	if(!isActive) return float4(texcolor.rgb,1);
+
 	//円内判定
 	float2 center = float2(0.5f,0.5f);
-	float radius1 = 0.2f;
+	float radius1 = 0.1;
 	float radius2 = 1.0f;
 	float2 calValue = float2((input.uv.x-center.x)*(input.uv.x-center.x), (input.uv.y-center.y)*(input.uv.y-center.y));
 
@@ -18,21 +20,21 @@ float4 main(VSOutput input) : SV_TARGET
 	float4 colorSum = float4(0.0f,0.0f,0.0f,0.0f);
 	int BlurMax = value;
 
-    for (int x = 0; x < BlurMax; x++)
+    for (int x = -BlurMax; x < BlurMax; x++)
     {
-        for (int y = 0; y < BlurMax; y++)
+        for (int y = -BlurMax; y < BlurMax; y++)
         {
             colorSum += tex.Sample(smp, (input.uv) + float2(x, y) * texelSize);
         }
     }
-    colorSum /= (BlurMax*BlurMax);  // 周囲9ピクセルの平均値を計算
+    colorSum /= (BlurMax*2*BlurMax*2);  // 周囲9ピクセルの平均値を計算
 
 
 	if(calValue.x+calValue.y <= radius1*radius1){
 		return float4(texcolor.rgb,1);
 	}
 	else if(calValue.x+calValue.y <= radius2*radius2){
-		return float4(colorSum.rgb*color, 1);
+		return float4(colorSum.rgb, 1);
 	}
 
 	return float4(texcolor.rgb,1);

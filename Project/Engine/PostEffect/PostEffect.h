@@ -7,21 +7,25 @@ public://エイリアス
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:
+	//ぼかし
 	struct ConstBufferDate{
 		bool isActive;
 		int value;
-		Vector2 offset;
-		Vector3 color;
 	};
 	
 public:
+	static PostEffect* GetInstance();
+	static void Delete();
+
 	static PostEffect* Create(UINT texNumber, Vector2 pos, Vector2 size, XMFLOAT4 color = {1,1,1,1},
 		Vector2 anchorpoint = {0.f,0.f}, bool isFlipX = false, bool isFlipY = false);
 
 public:
-	PostEffect(UINT texnumber, Vector3 pos, Vector2 size, XMFLOAT4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY);
+	PostEffect() {};
 
 	bool Initialize();
+
+	void Update();
 
 	void Draw();
 
@@ -29,6 +33,17 @@ public:
 	void PreDrawScene();
 	//シーン描画後処理
 	void PostDrawScene();
+
+
+	//ポストエフェクト開始
+	inline void PostEffectStart()	{isActive_ = true;}
+
+	//ブラー
+	void Blur();
+
+
+	//Getter
+	inline bool GetIsActive()	{return isActive_;}
 
 private:
 	//スプライト共通初期化
@@ -52,6 +67,9 @@ private:
 
 
 private:
+	//シングルトン
+	static PostEffect* instance;
+
 	//画面クリアカラー
 	static const float clearColor[4];
 
@@ -78,12 +96,10 @@ private:
 	//定数バッファ
 	ComPtr<ID3D12Resource> constBuff;
 
-	bool isActive = true;
+	bool isActive_ = false;
 	const int BlurValue = 10;
-	int blurValue = BlurValue;
-	Vector2 offset = {0.0f, 0.0f};
-	Vector3 color = {0.8f,0.8f,0.8f};
+	int blurValue_ = BlurValue;
 
-	float frame = 0;
+	float frame_ = 0;
 };
 

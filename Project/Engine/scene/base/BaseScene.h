@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Camera.h"
 
-//#include "SceneManager.h"
+#include "PostEffect.h"
 
 #ifdef _DEBUG
 #include "DebugText.h"
@@ -46,6 +46,7 @@ public:
 	/// </summary>
 	void EndUpdate();
 
+
 	/// <summary>
 	/// 3D描画
 	/// </summary>
@@ -60,6 +61,8 @@ public:
 	/// 2D描画UI
 	/// </summary>
 	virtual void DrawNear();
+
+
 
 	/// <summary>
 	/// 後処理
@@ -92,6 +95,9 @@ protected:
 	//借り物
 	//シーンマネージャー
 	SceneManager* sceneManager = nullptr;
+
+	//ポストエフェクト
+	PostEffect* postEffect = nullptr;
 
 #ifdef _DEBUG
 	//借り物
