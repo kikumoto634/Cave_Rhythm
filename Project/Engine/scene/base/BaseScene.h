@@ -106,5 +106,8 @@ protected:
 	bool show_demo_window = false;
 #endif // _DEBUG
 
+	//描画停止
+	bool isDrawStop = false;
+
 };
 

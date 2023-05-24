@@ -8,9 +8,11 @@ float4 main(VSOutput input) : SV_TARGET
 	float4 texcolor = tex.Sample(smp, input.uv);
 
 	//フェード
-
+	if(isFadeActive){
+		return float4(texcolor.rgb*fadeColor,1);
+	}
 	//ぼかし
-	if(isBlurActive){
+	else if(isBlurActive){
 		//円内判定
 		float2 center = float2(0.5f,0.5f);
 		float radius1 = 0.1;

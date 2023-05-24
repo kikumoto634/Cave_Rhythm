@@ -44,12 +44,8 @@ void TitleScene::Initialize()
 	lightGroup_->SetDirLightActive(1, false);
 	lightGroup_->SetDirLightActive(2, false);
 
-	//シーン遷移(FadeOut)
-	fadeInSize_ = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
-	fade_ = make_unique<BaseSprites>();
-	fade_->Initialize(white1x1_tex.number);
-	fade_->SetColor({fadeColor_.x,fadeColor_.y,fadeColor_.z,fadeColor_.w});
-	fade_->SetSize({fadeInSize_});
+	//ポストエフェクト
+	postEffect->FadeStart();
 }
 
 void TitleScene::Update()
@@ -58,12 +54,16 @@ void TitleScene::Update()
 
 	if(input->Trigger(DIK_Z) && !isNextSceneChange_){
 		isNextSceneChange_ = true;
+		postEffect->FadeStart();
 		audio_->PlayWave(coinGet_audio.number,coinGet_audio.volume);
 	}
 
-	if(input->Trigger(DIK_SPACE)){
-		postEffect->PostEffectStart();
+	/*if(input->Trigger(DIK_1)){
+		postEffect->BlurStart();
 	}
+	else if(input->Trigger(DIK_2)){
+		postEffect->FadeStart();
+	}*/
 
 #pragma region _3DObj Update
 	for(auto it = objs_.begin(); it != objs_.end(); ++it){
@@ -73,7 +73,6 @@ void TitleScene::Update()
 
 #pragma region _2DObj Update
 	SceneChange();
-	fade_->Update();
 
 	for(auto it = sp_.begin(); it != sp_.end(); it++){
 		(*it)->Update();
@@ -113,6 +112,8 @@ void TitleScene::Update()
 
 void TitleScene::Draw()
 {
+	if(isDrawStop) return;
+
 	for(auto it = objs_.begin(); it != objs_.end(); ++it){
 		(*it)->Draw();
 	}
@@ -120,15 +121,17 @@ void TitleScene::Draw()
 
 void TitleScene::DrawBack()
 {
+	if(isDrawStop) return;
 }
 
 void TitleScene::DrawNear()
 {
+	if(isDrawStop) return;
+
 	Sprite::SetPipelineState();
 	for(auto it = sp_.begin(); it != sp_.end(); it++){
 		(*it)->Draw();
 	}
-	fade_->Draw();
 }
 
 
@@ -139,8 +142,6 @@ void TitleScene::Finalize()
 	for(auto it = sp_.begin(); it != sp_.end(); it++){
 		(*it)->Finalize();
 	}
-
-	fade_->Finalize();
 
 	delete lightGroup_;
 	lightGroup_ = nullptr;
@@ -167,27 +168,19 @@ void TitleScene::SceneChange()
 {
 	//PrevSceneからの移動後処理
 	if(isPrevSceneChange_){
-		if(fadeColor_.w <= 0){
-			isPrevSceneChange_ = false;
-			fadeCurrentFrame_ = 0;
-			return;
-		}
-
-		fadeColor_.w = 
-			Easing_Point2_Linear<float>(1.0f,0.0f,Time_OneWay(fadeCurrentFrame_, FadeSecond));
-		fade_->SetColor({fadeColor_.x,fadeColor_.y,fadeColor_.z,fadeColor_.w});
+		if(!postEffect->FadeIn()) return;
+		
+		isPrevSceneChange_ = false;
+		return;
 	}
 	//NextSceneへの移動
 	else if(isNextSceneChange_ || isDebugScene_){
+		if(!postEffect->FadeOut()) return;
 
-		if(fadeColor_.w >= 1){
-			if(isNextSceneChange_)NextSceneChange();
-			else if(isDebugScene_)DebugSceneChange();
-		}
-
-		fadeColor_.w = 
-			Easing_Point2_Linear<float>(0.0f,1.0f,Time_OneWay(fadeCurrentFrame_, FadeSecond));
-		fade_->SetColor({fadeColor_.x,fadeColor_.y,fadeColor_.z,fadeColor_.w});
+		isDrawStop = true;
+		
+		if(isNextSceneChange_)NextSceneChange();
+		else if(isDebugScene_)DebugSceneChange();
 	}
 }
 

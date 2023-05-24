@@ -13,9 +13,18 @@ public:
 		int value;
 	};
 
+	//フェード
+	struct ConstBufferData_Fade{
+		bool isActive;
+		Vector3 color;
+	};
+
 private:
 	//ぼかしの強さ
 	const int BlurValue = 10;
+
+	//フェード時間
+	const float FadeSecond = 1.5f;
 	
 public:
 	static PostEffect* GetInstance();
@@ -40,10 +49,15 @@ public:
 
 
 	//ポストエフェクト開始
-	inline void PostEffectStart()	{isBlurActive_ = true;}
+	inline void BlurStart()	{isBlurActive_ = true;}
+	inline void FadeStart()	{isFadeActive = true;}
 
 	//ブラー
 	void Blur();
+
+	//フェード
+	bool FadeIn();
+	bool FadeOut();
 
 
 	//Getter
@@ -99,10 +113,16 @@ private:
 
 	//定数バッファ
 	ComPtr<ID3D12Resource> constBuff_Blur;
+	ComPtr<ID3D12Resource> constBuff_Fade;
 
 	//ぼかし
 	bool isBlurActive_ = false;
 	int blurValue_ = BlurValue;
 	float blurFrame_ = 0;
+
+	//フェード
+	bool isFadeActive = false;
+	Vector3 fadeColor = {0,0,0};
+	float fadeFrame = 0;
 };
 

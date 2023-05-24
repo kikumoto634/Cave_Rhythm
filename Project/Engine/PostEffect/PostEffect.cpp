@@ -59,21 +59,35 @@ bool PostEffect::Initialize()
 	DepthInitialize();
 	DSVInitialize();
 
-
-	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData_Blur) + 0xff) & ~0xff);
-
 	HRESULT result;
+	{
+		// ヒーププロパティ
+		CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+		// リソース設定
+		CD3DX12_RESOURCE_DESC resourceDesc =
+			CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData_Blur) + 0xff) & ~0xff);
 
-	// 定数バッファの生成
-	result = common->dxCommon->GetDevice()->CreateCommittedResource(
-		&heapProps, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuff_Blur));
-	assert(SUCCEEDED(result));
+		// 定数バッファの生成
+		result = common->dxCommon->GetDevice()->CreateCommittedResource(
+			&heapProps, // アップロード可能
+			D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+			IID_PPV_ARGS(&constBuff_Blur));
+		assert(SUCCEEDED(result));
+	}
+	{
+		// ヒーププロパティ
+		CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+		// リソース設定
+		CD3DX12_RESOURCE_DESC resourceDesc =
+			CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData_Fade) + 0xff) & ~0xff);
+
+		// 定数バッファの生成
+		result = common->dxCommon->GetDevice()->CreateCommittedResource(
+			&heapProps, // アップロード可能
+			D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+			IID_PPV_ARGS(&constBuff_Fade));
+		assert(SUCCEEDED(result));
+	}
 
 	//パイプライン
 	CreateGraphicsPipelineState();
@@ -83,7 +97,6 @@ bool PostEffect::Initialize()
 
 void PostEffect::Update()
 {
-	Blur();
 }
 
 void PostEffect::Draw()
@@ -107,6 +120,14 @@ void PostEffect::Draw()
 		constMap->value = blurValue_;
 		constBuff_Blur->Unmap(0, nullptr);
 	}
+	{
+		ConstBufferData_Fade* constMap = nullptr;
+		result = this->constBuff_Fade->Map(0,nullptr, (void**)&constMap);
+		assert(SUCCEEDED(result));
+		constMap->isActive = isFadeActive;
+		constMap->color = fadeColor;
+		constBuff_Fade->Unmap(0, nullptr);
+	}
 
 
 	//パイプラインステートの設定
@@ -124,6 +145,7 @@ void PostEffect::Draw()
 	common->dxCommon->GetCommandList()->IASetVertexBuffers(0,1,&this->vbView);
 	//定数バッファをセット
 	common->dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuff_Blur->GetGPUVirtualAddress());
+	common->dxCommon->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuff_Fade->GetGPUVirtualAddress());
 	//テスクチャ用デスクリプタヒープの設定
 	ID3D12DescriptorHeap* ppHeaps[] = {descHeapSRV.Get()};
 	common->dxCommon->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps),ppHeaps);
@@ -473,9 +495,10 @@ void PostEffect::CreateGraphicsPipelineState()
 	descRangeSRV.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	//設定
-	CD3DX12_ROOT_PARAMETER rootParam[2] = {};
-	rootParam[0].InitAsConstantBufferView(0,0,D3D12_SHADER_VISIBILITY_ALL);
+	CD3DX12_ROOT_PARAMETER rootParam[3] = {};
+	rootParam[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 	rootParam[1].InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);
+	rootParam[2].InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_ALL);
 
 	///スタティックサンプラー
 	CD3DX12_STATIC_SAMPLER_DESC samplerDesc = CD3DX12_STATIC_SAMPLER_DESC(0,D3D12_FILTER_MIN_MAG_MIP_POINT);
@@ -578,4 +601,32 @@ void PostEffect::Blur()
 		blurFrame_ = 0;
 		isBlurActive_ = false;
 	}
+}
+
+bool PostEffect::FadeIn()
+{
+	if(!isFadeActive) return false;
+	fadeColor = Easing_Point2_Linear<Vector3>({0,0,0}, {1,1,1}, Time_OneWay(fadeFrame, FadeSecond));
+
+	if(fadeColor.x == 1, fadeColor.y == 1 && fadeColor.z == 1) {
+		isFadeActive = false;
+		fadeFrame = 0;
+		return true;
+	}
+
+	return false;
+}
+
+bool PostEffect::FadeOut()
+{
+	if(!isFadeActive) return false;
+	fadeColor = Easing_Point2_Linear<Vector3>({1,1,1}, {0,0,0}, Time_OneWay(fadeFrame, FadeSecond));
+
+	if(fadeColor.x == 0, fadeColor.y == 0 && fadeColor.z == 0) {
+		isFadeActive = false;
+		fadeFrame = 0;
+		return true;
+	}
+
+	return false;
 }

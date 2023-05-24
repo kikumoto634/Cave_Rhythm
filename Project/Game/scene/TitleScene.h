@@ -116,10 +116,6 @@ private:
 	LightGroup* lightGroup_ = nullptr;
 
 	//シーン遷移
-	unique_ptr<BaseSprites> fade_;
-	Vector4 fadeColor_ = {0,0,0,1};
-	Vector2 fadeInSize_ = {};
-	float fadeCurrentFrame_ = 0;
 	//Prev
 	bool isPrevSceneChange_ = true;
 	//Next

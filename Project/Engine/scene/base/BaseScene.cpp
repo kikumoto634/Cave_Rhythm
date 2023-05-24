@@ -24,6 +24,8 @@ void BaseScene::Initialize()
 
 	//カメラ
 	camera->Initialize(window);
+
+	isDrawStop = false;
 }
 
 void BaseScene::Update()
