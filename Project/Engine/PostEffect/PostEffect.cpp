@@ -608,7 +608,7 @@ bool PostEffect::FadeIn()
 	if(!isFadeActive) return false;
 	fadeColor = Easing_Point2_Linear<Vector3>({0,0,0}, {1,1,1}, Time_OneWay(fadeFrame, FadeSecond));
 
-	if(fadeColor.x == 1, fadeColor.y == 1 && fadeColor.z == 1) {
+	if(fadeColor.x == 1) {
 		isFadeActive = false;
 		fadeFrame = 0;
 		return true;
@@ -622,7 +622,7 @@ bool PostEffect::FadeOut()
 	if(!isFadeActive) return false;
 	fadeColor = Easing_Point2_Linear<Vector3>({1,1,1}, {0,0,0}, Time_OneWay(fadeFrame, FadeSecond));
 
-	if(fadeColor.x == 0, fadeColor.y == 0 && fadeColor.z == 0) {
+	if(fadeColor.x == 0) {
 		isFadeActive = false;
 		fadeFrame = 0;
 		return true;
