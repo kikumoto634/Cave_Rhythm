@@ -83,5 +83,6 @@ private:
 	Vector3 color = {1,1,1};
 
 	float frame = 0;
+	float frame2 = 0;
 };
 

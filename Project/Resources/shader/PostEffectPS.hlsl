@@ -10,7 +10,7 @@ float4 main(VSOutput input) : SV_TARGET
 	//‰~“à”»’è
 	float2 center = float2(0.5f,0.5f);
 	float radius1 = offset.x;
-	float radius2 = radius1+0.1f;
+	float radius2 = radius1+offset.y;
 	float2 calValue = float2((input.uv.x-center.x)*(input.uv.x-center.x), (input.uv.y-center.y)*(input.uv.y-center.y));
 
 	//‚Ú‚©‚µ

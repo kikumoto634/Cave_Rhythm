@@ -60,7 +60,6 @@ void TitleScene::Update()
 		isNextSceneChange_ = true;
 		audio_->PlayWave(coinGet_audio.number,coinGet_audio.volume);
 	}
-
 #pragma region _3DObj Update
 	for(auto it = objs_.begin(); it != objs_.end(); ++it){
 		(*it)->Update(camera);
