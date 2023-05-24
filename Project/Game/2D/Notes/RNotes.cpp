@@ -26,7 +26,7 @@ void RNotes::Update(float goalTime)
 
 		//移動
 		curBeatTime += 1.f/easingTime;
-		easingPos = Easing_Linear_Point2(R_Start_Pos,R_End_Pos,curBeatTime);
+		easingPos = Easing_Point2_Linear(R_Start_Pos,R_End_Pos,curBeatTime);
 
 		SetPosition(easingPos);
 	}

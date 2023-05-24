@@ -113,7 +113,7 @@ void BaseObjObject::SetCollider(BaseCollider *collider)
 bool BaseObjObject::ScaleChange(Vector3 &sizeMax, Vector3 &sizeMin, const float &EndTime)
 {
 	float ease = -(cosf(3.14159265f * scaleCurrentTime_) - 1.f)/2.f;
-	scale_ = Easing_Linear_Point2(sizeMin, sizeMax, ease);
+	scale_ = Easing_Point2_Linear(sizeMin, sizeMax, ease);
 	SetScale(scale_);
 
 	if(scaleCurrentTime_ >= 1.0f){

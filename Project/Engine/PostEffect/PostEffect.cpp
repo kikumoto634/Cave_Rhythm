@@ -1,6 +1,8 @@
 #include "PostEffect.h"
 #include "Window.h"
 
+#include "Easing.h"
+
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -70,10 +72,6 @@ bool PostEffect::Initialize()
 
 void PostEffect::Draw()
 {
-	offset.x += 0.001f;
-	//color -= {0.01f,0.01f,0.01f};
-
-
 	//ワールド行列の更新
 	this->matWorld = XMMatrixIdentity();
 	//Z軸回転

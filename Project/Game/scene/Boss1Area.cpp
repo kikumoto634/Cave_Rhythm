@@ -43,7 +43,7 @@ void Boss1Area::SceneChange()
 			}
 
 			fadeColor_.w = 
-				Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
+				Easing_Point2_Linear<float>(1.0f,0.0f,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
 			fade_->SetColor(fadeColor_);
 			fade_->Update();
 		}
@@ -58,7 +58,7 @@ void Boss1Area::SceneChange()
 		}
 
 		fadeColor_.w = 
-			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
+			Easing_Point2_Linear<float>(0.0f,1.0f,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
 		fade_->SetColor(fadeColor_);
 		fade_->Update();
 	}
@@ -307,10 +307,10 @@ void Boss1Area::cutinUpdate()
 		}
 
 		if(IsCutInMoveStart){
-			cutInPos = Easing_Linear_Point2({1920,360},{640,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-			cutInPartPos1 = Easing_Linear_Point2({1680,600},{880,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-			cutInPartPos2 = Easing_Linear_Point2({-400,120},{380,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-			bossNamePos = Easing_Linear_Point2({1605,610},{950,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPos = Easing_Point2_Linear<Vector2>({1920,360},{640,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos1 = Easing_Point2_Linear<Vector2>({1680,600},{880,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos2 = Easing_Point2_Linear<Vector2>({-400,120},{380,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			bossNamePos = Easing_Point2_Linear<Vector2>({1605,610},{950,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 	
 			if(cutInMoveFrameCur >= 1.0f){
 				cutInPos = {640,360};
@@ -327,10 +327,10 @@ void Boss1Area::cutinUpdate()
 			bossName->SetPosition(bossNamePos);
 		}
 		else if(IsCutInMoveEnd){
-			cutInPos = Easing_Linear_Point2({640,360},{1920,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-			cutInPartPos1 = Easing_Linear_Point2({800,600},{1680,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-			cutInPartPos2 = Easing_Linear_Point2({380,120},{-400,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-			bossNamePos = Easing_Linear_Point2({950,610},{1605,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPos = Easing_Point2_Linear<Vector2>({640,360},{1920,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos1 = Easing_Point2_Linear<Vector2>({800,600},{1680,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			cutInPartPos2 = Easing_Point2_Linear<Vector2>({380,120},{-400,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
+			bossNamePos = Easing_Point2_Linear<Vector2>({950,610},{1605,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
 
 			if(cutInMoveFrameCur >= 1.0f){
 				cutInPos = {1920,360};

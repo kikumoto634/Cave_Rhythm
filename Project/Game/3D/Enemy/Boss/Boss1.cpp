@@ -135,7 +135,7 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 
 		//移動
 		if(IsMoveEasing){
-			world_.translation = Easing_Linear_Point2(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+			world_.translation = Easing_Point2_Linear(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
 		
 			Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
 			if(subVector.length() <= 1.f){

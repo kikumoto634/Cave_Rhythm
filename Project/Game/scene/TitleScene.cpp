@@ -169,7 +169,7 @@ void TitleScene::SceneChange()
 		}
 
 		fadeColor_.w = 
-			Easing_Linear_Point2(1,0,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+			Easing_Point2_Linear<float>(1.0f,0.0f,Time_OneWay(fadeCurrentFrame_, FadeSecond));
 		fade_->SetColor({fadeColor_.x,fadeColor_.y,fadeColor_.z,fadeColor_.w});
 	}
 	//NextSceneへの移動
@@ -181,7 +181,7 @@ void TitleScene::SceneChange()
 		}
 
 		fadeColor_.w = 
-			Easing_Linear_Point2(0,1,Time_OneWay(fadeCurrentFrame_, FadeSecond));
+			Easing_Point2_Linear<float>(0.0f,1.0f,Time_OneWay(fadeCurrentFrame_, FadeSecond));
 		fade_->SetColor({fadeColor_.x,fadeColor_.y,fadeColor_.z,fadeColor_.w});
 	}
 }

@@ -15,7 +15,7 @@ float4 main(VSOutput input) : SV_TARGET
 
 	//‚Ú‚©‚µ
 	float2 texelSize = float2(1.0f/1280.0f, 1.0f/720.0f);
-	float4 colorSum = (0,0,0,0);
+	float4 colorSum = (0.0f,0.0f,0.0f,0.0f);
 
     for (int x = 0; x < 16; x++)
     {

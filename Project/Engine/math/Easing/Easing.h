@@ -2,8 +2,10 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
+#include <cmath>
+
 /// <summary>
-/// イージング用時間(一回)
+/// イージング_時間(一回)
 /// </summary>
 /// <param name="frame">フレーム</param>
 /// <param name="second">何秒で到達</param>
@@ -11,46 +13,84 @@
 float& Time_OneWay(float& frame, const float second);
 
 /// <summary>
-/// イージング用時間(ループ)
+/// イージング_時間(ループ)
 /// </summary>
 /// <param name="frame">フレーム</param>
 /// <param name="second">何秒で到達</param>
 /// <returns></returns>
 float& Time_Loop(float& frame, const float second);
 
+
+
 /// <summary>
-/// 等速直線 2点
+/// EaseOutBounce用フレーム変化
 /// </summary>
-/// <param name="start">開始座標</param>
-/// <param name="end">終了座標</param>
-/// <param name="frame">フレーム</param>
-/// <returns></returns>
-const Vector3 Easing_Linear_Point2(const Vector3& start, const Vector3& end, const float& frame);
+float EaseOutBounec(float value);
+
+/// <summary>
+/// EaseOutInBounce
+/// </summary>
+float EaseInOutBounce(float value);
+
+
 
 /// <summary>
 /// 等速直線 2点
 /// </summary>
-/// <param name="start">開始座標</param>
-/// <param name="end">終了座標</param>
-/// <param name="frame">フレーム</param>
-/// <returns></returns>
-const Vector2 Easing_Linear_Point2(const Vector2& start, const Vector2& end, const float& frame);
-
-/// <summary>
-/// 等速直線 2点
-/// </summary>
-/// <param name="start">開始座標</param>
-/// <param name="end">終了座標</param>
-/// <param name="frame">フレーム</param>
-/// <returns></returns>
-const float Easing_Linear_Point2(const float& start, const float& end, const float& frame);
+template<typename T>
+const T Easing_Point2_Linear(const T& start, const T& end, const float& frame);
 
 /// <summary>
 /// 等速直線 3点
 /// </summary>
-/// <param name="start">開始座標</param>
-/// <param name="center">中間座標</param>
-/// <param name="end">終了座標</param>
-/// <param name="frame">フレーム</param>
-/// <returns></returns>
-const Vector3 Easing_Linear_Point3(const Vector3& start, const Vector3& center, const Vector3& end, const float& frame);
+template<class T>
+const T Easing_Point3_Linear(const T& start, const T& center, const T& end, const float& frame);
+
+/// <summary>
+/// EaseOutBounce 2点
+/// </summary>
+template<class T>
+const T Easing_Point2_EaseOutBounce(const T& start, const T& end, const float& frame);
+
+/// <summary>
+/// EaseOutInBounce 2点
+/// </summary>
+template<class T>
+const T Easing_Point2_EaseOutInBounce(const T& start, const T& end, const float& frame);
+
+
+
+template<class T>
+inline const T Easing_Point2_Linear(const T &start, const T &end, const float &frame)
+{
+	T pos{};
+	pos = (1.f-frame) * start + frame * end;
+	return pos;
+}
+
+template<class T>
+inline const T Easing_Point3_Linear(const T &start, const T &center, const T &end, const float &frame)
+{
+	T pos{};
+	pos = ((1.f-frame)*(1.f-frame) * start) + (2.f * (1.f-frame) * frame * center) + (frame*frame * end);
+	return pos;
+}
+
+
+template<class T>
+inline const T Easing_Point2_EaseOutBounce(const T &start, const T &end, const float &frame)
+{
+	T pos{};
+	float value = EaseOutBounec(frame);
+	pos = (1.f-value) * start + value * end;
+	return pos;
+}
+
+template<class T>
+inline const T Easing_Point2_EaseOutInBounce(const T &start, const T &end, const float &frame)
+{
+	T pos{};
+	float value = EaseInOutBounce(frame);
+	pos = (1.f-value) * start + value * end;
+	return pos;
+}

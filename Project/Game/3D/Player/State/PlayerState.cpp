@@ -31,7 +31,7 @@ void MovePlayerState::UpdateTrigger()
 void MovePlayerState::Update()
 {
 	//移動処理
-	player_->world_.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
+	player_->world_.translation = Easing_Point2_Linear(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//モデル変更
 	player_->object_->SetModel(player_->model_);

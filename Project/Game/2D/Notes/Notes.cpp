@@ -1,4 +1,4 @@
-﻿#include "Notes.h"
+#include "Notes.h"
 #include "Easing.h"
 
 void Notes::Initialize(UINT textureNumber)
@@ -19,7 +19,7 @@ void Notes::Update(float goalTime)
 	if(IsMoveStop){
 
 		//消滅色変化
-		this->color.w = Easing_Linear_Point2(1,0,Time_OneWay(curAlphaFrame, AlphaMaxTime));
+		this->color.w = Easing_Point2_Linear<float>(1.0f,0.0f,Time_OneWay(curAlphaFrame, AlphaMaxTime));
 
 		if(this->color.w <= 0){
 			IsNoteAlive = false;

@@ -34,7 +34,7 @@ void Combo::Update()
 
 	//リセット色変化
 	if(isReset_){
-		comboSpColor_.x = Easing_Linear_Point2(0,1,Time_OneWay(curColorChangeFrame_,ComboResetColorSecond));
+		comboSpColor_.x = Easing_Point2_Linear<float>(0.0f,1.0f,Time_OneWay(curColorChangeFrame_,ComboResetColorSecond));
 		comboSpColor_.y = comboSpColor_.x;
 
 		if(comboSpColor_.x >= 1){

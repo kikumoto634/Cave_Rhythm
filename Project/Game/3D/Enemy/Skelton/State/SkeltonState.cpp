@@ -118,7 +118,7 @@ void TrackSkeltonState::Update()
 	}
 
 	//移動処理
-	skelton_->world_.translation = Easing_Linear_Point2(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
+	skelton_->world_.translation = Easing_Point2_Linear(easigStartPos_, easingEndPos_, Time_OneWay(easingMoveTime_, EasingMoveTimeMax));
 
 	//移動完了時
 	if(easingMoveTime_ >= EasingFrameMax){

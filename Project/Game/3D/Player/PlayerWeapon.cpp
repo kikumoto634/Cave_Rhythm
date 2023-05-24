@@ -35,7 +35,7 @@ void PlayerWeapon::Update(Camera *camera)
 		isAlive_ = false;
 		return;
 	}
-	world_.scale = Easing_Linear_Point2(StartSize, EndSize,Time_OneWay(aliveCurrentTime_, AliveTime));
+	world_.scale = Easing_Point2_Linear(StartSize, EndSize,Time_OneWay(aliveCurrentTime_, AliveTime));
 
 	//ベース更新
 	BaseObjObject::Update(this->camera_);
