@@ -57,14 +57,6 @@ void TitleScene::Update()
 		postEffect->FadeStart();
 		audio_->PlayWave(coinGet_audio.number,coinGet_audio.volume);
 	}
-
-	/*if(input->Trigger(DIK_1)){
-		postEffect->BlurStart();
-	}
-	else if(input->Trigger(DIK_2)){
-		postEffect->FadeStart();
-	}*/
-
 #pragma region _3DObj Update
 	for(auto it = objs_.begin(); it != objs_.end(); ++it){
 		(*it)->Update(camera);

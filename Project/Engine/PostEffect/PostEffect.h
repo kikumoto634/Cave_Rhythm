@@ -53,7 +53,7 @@ public:
 	inline void FadeStart()	{isFadeActive = true;}
 
 	//ブラー
-	void Blur();
+	bool Blur();
 
 	//フェード
 	bool FadeIn();
@@ -61,7 +61,8 @@ public:
 
 
 	//Getter
-	inline bool GetIsActive()	{return isBlurActive_;}
+	inline bool GetIsBlurActive()	{return isBlurActive_;}
+	inline bool GetIsFadeActive()	{return isFadeActive;}
 
 private:
 	//スプライト共通初期化

@@ -584,9 +584,9 @@ void PostEffect::PostDrawScene()
 	);
 }
 
-void PostEffect::Blur()
+bool PostEffect::Blur()
 {
-	if(!isBlurActive_) return;
+	if(!isBlurActive_) return false;
 
 	if(blurValue_ != 1){
 		if(blurFrame_ > 3){
@@ -600,7 +600,10 @@ void PostEffect::Blur()
 		blurValue_ = BlurValue;
 		blurFrame_ = 0;
 		isBlurActive_ = false;
+		return true;
 	}
+
+	return false;
 }
 
 bool PostEffect::FadeIn()
