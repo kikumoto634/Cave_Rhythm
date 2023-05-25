@@ -24,7 +24,7 @@ private:
 	const int BlurValue = 2;
 
 	//フェード時間
-	const float FadeSecond = 1.5f;
+	const float FadeSecond = 1.f;
 	
 public:
 	static PostEffect* GetInstance();
