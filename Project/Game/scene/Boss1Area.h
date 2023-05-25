@@ -99,7 +99,7 @@ private:
 	//vector
 	vector<unique_ptr<BaseSprites>> cutInSp_;
 	//時間
-	const float cutInMoveSecondMax = 0.5f;
+	const float cutInMoveSecondMax = 0.25f;
 	float cutInMoveframe = 0.f;
 
 };
