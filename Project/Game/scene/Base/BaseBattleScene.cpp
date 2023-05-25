@@ -40,6 +40,9 @@ void BaseBattleScene::Initialize()
 	Object3DInitialize();
 	//2D
 	Object2DInitialize();
+
+	//ポストエフェクト
+	postEffect->FadeStart();
 }
 
 void BaseBattleScene::Update()
@@ -105,10 +108,12 @@ void BaseBattleScene::Update()
 		ImGui::Text("Now:Home   Next:Game");
 		if(!isPrevSceneChange_ && ImGui::Button("NextScene")){
 			isNextSceneChange_ = true;
+			postEffect->FadeStart();
 		}
 		ImGui::Text("Now:Home   Next:Title");
 		if(!isPrevSceneChange_ && ImGui::Button("GameEnd")){
 			isGameEnd_ = true;
+			postEffect->FadeStart();
 		}
 
 		ImGui::End();
@@ -212,13 +217,6 @@ void BaseBattleScene::Object3DInitialize()
 
 void BaseBattleScene::Object2DInitialize()
 {
-	//シーン遷移(FadeOut)
-	fadeInSize_ = {static_cast<float>(window->GetWindowWidth()), static_cast<float>(window->GetWindowHeight())};
-	fade_ = make_unique<BaseSprites>();
-	fade_->Initialize(white1x1_tex.number);
-	fade_->SetColor(fadeColor_);
-	fade_->SetSize({fadeInSize_});
-
 	judgeLoca_ = make_unique<JudgeLocation>();
 	judgeLoca_->Initialize();
 
@@ -292,6 +290,7 @@ void BaseBattleScene::CommonUpdate()
 	//シーン遷移
 	if(player_->GetIsNextScene())	{
 		isNextSceneChange_ = true;
+		postEffect->FadeStart();
 		if(!exit_->GetIsOpenAudioOnce()){
 			gameManager_->AudioPlay(openExit_audio.number, openExit_audio.volume);
 			camera->ShakeStart();
@@ -350,6 +349,8 @@ void BaseBattleScene::BeatEndUpdate()
 
 void BaseBattleScene::Object3DDraw()
 {
+	if(isDrawStop) return;
+
 	player_->Draw();
 	exit_->Draw();
 
@@ -358,6 +359,8 @@ void BaseBattleScene::Object3DDraw()
 
 void BaseBattleScene::ParticleDraw()
 {
+	if(isDrawStop) return;
+
 	areaManager_->ParticleDraw();
 
 	AddParticleDraw();
@@ -365,6 +368,8 @@ void BaseBattleScene::ParticleDraw()
 
 void BaseBattleScene::UIDraw()
 {
+	if(isDrawStop) return;
+
 	AddFrontUIDraw();
 
 	//出口
@@ -373,9 +378,6 @@ void BaseBattleScene::UIDraw()
 	judgeLoca_->Draw();
 
 	gameManager_->SpriteDraw();
-
-	//シーン遷移
-	fade_->Draw();
 
 	AddBackUIDraw();
 }
@@ -389,37 +391,22 @@ void BaseBattleScene::SceneChange()
 {
 	//PrevSceneからの移動後処理
 	if(isPrevSceneChange_){
-
-		//画面が開く
-		{
-			if(fadeColor_.w <= 0){
-				isPrevSceneChange_ = false;
-				fadeCurrentFrame_ = 0;
-				//リズム
-				rhythmManager_->TimeStart();
-				gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
-				return;
-			}
-
-			fadeColor_.w = 
-				Easing_Point2_Linear<float>(1.0f,0.0f,Time_OneWay(fadeCurrentFrame_, GameEndFadeSecond));
-			fade_->SetColor(fadeColor_);
-			fade_->Update();
-		}
+		if(!postEffect->FadeIn()) return;
+		
+		isPrevSceneChange_ = false;
+		rhythmManager_->TimeStart();
+		gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+		return;
 	}
 	//NextSceneへの移動
 	else if(isNextSceneChange_ || isGameEnd_){
+		if(!postEffect->FadeOut()) return;
 
-		if(fadeColor_.w >= 1){
-			camera->Reset();
-			if(isNextSceneChange_)NextSceneChange();
-			else if(isGameEnd_)	SceneGameEnd();
-		}
-
-		fadeColor_.w = 
-			Easing_Point2_Linear<float>(0.0f,1.0f,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
-		fade_->SetColor(fadeColor_);
-		fade_->Update();
+		isDrawStop = true;
+		
+		camera->Reset();
+		if(isNextSceneChange_)NextSceneChange();
+		else if(isGameEnd_)SceneGameEnd();
 	}
 }
 
@@ -432,7 +419,6 @@ void BaseBattleScene::ObjectFinaize()
 
 #pragma region _2D解放
 	judgeLoca_->Finalize();
-	fade_->Finalize();
 #pragma endregion _2D解放
 
 	AddObjectFinalize();

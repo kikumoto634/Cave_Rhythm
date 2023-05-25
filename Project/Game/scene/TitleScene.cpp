@@ -88,10 +88,12 @@ void TitleScene::Update()
 		ImGui::Text("Now:Title   Next:Home");
 		if(!isPrevSceneChange_ && ImGui::Button("NextScene")){
 			isNextSceneChange_ = true;
+			postEffect->FadeStart();
 		}
 		ImGui::Text("Now:Title   Next:Debug");
 		if(!isPrevSceneChange_ && ImGui::Button("DebugScene")){
 			isDebugScene_ = true;
+			postEffect->FadeStart();
 		}
 
 		ImGui::End();

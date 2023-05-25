@@ -31,36 +31,22 @@ void Boss1Area::SceneChange()
 {
 	//PrevSceneからの移動後処理
 	if(isPrevSceneChange_){
-
-		//画面が開く
-		{
-			if(fadeColor_.w <= 0){
-				isPrevSceneChange_ = false;
-				fadeCurrentFrame_ = 0;
-				//リズム
-				rhythmManager_->TimeStart();
-				return;
-			}
-
-			fadeColor_.w = 
-				Easing_Point2_Linear<float>(1.0f,0.0f,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
-			fade_->SetColor(fadeColor_);
-			fade_->Update();
-		}
+		if(!postEffect->FadeIn()) return;
+		
+		isPrevSceneChange_ = false;
+		//リズム
+		rhythmManager_->TimeStart();
+		return;
 	}
 	//NextSceneへの移動
 	else if(isNextSceneChange_ || isGameEnd_){
+		if(!postEffect->FadeOut()) return;
 
-		if(fadeColor_.w >= 1){
-			camera->Reset();
-			if(isNextSceneChange_)NextSceneChange();
-			else if(isGameEnd_)	SceneGameEnd();
-		}
-
-		fadeColor_.w = 
-			Easing_Point2_Linear<float>(0.0f,1.0f,Time_OneWay(fadeCurrentFrame_, GameStartFadeSecond));
-		fade_->SetColor(fadeColor_);
-		fade_->Update();
+		isDrawStop = true;
+		
+		camera->Reset();
+		if(isNextSceneChange_)NextSceneChange();
+		else if(isGameEnd_)SceneGameEnd();
 	}
 }
 
