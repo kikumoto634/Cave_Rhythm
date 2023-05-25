@@ -45,32 +45,7 @@ private:
 	void cutinDraw();
 	void cutinFinalize();
 
-
-	void ActorCreateInitialize();
-	void ActorSummon();
-
 private:
-	//エネミー
-	std::unique_ptr<Boss1> boss;
-
-	int skeltonPopNumMax = 10;
-	std::vector<std::unique_ptr<Skelton>> skelton;
-
-	float Block_Size = 2.0f;
-	//入口開閉
-	bool IsEnterClose = false;
-	int enterBorderLineZ = 0;
-	std::unique_ptr<IndestructibleWall> enterWall[3];
-	Vector3 enterWallBasePos = {-2,-3,-2};
-
-	//出口開閉
-	bool IsExitOpen = false;
-	std::unique_ptr<IndestructibleWall> exitWall[3];
-	Vector3 exitWallBasePos = {-2,-3,24};
-
-	//モデル
-	ObjModelManager* IndestructibleWallModel = nullptr;
-	ObjModelManager* IndestructibleWallColliderModel = nullptr;
 
 
 	//ゲーム開始

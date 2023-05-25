@@ -34,8 +34,6 @@ void Boss1Area::SceneChange()
 		if(!postEffect->FadeIn()) return;
 		
 		isPrevSceneChange_ = false;
-		//リズム
-		rhythmManager_->TimeStart();
 		return;
 	}
 	//NextSceneへの移動
@@ -58,32 +56,6 @@ void Boss1Area::AddCommonInitialize()
 
 void Boss1Area::AddObject3DInitialize()
 {
-	//ボス
-	boss = make_unique<Boss1>();
-	boss->Initialize("Skeleton");
-	Vector3 lpos = areaManager_->GetCSVObjectPopPosition(0);
-	boss->Pop({lpos.x, -3.f,lpos.z});
-
-	ActorCreateInitialize();
-
-	IndestructibleWallModel = new ObjModelManager();
-	IndestructibleWallModel->CreateModel("GroundBlock3");
-	IndestructibleWallColliderModel = new ObjModelManager();
-	IndestructibleWallColliderModel->CreateModel("GroundBlock2_Collider");
-	
-	//入口
-	for(int i = 0; i < 3; i++){
-		enterWall[i] = make_unique<IndestructibleWall>();
-		enterWall[i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-		enterWall[i]->SetPosition({enterWallBasePos.x + Block_Size*i, enterWallBasePos.y, enterWallBasePos.z});
-	}
-
-	//出口
-	for(int i = 0; i < 3; i++){
-		exitWall[i] = make_unique<IndestructibleWall>();
-		exitWall[i]->Initialize(IndestructibleWallModel, IndestructibleWallColliderModel);
-		exitWall[i]->SetPosition({exitWallBasePos.x + Block_Size*i, exitWallBasePos.y, exitWallBasePos.z});
-	}
 }
 
 void Boss1Area::AddObject2DInitialize()
@@ -98,6 +70,8 @@ void Boss1Area::AddCommonUpdate()
 	if(IsBossStart && !IsCutInHide){
 		if(input->Trigger(DIK_Z) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_UP) || input->Trigger(DIK_LEFT) || input->Trigger(DIK_RIGHT)){
 			IsCutInMoveEnd = true;
+			//リズム
+			rhythmManager_->TimeStart();
 			IsBossStart = false;
 		}
 	}
@@ -105,62 +79,6 @@ void Boss1Area::AddCommonUpdate()
 
 void Boss1Area::AddObject3DUpdate()
 {
-	//ボス
-	if(IsEnterClose){
-		if(boss->GetIsDeadAudio()){
-			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
-		}
-		else if(boss->GetIsDead() && !IsExitOpen){
-			IsExitOpen = true;
-			gameManager_->AudioPlay(gateEnter_audio.number, gateEnter_audio.volume);
-		}
-		boss->Update(camera,player_->GetPosition());
-		ActorSummon();
-		boss->ParticleUpdate();
-	}
-
-	//for(auto it = skelton.begin(); it != skelton.end(); it++){
-	//	/*if((*it)->GetIsDeadAudio()){
-	//		gameManager->AudioPlay(2, 0.5f);
-	//	}
-	//	(*it)->Update(camera,player->GetPosition());*/
-	//}
-
-	//入口
-	{
-		if(IsEnterClose){
-			for(int i = 0; i < 3; i++){
-				enterWall[i]->Update(this->camera);
-				enterWall[i]->SetPlayerPos(player_->GetPosition());
-			}
-		}
-		else if(!IsEnterClose){
-			for(int i = 0; i < 3; i++){
-				enterWall[i]->ColliderRemove();
-			}
-			//場所に応じて閉じる
-			if(player_->GetPosition().z >= enterBorderLineZ){
-				IsEnterClose = true;
-				camera->ShakeStart();
-				gameManager_->AudioPlay(gateEnter_audio.number);
-			}
-		}
-	}
-
-	//出口
-	{
-		if(IsExitOpen){
-			for(int i = 0; i < 3; i++){
-				exitWall[i]->ColliderRemove();
-			}
-		}
-		else if(!IsExitOpen){
-			for(int i = 0; i < 3; i++){
-				exitWall[i]->Update(this->camera);
-				exitWall[i]->SetPlayerPos(player_->GetPosition());
-			}
-		}
-	}
 	exit_->SetExitOpenNeedCoin(0);
 	exit_->NeedCoinSpriteUpdate();
 }
@@ -172,42 +90,15 @@ void Boss1Area::AddObject2DUpdate()
 
 void Boss1Area::AddBeatEndUpdate()
 {
-	if(!IsEnterClose) return;
-	boss->IsBeatEndOn();
-
-	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
-		(*it)->IsBeatEndOn();
-	}*/
 }
 
 void Boss1Area::AddObject3DDraw()
 {
 	areaManager_->CSVAreaDraw();
-
-	if(!IsExitOpen){
-		for(int i = 0; i < 3; i++){
-			exitWall[i]->Draw();
-		}
-	}
-
-	if(!IsEnterClose) return;
-	//ボス
-	boss->Draw();
-	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
-		(*it)->Draw();
-	}*/
-	//入口
-	for(int i = 0; i < 3; i++){
-		enterWall[i]->Draw();
-	}
 }
 
 void Boss1Area::AddParticleDraw()
 {
-	boss->ParticleDraw();
-	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
-		(*it)->ParticleDraw();
-	}*/
 }
 
 void Boss1Area::AddFrontUIDraw()
@@ -221,25 +112,6 @@ void Boss1Area::AddBackUIDraw()
 
 void Boss1Area::AddObjectFinalize()
 {
-	//ボス
-	boss->Finalize();
-
-	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
-		(*it)->Finalize();
-	}*/
-
-	delete IndestructibleWallModel;
-	delete IndestructibleWallColliderModel;
-	//入口
-	for(int i = 0; i < 3; i++){
-		enterWall[i]->Finalize();
-	}
-
-	//出口
-	for(int i = 0; i < 3; i++){
-		exitWall[i]->Finalize();
-	}
-
 	//カットインSp
 	cutinFinalize();
 }
@@ -288,7 +160,7 @@ void Boss1Area::cutinUpdate()
 	{
 		//音声
 		if(!IsCutInAudio){
-			gameManager_->AudioPlay(reflected_audio.number, reflected_audio.volume);
+			gameManager_->AudioPlay(cutIn_audio.number, cutIn_audio.volume);
 			IsCutInAudio = true;
 		}
 
@@ -357,28 +229,3 @@ void Boss1Area::cutinFinalize()
 	bossName->Finalize();
 }
 #pragma endregion
-
-void Boss1Area::ActorCreateInitialize()
-{
-	/*for(int i = 0; i < skeltonPopNumMax; i++){
-		unique_ptr<Skelton> newObj = make_unique<Skelton>();
-		newObj->Initialize("Skeleton");
-		skelton.push_back(move(newObj));
-	}*/
-}
-
-void Boss1Area::ActorSummon()
-{
-	if(!boss->GetIsSummonEnemyPop()) return;
-	/*for(auto it = skelton.begin(); it != skelton.end(); it++){
-		if(!(*it)->GetIsNotApp()){
-			int lx = rand()%7 + -3;
-			int lz = rand()%4;
-			Vector3 pos = {lx*Block_Size, 0.f,(-lz)*Block_Size};
-			pos += boss->GetPosition();
-			(*it)->Pop(pos);
-			boss->IsSummonEnemyPopNot();
-			break;
-		}
-	}*/
-}
