@@ -34,12 +34,12 @@ void BaseScene::Update()
 	input->Update();
 
 #ifdef _DEBUG
-	if(input->Trigger(DIK_1)){
+	if(input->Push(DIK_1)){
 		postEffect->BlurStart();
 	}
 	
 	if(!postEffect->Blur() && postEffect->GetIsBlurActive()){
-		camera->ShakeStart(1);
+		//camera->ShakeStart(1);
 	}
 
 	{

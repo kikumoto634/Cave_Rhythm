@@ -21,7 +21,7 @@ public:
 
 private:
 	//ぼかしの強さ
-	const int BlurValue = 10;
+	const int BlurValue = 2;
 
 	//フェード時間
 	const float FadeSecond = 1.5f;
