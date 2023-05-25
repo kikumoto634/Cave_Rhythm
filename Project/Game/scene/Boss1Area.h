@@ -5,12 +5,17 @@
 #include "Skelton.h"
 #include "TutorialSp.h"
 
+#include <vector>
+
 class Boss1Area : public BaseBattleScene
 {
 public:
 	~Boss1Area();
 
 	Boss1Area(DirectXCommon* dxCommon, Window* window, int saveHP = 5);
+
+private:
+	template <class T> using vector = std::vector<T>;
 
 private:
 //シーン遷移
@@ -40,37 +45,62 @@ private:
 	void AddCommonFinalize() override;
 
 private:
-	void cutinInitialize();
-	void cutinUpdate();
-	void cutinDraw();
-	void cutinFinalize();
+	//カットイン
+	void CutInInitialize();
+	void cutInInput();
+	void CutInUpdate();
+	void CutInDraw();
+	void CutInFinalize();
 
 private:
 
+	////カットインSp
+	//bool IsCutInHide = false;
+	//bool IsCutInMoveStart = true;
+	//bool IsCutInMoveEnd = false;
+	//bool IsCutInAudio = false;
 
-	//ゲーム開始
-	bool IsBossStart = false;
+	//const float cutinSecond = 0.5f;
 
+	//std::unique_ptr<BaseSprites> cutInSpMain;
+	//Vector2 cutInPos = {1920,360};
+	//float cutInMoveFrameCur = 0;
 
-	//カットインSp
-	bool IsCutInHide = false;
-	bool IsCutInMoveStart = true;
-	bool IsCutInMoveEnd = false;
-	bool IsCutInAudio = false;
+	//std::unique_ptr<BaseSprites> cutInSpPart1;
+	//Vector2 cutInPartPos1 = {1680,600};
 
-	const float cutinSecond = 0.5f;
+	//std::unique_ptr<BaseSprites> cutInSpPart2;
+	//Vector2 cutInPartPos2 = {-400,120};
 
-	std::unique_ptr<BaseSprites> cutInSpMain;
-	Vector2 cutInPos = {1920,360};
-	float cutInMoveFrameCur = 0;
+	//std::unique_ptr<BaseSprites> bossName;
+	//Vector2 bossNamePos = {1605,610};
 
-	std::unique_ptr<BaseSprites> cutInSpPart1;
-	Vector2 cutInPartPos1 = {1680,600};
+	//ボス紹介UIのフラグ
+	bool isBossAppUIFlag_ = true;
 
-	std::unique_ptr<BaseSprites> cutInSpPart2;
-	Vector2 cutInPartPos2 = {-400,120};
+	//UI移動
+	bool isCutInUIMove = false;
 
-	std::unique_ptr<BaseSprites> bossName;
-	Vector2 bossNamePos = {1605,610};
+	//CutIN
+	const int cutInSpNum = 4;
+	const Vector2 cutInSpAnc = {0.5f,0.5f};
+	//0 : Center
+	const int cutInSpCenterNumber = 0;
+	Vector2 cutInSpCenterPos;
+	Vector2 cutInSpCenterBeginPos = {1920,360};
+	Vector2 cutInSpCenterEndPos   = {640,360};
+	Vector2 cutInSpCenterSize     = {1280,360};
+	//1 : UP
+	const int cutInSpUpNumber = 1;
+	//2 : Down
+	const int cutInSpDownNumber = 2;
+	//3 : Name
+	const int cutInSpNameNumber = 3;
+	//vector
+	vector<unique_ptr<BaseSprites>> cutInSp_;
+	//時間
+	const float cutInMoveSecondMax = 0.5f;
+	float cutInMoveframe = 0.f;
+
 };
 
