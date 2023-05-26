@@ -45,6 +45,18 @@ private:
 	//移動時間
 	const float CutInMoveSecondMax = 0.25f;
 
+
+	//壁
+	const int BlocksNum = 3;
+	const float BlockSize = AreaManager::Block_Size;
+
+	//入口
+	const Vector3 EnterWallBasePos = {-2,-3,-2};
+	const float EnterCloseBorderPosZ = 0.f;
+
+	//出口
+	const Vector3 ExitWallBasePos = {-2,-3,24};
+
 private:
 //シーン遷移
 	void SceneGameEnd()override;
@@ -80,6 +92,18 @@ private:
 	void CutInDraw();
 	void CutInFinalize();
 
+	//入口
+	void EnterInitialize();
+	void EnterUpdate();
+	void EnterDraw();
+	void EnterFinalize();
+
+	//出口
+	void ExitInitialize();
+	void ExitUpdate();
+	void ExitDraw();
+	void ExitFinalize();
+
 private:
 	//CutInUIフラグ
 	//生存
@@ -94,5 +118,15 @@ private:
 	//時間
 	float cutInMoveframe_ = 0.f;
 
+	//壁
+	//モデル
+	ObjModelManager* indestructibleWallModel_ = nullptr;
+	ObjModelManager* indestructibleWallColliderModel_ = nullptr;
+	//入口
+	bool isEnterBlocksAlive_ = false;
+	list<unique_ptr<IndestructibleWall>> enterWall_;
+	//出口
+	bool isExitBlocksAlive_ = true;
+	list<unique_ptr<IndestructibleWall>> exitWall_;
 };
 

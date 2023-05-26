@@ -56,6 +56,12 @@ void Boss1Area::AddCommonInitialize()
 
 void Boss1Area::AddObject3DInitialize()
 {
+	indestructibleWallModel_ = new ObjModelManager();
+	indestructibleWallModel_->CreateModel("GroundBlock3");
+	indestructibleWallColliderModel_ = new ObjModelManager();
+	indestructibleWallColliderModel_->CreateModel("GroundBlock2_Collider");
+	//EnterInitialize();
+	ExitInitialize();
 }
 
 void Boss1Area::AddObject2DInitialize()
@@ -67,14 +73,6 @@ void Boss1Area::AddCommonUpdate()
 {
 	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 
-	//if(IsBossStart && !IsCutInHide){
-	//	if(input->Trigger(DIK_Z) || input->Trigger(DIK_DOWN) || input->Trigger(DIK_UP) || input->Trigger(DIK_LEFT) || input->Trigger(DIK_RIGHT)){
-	//		IsCutInMoveEnd = true;
-	//		//リズム
-	//		rhythmManager_->TimeStart();
-	//		IsBossStart = false;
-	//	}
-	//}
 	cutInInput();
 }
 
@@ -82,6 +80,9 @@ void Boss1Area::AddObject3DUpdate()
 {
 	exit_->SetExitOpenNeedCoin(0);
 	exit_->NeedCoinSpriteUpdate();
+
+	//EnterUpdate();
+	ExitUpdate();
 }
 
 void Boss1Area::AddObject2DUpdate()
@@ -96,6 +97,9 @@ void Boss1Area::AddBeatEndUpdate()
 void Boss1Area::AddObject3DDraw()
 {
 	areaManager_->CSVAreaDraw();
+
+	//EnterDraw();
+	ExitDraw();
 }
 
 void Boss1Area::AddParticleDraw()
@@ -113,8 +117,11 @@ void Boss1Area::AddBackUIDraw()
 
 void Boss1Area::AddObjectFinalize()
 {
-	//カットインSp
 	CutInFinalize();
+	//EnterFinalize();
+	ExitFinalize();
+	delete indestructibleWallModel_;
+	delete indestructibleWallColliderModel_;
 }
 
 void Boss1Area::AddCommonFinalize()
@@ -241,8 +248,86 @@ void Boss1Area::CutInDraw()
 
 void Boss1Area::CutInFinalize()
 {
-	if(!isCutInAlive_) return;
 	for(const auto& it : cutInSp_){
+		it->Finalize();
+	}
+}
+#pragma endregion
+
+
+#pragma region 入口
+void Boss1Area::EnterInitialize()
+{
+	for(int i = 0; i < BlocksNum; i++){
+		unique_ptr<IndestructibleWall> obj = make_unique<IndestructibleWall>();
+		obj->Initialize(indestructibleWallModel_,indestructibleWallColliderModel_);
+		obj->SetPosition({EnterWallBasePos.x + BlockSize*i, EnterWallBasePos.y, EnterWallBasePos.z});
+		enterWall_.push_back(move(obj));
+	}
+}
+
+void Boss1Area::EnterUpdate()
+{
+	if(!isEnterBlocksAlive_){
+		if(player_->GetPosition().z < EnterCloseBorderPosZ) return;
+		camera->ShakeStart();
+		gameManager_->AudioPlay(gateEnter_audio.number);
+		isEnterBlocksAlive_ = true;
+		return;
+	}
+
+	for(const auto& it : enterWall_){
+		it->Update(camera);
+	}
+}
+
+void Boss1Area::EnterDraw()
+{
+	if(!isEnterBlocksAlive_) return;
+	for(const auto& it : enterWall_){
+		it->Draw();
+	}
+}
+
+void Boss1Area::EnterFinalize()
+{
+	for(const auto& it : enterWall_){
+		it->Finalize();
+	}
+}
+#pragma endregion
+
+
+#pragma region 出口
+void Boss1Area::ExitInitialize()
+{
+	for(int i = 0; i < BlocksNum; i++){
+		unique_ptr<IndestructibleWall> obj = make_unique<IndestructibleWall>();
+		obj->Initialize(indestructibleWallModel_,indestructibleWallColliderModel_);
+		obj->SetPosition({ExitWallBasePos.x + BlockSize*i, ExitWallBasePos.y, ExitWallBasePos.z});
+		exitWall_.push_back(move(obj));
+	}
+}
+
+void Boss1Area::ExitUpdate()
+{
+	if(!isExitBlocksAlive_) return;
+	for(const auto& it : exitWall_){
+		it->Update(camera);
+	}
+}
+
+void Boss1Area::ExitDraw()
+{
+	if(!isExitBlocksAlive_) return;
+	for(const auto& it : exitWall_){
+		it->Draw();
+	}
+}
+
+void Boss1Area::ExitFinalize()
+{
+	for(const auto& it : exitWall_){
 		it->Finalize();
 	}
 }
