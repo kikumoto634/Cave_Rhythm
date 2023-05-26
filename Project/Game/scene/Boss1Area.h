@@ -18,6 +18,34 @@ private:
 	template <class T> using vector = std::vector<T>;
 
 private:
+	//CutInUI
+	const int CutInSpNum = 4;
+	const Vector2 CutInSpAnc = {0.5f,0.5f};
+
+	//真ん中
+	const int CutInSpCenterNumber = 0;
+	const Vector2 CutInSpCenterBeginPos = {1920,360};
+	const Vector2 CutInSpCenterEndPos   = {640,360};
+	const Vector2 CutInSpCenterSize     = {1280,360};
+	//上
+	const int CutInSpUpNumber = 1;
+	const Vector2 CutInSpUpBeginPos = {-400,120};
+	const Vector2 CutInSpUpEndPos   = {380,120};
+	const Vector2 CutInSpUpDownSize = {800,180};
+	//下
+	const int CutInSpDownNumber = 2;
+	const Vector2 CutInSpDownBeginPos = {1680,600};
+	const Vector2 CutInSpDownEndPos   = {880,600};
+	//名前
+	const int CutInSpNameNumber = 3;
+	const Vector2 CutInSpNameBeginPos = {1605,610};
+	const Vector2 CutInSpNameEndPos = {950,610};
+	const Vector2 CutInSpNameSize = {650,150};
+
+	//移動時間
+	const float CutInMoveSecondMax = 0.25f;
+
+private:
 //シーン遷移
 	void SceneGameEnd()override;
 	void NextSceneChange() override;
@@ -53,54 +81,18 @@ private:
 	void CutInFinalize();
 
 private:
-
-	////カットインSp
-	//bool IsCutInHide = false;
-	//bool IsCutInMoveStart = true;
-	//bool IsCutInMoveEnd = false;
-	//bool IsCutInAudio = false;
-
-	//const float cutinSecond = 0.5f;
-
-	//std::unique_ptr<BaseSprites> cutInSpMain;
-	//Vector2 cutInPos = {1920,360};
-	//float cutInMoveFrameCur = 0;
-
-	//std::unique_ptr<BaseSprites> cutInSpPart1;
-	//Vector2 cutInPartPos1 = {1680,600};
-
-	//std::unique_ptr<BaseSprites> cutInSpPart2;
-	//Vector2 cutInPartPos2 = {-400,120};
-
-	//std::unique_ptr<BaseSprites> bossName;
-	//Vector2 bossNamePos = {1605,610};
-
-	//ボス紹介UIのフラグ
+	//CutInUIフラグ
+	//生存
+	bool isCutInAlive_ = true;
+	//登場
 	bool isBossAppUIFlag_ = true;
-
-	//UI移動
-	bool isCutInUIMove = false;
-
-	//CutIN
-	const int cutInSpNum = 4;
-	const Vector2 cutInSpAnc = {0.5f,0.5f};
-	//0 : Center
-	const int cutInSpCenterNumber = 0;
-	Vector2 cutInSpCenterPos;
-	Vector2 cutInSpCenterBeginPos = {1920,360};
-	Vector2 cutInSpCenterEndPos   = {640,360};
-	Vector2 cutInSpCenterSize     = {1280,360};
-	//1 : UP
-	const int cutInSpUpNumber = 1;
-	//2 : Down
-	const int cutInSpDownNumber = 2;
-	//3 : Name
-	const int cutInSpNameNumber = 3;
-	//vector
+	//移動
+	bool isCutInUIMove_ = false;
+	//STL
 	vector<unique_ptr<BaseSprites>> cutInSp_;
+	vector<Vector2> cutInSpPos_;
 	//時間
-	const float cutInMoveSecondMax = 0.25f;
-	float cutInMoveframe = 0.f;
+	float cutInMoveframe_ = 0.f;
 
 };
 

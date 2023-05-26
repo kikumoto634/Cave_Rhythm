@@ -131,52 +131,43 @@ void Boss1Area::CutInInitialize()
 	//センター
 	unique_ptr<BaseSprites> center = make_unique<BaseSprites>();
 	center->Initialize(cutInBoss_tex.number);
-	center->SetPosition(cutInSpCenterPos);
-	center->SetAnchorPoint(cutInSpAnc);
-	center->SetSize(cutInSpCenterSize);
+	center->SetAnchorPoint(CutInSpAnc);
+	center->SetSize(CutInSpCenterSize);
 
+	//上
+	unique_ptr<BaseSprites> up = make_unique<BaseSprites>();
+	up->Initialize(cutInParts2_tex.number);
+	up->SetAnchorPoint(CutInSpAnc);
+	up->SetSize(CutInSpUpDownSize);
+
+	//下
+	unique_ptr<BaseSprites> down = make_unique<BaseSprites>();
+	down->Initialize(cutInParts1_tex.number);
+	down->SetAnchorPoint(CutInSpAnc);
+	down->SetSize(CutInSpUpDownSize);
+
+	//名前
+	unique_ptr<BaseSprites> name = make_unique<BaseSprites>();
+	name->Initialize(bossName_tex.number);
+	name->SetAnchorPoint(CutInSpAnc);
+	name->SetSize(CutInSpNameSize);
 
 	//追加
 	cutInSp_.push_back(move(center));
+	cutInSp_.push_back(move(up));
+	cutInSp_.push_back(move(down));
+	cutInSp_.push_back(move(name));
 
-	/*{
-		cutInSpMain = make_unique<BaseSprites>();
-		cutInSpMain->Initialize(cutInBoss_tex.number);
-		cutInSpMain->SetPosition(cutInPos);
-		cutInSpMain->SetAnchorPoint({0.5,0.5});
-		cutInSpMain->SetSize({1280, 360});
-	}
-	{
-		cutInSpPart1 = make_unique<BaseSprites>();
-		cutInSpPart1->Initialize(cutInParts1_tex.number);
-		cutInSpPart1->SetPosition(cutInPartPos1);
-		cutInSpPart1->SetAnchorPoint({0.5,0.5});
-		cutInSpPart1->SetSize({800, 180});
-	}
-	{
-		cutInSpPart2 = make_unique<BaseSprites>();
-		cutInSpPart2->Initialize(cutInParts2_tex.number);
-		cutInSpPart2->SetPosition(cutInPartPos2);
-		cutInSpPart2->SetAnchorPoint({0.5,0.5});
-		cutInSpPart2->SetSize({800, 180});
-	}
-	{
-		bossName = make_unique<BaseSprites>();
-		bossName->Initialize(bossName_tex.number);
-		bossName->SetPosition(bossNamePos);
-		bossName->SetAnchorPoint({0.5f,0.5f});
-		bossName->SetSize({650, 150});
-	}*/
+	cutInSpPos_.resize(CutInSpNum);
 }
 
 void Boss1Area::cutInInput()
 {
-	if(!isBossAppUIFlag_ && isCutInUIMove) return;
+	if(!isCutInAlive_) return;
 
-	if(!input->Trigger(DIK_Z)) return;
-	if(!input->Trigger(DIK_RETURN) || !input->Trigger(DIK_SPACE)) return;
-	if(!input->Trigger(DIK_W) || !input->Trigger(DIK_A) || !input->Trigger(DIK_S) || !input->Trigger(DIK_D)) return;
-	if(!input->Trigger(DIK_UP) || !input->Trigger(DIK_LEFT) || !input->Trigger(DIK_DOWN) || !input->Trigger(DIK_RIGHT)) return;
+	if(!input->Trigger(DIK_UP) && !input->Trigger(DIK_LEFT) && !input->Trigger(DIK_DOWN) && !input->Trigger(DIK_RIGHT) &&
+		!input->Trigger(DIK_W) && !input->Trigger(DIK_A) && !input->Trigger(DIK_S) && !input->Trigger(DIK_D) &&
+		!input->Trigger(DIK_Z) && !input->Trigger(DIK_SPACE) && !input->Trigger(DIK_RETURN)) return;
 		
 
 	isBossAppUIFlag_ = false;
@@ -186,98 +177,73 @@ void Boss1Area::cutInInput()
 
 void Boss1Area::CutInUpdate()
 {
+	if(!isCutInAlive_) return;
 	//開始時
-	if(isBossAppUIFlag_ && !isCutInUIMove){
+	if(isBossAppUIFlag_ && !isCutInUIMove_){
+		//時間
+		cutInMoveframe_ = Time_OneWay(cutInMoveframe_, CutInMoveSecondMax);
+
 		//移動
-		cutInSpCenterPos = Easing_Point2_Linear<Vector2>(cutInSpCenterBeginPos, cutInSpCenterEndPos, Time_OneWay(cutInMoveframe,cutInMoveSecondMax));
+		cutInSpPos_[CutInSpCenterNumber] = Easing_Point2_Linear<Vector2>(CutInSpCenterBeginPos, CutInSpCenterEndPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpUpNumber]     = Easing_Point2_Linear<Vector2>(CutInSpUpBeginPos, CutInSpUpEndPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpDownNumber]   = Easing_Point2_Linear<Vector2>(CutInSpDownBeginPos, CutInSpDownEndPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpNameNumber]   = Easing_Point2_Linear<Vector2>(CutInSpNameBeginPos, CutInSpNameEndPos, cutInMoveframe_);
 
 		//目標値
-		if(cutInMoveframe >= 1.0){
-			cutInSpCenterPos = cutInSpCenterEndPos;
+		if(cutInMoveframe_ >= 1.0){
+			cutInSpPos_[CutInSpCenterNumber] = CutInSpCenterEndPos;
+			cutInSpPos_[CutInSpUpNumber]     = CutInSpUpEndPos;
+			cutInSpPos_[CutInSpDownNumber]   = CutInSpDownEndPos;
+			cutInSpPos_[CutInSpNameNumber]   = CutInSpNameEndPos;
+			cutInMoveframe_ = 0.f;
 
 			//移動完了
-			isCutInUIMove = true;
+			isCutInUIMove_ = true;
 		}
+	}
+	//UI引き
+	else if(!isBossAppUIFlag_ && isCutInUIMove_){
+		//時間
+		cutInMoveframe_ = Time_OneWay(cutInMoveframe_, CutInMoveSecondMax);
 
-		//更新
-		cutInSp_[cutInSpCenterNumber]->SetPosition(cutInSpCenterPos);
+		//移動
+		cutInSpPos_[CutInSpCenterNumber] = Easing_Point2_Linear<Vector2>(CutInSpCenterEndPos, CutInSpCenterBeginPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpUpNumber]     = Easing_Point2_Linear<Vector2>(CutInSpUpEndPos, CutInSpUpBeginPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpDownNumber]   = Easing_Point2_Linear<Vector2>(CutInSpDownEndPos, CutInSpDownBeginPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpNameNumber]   = Easing_Point2_Linear<Vector2>(CutInSpNameEndPos, CutInSpNameBeginPos, cutInMoveframe_);
+
+		//目標値
+		if(cutInMoveframe_ >= 1.0){
+			cutInSpPos_[CutInSpCenterNumber] = CutInSpCenterBeginPos;
+			cutInSpPos_[CutInSpUpNumber]     = CutInSpUpBeginPos;
+			cutInSpPos_[CutInSpDownNumber]   = CutInSpDownBeginPos;
+			cutInSpPos_[CutInSpNameNumber]   = CutInSpNameBeginPos;
+			isCutInAlive_ = false;
+		}
 	}
 
-	//if(!IsCutInHide)
-	//{
-	//	if(IsCutInMoveStart){
-	//		cutInPos = Easing_Point2_Linear<Vector2>({1920,360},{640,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//		cutInPartPos1 = Easing_Point2_Linear<Vector2>({1680,600},{880,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//		cutInPartPos2 = Easing_Point2_Linear<Vector2>({-400,120},{380,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//		bossNamePos = Easing_Point2_Linear<Vector2>({1605,610},{950,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//
-	//		if(cutInMoveFrameCur >= 1.0f){
-	//			cutInPos = {640,360};
-	//			cutInPartPos1 = {880, 600};
-	//			cutInPartPos2 = {380, 120};
-	//			bossNamePos = {950,610};
-	//			cutInMoveFrameCur = 0.f;
-	//			IsCutInMoveStart = false;
-	//			IsBossStart = true;
-	//		}
-	//		cutInSpMain->SetPosition(cutInPos);
-	//		cutInSpPart1->SetPosition(cutInPartPos1);
-	//		cutInSpPart2->SetPosition(cutInPartPos2);
-	//		bossName->SetPosition(bossNamePos);
-	//	}
-	//	else if(IsCutInMoveEnd){
-	//		cutInPos = Easing_Point2_Linear<Vector2>({640,360},{1920,360},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//		cutInPartPos1 = Easing_Point2_Linear<Vector2>({800,600},{1680,600},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//		cutInPartPos2 = Easing_Point2_Linear<Vector2>({380,120},{-400,120},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-	//		bossNamePos = Easing_Point2_Linear<Vector2>({950,610},{1605,610},Time_OneWay(cutInMoveFrameCur, cutinSecond));
-
-	//		if(cutInMoveFrameCur >= 1.0f){
-	//			cutInPos = {1920,360};
-	//			cutInPartPos1 = {1680, 600};
-	//			cutInPartPos2 = {-400, 120};
-	//			bossNamePos = {1605,610};
-	//			cutInMoveFrameCur = 0.f;
-	//			IsCutInMoveEnd = false;
-	//			IsCutInHide = true;
-	//		}
-	//		cutInSpMain->SetPosition(cutInPos);
-	//		cutInSpPart1->SetPosition(cutInPartPos1);
-	//		cutInSpPart2->SetPosition(cutInPartPos2);
-	//		bossName->SetPosition(bossNamePos);
-	//	}
-
-	//	cutInSpMain->Update();
-	//	cutInSpPart1->Update();
-	//	cutInSpPart2->Update();
-	//	bossName->Update();
-	//}
-
-	for(auto it = cutInSp_.begin(); it != cutInSp_.end(); it++){
-		(*it)->Update();
+	//更新
+	int i = 0;
+	for(const auto& it : cutInSp_){
+		it->SetPosition(cutInSpPos_[i]);
+		it->Update();
+		i++;
 	}
 }
 
 void Boss1Area::CutInDraw()
 {
-	/*if(IsCutInHide) return;
-	cutInSpMain->Draw();
-	cutInSpPart1->Draw();
-	cutInSpPart2->Draw();
-	bossName->Draw();*/
-	for(auto it = cutInSp_.begin(); it != cutInSp_.end(); it++){
-		(*it)->Draw();
+	if(!isCutInAlive_) return;
+	for(const auto& it : cutInSp_){
+		it->Draw();
 	}
 }
 
 void Boss1Area::CutInFinalize()
 {
-	/*cutInSpMain->Finalize();
-	cutInSpPart1->Finalize();
-	cutInSpPart2->Finalize();
-	bossName->Finalize();*/
-
-	for(auto it = cutInSp_.begin(); it != cutInSp_.end(); it++){
-		(*it)->Finalize();
+	if(!isCutInAlive_) return;
+	for(const auto& it : cutInSp_){
+		it->Finalize();
 	}
 }
 #pragma endregion
