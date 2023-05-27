@@ -104,6 +104,21 @@ private:
 	void ExitDraw();
 	void ExitFinalize();
 
+	void ExitOpen();
+
+
+	//ボス
+	void BossInitialize();
+	void BossUpdate();
+	void BossBeatEnd();
+	void BossDraw();
+	void BossParticleDraw();
+	void BossFinalize();
+
+	//イベント処理
+	void EventStart();
+	void EventUpdate();
+
 private:
 	//CutInUIフラグ
 	//生存
@@ -128,5 +143,25 @@ private:
 	//出口
 	bool isExitBlocksAlive_ = true;
 	list<unique_ptr<IndestructibleWall>> exitWall_;
+
+	//ボス
+	bool isBossAlive_ = false;
+	unique_ptr<Boss1> boss_;
+
+	//イベント開始
+	bool isEventBegin_ = false;
+	bool isEventEnd_ = false;
+
+	const float TargetZEnd = 10.f;
+	const float EyeZEnd = -5.f;
+
+	Vector3 targetSaveValue;
+	Vector3 eyeSaveValue;
+
+	Vector3 targetValue;
+	Vector3 eyeValue;
+
+	float eventSecond = 0;
+	const float EventSecond = 3.f;
 };
 

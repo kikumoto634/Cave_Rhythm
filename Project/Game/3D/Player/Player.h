@@ -100,6 +100,11 @@ public:
 	//入力可能状態
 	inline void InputPossible()	{isDuplicateLimit_ = false;}
 
+	//イベント
+	inline void EventBegin()	{isEvent_ = true;}
+	inline void EventEnd()	{isEvent_ = false;}
+
+
 	//Getter
 	//ダメージ
 	bool GetIsDamage();
@@ -113,6 +118,8 @@ public:
 	inline bool GetIsInput()	{return isInput_;}
 	//次のシーン
 	inline bool GetIsNextScene()	{return isNextScene_;}
+	//イベント
+	inline bool GetIsEvent()	{return isEvent_;}
 
 	//Setter
 	//入力判別
@@ -197,5 +204,8 @@ private:
 
 	//破壊ブロック位置
 	Vector2 blockBreakPos_ = {-100,-100};
+
+	//イベント発生
+	bool isEvent_ = false;
 };
 

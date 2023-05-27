@@ -1,4 +1,4 @@
-﻿#include "Camera.h"
+#include "Camera.h"
 
 using namespace DirectX;
 
@@ -87,8 +87,10 @@ void Camera::RotVector(Vector3 rot)
 	view.UpdateViewMatrix();
 }
 
-void Camera::Tracking(Vector3 target)
+void Camera::Tracking(Vector3 target, bool isActive)
 {
+	if(isActive) return;
+
 	Vector3 cameraPosXZ = view.eye - view.target;
 	float height = cameraPosXZ.y;
 	cameraPosXZ.y = 0.0f;

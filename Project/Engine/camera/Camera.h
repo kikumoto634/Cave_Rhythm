@@ -55,7 +55,7 @@ public:
 	/// カメラ追従
 	/// </summary>
 	/// <param name="target">ターゲット</param>
-	void Tracking(Vector3 target);
+	void Tracking(Vector3 target, bool isActive);
 
 	//シェイク
 	void ShakeStart(int MaxFrame = 5);

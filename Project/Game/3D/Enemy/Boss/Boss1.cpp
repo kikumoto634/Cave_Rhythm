@@ -38,135 +38,135 @@ void Boss1::Update(Camera *camera, Vector3 playerPos)
 	this->camera_ = camera;
 	if(!IsNotApp) return;
 
-	//距離計測
-	Vector3 pos = playerPos - world_.translation;
-	distance = pos.length();
-	if(-13 <= distance && distance <= 13)		{
-		IsInvisible = false;
-	}
-	else if(-13 > distance || distance > 13)	{
-		IsInvisible = true;
-	}
+	////距離計測
+	//Vector3 pos = playerPos - world_.translation;
+	//distance = pos.length();
+	//if(-13 <= distance && distance <= 13)		{
+	//	IsInvisible = false;
+	//}
+	//else if(-13 > distance || distance > 13)	{
+	//	IsInvisible = true;
+	//}
 
-	//ダメージ
-	if(IsDamage){
-		damageResetCurFrame++;
+	////ダメージ
+	//if(IsDamage){
+	//	damageResetCurFrame++;
 
-		if(hp <= 0){
-			IsDead = true;
-			IsDeadOnceAudio = true;
-			IsDeadOnceParticle = true;
-			DeadParticlePos = GetPosition();
-			SetPosition(NotAlivePos);
-			world_.UpdateMatrix();
-			baseCollider_->Update();
-			return;
-		}
+	//	if(hp <= 0){
+	//		IsDead = true;
+	//		IsDeadOnceAudio = true;
+	//		IsDeadOnceParticle = true;
+	//		DeadParticlePos = GetPosition();
+	//		SetPosition(NotAlivePos);
+	//		world_.UpdateMatrix();
+	//		baseCollider_->Update();
+	//		return;
+	//	}
 
-		if(IsDeadOnceAudio){
-			IsDeadOnceAudio = false;
-		}
+	//	if(IsDeadOnceAudio){
+	//		IsDeadOnceAudio = false;
+	//	}
 
-		//無敵時間内
-		Vector4 color;
-		if(damageResetCurFrame / 6 == 0){
-			color = {0.0f, 0.0f, 0.0f, 1.0f};
-		}
-		else{
-			color = {1.0f, 0.0f, 0.0f, 1.0f};
-		}
-		object_->SetColor(color);
+	//	//無敵時間内
+	//	Vector4 color;
+	//	if(damageResetCurFrame / 6 == 0){
+	//		color = {0.0f, 0.0f, 0.0f, 1.0f};
+	//	}
+	//	else{
+	//		color = {1.0f, 0.0f, 0.0f, 1.0f};
+	//	}
+	//	object_->SetColor(color);
 
-		//無敵時間
-		if(damageResetCurFrame >= DamageResetFrame){
-			damageResetCurFrame = 0;
-			color = {1.0f,1.0f,1.0f,1.0f};
-			object_->SetColor(color);
-			IsDamage = false;
-		}
-	}
+	//	//無敵時間
+	//	if(damageResetCurFrame >= DamageResetFrame){
+	//		damageResetCurFrame = 0;
+	//		color = {1.0f,1.0f,1.0f,1.0f};
+	//		object_->SetColor(color);
+	//		IsDamage = false;
+	//	}
+	//}
 
-	if(IsInvisible) return;
-	//生存
-	if(!IsDead){
-		//拍終了
-		if(isBeatEnd_){
-			//スケール
-			IsScaleEasing  = true;
-			//拍終了
-			isBeatEnd_ = false;
-			//カウント
-			patternCount++;
+	//if(IsInvisible) return;
+	////生存
+	//if(!IsDead){
+	//	//拍終了
+	//	if(isBeatEnd_){
+	//		//スケール
+	//		IsScaleEasing  = true;
+	//		//拍終了
+	//		isBeatEnd_ = false;
+	//		//カウント
+	//		patternCount++;
 
-			if(patternCount == 2){
-				IsSummon = true;
-				IsMove = false;
-			}
-			else if(patternCount == 25){
-				IsSummon = false;
-				IsMove = true;
-			}
+	//		if(patternCount == 2){
+	//			IsSummon = true;
+	//			IsMove = false;
+	//		}
+	//		else if(patternCount == 25){
+	//			IsSummon = false;
+	//			IsMove = true;
+	//		}
 
-			//追撃
-			if(IsMove){
-				moveWaitCurCount++;
-					if(moveWaitCurCount >= MoveWaitCount){
-					//移動
-					IsMoveEasing = true;
-					OldPosition = GetPosition();
-					if(!IsComeBack)	targetPos = playerPos;
-					else if(IsComeBack) targetPos = homePos;
-					Movement();
-					currentPos = GetPosition();
-					moveWaitCurCount = 0;
-				}
-			}
-			//召喚
-			if(IsSummon){
-				Summon();
-			}
-		}
-		//スケール遷移
-		if(IsScaleEasing){
-			if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
-				IsScaleEasing = false;
-			}
-		}
+	//		//追撃
+	//		if(IsMove){
+	//			moveWaitCurCount++;
+	//				if(moveWaitCurCount >= MoveWaitCount){
+	//				//移動
+	//				IsMoveEasing = true;
+	//				OldPosition = GetPosition();
+	//				if(!IsComeBack)	targetPos = playerPos;
+	//				else if(IsComeBack) targetPos = homePos;
+	//				Movement();
+	//				currentPos = GetPosition();
+	//				moveWaitCurCount = 0;
+	//			}
+	//		}
+	//		//召喚
+	//		if(IsSummon){
+	//			Summon();
+	//		}
+	//	}
+	//	//スケール遷移
+	//	if(IsScaleEasing){
+	//		if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
+	//			IsScaleEasing = false;
+	//		}
+	//	}
 
-		//移動
-		if(IsMoveEasing){
-			world_.translation = Easing_Point2_Linear(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
-		
-			Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
-			if(subVector.length() <= 1.f){
-			
-				if(IsMove){
-					IsMove = false;
-					patternCount = 0;
-				}
+	//	//移動
+	//	if(IsMoveEasing){
+	//		world_.translation = Easing_Point2_Linear(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
+	//	
+	//		Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
+	//		if(subVector.length() <= 1.f){
+	//		
+	//			if(IsMove){
+	//				IsMove = false;
+	//				patternCount = 0;
+	//			}
 
-				//戻り終わった
-				if(IsComeBack){
-					IsComeBack = false;
-					SetRotation({0,XMConvertToRadians(180),0});
-				}
-				//戻る
-				else if(!IsComeBack){
-					IsComeBack = true;
-				}
+	//			//戻り終わった
+	//			if(IsComeBack){
+	//				IsComeBack = false;
+	//				SetRotation({0,XMConvertToRadians(180),0});
+	//			}
+	//			//戻る
+	//			else if(!IsComeBack){
+	//				IsComeBack = true;
+	//			}
 
-				movePosition = OldPosition;
-			}
+	//			movePosition = OldPosition;
+	//		}
 
-			if(moveEasingFrame >= 1.f){
-				IsMoveEasing = false;
-				world_.translation = movePosition;
-				currentPos = {};
-				movePosition = {};
-				moveEasingFrame = 0;
-			}
-		}
-	}
+	//		if(moveEasingFrame >= 1.f){
+	//			IsMoveEasing = false;
+	//			world_.translation = movePosition;
+	//			currentPos = {};
+	//			movePosition = {};
+	//			moveEasingFrame = 0;
+	//		}
+	//	}
+	//}
 	BaseObjObject::Update(this->camera_);
 }
 
@@ -207,8 +207,8 @@ void Boss1::ParticleUpdate()
 
 void Boss1::Draw()
 {
-	if(IsDead) return;
-	if(IsInvisible) return;
+	/*if(IsDead) return;
+	if(IsInvisible) return;*/
 
 	BaseObjObject::Draw();
 }

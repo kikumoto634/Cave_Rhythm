@@ -52,21 +52,22 @@ void BaseBattleScene::Update()
 #pragma region 入力処理
 
 #ifdef _DEBUG
-	if(input->Push(DIK_LSHIFT)){
-		if(input->Push(DIK_A)){
-			camera->RotVector({0.f, XMConvertToRadians(3.f), 0.f});
-		}
-		else if(input->Push(DIK_D)){
-			camera->RotVector({0.f,XMConvertToRadians(-3.f), 0.f});
-		}
-
-		if(input->Push(DIK_W)){
-			camera->RotVector({XMConvertToRadians(-3.f), 0.f, 0.f});
-		}
-		else if(input->Push(DIK_S)){
-			camera->RotVector({XMConvertToRadians(3.f), 0.f, 0.f});
-		}
+	//if(input->Push(DIK_LSHIFT)){
+		
+	if(input->Push(DIK_A)){
+		camera->MoveVector({-1.f, 0.f, 0.f});
 	}
+	else if(input->Push(DIK_D)){
+		camera->MoveVector({1.f, 0.f, 0.f});
+	}
+
+	if(input->Push(DIK_W)){
+		camera->MoveVector({0.f, 0.f, 1.f});
+	}
+	else if(input->Push(DIK_S)){
+		camera->MoveVector({0.f, 0.f, -1.f});
+	}
+	//}
 #endif // _DEBUG
 
 	//シーン更新
@@ -285,7 +286,7 @@ void BaseBattleScene::CommonUpdate()
 	}
 
 	//カメラ追従
-	camera->Tracking(player_->GetPosition());
+	camera->Tracking(player_->GetPosition(), player_->GetIsEvent());
 
 	//シーン遷移
 	if(player_->GetIsNextScene())	{

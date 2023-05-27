@@ -146,6 +146,8 @@ void Player::InputUpdate()
 	if(isNextScene_) return ;
 	//重複
 	if(isDuplicateLimit_) return;
+	//イベント中
+	if(isEvent_) return;
 	
 	//移動処理
 	InputMovement();
@@ -161,10 +163,10 @@ void Player::ContactUpdate()
 void Player::InputMovement()
 {
 	//入力
-	bool isLEFT  = (input_->Trigger(DIK_LEFT)  || input_->Trigger(DIK_A));
-	bool isRIGHT = (input_->Trigger(DIK_RIGHT) || input_->Trigger(DIK_D));
-	bool isUP    = (input_->Trigger(DIK_UP)    || input_->Trigger(DIK_W));
-	bool isDOWN  = (input_->Trigger(DIK_DOWN)  || input_->Trigger(DIK_S));
+	bool isLEFT  = (input_->Trigger(DIK_LEFT)  /*|| input_->Trigger(DIK_A)*/);
+	bool isRIGHT = (input_->Trigger(DIK_RIGHT) /*|| input_->Trigger(DIK_D)*/);
+	bool isUP    = (input_->Trigger(DIK_UP)    /*|| input_->Trigger(DIK_W)*/);
+	bool isDOWN  = (input_->Trigger(DIK_DOWN)  /*|| input_->Trigger(DIK_S)*/);
 
 	if(!isLEFT && !isRIGHT && !isUP && !isDOWN) return;
 

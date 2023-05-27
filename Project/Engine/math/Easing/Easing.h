@@ -32,6 +32,11 @@ float EaseOutBounec(float value);
 /// </summary>
 float EaseInOutBounce(float value);
 
+/// <summary>
+/// EaseInCubic
+/// </summary>
+float EaseInCubic(float value);
+
 
 
 /// <summary>
@@ -57,6 +62,12 @@ const T Easing_Point2_EaseOutBounce(const T& start, const T& end, const float& f
 /// </summary>
 template<class T>
 const T Easing_Point2_EaseOutInBounce(const T& start, const T& end, const float& frame);
+
+/// <summary>
+/// EaseInCubic 2点
+/// </summary>
+template<class T>
+const T Easing_Point2_EaseInCubic(const T& start, const T& end, const float& frame);
 
 
 
@@ -91,6 +102,15 @@ inline const T Easing_Point2_EaseOutInBounce(const T &start, const T &end, const
 {
 	T pos{};
 	float value = EaseInOutBounce(frame);
+	pos = (1.f-value) * start + value * end;
+	return pos;
+}
+
+template<class T>
+inline const T Easing_Point2_EaseInCubic(const T &start, const T &end, const float &frame)
+{
+	T pos{};
+	float value = EaseInCubic(frame);
 	pos = (1.f-value) * start + value * end;
 	return pos;
 }

@@ -38,3 +38,8 @@ float EaseInOutBounce(float value)
 {
 	return (value < 0.5f) ? (1-EaseOutBounec(1-2*value))/2 : (1 + EaseOutBounec(2*value-1))/2;
 }
+
+float EaseInCubic(float value)
+{
+	return value*value*value;
+}

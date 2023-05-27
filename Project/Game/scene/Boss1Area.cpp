@@ -60,8 +60,10 @@ void Boss1Area::AddObject3DInitialize()
 	indestructibleWallModel_->CreateModel("GroundBlock3");
 	indestructibleWallColliderModel_ = new ObjModelManager();
 	indestructibleWallColliderModel_->CreateModel("GroundBlock2_Collider");
-	//EnterInitialize();
+	EnterInitialize();
 	ExitInitialize();
+
+	BossInitialize();
 }
 
 void Boss1Area::AddObject2DInitialize()
@@ -74,6 +76,7 @@ void Boss1Area::AddCommonUpdate()
 	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 
 	cutInInput();
+	EventUpdate();
 }
 
 void Boss1Area::AddObject3DUpdate()
@@ -81,8 +84,10 @@ void Boss1Area::AddObject3DUpdate()
 	exit_->SetExitOpenNeedCoin(0);
 	exit_->NeedCoinSpriteUpdate();
 
-	//EnterUpdate();
+	EnterUpdate();
 	ExitUpdate();
+
+	BossUpdate();
 }
 
 void Boss1Area::AddObject2DUpdate()
@@ -92,18 +97,22 @@ void Boss1Area::AddObject2DUpdate()
 
 void Boss1Area::AddBeatEndUpdate()
 {
+	BossBeatEnd();
 }
 
 void Boss1Area::AddObject3DDraw()
 {
 	areaManager_->CSVAreaDraw();
 
-	//EnterDraw();
+	EnterDraw();
 	ExitDraw();
+
+	BossDraw();
 }
 
 void Boss1Area::AddParticleDraw()
 {
+	BossParticleDraw();
 }
 
 void Boss1Area::AddFrontUIDraw()
@@ -118,10 +127,11 @@ void Boss1Area::AddBackUIDraw()
 void Boss1Area::AddObjectFinalize()
 {
 	CutInFinalize();
-	//EnterFinalize();
+	EnterFinalize();
 	ExitFinalize();
 	delete indestructibleWallModel_;
 	delete indestructibleWallColliderModel_;
+	BossFinalize();
 }
 
 void Boss1Area::AddCommonFinalize()
@@ -166,6 +176,9 @@ void Boss1Area::CutInInitialize()
 	cutInSp_.push_back(move(name));
 
 	cutInSpPos_.resize(CutInSpNum);
+
+	//イベント状態
+	player_->EventBegin();
 }
 
 void Boss1Area::cutInInput()
@@ -180,6 +193,8 @@ void Boss1Area::cutInInput()
 	isBossAppUIFlag_ = false;
 	//リズム
 	rhythmManager_->TimeStart();
+	//イベント
+	player_->EventEnd();
 }
 
 void Boss1Area::CutInUpdate()
@@ -273,11 +288,15 @@ void Boss1Area::EnterUpdate()
 		camera->ShakeStart();
 		gameManager_->AudioPlay(gateEnter_audio.number);
 		isEnterBlocksAlive_ = true;
+
+		EventStart();
+
 		return;
 	}
 
 	for(const auto& it : enterWall_){
 		it->Update(camera);
+		it->SetPlayerPos(player_->GetPosition());
 	}
 }
 
@@ -311,9 +330,17 @@ void Boss1Area::ExitInitialize()
 
 void Boss1Area::ExitUpdate()
 {
+#ifdef _DEBUG
+	if(input->Trigger(DIK_2) && isExitBlocksAlive_){
+		ExitOpen();
+	}
+#endif // _DEBUG
+
+
 	if(!isExitBlocksAlive_) return;
 	for(const auto& it : exitWall_){
 		it->Update(camera);
+		it->SetPlayerPos(player_->GetPosition());
 	}
 }
 
@@ -330,5 +357,93 @@ void Boss1Area::ExitFinalize()
 	for(const auto& it : exitWall_){
 		it->Finalize();
 	}
+}
+
+void Boss1Area::ExitOpen()
+{
+	isExitBlocksAlive_ = false;
+	camera->ShakeStart();
+	gameManager_->AudioPlay(gateEnter_audio.number);
+}
+#pragma endregion
+
+
+#pragma region ボス
+void Boss1Area::BossInitialize()
+{
+	boss_ = make_unique<Boss1>();
+	boss_->Initialize("Skeleton");
+	Vector3 lpos = areaManager_->GetCSVObjectPopPosition(0);
+	lpos.y = -3.f;
+	boss_->Pop(lpos);
+}
+
+void Boss1Area::BossUpdate()
+{
+	if(!isBossAlive_) return;
+	boss_->Update(camera, player_->GetPosition());
+	boss_->ParticleUpdate();
+}
+
+void Boss1Area::BossBeatEnd()
+{
+	if(!isBossAlive_) return;
+	boss_->IsBeatEndOn();
+}
+
+void Boss1Area::BossDraw()
+{
+	if(!isBossAlive_) return;
+	boss_->Draw();
+}
+
+void Boss1Area::BossParticleDraw()
+{
+	if(!isBossAlive_) return;
+	boss_->ParticleDraw();
+}
+
+void Boss1Area::BossFinalize()
+{
+	boss_->Finalize();
+}
+#pragma endregion
+
+#pragma region イベント
+void Boss1Area::EventStart()
+{
+	isEventBegin_ = true;
+	isBossAlive_  = true;
+
+	player_->EventBegin();
+
+	targetSaveValue = camera->GetTarget();
+	eyeSaveValue = camera->GetEye();
+}
+
+void Boss1Area::EventUpdate()
+{
+	if(!isEventBegin_) return;
+	//TargetZ 0,  EyeZ -10
+	//TargetZ 16, EyeZ  6
+	
+	//Target
+	targetValue = Easing_Point2_EaseInCubic<Vector3>(
+		targetSaveValue, {targetSaveValue.x, targetSaveValue.y, TargetZEnd},
+		Time_OneWay(eventSecond, EventSecond));
+
+	//Eye
+	eyeValue = Easing_Point2_EaseInCubic<Vector3>(
+		eyeSaveValue, {eyeSaveValue.x, eyeSaveValue.y, EyeZEnd},
+		Time_OneWay(eventSecond, EventSecond));
+
+	if(eventSecond >= 1.0f){
+		targetValue = {targetSaveValue.x, targetSaveValue.y, TargetZEnd};
+		eyeValue = {eyeSaveValue.x, eyeSaveValue.y, EyeZEnd};
+		isEventBegin_ = false;
+	}
+	camera->SetTarget(targetValue);
+	camera->SetEye(eyeValue);
+
 }
 #pragma endregion
