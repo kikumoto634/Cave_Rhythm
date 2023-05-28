@@ -412,7 +412,7 @@ void Boss1Area::BossFinalize()
 #pragma region イベント
 void Boss1Area::EventStart()
 {
-	isEventBegin_ = true;
+	isEventActive_ = true;
 	isBossAlive_  = true;
 
 	player_->EventBegin();
@@ -423,27 +423,76 @@ void Boss1Area::EventStart()
 
 void Boss1Area::EventUpdate()
 {
-	if(!isEventBegin_) return;
+	if(!isEventActive_) return;
 	//TargetZ 0,  EyeZ -10
 	//TargetZ 16, EyeZ  6
 	
-	//Target
-	targetValue = Easing_Point2_EaseInCubic<Vector3>(
-		targetSaveValue, {targetSaveValue.x, targetSaveValue.y, TargetZEnd},
-		Time_OneWay(eventSecond, EventSecond));
+	switch (event_)
+	{
+	case Boss1Area::EventState::Approach:
 
-	//Eye
-	eyeValue = Easing_Point2_EaseInCubic<Vector3>(
-		eyeSaveValue, {eyeSaveValue.x, eyeSaveValue.y, EyeZEnd},
-		Time_OneWay(eventSecond, EventSecond));
+		//Target
+		targetValue = Easing_Point2_EaseInCubic<Vector3>(
+			targetSaveValue, {targetSaveValue.x, targetSaveValue.y, TargetZEnd},
+			eventSecond);
 
-	if(eventSecond >= 1.0f){
-		targetValue = {targetSaveValue.x, targetSaveValue.y, TargetZEnd};
-		eyeValue = {eyeSaveValue.x, eyeSaveValue.y, EyeZEnd};
-		isEventBegin_ = false;
+		//Eye
+		eyeValue = Easing_Point2_EaseInCubic<Vector3>(
+			eyeSaveValue, {eyeSaveValue.x, EyeYEnd, EyeZEnd},
+			eventSecond);
+
+		if(Time_OneWay(eventSecond, EventApproachSecond) >= 1.0f){
+			gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
+			targetValue = {targetSaveValue.x, targetSaveValue.y, TargetZEnd};
+			eyeValue = {eyeSaveValue.x, EyeYEnd, EyeZEnd};
+			eventSecond = 0;
+			isRoar_ = true;
+			event_ = EventState::Roar;
+			camera->ShakeStart();
+		}
+		camera->SetTarget(targetValue);
+		camera->SetEye(eyeValue);
+
+		break;
+	case Boss1Area::EventState::Roar:
+		if(isRoar_){
+			postEffect->BlurStart();
+		}
+
+		if(Time_OneWay(eventSecond, EventRoarSecond) >= 1.0f){
+			isRoar_ = false;
+			eventSecond = 0.f;
+			event_ = EventState::Return;
+		}
+
+		break;
+	case Boss1Area::EventState::Return:
+	default:
+		//Target
+		targetValue = Easing_Point2_EaseInCubic<Vector3>(
+			{targetSaveValue.x, targetSaveValue.y, TargetZEnd},targetSaveValue,
+			eventSecond);
+
+		//Eye
+		eyeValue = Easing_Point2_EaseInCubic<Vector3>(
+			{eyeSaveValue.x, EyeYEnd, EyeZEnd}, eyeSaveValue,
+			eventSecond);
+
+		if(Time_OneWay(eventSecond, EventApproachSecond) >= 1.0f){
+			targetValue = targetSaveValue;
+			eyeValue = eyeSaveValue;
+			eventSecond = 0;
+			isEventActive_ = false;
+			player_->EventEnd();
+		}
+
+		camera->SetTarget(targetValue);
+		camera->SetEye(eyeValue);
+		break;
 	}
-	camera->SetTarget(targetValue);
-	camera->SetEye(eyeValue);
 
+	if(!postEffect->Blur() && postEffect->GetIsBlurActive()){
+		//camera->ShakeStart(1);
+	}
 }
 #pragma endregion

@@ -117,6 +117,7 @@ void Application::Initialize()
 	Audio::Load(gateEnter_audio.number	,gateEnter_audio.path);
 	Audio::Load(cutIn_audio.number		,cutIn_audio.path);
 	Audio::Load(reflected_audio.number	,reflected_audio.path);
+	Audio::Load(roar_audio.number		,roar_audio.path);
 
 #pragma endregion
 

@@ -34,14 +34,6 @@ void BaseScene::Update()
 	input->Update();
 
 #ifdef _DEBUG
-	if(input->Push(DIK_1)){
-		postEffect->BlurStart();
-	}
-	
-	if(!postEffect->Blur() && postEffect->GetIsBlurActive()){
-		//camera->ShakeStart(1);
-	}
-
 	{
 		//座標
 		ImGui::SetNextWindowPos(ImVec2{0,40});

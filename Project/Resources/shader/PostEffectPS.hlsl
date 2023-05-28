@@ -15,7 +15,7 @@ float4 main(VSOutput input) : SV_TARGET
 	else if(isBlurActive){
 		//ガウシアンブラー
 		float totalWeight = 0;
-		float _Sigma = 0.005;
+		float _Sigma = 0.01;
 		float _StepWidth = 0.001;
 		float Blur = _Sigma*2;
 		float4 col = float4(0,0,0,1);
@@ -33,7 +33,7 @@ float4 main(VSOutput input) : SV_TARGET
 
 
 		//円内判定
-		float2 center = float2(0.5f,0.5f);
+		float2 center = float2(0.5f,0.45f);
 		float radius1 = 0.05;
 		float radius2 = 1.0f;
 		float2 calValue = float2((input.uv.x-center.x)*(input.uv.x-center.x), (input.uv.y-center.y)*(input.uv.y-center.y));

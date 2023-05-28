@@ -17,6 +17,13 @@ public:
 private:
 	template <class T> using vector = std::vector<T>;
 
+public:
+	enum class EventState{
+		Approach,
+		Roar,
+		Return
+	};
+
 private:
 	//CutInUI
 	const int CutInSpNum = 4;
@@ -149,11 +156,12 @@ private:
 	unique_ptr<Boss1> boss_;
 
 	//イベント開始
-	bool isEventBegin_ = false;
-	bool isEventEnd_ = false;
+	EventState event_ = EventState::Approach;
+	bool isEventActive_ = false;
 
 	const float TargetZEnd = 10.f;
-	const float EyeZEnd = -5.f;
+	const float EyeYEnd = 3.f;
+	const float EyeZEnd = -8.f;
 
 	Vector3 targetSaveValue;
 	Vector3 eyeSaveValue;
@@ -162,6 +170,9 @@ private:
 	Vector3 eyeValue;
 
 	float eventSecond = 0;
-	const float EventSecond = 3.f;
-};
+	const float EventApproachSecond = 3.f;
+	const float EventRoarSecond = 1.5f;
 
+	//咆哮
+	bool isRoar_ = true;
+};

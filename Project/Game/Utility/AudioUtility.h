@@ -22,3 +22,4 @@ inline AudioState dig_audio			= {10, 1.0f,  "dig.wav"};
 inline AudioState gateEnter_audio	= {11, 0.25f, "Enter.wav"};
 inline AudioState cutIn_audio		= {12, 0.25f, "cutin.wav"};
 inline AudioState reflected_audio	= {13, 0.5f,  "reflected.wav"};
+inline AudioState roar_audio	    = {14, 0.75f,  "Roar.wav"};

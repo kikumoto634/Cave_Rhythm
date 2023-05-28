@@ -62,10 +62,12 @@ void BaseBattleScene::Update()
 	}
 
 	if(input->Push(DIK_W)){
-		camera->MoveVector({0.f, 0.f, 1.f});
+		//camera->MoveVector({0.f, 0.f, 1.f});
+		camera->RotVector({XMConvertToRadians(1.0f),0.f,0.f});
 	}
 	else if(input->Push(DIK_S)){
-		camera->MoveVector({0.f, 0.f, -1.f});
+		//camera->MoveVector({0.f, 0.f, -1.f});
+		camera->RotVector({XMConvertToRadians(-1.0f),0.f,0.f});
 	}
 	//}
 #endif // _DEBUG
