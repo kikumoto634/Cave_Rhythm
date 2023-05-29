@@ -14,6 +14,8 @@ public:
 	friend class RunAwayBossState;
 	friend class DeadBossState;
 
+	//template <class T> using queue = std::queue<T>;
+
 public:
 	void AddInitialize() override;
 	void AddUpdate() override;
@@ -49,6 +51,6 @@ private:
 
 	bool isEvent_ = false;
 
-	queue<Vector3> summonObjPopPos;
+	//queue<Vector3> summonObjPopPos;
 };
 
