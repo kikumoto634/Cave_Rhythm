@@ -1,359 +1,122 @@
 #include "Boss1.h"
-#include "SphereCollider.h"
-#include "ParticleManager.h"
-
-#include "CollisionManager.h"
-#include "CollisionAttribute.h"
-
-#include "Easing.h"
+#include "BossStateManager.h"
+#include "BossState.h"
+#include <queue>
 
 using namespace std;
 
-void Boss1::Initialize(std::string filePath, bool IsSmoothing)
+void Boss1::AddInitialize()
 {
-	BaseObjObject::Initialize(filePath, IsSmoothing);
-	scaleMax_ = {1.3f,1.3f,1.3f};
-	scaleMin_ = {1.f,1.f,1.f};
-
-	SetPosition(NotAlivePos);
-	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
-	world_.UpdateMatrix();
-
-	hp = FullHP;
-
-	//パーティクル
-	DeadParticle = make_unique<ParticleObject>();
-	DeadParticle->Initialize();
-	SummonParticle = make_unique<ParticleObject>();
-	SummonParticle->Initialize();
-
-	//コライダー
-	SetCollider(new SphereCollider(XMVECTOR{0,0.0,0}, radius));
-	baseCollider_->SetAttribute(COLLISION_ATTR_ENEMYS);
-	baseCollider_->Update();
+	state_ = new BossStateManager();
+	state_->SetNextState(new IdelBossState);
 }
 
-void Boss1::Update(Camera *camera, Vector3 playerPos)
+void Boss1::AddUpdate()
 {
-	this->camera_ = camera;
-	if(!IsNotApp) return;
-
-	////距離計測
-	//Vector3 pos = playerPos - world_.translation;
-	//distance = pos.length();
-	//if(-13 <= distance && distance <= 13)		{
-	//	IsInvisible = false;
-	//}
-	//else if(-13 > distance || distance > 13)	{
-	//	IsInvisible = true;
-	//}
-
-	////ダメージ
-	//if(IsDamage){
-	//	damageResetCurFrame++;
-
-	//	if(hp <= 0){
-	//		IsDead = true;
-	//		IsDeadOnceAudio = true;
-	//		IsDeadOnceParticle = true;
-	//		DeadParticlePos = GetPosition();
-	//		SetPosition(NotAlivePos);
-	//		world_.UpdateMatrix();
-	//		baseCollider_->Update();
-	//		return;
-	//	}
-
-	//	if(IsDeadOnceAudio){
-	//		IsDeadOnceAudio = false;
-	//	}
-
-	//	//無敵時間内
-	//	Vector4 color;
-	//	if(damageResetCurFrame / 6 == 0){
-	//		color = {0.0f, 0.0f, 0.0f, 1.0f};
-	//	}
-	//	else{
-	//		color = {1.0f, 0.0f, 0.0f, 1.0f};
-	//	}
-	//	object_->SetColor(color);
-
-	//	//無敵時間
-	//	if(damageResetCurFrame >= DamageResetFrame){
-	//		damageResetCurFrame = 0;
-	//		color = {1.0f,1.0f,1.0f,1.0f};
-	//		object_->SetColor(color);
-	//		IsDamage = false;
-	//	}
-	//}
-
-	//if(IsInvisible) return;
-	////生存
-	//if(!IsDead){
-	//	//拍終了
-	//	if(isBeatEnd_){
-	//		//スケール
-	//		IsScaleEasing  = true;
-	//		//拍終了
-	//		isBeatEnd_ = false;
-	//		//カウント
-	//		patternCount++;
-
-	//		if(patternCount == 2){
-	//			IsSummon = true;
-	//			IsMove = false;
-	//		}
-	//		else if(patternCount == 25){
-	//			IsSummon = false;
-	//			IsMove = true;
-	//		}
-
-	//		//追撃
-	//		if(IsMove){
-	//			moveWaitCurCount++;
-	//				if(moveWaitCurCount >= MoveWaitCount){
-	//				//移動
-	//				IsMoveEasing = true;
-	//				OldPosition = GetPosition();
-	//				if(!IsComeBack)	targetPos = playerPos;
-	//				else if(IsComeBack) targetPos = homePos;
-	//				Movement();
-	//				currentPos = GetPosition();
-	//				moveWaitCurCount = 0;
-	//			}
-	//		}
-	//		//召喚
-	//		if(IsSummon){
-	//			Summon();
-	//		}
-	//	}
-	//	//スケール遷移
-	//	if(IsScaleEasing){
-	//		if(ScaleChange(scaleMax_, scaleMin_, ScaleEndTime)){
-	//			IsScaleEasing = false;
-	//		}
-	//	}
-
-	//	//移動
-	//	if(IsMoveEasing){
-	//		world_.translation = Easing_Point2_Linear(currentPos, movePosition, Time_OneWay(moveEasingFrame, MoveEasingMaxTime));
-	//	
-	//		Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
-	//		if(subVector.length() <= 1.f){
-	//		
-	//			if(IsMove){
-	//				IsMove = false;
-	//				patternCount = 0;
-	//			}
-
-	//			//戻り終わった
-	//			if(IsComeBack){
-	//				IsComeBack = false;
-	//				SetRotation({0,XMConvertToRadians(180),0});
-	//			}
-	//			//戻る
-	//			else if(!IsComeBack){
-	//				IsComeBack = true;
-	//			}
-
-	//			movePosition = OldPosition;
-	//		}
-
-	//		if(moveEasingFrame >= 1.f){
-	//			IsMoveEasing = false;
-	//			world_.translation = movePosition;
-	//			currentPos = {};
-	//			movePosition = {};
-	//			moveEasingFrame = 0;
-	//		}
-	//	}
-	//}
-	BaseObjObject::Update(this->camera_);
-}
-
-void Boss1::ParticleUpdate()
-{
-	//死亡
-	if(IsDead){
-		if(IsDeadOnceAudio){
-			IsDeadOnceAudio = false;
-			appDeadParFrame = 0;
-		}
-
-		if(appDeadParFrame >= AppDeadParMaxFrame){
-			appDeadParFrame = AppDeadParMaxFrame;
-			return;
-		}
-
-		appDeadParFrame++;
-
-		DeadParticleApp();
-		DeadParticle->Update(this->camera_);
+	//死亡時
+	if(!isAlive_){
+		popPosition_ = world_.translation;
+		state_->SetNextState(new IdelBossState);
 	}
 
-	//召喚
-	if(IsSummon){
-		SummonParticlePos = GetPosition();
-
-		if(appSummonParFrame >= AppSummonParMaxFrame){
-			appSummonParFrame = 0;
-		}
-
-		appSummonParFrame++;
-
-		SummonParticleApp();
-		SummonParticle->Update(this->camera_);
-	}
+	state_->Update(this);
 }
 
-void Boss1::Draw()
+void Boss1::AddDraw()
 {
-	/*if(IsDead) return;
-	if(IsInvisible) return;*/
-
-	BaseObjObject::Draw();
+	
 }
 
-void Boss1::ParticleDraw()
+void Boss1::AddParticleDraw()
 {
-	if(IsDead){
-		DeadParticle->Draw();
-	}
-	if(IsSummon){
-		SummonParticle->Draw();
-	}
+	state_->ParticleDraw();
 }
 
-void Boss1::Finalize()
+void Boss1::AddFinalize()
 {
-	DeadParticle->Finalize();
-	SummonParticle->Finalize();
-
-	BaseObjObject::Finalize();
+	delete state_;
+	state_ = nullptr;
 }
 
-void Boss1::OnCollision(const CollisionInfo &info)
-{
-	if(IsDead) return;
-	if(IsInvisible) return;
-
-	if(info.collider->GetAttribute() == COLLISION_ATTR_WEAPONS){
-		
-		if(!IsDamage){
-			hp = hp - 1;
-			IsDeadOnceAudio = true;
-			IsDamage = true;
-		}
-
-		IsComeBack = true;
-	}
-}
-
-void Boss1::Pop(Vector3 pos)
+void Boss1::BossPopInit(Vector3 pos)
 {
 	world_.translation = pos;
+	SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 	world_.UpdateMatrix();
-	homePos = pos;
-	IsNotApp = true;
+	isAlive_ = true;
+	isInvisible_ = false;
+	isPopsPosibble_ = false;
 }
 
-void Boss1::ContactUpdate()
+vector<MapNode *> Boss1::PathSearch(vector<vector<int>> &grid, int start_x, int start_y, int end_x, int end_y)
 {
-}
+	//パス
+    vector<MapNode*> path;
+    //未探索ノード
+    priority_queue<MapNode*> frontier;
+    //調べたノードをマーク
+    vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
 
-void Boss1::Movement()
-{
-	Vector2 baseVector = {1,0};
-	Vector2 subVector = {GetPosition().x - targetPos.x, GetPosition().z - targetPos.z};
+    //スタートノード設定
+    MapNode* start_node = new MapNode(start_x,start_y, 0,Heuristic(start_x, start_y, end_x, end_y), nullptr);
+    //未探索エリアの追加
+    frontier.push(start_node);
 
-	float lengthBase = baseVector.length();
-	float lengthSub = subVector.length();
+    //未探索エリアが空で解除
+    while (!frontier.empty()) {
+        //現在地のノードを設定(priority_queueを使用しているので降順で大きい値が取得される)
+        MapNode* current_node = frontier.top();
+        //現在地で探索されたので、削除
+        frontier.pop();
 
-	float cos = baseVector.dot(subVector)/(lengthBase*lengthSub);
+        //現在地がゴールなら終了
+        if (current_node->x == end_x && current_node->y == end_y) {
+            while (current_node != nullptr) {
+                path.push_back(current_node);
+                current_node = current_node->parent;
+            }
+            //取得した順番を逆にする
+            reverse(path.begin(), path.end());
+            break;
+        }
 
-	float sita = acosf(cos);
-	sita = sita*(180/3.14159265f);
+        //現在地に調べたマークをつける
+        visited[current_node->y][current_node->x] = true;
 
-	//右
-	if(sita >= 135){
-		movePosition = world_.translation + Vector3{2.f,0,0};
-		SetRotation({0,XMConvertToRadians(90),0});
-	}
-	//左
-	else if(45 >= sita){
-		movePosition = world_.translation + Vector3{-2.f,0,0};
-		SetRotation({0,XMConvertToRadians(-90),0});
-	}
-	//下
-	else if(sita > 45 && 135 > sita){
+        //上下左右のルート先
+        int dx[4] = {-1, 1, 0, 0};
+        int dy[4] = {0, 0, -1, 1};
 
-		//下
-		if(subVector.y > 0){
-			movePosition = world_.translation + Vector3{0,0,-2.f};
-			SetRotation({0,XMConvertToRadians(180),0});
-		}
-		//上
-		else if(subVector.y < 0){
-			movePosition = world_.translation + Vector3{0,0,2.f};
-			SetRotation({0,0,0});
-		}
-	}
-}
+        //四方向をforで調べる
+        for (int i = 0; i < 4; i++) {
+            //dx,dy方向のルート移動
+            int next_x = current_node->x + dx[i];
+            int next_y = current_node->y + dy[i];
 
-void Boss1::Summon()
-{
-	if(!IsSummon) return;
-	if(summonEnemyPosNum >= SummonEnemyPosNumMax) {
-		IsSummon = false;
-		summonEnemyPosNum = 0;
-		return;
-	}
+            //マップ範囲外
+            if (next_x < 0 || next_y < 0 || next_x >= grid[0].size() || next_y >= grid[0].size()) {
+                continue;
+            }
 
-	summonEnemyPosNum++;
-	IsSummonEnemyPop = true;
-}
+            //常に調べ済み
+            if (visited[next_y][next_x]) {
+                continue;
+            }
 
-void Boss1::DeadParticleApp()
-{
-	if(!IsDeadOnceParticle) return;
+            //障害物
+            if (grid[next_y][next_x] != 1) {
+                continue;
+            }
 
-	Vector3 vel{};
-	const float rnd_vel = 0.08f;
-	float randomVel = rnd_vel - rnd_vel / 2.0f;
-	vel.y = 0.06f;
+            //開始ノードからのコスト
+            int new_g = current_node->g + 1;
+            //ヒューリスティック推定値
+            int new_h = Heuristic(next_x, next_y, end_x, end_y);
 
-	Vector3 acc{};
-	acc.y = -0.005f;
-
-	for (int i = 0; i < 10; i++) {
-		vel.x = (float)rand() / RAND_MAX * randomVel;
-		vel.z = (float)rand() / RAND_MAX * randomVel;
-
-		DeadParticle->ParticleSet(AppDeadParMaxFrame,DeadParticlePos,vel,acc,0.4f,0.0f,1,{1.f,0.0f,0.0f,1.f});
-		DeadParticle->ParticleAppearance();
-	}
-
-	IsDeadOnceParticle = false;
-}
-
-void Boss1::SummonParticleApp()
-{
-	if(!IsSummon) return;
-	const float rnd_pos = 3.f;
-	Vector3 pos;
-	pos.x = (float)rand()/RAND_MAX * rnd_pos - rnd_pos/2.0f;
-	pos.y = -1.f;
-	pos.z = (float)rand()/RAND_MAX * rnd_pos - rnd_pos/2.0f;
-	pos += SummonParticlePos;
-
-	const float rnd_vel = 0.08f;
-	Vector3 vel{};
-	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	vel.y = 0.06f;
-	vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-
-	Vector3 acc{};
-	acc.y = 0.001f;
-
-	SummonParticle->ParticleSet(AppSummonParMaxFrame,pos,vel,acc,0.4f,0.0f,1,{0.0f,0.4f,0.0f,0.4f});
-	SummonParticle->ParticleAppearance();
+            //次のノードの取得、未探索エリアに追加
+            MapNode* next_node = new MapNode(next_x, next_y, new_g, new_h, current_node);
+            frontier.push(next_node);
+        }
+    }
+    return path;
 }

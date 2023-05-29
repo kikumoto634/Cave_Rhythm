@@ -159,9 +159,8 @@ private:
 	EventState event_ = EventState::Approach;
 	bool isEventActive_ = false;
 
-	const float TargetZEnd = 10.f;
-	const float EyeYEnd = 3.f;
-	const float EyeZEnd = -8.f;
+	const Vector3 TargetEnd = {0.f,-3.f,10.f};
+	const Vector3 EyeEnd = {0.f,3.f,-8.f};
 
 	Vector3 targetSaveValue;
 	Vector3 eyeSaveValue;

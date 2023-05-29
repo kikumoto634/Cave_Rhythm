@@ -375,14 +375,14 @@ void Boss1Area::BossInitialize()
 	boss_->Initialize("Skeleton");
 	Vector3 lpos = areaManager_->GetCSVObjectPopPosition(0);
 	lpos.y = -3.f;
-	boss_->Pop(lpos);
+	boss_->BossPopInit(lpos);
 }
 
 void Boss1Area::BossUpdate()
 {
 	if(!isBossAlive_) return;
+	boss_->SetMapInfo(areaManager_->GetMapInfo());
 	boss_->Update(camera, player_->GetPosition());
-	boss_->ParticleUpdate();
 }
 
 void Boss1Area::BossBeatEnd()
@@ -416,6 +416,7 @@ void Boss1Area::EventStart()
 	isBossAlive_  = true;
 
 	player_->EventBegin();
+	boss_->EventBegin();
 
 	targetSaveValue = camera->GetTarget();
 	eyeSaveValue = camera->GetEye();
@@ -424,72 +425,68 @@ void Boss1Area::EventStart()
 void Boss1Area::EventUpdate()
 {
 	if(!isEventActive_) return;
-	//TargetZ 0,  EyeZ -10
-	//TargetZ 16, EyeZ  6
-	
 	switch (event_)
 	{
 	case Boss1Area::EventState::Approach:
 
 		//Target
 		targetValue = Easing_Point2_EaseInCubic<Vector3>(
-			targetSaveValue, {targetSaveValue.x, targetSaveValue.y, TargetZEnd},
+			targetSaveValue, TargetEnd,
 			eventSecond);
 
 		//Eye
 		eyeValue = Easing_Point2_EaseInCubic<Vector3>(
-			eyeSaveValue, {eyeSaveValue.x, EyeYEnd, EyeZEnd},
+			eyeSaveValue, EyeEnd,
 			eventSecond);
 
-		if(Time_OneWay(eventSecond, EventApproachSecond) >= 1.0f){
-			gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
-			targetValue = {targetSaveValue.x, targetSaveValue.y, TargetZEnd};
-			eyeValue = {eyeSaveValue.x, EyeYEnd, EyeZEnd};
-			eventSecond = 0;
-			isRoar_ = true;
-			event_ = EventState::Roar;
-			camera->ShakeStart();
-		}
-		camera->SetTarget(targetValue);
-		camera->SetEye(eyeValue);
+		if(Time_OneWay(eventSecond, EventApproachSecond) < 1.0f) break;
+		targetValue = TargetEnd;
+		eyeValue = EyeEnd;
+		eventSecond = 0;
+		event_ = EventState::Roar;
+
+		gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
+		isRoar_ = true;
+		camera->ShakeStart();
 
 		break;
 	case Boss1Area::EventState::Roar:
-		if(isRoar_){
-			postEffect->BlurStart();
-		}
+		if(!isRoar_) break;
+		postEffect->BlurStart();
 
-		if(Time_OneWay(eventSecond, EventRoarSecond) >= 1.0f){
-			isRoar_ = false;
-			eventSecond = 0.f;
-			event_ = EventState::Return;
-		}
+		if(Time_OneWay(eventSecond, EventRoarSecond) < 1.0f) break;
+		
+		isRoar_ = false;
+		eventSecond = 0.f;
+		event_ = EventState::Return;
 
 		break;
 	case Boss1Area::EventState::Return:
 	default:
 		//Target
 		targetValue = Easing_Point2_EaseInCubic<Vector3>(
-			{targetSaveValue.x, targetSaveValue.y, TargetZEnd},targetSaveValue,
+			TargetEnd,targetSaveValue,
 			eventSecond);
 
 		//Eye
 		eyeValue = Easing_Point2_EaseInCubic<Vector3>(
-			{eyeSaveValue.x, EyeYEnd, EyeZEnd}, eyeSaveValue,
+			EyeEnd, eyeSaveValue,
 			eventSecond);
 
-		if(Time_OneWay(eventSecond, EventApproachSecond) >= 1.0f){
-			targetValue = targetSaveValue;
-			eyeValue = eyeSaveValue;
-			eventSecond = 0;
-			isEventActive_ = false;
-			player_->EventEnd();
-		}
+		if(Time_OneWay(eventSecond, EventApproachSecond) < 1.0f) break;
+		
+		targetValue = targetSaveValue;
+		eyeValue = eyeSaveValue;
+		eventSecond = 0;
 
-		camera->SetTarget(targetValue);
-		camera->SetEye(eyeValue);
+		isEventActive_ = false;
+		player_->EventEnd();
+		boss_->EventEnd();
 		break;
 	}
+
+	camera->SetTarget(targetValue);
+	camera->SetEye(eyeValue);
 
 	if(!postEffect->Blur() && postEffect->GetIsBlurActive()){
 		//camera->ShakeStart(1);

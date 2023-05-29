@@ -1,125 +1,54 @@
 ﻿#pragma once
-#include "BaseObjObject.h"
-#include "ParticleObject.h"
-class Boss1 : public BaseObjObject
+#include "BaseEnemy.h"
+#include "MapNode.h"
+#include <vector>
+
+class BossStateManager;
+
+class Boss1 : public BaseEnemy
 {
-//定数
-	//ビートx回数終了時にPOP
-	const int POP_COUNT = 6;
-	//死亡後のリセット時間
-	const int AppDeadParMaxFrame = 150;
-
-	//召喚エフェクト
-	const int AppSummonParMaxFrame = 50;
-	const int SummonEnemyPosNumMax = 10;
-
-	//体力
-	const int FullHP = 10;
-	//無敵時間
-	const int DamageResetFrame = 10;
-
-	//移動待機
-	const int MoveWaitCount = 2;
-
-	//敵行動
-	/*
-	* ビート数に応じて遷移
-	* 1召喚 5beat目		発生
-	* 2待機 8beat		待機
-	* 3接近 2待機終了後 Reset
-	* 4戻る 3成功->後ろに戻る
-	*/
+public:
+	friend class IdelBossState;
+	friend class SummonBossState;
+	friend class TrackBossState;
+	friend class RunAwayBossState;
+	friend class DeadBossState;
 
 public:
-	void Initialize(std::string filePath, bool IsSmoothing = false) override;
-	void Update(Camera* camera, Vector3 playerPos);
-	void ParticleUpdate();
-	void Draw() override;
-	void ParticleDraw();
-	void Finalize() override;
-	void OnCollision(const CollisionInfo& info) override;
+	void AddInitialize() override;
+	void AddUpdate() override;
+	void AddDraw() override;
+	void AddParticleDraw() override;
+	void AddFinalize() override;
 
-	void Pop(Vector3 pos);
-	//当たり判定時処理
-	void ContactUpdate() override;
-	void IsSummonEnemyPopNot()	{IsSummonEnemyPop = false;}
+	void EventBegin()	{isEvent_ = true;}
+	void EventEnd()	{isEvent_ = false;}
 
 	//Getter
-	inline bool GetIsNotApp()	{return IsNotApp;}
-	inline bool GetIsDeadAudio()	{return IsDeadOnceAudio;}
-	inline bool GetIsDead()	{return IsDead;}
-	inline Vector3 GetDeadParticlepos()	{return DeadParticlePos;}
-	inline bool GetIsInvisible() {return IsInvisible;}
-	inline bool GetIsSummonEnemyPop()	{return IsSummonEnemyPop;}
+	inline Vector3 GetPopPosition() override {return particlePos_;}
+	inline bool GetIsEvent()	{return isEvent_;}
+
+	void BossPopInit(Vector3 pos);
 
 private:
-
-	void Movement();
-	void Summon();
-
-	//死亡エフェクト
-	void DeadParticleApp();
-	//召喚エフェクト
-	void SummonParticleApp();
+	//経路探索(A*アルゴリズム)
+	vector<MapNode*> PathSearch(
+		vector<vector<int>>& grid, 
+		int start_x, int start_y, 
+		int end_x, int end_y);
+	//ヒューリスティック推定値計算
+	int Heuristic(int x1,int y1, int x2,int y2){
+		return abs(x1-x2) + abs(y1-y2);
+	}
 
 private:
+	//状態
+	BossStateManager* state_= nullptr;
+	//出現位置
+	Vector3 popPosition_ = {};
 
-	//未出現
-	bool IsNotApp = false;
+	bool isEvent_ = false;
 
-	//パターンカウント
-	int patternCount = 0;
-
-	//HP
-	int hp = 0;
-
-	//ダメージ
-	bool IsDamage = false;
-	int damageResetCurFrame = 0;
-
-	//追跡
-	bool IsMove = true;
-	Vector3 targetPos;
-	bool IsMoveEasing = false;
-	int moveWaitCurCount = 0;
-	Vector3 currentPos;
-	Vector3 movePosition;
-	Vector3 OldPosition = {};
-	const float MoveEasingMaxTime = 0.05f;
-	float moveEasingFrame = 0;
-
-	//召喚
-	bool IsSummon = false;
-	bool IsSummonEnemyPop = false;
-	int summonEnemyPosNum = 0;
-
-	//退却
-	bool IsComeBack= false;
-	Vector3 homePos = {};
-
-	//コライダー
-	float radius = 1.0f;
-
-	Vector3 NotAlivePos = {50,50,50};
-	//死亡
-	bool IsDead = false;
-	bool IsDeadOnceAudio = false;
-
-	//距離に応じた非表示
-	bool IsInvisible = false;
-	float distance = 0.f;
-
-	//スケール
-	bool IsScaleEasing = false;
-
-	//パーティクル
-	std::unique_ptr<ParticleObject> DeadParticle;
-	int appDeadParFrame = 0;
-	bool IsDeadOnceParticle = false;
-	Vector3 DeadParticlePos = {};
-
-	std::unique_ptr<ParticleObject> SummonParticle;
-	int appSummonParFrame = 0;
-	Vector3 SummonParticlePos ={};
+	queue<Vector3> summonObjPopPos;
 };
 

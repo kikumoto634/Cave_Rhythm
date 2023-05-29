@@ -21,7 +21,6 @@ void BossStateManager::Update(Boss1 *boss_)
 		state_->Initialize(boss_);
 		state_->UpdateTrigger();
 	}
-
 	state_->Update();
 }
 
