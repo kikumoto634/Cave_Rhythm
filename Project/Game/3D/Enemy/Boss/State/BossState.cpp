@@ -26,6 +26,10 @@ void IdelBossState::Update()
 	waitCount_++;
 	if(waitCount_ <= WaitCountMax) return;
 	waitCount_ = 0;
+	if(boss_->summonObjPos.size() <= 4){
+		stateManager_->SetNextState(new SummonBossState);
+		return;
+	}
 	stateManager_->SetNextState(new TrackBossState);
 }
 
@@ -41,10 +45,44 @@ void SummonBossState::UpdateTrigger()
 
 void SummonBossState::Update()
 {
+
+	if(boss_->isSummonStop_){
+		boss_->isSummonStop_ = false;
+		queue<Vector3> empty;
+		boss_->summonObjPos.swap(empty);
+		stateManager_->SetNextState(new IdelBossState);
+		return;
+	}
+
+	boss_->summonParticle_->Update(boss_->camera_);
+	App();
+
+	if(boss_->summonObjPos.size() >= boss_->SummonMax) return;
+	Vector3 pos = boss_->GetPosition();
+	pos = {pos.x + (BlockSize*(rand()%7-3)), pos.y, pos.z + (BlockSize*(rand()%7-3))};
+	boss_->summonObjPos.push(pos);
 }
 
 void SummonBossState::ParticleDraw()
 {
+	boss_->summonParticle_->Draw();
+}
+
+void SummonBossState::App()
+{
+	pos.x = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos/2.0f;
+	pos.y = PosY;
+	pos.z = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos/2.0f;
+	pos += boss_->GetPosition();
+
+	vel.x = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
+	vel.y = VelY;
+	vel.z = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
+
+	acc.y = AccY;
+
+	boss_->summonParticle_->ParticleSet(ParticleAliveFrameMax,pos,vel,acc,SizeStart,SizeEnd,TextureNumber,Color);
+	boss_->summonParticle_->ParticleAppearance();
 }
 
 
@@ -124,7 +162,7 @@ void TrackBossState::Update()
 		easingEndPos_ = {};
 		easingMoveTime_ = 0.f;
 		
-		stateManager_->SetNextState(new IdelBossState);
+		stateManager_->SetNextState(new RunAwayBossState);
 	}
 }
 

@@ -189,9 +189,9 @@ protected:
 	unique_ptr<JudgeLocation> judgeLoca_;
 
 	//ノーツ数
-	const int notesNum= 5;
+	/*const int notesNum= 5;
 	std::vector<std::unique_ptr<Notes>> lNotes;
-	std::vector<std::unique_ptr<Notes>> rNotes;
+	std::vector<std::unique_ptr<Notes>> rNotes;*/
 
 	bool isNoteInput_ = false;
 };

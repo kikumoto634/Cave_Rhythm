@@ -9,6 +9,12 @@ void Boss1::AddInitialize()
 {
 	state_ = new BossStateManager();
 	state_->SetNextState(new IdelBossState);
+
+    scaleMax_ = {3.f,3.f,3.f};
+    scaleMin_ = {2.f,2.f,2.f};
+
+    summonParticle_ = make_unique<ParticleObject>();
+    summonParticle_->Initialize();
 }
 
 void Boss1::AddUpdate()
@@ -16,9 +22,13 @@ void Boss1::AddUpdate()
 	//死亡時
 	if(!isAlive_){
 		popPosition_ = world_.translation;
-		state_->SetNextState(new IdelBossState);
+		state_->SetNextState(new DeadBossState);
 	}
 
+    if(summonNum_ >= SummonMax){
+        isSummonStop_ = true;
+        summonNum_ = 0;
+    }
 	state_->Update(this);
 }
 
@@ -34,8 +44,18 @@ void Boss1::AddParticleDraw()
 
 void Boss1::AddFinalize()
 {
+    summonParticle_->Finalize();
+
 	delete state_;
 	state_ = nullptr;
+}
+
+Vector3 Boss1::GetSummonObjPos()
+{
+    Vector3 pos = summonObjPos.front();
+    summonObjPos.pop();
+    summonNum_++;
+    return pos;
 }
 
 void Boss1::BossPopInit(Vector3 pos)

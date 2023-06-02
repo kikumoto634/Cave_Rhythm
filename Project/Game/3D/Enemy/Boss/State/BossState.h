@@ -39,9 +39,42 @@ private:
 //召喚
 class SummonBossState : public BossState{
 private:
+	//パーティクル生存時間
+	const int ParticleAliveFrameMax = 50;
+
+	//座標
+	const float Rand_Pos = 3.f;
+	const float PosY = -1.f;
+	//速度
+	const float Rand_Vel = 0.08f;
+	const float VelY = 0.06f;
+	//加速度
+	const float AccY = 0.001f;
+	//サイズ
+	const float SizeStart = 0.4f;
+	const float SizeEnd = 0.0f;
+	//テクスチャ番号
+	const uint32_t TextureNumber = 1;
+	//色
+	Vector4 Color = {0.0f,0.4f,0.0f,0.4f};
+
+	const float BlockSize = AreaManager::Block_Size;
+
+private:
 	void UpdateTrigger() override;
 	void Update() override;
 	void ParticleDraw() override;
+
+	void App();
+
+private:
+	//パーティクル生成
+	//座標
+	Vector3 pos{};
+	//速度
+	Vector3 vel{};
+	//加速度
+	Vector3 acc{};
 };
 
 //追跡

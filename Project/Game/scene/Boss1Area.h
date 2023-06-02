@@ -122,6 +122,15 @@ private:
 	void BossParticleDraw();
 	void BossFinalize();
 
+	//スケルトン
+	void SkeltonCreate();
+	void SkeltonInitialize();
+	void SkeltonUpdate();
+	void SkeltonBeatEnd();
+	void SkeltonDraw();
+	void SkeltonParticleDraw();
+	void SkeltonFinalize();
+
 	//イベント処理
 	void EventStart();
 	void EventUpdate();
@@ -154,6 +163,9 @@ private:
 	//ボス
 	bool isBossAlive_ = false;
 	unique_ptr<Boss1> boss_;
+
+	//スケルトン
+	list<unique_ptr<BaseEnemy>> enemys_;
 
 	//イベント開始
 	EventState event_ = EventState::Approach;

@@ -64,6 +64,7 @@ void Boss1Area::AddObject3DInitialize()
 	ExitInitialize();
 
 	BossInitialize();
+	SkeltonInitialize();
 }
 
 void Boss1Area::AddObject2DInitialize()
@@ -88,6 +89,7 @@ void Boss1Area::AddObject3DUpdate()
 	ExitUpdate();
 
 	BossUpdate();
+	SkeltonUpdate();
 }
 
 void Boss1Area::AddObject2DUpdate()
@@ -98,6 +100,7 @@ void Boss1Area::AddObject2DUpdate()
 void Boss1Area::AddBeatEndUpdate()
 {
 	BossBeatEnd();
+	SkeltonBeatEnd();
 }
 
 void Boss1Area::AddObject3DDraw()
@@ -108,11 +111,13 @@ void Boss1Area::AddObject3DDraw()
 	ExitDraw();
 
 	BossDraw();
+	SkeltonDraw();
 }
 
 void Boss1Area::AddParticleDraw()
 {
 	BossParticleDraw();
+	SkeltonParticleDraw();
 }
 
 void Boss1Area::AddFrontUIDraw()
@@ -132,6 +137,7 @@ void Boss1Area::AddObjectFinalize()
 	delete indestructibleWallModel_;
 	delete indestructibleWallColliderModel_;
 	BossFinalize();
+	SkeltonFinalize();
 }
 
 void Boss1Area::AddCommonFinalize()
@@ -389,6 +395,9 @@ void Boss1Area::BossBeatEnd()
 {
 	if(!isBossAlive_) return;
 	boss_->IsBeatEndOn();
+
+	if(boss_->GetIsEvent()) return;
+	SkeltonCreate();
 }
 
 void Boss1Area::BossDraw()
@@ -406,6 +415,65 @@ void Boss1Area::BossParticleDraw()
 void Boss1Area::BossFinalize()
 {
 	boss_->Finalize();
+}
+#pragma endregion
+
+#pragma region スケルトン
+void Boss1Area::SkeltonCreate()
+{
+	if(boss_->GetIsSummon()) return;
+	for(const auto& it : enemys_){
+		if(!it->GetIsPopsPmposibble_()) continue;
+
+		it->Pop(boss_->GetSummonObjPos());
+		break;
+	}
+}
+
+void Boss1Area::SkeltonInitialize()
+{
+	for(int i = 0; i < boss_->GetSummonMax(); i++){
+		unique_ptr<Skelton> obj = make_unique<Skelton>();
+		obj->Initialize("Skeleton");
+
+		enemys_.push_back(move(obj));
+	}
+}
+
+void Boss1Area::SkeltonUpdate()
+{
+	for(const auto& it : enemys_){
+		it->SetMapInfo(areaManager_->GetMapInfo());
+		it->Update(camera,player_->GetPosition());
+	}
+}
+
+void Boss1Area::SkeltonBeatEnd()
+{
+	for(const auto& it : enemys_){
+		it->IsBeatEndOn();
+	}
+}
+
+void Boss1Area::SkeltonDraw()
+{
+	for(const auto& it : enemys_){
+		it->Draw();
+	}
+}
+
+void Boss1Area::SkeltonParticleDraw()
+{
+	for(const auto& it : enemys_){
+		it->ParticleDraw();
+	}
+}
+
+void Boss1Area::SkeltonFinalize()
+{
+	for(const auto& it : enemys_){
+		it->Finalize();
+	}
 }
 #pragma endregion
 

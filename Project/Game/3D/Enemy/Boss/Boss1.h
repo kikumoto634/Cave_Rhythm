@@ -2,6 +2,7 @@
 #include "BaseEnemy.h"
 #include "MapNode.h"
 #include <vector>
+#include <queue>
 
 class BossStateManager;
 
@@ -14,7 +15,10 @@ public:
 	friend class RunAwayBossState;
 	friend class DeadBossState;
 
-	//template <class T> using queue = std::queue<T>;
+	template <class T> using queue = std::queue<T>;
+
+private:
+	const int SummonMax = 10;
 
 public:
 	void AddInitialize() override;
@@ -27,6 +31,9 @@ public:
 	void EventEnd()	{isEvent_ = false;}
 
 	//Getter
+	Vector3 GetSummonObjPos();
+	inline bool GetIsSummon() {return summonObjPos.empty();}
+	inline int GetSummonMax()	{return SummonMax;}
 	inline Vector3 GetPopPosition() override {return particlePos_;}
 	inline bool GetIsEvent()	{return isEvent_;}
 
@@ -51,6 +58,9 @@ private:
 
 	bool isEvent_ = false;
 
-	//queue<Vector3> summonObjPopPos;
+	queue<Vector3> summonObjPos;
+	int summonNum_ = 0;
+	bool isSummonStop_ = false;
+	unique_ptr<ParticleObject> summonParticle_;
 };
 
