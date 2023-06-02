@@ -378,7 +378,7 @@ void Boss1Area::ExitOpen()
 void Boss1Area::BossInitialize()
 {
 	boss_ = make_unique<Boss1>();
-	boss_->Initialize("Skeleton");
+	boss_->Initialize("necromancer");
 	Vector3 lpos = areaManager_->GetCSVObjectPopPosition(0);
 	lpos.y = -3.f;
 	boss_->BossPopInit(lpos);

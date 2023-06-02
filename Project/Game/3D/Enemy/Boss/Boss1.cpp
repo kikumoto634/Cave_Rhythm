@@ -10,8 +10,8 @@ void Boss1::AddInitialize()
 	state_ = new BossStateManager();
 	state_->SetNextState(new IdelBossState);
 
-    scaleMax_ = {3.f,3.f,3.f};
-    scaleMin_ = {2.f,2.f,2.f};
+    scaleMin_ = {0.5f,0.5f,0.5f};
+    scaleMax_ = {0.8f,0.8f,0.8f};
 
     summonParticle_ = make_unique<ParticleObject>();
     summonParticle_->Initialize();
