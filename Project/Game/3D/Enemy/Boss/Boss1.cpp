@@ -12,6 +12,7 @@ void Boss1::AddInitialize()
 
     scaleMin_ = {0.5f,0.5f,0.5f};
     scaleMax_ = {0.8f,0.8f,0.8f};
+    SetScale(scaleMax_);
 
     summonParticle_ = make_unique<ParticleObject>();
     summonParticle_->Initialize();

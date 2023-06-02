@@ -426,6 +426,7 @@ void Boss1Area::SkeltonCreate()
 		if(!it->GetIsPopsPmposibble_()) continue;
 
 		it->Pop(boss_->GetSummonObjPos());
+		it->SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 		break;
 	}
 }
