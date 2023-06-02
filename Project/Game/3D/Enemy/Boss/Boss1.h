@@ -18,7 +18,7 @@ public:
 	template <class T> using queue = std::queue<T>;
 
 private:
-	const int SummonMax = 10;
+	const int SummonMax = 3;
 
 public:
 	void AddInitialize() override;
@@ -60,7 +60,9 @@ private:
 
 	queue<Vector3> summonObjPos;
 	int summonNum_ = 0;
-	bool isSummonStop_ = false;
+	bool isSummon = false;
 	unique_ptr<ParticleObject> summonParticle_;
+
+	bool isdebug = false;
 };
 

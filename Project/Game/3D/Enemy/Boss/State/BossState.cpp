@@ -26,11 +26,12 @@ void IdelBossState::Update()
 	waitCount_++;
 	if(waitCount_ <= WaitCountMax) return;
 	waitCount_ = 0;
-	if(boss_->summonObjPos.size() <= 4){
+	//if(boss_->summonObjPos.size() <= 4){
+	if(boss_->isdebug) return;
 		stateManager_->SetNextState(new SummonBossState);
-		return;
-	}
-	stateManager_->SetNextState(new TrackBossState);
+		//return;
+	//}
+//	stateManager_->SetNextState(new TrackBossState);
 }
 
 void IdelBossState::ParticleDraw()
@@ -45,22 +46,28 @@ void SummonBossState::UpdateTrigger()
 
 void SummonBossState::Update()
 {
-
-	if(boss_->isSummonStop_){
-		boss_->isSummonStop_ = false;
-		queue<Vector3> empty;
-		boss_->summonObjPos.swap(empty);
-		stateManager_->SetNextState(new IdelBossState);
-		return;
-	}
-
 	boss_->summonParticle_->Update(boss_->camera_);
 	App();
 
-	if(boss_->summonObjPos.size() >= boss_->SummonMax) return;
+
+	if(boss_->isSummon && boss_->summonNum_ <= 1){
+		stateManager_->SetNextState(new IdelBossState);
+		boss_->summonNum_ = 0;
+		boss_->isSummon = false;
+		boss_->isdebug = true;
+		return;
+	}
+
+	//召喚座標
+	if(boss_->isSummon) return;
+	if(boss_->summonNum_ >= boss_->SummonMax){
+		boss_->isSummon = true;
+	}
+
 	Vector3 pos = boss_->GetPosition();
 	pos = {pos.x + (BlockSize*(rand()%7-3)), pos.y, pos.z + (BlockSize*(rand()%7-3))};
 	boss_->summonObjPos.push(pos);
+	boss_->summonNum_++;
 }
 
 void SummonBossState::ParticleDraw()

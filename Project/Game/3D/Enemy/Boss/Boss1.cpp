@@ -26,10 +26,6 @@ void Boss1::AddUpdate()
 		state_->SetNextState(new DeadBossState);
 	}
 
-    if(summonNum_ >= SummonMax){
-        isSummonStop_ = true;
-        summonNum_ = 0;
-    }
 	state_->Update(this);
 }
 
@@ -55,7 +51,7 @@ Vector3 Boss1::GetSummonObjPos()
 {
     Vector3 pos = summonObjPos.front();
     summonObjPos.pop();
-    summonNum_++;
+    summonNum_--;
     return pos;
 }
 
