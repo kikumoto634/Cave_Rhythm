@@ -60,6 +60,9 @@ private:
 
 	const float BlockSize = AreaManager::Block_Size;
 
+	//状態遷移インターバル
+	const float StateIntarvalMax = 3.f;
+
 private:
 	void UpdateTrigger() override;
 	void Update() override;
@@ -75,6 +78,10 @@ private:
 	Vector3 vel{};
 	//加速度
 	Vector3 acc{};
+
+	//状態遷移のインターバル
+	bool isStateIntarval_ = false;
+	float stateInterval_ = 0.f;
 };
 
 //追跡

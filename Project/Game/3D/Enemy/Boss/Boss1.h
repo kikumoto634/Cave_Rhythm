@@ -60,9 +60,8 @@ private:
 
 	queue<Vector3> summonObjPos;
 	int summonNum_ = 0;
-	bool isSummon = false;
+	bool isSummon_ = false;
+	bool isSummonComp_ = false;
 	unique_ptr<ParticleObject> summonParticle_;
-
-	bool isdebug = false;
 };
 

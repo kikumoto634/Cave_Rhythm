@@ -39,7 +39,7 @@ public:
 	inline double GetCalTime()	{return calTime_.count();}
 	inline double GetInputTimeTarget()	{return inputTimeTarget_;}
 	inline double GetInputTimet()	{return inputTime_.count();}
-	inline double GetBPMTime()	{return beatTime_;}
+	inline double GetBPMTime()	{return beatTime_;                              }
 	inline bool GetIsMeasureUp()	{return isMeasureUp_;}
 
 	//Setter

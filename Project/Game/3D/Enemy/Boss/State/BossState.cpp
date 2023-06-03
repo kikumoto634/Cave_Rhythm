@@ -27,7 +27,7 @@ void IdelBossState::Update()
 	if(waitCount_ <= WaitCountMax) return;
 	waitCount_ = 0;
 	//if(boss_->summonObjPos.size() <= 4){
-	if(boss_->isdebug) return;
+	if(boss_->isSummonComp_) return;
 		stateManager_->SetNextState(new SummonBossState);
 		//return;
 	//}
@@ -50,18 +50,26 @@ void SummonBossState::Update()
 	App();
 
 
-	if(boss_->isSummon && boss_->summonNum_ <= 1){
-		stateManager_->SetNextState(new IdelBossState);
+	if(isStateIntarval_){
+		if(Time_OneWay(stateInterval_,StateIntarvalMax) >= 1.f){
+			stateManager_->SetNextState(new IdelBossState);
+		}
+		return;
+	}
+
+	//召喚終了
+	if(boss_->isSummon_ && boss_->summonNum_ <= 1){
+		isStateIntarval_ = true;
 		boss_->summonNum_ = 0;
-		boss_->isSummon = false;
-		boss_->isdebug = true;
+		boss_->isSummon_ = false;
+		boss_->isSummonComp_ = true;
 		return;
 	}
 
 	//召喚座標
-	if(boss_->isSummon) return;
+	if(boss_->isSummon_) return;
 	if(boss_->summonNum_ >= boss_->SummonMax){
-		boss_->isSummon = true;
+		boss_->isSummon_ = true;
 	}
 
 	Vector3 pos = boss_->GetPosition();
