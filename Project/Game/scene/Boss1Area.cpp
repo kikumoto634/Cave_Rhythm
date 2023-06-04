@@ -101,6 +101,11 @@ void Boss1Area::AddBeatEndUpdate()
 {
 	BossBeatEnd();
 	SkeltonBeatEnd();
+
+	if(isEventBGM_){
+		gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+		isEventBGM_ = false;
+	}
 }
 
 void Boss1Area::AddObject3DDraw()
@@ -370,6 +375,10 @@ void Boss1Area::ExitFinalize()
 
 void Boss1Area::ExitOpen()
 {
+	for(const auto& it : exitWall_){
+		it->ColliderRemove();
+	}
+
 	isExitBlocksAlive_ = false;
 	camera->ShakeStart();
 	gameManager_->AudioPlay(gateEnter_audio.number);
@@ -538,6 +547,7 @@ void Boss1Area::EventUpdate()
 
 		if(Time_OneWay(eventSecond, EventRoarSecond) < 1.0f) break;
 		
+		isEventBGM_ = true;
 		isRoar_ = false;
 		eventSecond = 0.f;
 		event_ = EventState::Return;

@@ -186,4 +186,7 @@ private:
 
 	//咆哮
 	bool isRoar_ = true;
+
+	//BGM再生
+	bool isEventBGM_ = false;
 };
