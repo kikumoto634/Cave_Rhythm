@@ -16,6 +16,9 @@ void Boss1::AddInitialize()
 
     summonParticle_ = make_unique<ParticleObject>();
     summonParticle_->Initialize();
+
+    runAwayParticle_ = make_unique<ParticleObject>();
+    runAwayParticle_->Initialize();
 }
 
 void Boss1::AddUpdate()
@@ -26,6 +29,11 @@ void Boss1::AddUpdate()
 		state_->SetNextState(new DeadBossState);
 	}
 
+    deadParticle_->Update(camera_);
+    summonParticle_->Update(camera_);
+    runAwayParticle_->Update(camera_);
+
+    DamageUpdate();
 	state_->Update(this);
 }
 
@@ -42,9 +50,16 @@ void Boss1::AddParticleDraw()
 void Boss1::AddFinalize()
 {
     summonParticle_->Finalize();
+    runAwayParticle_->Finalize();
 
 	delete state_;
 	state_ = nullptr;
+}
+
+void Boss1::AddContactUpdate()
+{
+    if(isDamage_)return;
+    isDamage_ = true;
 }
 
 Vector3 Boss1::GetSummonObjPos()
@@ -136,4 +151,25 @@ vector<MapNode *> Boss1::PathSearch(vector<vector<int>> &grid, int start_x, int 
         }
     }
     return path;
+}
+
+void Boss1::DamageUpdate()
+{
+    if(!isAlive_ || !isDamage_) return;
+
+    if(damageFrame_ == 0){
+        isContactTrigger_ = true;
+        state_->SetNextState(new RunAwayBossState);
+	}
+
+	//無敵時間内
+	Vector4 color = (damageFrame_ % damageFrameInterval == 1) ? color = Damage1Color : color = Damage2Color;
+	object_->SetColor(color);
+	damageFrame_ ++;
+
+	//無敵時間終了
+	if(damageFrame_ < DamageFrameMax) return;
+	damageFrame_ = 0;
+	object_->SetColor(NormalColor);
+	isDamage_ = false;
 }

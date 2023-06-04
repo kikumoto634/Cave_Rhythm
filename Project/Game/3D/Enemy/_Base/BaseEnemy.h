@@ -62,6 +62,9 @@ public:
 	//当たり判定時処理
 	void ContactUpdate() override;
 
+	void ColliderSet();
+	void ColliderRemove();
+
 	//Getter
 
 	//Setter
@@ -73,6 +76,8 @@ public:
 	virtual void AddDraw() = 0;
 	virtual void AddParticleDraw() = 0;
 	virtual void AddFinalize() = 0;
+
+	virtual void AddContactUpdate() = 0;
 
 	virtual inline Vector3 GetPopPosition() = 0;
 
@@ -88,8 +93,6 @@ private:
 
 	//コライダー
 	void ColliderInitialize();
-	void ColliderSet();
-	void ColliderRemove();
 
 	//パーティクル
 	void ParticleInitialize();
@@ -120,5 +123,6 @@ protected:
 	unique_ptr<ParticleObject> popParticle_;
 	Vector3 particlePos_ = {0,-10,0};
 	int particleAliveFrame_ = 0;
+
 };
 

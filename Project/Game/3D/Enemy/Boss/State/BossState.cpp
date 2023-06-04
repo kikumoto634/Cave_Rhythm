@@ -26,12 +26,11 @@ void IdelBossState::Update()
 	waitCount_++;
 	if(waitCount_ <= WaitCountMax) return;
 	waitCount_ = 0;
-	//if(boss_->summonObjPos.size() <= 4){
-	if(boss_->isSummonComp_) return;
+	if(!boss_->isSummonComp_ || boss_->summonNum_ >= boss_->SummonMax) {
 		stateManager_->SetNextState(new SummonBossState);
-		//return;
-	//}
-//	stateManager_->SetNextState(new TrackBossState);
+		return;
+	}
+	stateManager_->SetNextState(new TrackBossState);
 }
 
 void IdelBossState::ParticleDraw()
@@ -42,16 +41,18 @@ void IdelBossState::ParticleDraw()
 
 void SummonBossState::UpdateTrigger()
 {
+	boss_->SetRotation({0,DirectX::XMConvertToRadians(180),0.f});
 }
 
 void SummonBossState::Update()
 {
-	boss_->summonParticle_->Update(boss_->camera_);
 	App();
 
 
 	if(isStateIntarval_){
 		if(Time_OneWay(stateInterval_,StateIntarvalMax) >= 1.f){
+			queue<Vector3> empty;
+			boss_->summonObjPos.swap(empty);
 			stateManager_->SetNextState(new IdelBossState);
 		}
 		return;
@@ -72,8 +73,16 @@ void SummonBossState::Update()
 		boss_->isSummon_ = true;
 	}
 
-	Vector3 pos = boss_->GetPosition();
-	pos = {pos.x + (BlockSize*(rand()%7-3)), pos.y, pos.z + (BlockSize*(rand()%7-3))};
+	Vector3 pos = {};
+	int X = 0;
+	int Y = 0;
+	do{
+		pos = boss_->GetPosition();
+		pos = {pos.x + (BlockSize*(rand()%7-3)), pos.y, pos.z + (BlockSize*(rand()%4-1))};
+
+		X = +int(pos.x/AreaBlockSize)+AreaBlocksHalfNum;
+		Y = -int(pos.z/AreaBlockSize)+AreaBlocksHalfNum;
+	}while(boss_->mapInfo_[Y][X] != 1);
 	boss_->summonObjPos.push(pos);
 	boss_->summonNum_++;
 }
@@ -109,8 +118,16 @@ void TrackBossState::UpdateTrigger()
 	mapPath_ = boss_->mapInfo_;
 	eX_ = +int(boss_->world_.translation.x/AreaBlockSize)+AreaBlocksHalfNum;
 	eY_ = -int(boss_->world_.translation.z/AreaBlockSize)+AreaBlocksHalfNum;
-	pX_ = +int(boss_->playerPos_.x/AreaBlockSize)+AreaBlocksHalfNum;
-	pY_ = -int(boss_->playerPos_.z/AreaBlockSize)+AreaBlocksHalfNum;
+	
+	if(boss_->moveCount < MoveCountMax){
+		pX_ = +int(boss_->playerPos_.x/AreaBlockSize)+AreaBlocksHalfNum;
+		pY_ = -int(boss_->playerPos_.z/AreaBlockSize)+AreaBlocksHalfNum;
+	}
+	else if(boss_->moveCount >= MoveCountMax){
+		pX_ = TrackGoalMapIndexX;
+		pY_ = TrackGoalMapIndexY;
+	}
+
 	path_ = boss_->PathSearch(boss_->mapInfo_, eX_,eY_, pX_,pY_);
 
 	int root = RootPathStartNumber;
@@ -119,7 +136,7 @@ void TrackBossState::UpdateTrigger()
 		root++;
 	}
 	mapPath_[eY_][eX_] = RootPathSkeltonNumber;
-	mapPath_[pY_][pX_] = RootPathPlayerNumber;
+	mapPath_[pY_][pX_] = RootPathGoalNumber;
 
 	//上下左右のルート先
     int dx[PathDirection] = {-1, 1, 0, 0};
@@ -132,7 +149,7 @@ void TrackBossState::UpdateTrigger()
         int next_y = eY_ + dy[j];
 		if(next_x < 0 || next_y < 0 || 31 <= next_x || 31 <= next_y) return;
 
-        if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == RootPathPlayerNumber){
+        if(mapPath_[next_y][next_x] == pathRoot_ || mapPath_[next_y][next_x] == RootPathGoalNumber){
 			easingEndPos_ = boss_->world_.translation + Vector3{dx[j]*AreaBlockSize, 0.f, -dy[j]*AreaBlockSize};
 			eX_ = next_x;
 			eY_ = next_y;
@@ -151,9 +168,12 @@ void TrackBossState::UpdateTrigger()
 				boss_->world_.rotation.y = UpAngle;
 			}
 
-			if(mapPath_[next_y][next_x] == RootPathPlayerNumber) {
-				pathRoot_ = RootPathGoalNumber;
+			if(mapPath_[next_y][next_x] == RootPathGoalNumber) {
+				pathRoot_ = RootPathNumber;
 
+				boss_->isSummonComp_ = false;
+				boss_->moveCount = 0;
+				stateManager_->SetNextState(new IdelBossState);
 			}
 			else if(mapPath_[next_y][next_x] == pathRoot_){
 				pathRoot_++;
@@ -176,8 +196,15 @@ void TrackBossState::Update()
 		easigStartPos_ = {};
 		easingEndPos_ = {};
 		easingMoveTime_ = 0.f;
+
+		if(boss_->moveCount >= MoveCountMax*2){
+			boss_->isSummonComp_ = false;
+			boss_->moveCount = 0;
+			stateManager_->SetNextState(new IdelBossState);
+		}
 		
-		stateManager_->SetNextState(new RunAwayBossState);
+		stateManager_->SetNextState(new IdelBossState);
+		boss_->moveCount++;
 	}
 }
 
@@ -189,14 +216,42 @@ void TrackBossState::ParticleDraw()
 
 void RunAwayBossState::UpdateTrigger()
 {
+	startPos = boss_->GetPosition();
+	boss_->ColliderRemove();
 }
 
 void RunAwayBossState::Update()
 {
+	boss_->world_.translation = Easing_Point2_Linear(startPos,GoalPos,Time_OneWay(moveSecond, moveSecondMax));
+	App();
+
+	if(moveSecond >= 1.0f){
+		boss_->SetPosition(GoalPos);
+		boss_->ColliderSet();
+		stateManager_->SetNextState(new IdelBossState);
+	}
 }
 
 void RunAwayBossState::ParticleDraw()
 {
+	boss_->runAwayParticle_->Draw();
+}
+
+void RunAwayBossState::App()
+{
+	pos.x = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos/2.0f;
+	pos.y = PosY;
+	pos.z = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos/2.0f;
+	pos += boss_->GetPosition();
+
+	vel.x = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
+	vel.y = VelY;
+	vel.z = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
+
+	acc.y = AccY;
+
+	boss_->runAwayParticle_->ParticleSet(ParticleAliveFrameMax,pos,vel,acc,SizeStart,SizeEnd,TextureNumber,Color);
+	boss_->runAwayParticle_->ParticleAppearance();
 }
 
 
@@ -208,14 +263,11 @@ void DeadBossState::UpdateTrigger()
 	boss_->world_.UpdateMatrix();
 	boss_->baseCollider_->Update();
 
-	boss_->isContactTrigger_ = true;
-
 	App();
 }
 
 void DeadBossState::Update()
 {
-	boss_->deadParticle_->Update(boss_->camera_);
 	boss_->particleAliveFrame_++;
 
 	if(boss_->particleAliveFrame_ < ParticleAliveFrameMax) return;

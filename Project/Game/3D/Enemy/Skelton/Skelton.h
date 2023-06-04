@@ -24,6 +24,8 @@ public:
 	void AddParticleDraw() override;
 	void AddFinalize() override;
 
+	void AddContactUpdate() override;
+
 	//Getter
 	inline Vector3 GetPopPosition() override {return popPosition_;}
 

@@ -6,7 +6,7 @@
 
 class BossStateManager;
 
-class Boss1 : public BaseEnemy
+class Boss1 : public BaseEnemy 
 {
 public:
 	friend class IdelBossState;
@@ -18,7 +18,18 @@ public:
 	template <class T> using queue = std::queue<T>;
 
 private:
-	const int SummonMax = 3;
+	const int SummonMax = 6;
+
+	//ダメージ状態の総フレーム
+	const int DamageFrameMax = 150;
+	//色変化の間隔
+	const int damageFrameInterval = 6;
+	//通常色
+	const Vector4 NormalColor = {1.0f,1.0f,1.0f,1.0f};
+	//ダメージ色1
+	const Vector4 Damage1Color = {0.0f,0.0f,0.0f,0.0f};
+	//ダメージ色2
+	const Vector4 Damage2Color = {1.0f,0.0f,0.0f,1.0f};
 
 public:
 	void AddInitialize() override;
@@ -26,6 +37,8 @@ public:
 	void AddDraw() override;
 	void AddParticleDraw() override;
 	void AddFinalize() override;
+
+	void AddContactUpdate() override;
 
 	void EventBegin()	{isEvent_ = true;}
 	void EventEnd()	{isEvent_ = false;}
@@ -50,6 +63,8 @@ private:
 		return abs(x1-x2) + abs(y1-y2);
 	}
 
+	void DamageUpdate();
+
 private:
 	//状態
 	BossStateManager* state_= nullptr;
@@ -63,5 +78,12 @@ private:
 	bool isSummon_ = false;
 	bool isSummonComp_ = false;
 	unique_ptr<ParticleObject> summonParticle_;
+
+	int moveCount = 0;
+
+	//ダメージ
+	bool isDamage_ = false;
+	int damageFrame_ = 0;
+	unique_ptr<ParticleObject> runAwayParticle_;
 };
 

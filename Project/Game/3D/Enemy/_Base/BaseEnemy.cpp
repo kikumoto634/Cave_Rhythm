@@ -80,7 +80,7 @@ void BaseEnemy::Pop(Vector3 pos)
 
 void BaseEnemy::ContactUpdate()
 {
-	isAlive_ = false;
+	AddContactUpdate();
 }
 
 
@@ -147,6 +147,7 @@ void BaseEnemy::ColliderInitialize()
 
 void BaseEnemy::ColliderSet()
 {
+	SetCollider(new SphereCollider(XMVECTOR{0,0,0,0}, colliderRadius_));
 	baseCollider_->SetAttribute(COLLISION_ATTR_ENEMYS);
 }
 

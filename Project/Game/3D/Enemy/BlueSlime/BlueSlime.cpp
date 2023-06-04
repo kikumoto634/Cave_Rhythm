@@ -28,3 +28,8 @@ void BlueSlime::AddFinalize()
 	delete state_;
 	state_ = nullptr;
 }
+
+void BlueSlime::AddContactUpdate()
+{
+	isAlive_ = false;
+}

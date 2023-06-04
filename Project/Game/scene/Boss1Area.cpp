@@ -387,6 +387,9 @@ void Boss1Area::BossInitialize()
 void Boss1Area::BossUpdate()
 {
 	if(!isBossAlive_) return;
+	if(boss_->GetIsContactTrigger()){
+		gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
+	}
 	boss_->SetMapInfo(areaManager_->GetMapInfo());
 	boss_->Update(camera, player_->GetPosition());
 }
@@ -444,6 +447,9 @@ void Boss1Area::SkeltonInitialize()
 void Boss1Area::SkeltonUpdate()
 {
 	for(const auto& it : enemys_){
+		if(it->GetIsContactTrigger()){
+			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
+		}
 		it->SetMapInfo(areaManager_->GetMapInfo());
 		it->Update(camera,player_->GetPosition());
 	}

@@ -34,6 +34,11 @@ void Skelton::AddFinalize()
     state_ = nullptr;
 }
 
+void Skelton::AddContactUpdate()
+{
+    isAlive_ = false;
+}
+
 vector<MapNode*> Skelton::PathSearch(vector<vector<int>> &grid, int start_x, int start_y, int end_x, int end_y)
 {
 	//パス
