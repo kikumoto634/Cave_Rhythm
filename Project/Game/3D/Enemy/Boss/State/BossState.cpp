@@ -271,7 +271,9 @@ void DeadBossState::Update()
 	boss_->particleAliveFrame_++;
 
 	if(boss_->particleAliveFrame_ < ParticleAliveFrameMax) return;
-
+	boss_->isAlive_ = false;
+	queue<Vector3> empty;
+	boss_->summonObjPos.swap(empty);
 }
 
 void DeadBossState::ParticleDraw()

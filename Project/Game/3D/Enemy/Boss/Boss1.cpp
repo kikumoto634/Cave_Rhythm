@@ -159,7 +159,12 @@ void Boss1::DamageUpdate()
 
     if(damageFrame_ == 0){
         isContactTrigger_ = true;
+        hp_--;
         state_->SetNextState(new RunAwayBossState);
+
+        if(hp_ <= 0){
+            state_->SetNextState(new DeadBossState);
+        }
 	}
 
 	//無敵時間内

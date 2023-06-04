@@ -69,6 +69,7 @@ public:
 
 	//Setter
 	inline void SetMapInfo(vector<vector<int>> info) {mapInfo_ = info;}
+	inline void SetIsAlive(bool isFlag)	{isAlive_ = isFlag;}
 
 public:
 	virtual void AddInitialize() = 0;

@@ -342,6 +342,9 @@ void Boss1Area::ExitUpdate()
 	}
 #endif // _DEBUG
 
+	if(!boss_->GetIsAlive() && isExitBlocksAlive_){
+		ExitOpen();
+	}
 
 	if(!isExitBlocksAlive_) return;
 	for(const auto& it : exitWall_){
@@ -447,6 +450,10 @@ void Boss1Area::SkeltonInitialize()
 void Boss1Area::SkeltonUpdate()
 {
 	for(const auto& it : enemys_){
+		if(!boss_->GetIsAlive()){
+			it->SetIsAlive(false);
+		}
+
 		if(it->GetIsContactTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
 		}

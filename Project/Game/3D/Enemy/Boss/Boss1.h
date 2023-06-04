@@ -85,5 +85,8 @@ private:
 	bool isDamage_ = false;
 	int damageFrame_ = 0;
 	unique_ptr<ParticleObject> runAwayParticle_;
+
+	//体力
+	int hp_ = 10;
 };
 
