@@ -153,9 +153,6 @@ void Boss1Area::AddCommonFinalize()
 #pragma region カットイン
 void Boss1Area::CutInInitialize()
 {
-	//音声
-	gameManager_->AudioPlay(cutIn_audio.number, cutIn_audio.volume);
-
 	//センター
 	unique_ptr<BaseSprites> center = make_unique<BaseSprites>();
 	center->Initialize(cutInBoss_tex.number);
@@ -224,6 +221,9 @@ void Boss1Area::CutInUpdate()
 
 		//目標値
 		if(cutInMoveframe_ >= 1.0){
+			//音声
+			gameManager_->AudioPlay(cutIn_audio.number, cutIn_audio.volume);
+
 			cutInSpPos_[CutInSpCenterNumber] = CutInSpCenterEndPos;
 			cutInSpPos_[CutInSpUpNumber]     = CutInSpUpEndPos;
 			cutInSpPos_[CutInSpDownNumber]   = CutInSpDownEndPos;

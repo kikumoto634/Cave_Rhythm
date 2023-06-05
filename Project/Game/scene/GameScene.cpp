@@ -24,9 +24,9 @@ GameScene::GameScene(DirectXCommon *dxCommon, Window *window, int saveHP,int flo
 
 void GameScene::NextSceneChange()
 {
-	if(floorValue_ >= DenpthMaxNum){
-		//sceneManager->SetNextScene(new Boss1Area(dxCommon,window,player->GetHP()));
-		sceneManager->SetNextScene(new HomeScene(dxCommon,window,player_->GetHp()));
+	if(floorValue_ >= 1){
+		sceneManager->SetNextScene(new Boss1Area(dxCommon,window,player_->GetHp()));
+		//sceneManager->SetNextScene(new HomeScene(dxCommon,window,player_->GetHp()));
 	}
 	else{
 		sceneManager->SetNextScene(new GameScene(dxCommon,window,player_->GetHp(), floorValue_));
