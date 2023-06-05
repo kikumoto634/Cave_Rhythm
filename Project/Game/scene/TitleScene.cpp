@@ -3,8 +3,9 @@
 #include "SceneManager.h"
 #include "TutorialScene.h"
 #include "GameScene.h"
-#include "Easing.h"
+#include "Boss1Area.h"
 
+#include "Easing.h"
 #include "AudioUtility.h"
 #include "TextureUtility.h"
 
