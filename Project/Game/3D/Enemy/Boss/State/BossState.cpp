@@ -59,7 +59,7 @@ void SummonBossState::Update()
 	}
 
 	//召喚終了
-	if(boss_->isSummon_ && boss_->summonNum_ <= 1){
+	if(boss_->isSummon_){
 		isStateIntarval_ = true;
 		boss_->summonNum_ = 0;
 		boss_->isSummon_ = false;
@@ -222,13 +222,22 @@ void RunAwayBossState::UpdateTrigger()
 
 void RunAwayBossState::Update()
 {
-	boss_->world_.translation = Easing_Point2_Linear(startPos,GoalPos,Time_OneWay(moveSecond, moveSecondMax));
+	boss_->world_.translation = Easing_Point2_Linear(startPos,GoalPos,Time_OneWay(moveSecond, MoveSecondMax));
 	App();
 
 	if(moveSecond >= 1.0f){
 		boss_->SetPosition(GoalPos);
 		boss_->ColliderSet();
-		stateManager_->SetNextState(new IdelBossState);
+
+		
+
+		if(boss_->hp_%2 == 0){
+			stateManager_->SetNextState(new RhythmChangeBossState);
+			return;
+		}
+		
+		
+		stateManager_->SetNextState(new SummonBossState);
 	}
 }
 
@@ -252,6 +261,52 @@ void RunAwayBossState::App()
 
 	boss_->runAwayParticle_->ParticleSet(ParticleAliveFrameMax,pos,vel,acc,SizeStart,SizeEnd,TextureNumber,Color);
 	boss_->runAwayParticle_->ParticleAppearance();
+}
+
+
+
+void RhythmChangeBossState::UpdateTrigger()
+{
+	boss_->isBpmChange = true;
+	if(boss_->currentBPM.BPM == boss_->Normal.BPM){
+		boss_->currentBPM = boss_->Fast;
+	}
+	else if(boss_->currentBPM.BPM == boss_->Fast.BPM){
+		boss_->currentBPM = boss_->Normal;
+	}
+}
+
+void RhythmChangeBossState::Update()
+{
+	App();
+
+	if(Time_OneWay(changeTime, ChangeTime)){
+		stateManager_->SetNextState(new IdelBossState);
+	}
+}
+
+void RhythmChangeBossState::ParticleDraw()
+{
+}
+
+void RhythmChangeBossState::App()
+{
+	for(int i = 0; i < 100; i++){
+		pos.x = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos/2.0f;
+		pos.y = PosY;
+		pos.z = (float)rand()/RAND_MAX * Rand_Pos - Rand_Pos/2.0f;
+		pos += boss_->GetPosition();
+
+		vel.x = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
+		//vel.y = VelY;
+		vel.z = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
+
+		acc.x = AccY;
+		acc.z = AccY;
+
+		boss_->rhythmChangeParticle_->ParticleSet(ParticleAliveFrameMax,pos,vel,acc,SizeStart,SizeEnd,TextureNumber,Color);
+		boss_->rhythmChangeParticle_->ParticleAppearance();
+	}
 }
 
 

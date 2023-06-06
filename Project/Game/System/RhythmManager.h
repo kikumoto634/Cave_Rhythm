@@ -3,13 +3,6 @@
 
 class RhythmManager
 {
-//定数
-private:
-	//BPM
-	const double BPM = 120;
-	//入力判定時の増減差分(1小節の何分割分の時間)
-	const double SUB = 5;
-
 //エイリアス
 public:
 	template <class T> using Duration = std::chrono::duration<T>;
@@ -43,8 +36,14 @@ public:
 	inline bool GetIsMeasureUp()	{return isMeasureUp_;}
 
 	//Setter
+	void SetBPM(double bpm, double sub = 5.0);
 
 private:
+	//BPM
+	double BPM = 120;
+	//入力判定時の増減差分(1小節の何分割分の時間)
+	double SUB = 5;
+
 	//計測時間
 	Duration<double> calTime_;
 	//入力した時間

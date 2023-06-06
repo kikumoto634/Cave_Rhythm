@@ -74,6 +74,12 @@ void Boss1Area::AddObject2DInitialize()
 
 void Boss1Area::AddCommonUpdate()
 {
+	if(boss_->GetIsBpmChange()&&Time_OneWay(changeTime, ChangeTime)){
+		changeTime = 0;
+		rhythmManager_->SetBPM(boss_->GetBPMValue().BPM, boss_->GetBPMValue().SUB);
+		gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
+	}
+
 	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 
 	cutInInput();

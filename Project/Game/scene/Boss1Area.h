@@ -64,6 +64,9 @@ private:
 	//出口
 	const Vector3 ExitWallBasePos = {-2,-3,24};
 
+	//リズム変更
+	const float ChangeTime = 1.5f;
+
 private:
 //シーン遷移
 	void SceneGameEnd()override;
@@ -189,4 +192,5 @@ private:
 
 	//BGM再生
 	bool isEventBGM_ = false;
+	float changeTime = 0.f;
 };

@@ -19,6 +19,9 @@ void Boss1::AddInitialize()
 
     runAwayParticle_ = make_unique<ParticleObject>();
     runAwayParticle_->Initialize();
+
+    rhythmChangeParticle_ = make_unique<ParticleObject>();
+    rhythmChangeParticle_->Initialize();
 }
 
 void Boss1::AddUpdate()
@@ -32,6 +35,7 @@ void Boss1::AddUpdate()
     deadParticle_->Update(camera_);
     summonParticle_->Update(camera_);
     runAwayParticle_->Update(camera_);
+    rhythmChangeParticle_->Update(camera_);
 
     DamageUpdate();
 	state_->Update(this);
@@ -45,12 +49,14 @@ void Boss1::AddDraw()
 void Boss1::AddParticleDraw()
 {
 	state_->ParticleDraw();
+    rhythmChangeParticle_->Draw();
 }
 
 void Boss1::AddFinalize()
 {
     summonParticle_->Finalize();
     runAwayParticle_->Finalize();
+    rhythmChangeParticle_->Finalize();
 
 	delete state_;
 	state_ = nullptr;
@@ -68,6 +74,16 @@ Vector3 Boss1::GetSummonObjPos()
     summonObjPos.pop();
     summonNum_--;
     return pos;
+}
+
+bool Boss1::GetIsBpmChange()
+{
+    if(isBpmChange){
+        isBpmChange = false;
+        return true;
+    }
+
+    return false;
 }
 
 void Boss1::BossPopInit(Vector3 pos)

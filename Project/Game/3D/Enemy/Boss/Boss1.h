@@ -13,15 +13,21 @@ public:
 	friend class SummonBossState;
 	friend class TrackBossState;
 	friend class RunAwayBossState;
+	friend class RhythmChangeBossState;
 	friend class DeadBossState;
 
 	template <class T> using queue = std::queue<T>;
 
+	struct BPMValue{
+		double BPM;
+		double SUB;
+	};
+
 private:
-	const int SummonMax = 6;
+	const int SummonMax = 9;
 
 	//ダメージ状態の総フレーム
-	const int DamageFrameMax = 150;
+	const int DamageFrameMax = 240;
 	//色変化の間隔
 	const int damageFrameInterval = 6;
 	//通常色
@@ -30,6 +36,10 @@ private:
 	const Vector4 Damage1Color = {0.0f,0.0f,0.0f,0.0f};
 	//ダメージ色2
 	const Vector4 Damage2Color = {1.0f,0.0f,0.0f,1.0f};
+
+	//通常リズム
+	const BPMValue Normal = {120, 5};
+	const BPMValue Fast = {60, 5};
 
 public:
 	void AddInitialize() override;
@@ -45,10 +55,12 @@ public:
 
 	//Getter
 	Vector3 GetSummonObjPos();
+	inline BPMValue GetBPMValue()	{return currentBPM;}
 	inline bool GetIsSummon() {return summonObjPos.empty();}
 	inline int GetSummonMax()	{return SummonMax;}
 	inline Vector3 GetPopPosition() override {return particlePos_;}
 	inline bool GetIsEvent()	{return isEvent_;}
+	bool GetIsBpmChange();
 
 	void BossPopInit(Vector3 pos);
 
@@ -88,5 +100,10 @@ private:
 
 	//体力
 	int hp_ = 10;
+
+	//リズム変更
+	bool isBpmChange = false;
+	BPMValue currentBPM = Normal;
+	unique_ptr<ParticleObject> rhythmChangeParticle_;
 };
 

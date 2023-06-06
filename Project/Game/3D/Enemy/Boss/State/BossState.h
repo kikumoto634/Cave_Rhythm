@@ -40,7 +40,7 @@ private:
 	void ParticleDraw() override;
 
 private:
-	int waitCount_ = 0;
+	int waitCount_ = WaitCountMax;
 };
 
 //召喚
@@ -73,7 +73,7 @@ private:
 	const float BlockSize = AreaManager::Block_Size;
 
 	//状態遷移インターバル
-	const float StateIntarvalMax = 3.f;
+	const float StateIntarvalMax = 2.f;
 
 private:
 	void UpdateTrigger() override;
@@ -130,7 +130,7 @@ private:
 	const int TrackGoalMapIndexY = 17;
 
 	//移動回数
-	const int MoveCountMax = 8;
+	const int MoveCountMax = 2;
 
 private:
 	void UpdateTrigger() override;
@@ -161,7 +161,7 @@ private:
 //逃亡
 class RunAwayBossState : public BossState{
 private:
-	const float moveSecondMax = 2.f;
+	const float MoveSecondMax = 2.f;
 	const Vector3 GoalPos = {0.f,-3.f,14.f};
 	const Vector3 TempCollPos = {0,-20,0};
 
@@ -204,6 +204,58 @@ private:
 
 	float moveSecond = 0.f;
 };
+
+//リズム変更
+class RhythmChangeBossState : public BossState{
+private:
+	const float MoveSecondMax = 2.f;
+	const Vector3 GoalPos = {0.f,-3.f,14.f};
+	const Vector3 TempCollPos = {0,-20,0};
+
+	//パーティクル生存時間
+	const int ParticleAliveFrameMax = 50;
+
+	//座標
+	const float Rand_Pos = 3.f;
+	const float PosY = -1.f;
+	//速度
+	const float Rand_Vel = 0.1f;
+	const float VelY = 0.08f;
+	//加速度
+	const float AccY = 0.001f;
+	//サイズ
+	const float SizeStart = 0.4f;
+	const float SizeEnd = 0.4f;
+	//テクスチャ番号
+	const uint32_t TextureNumber = 1;
+	//色
+	Vector4 Color = {0.5f,0.5f,0.5f,1.0f};
+
+	const float ChangeTime = 1.5f;
+
+private:
+	void UpdateTrigger() override;
+	void Update() override;
+	void ParticleDraw() override;
+
+	void App();
+
+private:
+	//パーティクル生成
+	//座標
+	Vector3 pos{};
+	//速度
+	Vector3 vel{};
+	//加速度
+	Vector3 acc{};
+
+	Vector3 startPos = {};
+
+	float moveSecond = 0.f;
+
+	float changeTime = 0.f;
+};
+
 
 //死亡
 class DeadBossState : public BossState{

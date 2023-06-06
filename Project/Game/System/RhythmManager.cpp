@@ -64,3 +64,14 @@ bool RhythmManager::IsInputRhythmJudge()
 
 	return false;
 }
+
+void RhythmManager::SetBPM(double bpm, double sub)
+{
+	BPM = bpm;
+	SUB = sub;
+
+	//1小節時間の計算
+	beatTime_ = 60.0 / BPM;
+	//差分時間
+	beatSub_ = beatTime_/SUB;
+}

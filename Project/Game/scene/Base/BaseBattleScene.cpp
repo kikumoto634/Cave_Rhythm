@@ -253,6 +253,7 @@ void BaseBattleScene::Object3DUpdate()
 	if(player_->GetIsDead())	{
 		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);
 		isGameEnd_ = true;
+		postEffect->FadeStart();
 	}
 	player_->Update(camera);
 	//出口
