@@ -10,7 +10,8 @@ public:
 	//ぼかし
 	struct ConstBufferData_Blur{
 		bool isActive;
-		int value;
+		int count;
+		float strength;
 	};
 
 	//フェード
@@ -20,8 +21,9 @@ public:
 	};
 
 private:
-	//ぼかしの強さ
-	const int BlurValue = 2;
+	//ブラー回数
+	const int BlurCont = 16;
+	const float BlurStrength = 1.f;
 
 	//フェード時間
 	const float FadeSecond = 1.f;
@@ -50,10 +52,11 @@ public:
 
 	//ポストエフェクト開始
 	inline void BlurStart()	{isBlurActive_ = true;}
+	inline void BlurEnd()	{isBlurActive_ = false;}
 	inline void FadeStart()	{isFadeActive = true;}
 
 	//ブラー
-	bool Blur();
+	void Blur(float second, const float Second);
 
 	//フェード
 	bool FadeIn();
@@ -118,8 +121,8 @@ private:
 
 	//ぼかし
 	bool isBlurActive_ = false;
-	int blurValue_ = BlurValue;
-	float blurFrame_ = 0;
+	int blurCount = BlurCont;
+	float blurStrength = BlurStrength;
 
 	//フェード
 	bool isFadeActive = false;

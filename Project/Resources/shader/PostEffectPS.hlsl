@@ -16,13 +16,13 @@ float4 main(VSOutput input) : SV_TARGET
 		float4 col = {0,0,0,0};
 		float2 symmetryUV = input.uv - 0.5f;
 		float distance = length(symmetryUV);
-		float factor = 1.0f / 16 * distance;
-		for(int j = 0; j < 16; j++){
+		float factor = BlurStrength / BlurCount * distance;
+		for(int j = 0; j < BlurCount; j++){
 			float uvOffset = 1 - factor * j;
 			col += tex.Sample(smp, symmetryUV * uvOffset + 0.5);
 		}
 
-		col /= 16;
+		col /= 10;
 		return col;
 	}
 

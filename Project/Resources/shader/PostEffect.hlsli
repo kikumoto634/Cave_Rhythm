@@ -1,7 +1,8 @@
 cbuffer cbuff0 : register(b0)
 {
 	bool isBlurActive;
-	int blurValue;
+	int BlurCount;
+	float BlurStrength;
 };
 
 cbuffer cbuff1 : register(b1)

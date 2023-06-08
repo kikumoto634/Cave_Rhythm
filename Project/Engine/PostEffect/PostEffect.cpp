@@ -117,7 +117,8 @@ void PostEffect::Draw()
 		result = this->constBuff_Blur->Map(0,nullptr, (void**)&constMap);
 		assert(SUCCEEDED(result));
 		constMap->isActive = isBlurActive_;
-		constMap->value = blurValue_;
+		constMap->count = blurCount;
+		constMap->strength= blurStrength;
 		constBuff_Blur->Unmap(0, nullptr);
 	}
 	{
@@ -584,26 +585,11 @@ void PostEffect::PostDrawScene()
 	);
 }
 
-bool PostEffect::Blur()
+void PostEffect::Blur(float second, const float Second)
 {
-	if(!isBlurActive_) return false;
+	if(!isBlurActive_) return;
 
-	if(blurValue_ != 1){
-		if(blurFrame_ > 3){
-			blurValue_--;
-			blurFrame_ = 0;
-		}
-		blurFrame_++;
-	}
-	else
-	{
-		blurValue_ = BlurValue;
-		blurFrame_ = 0;
-		isBlurActive_ = false;
-		return true;
-	}
-
-	return false;
+	blurStrength = BlurStrength*((Second-second)/Second);
 }
 
 bool PostEffect::FadeIn()

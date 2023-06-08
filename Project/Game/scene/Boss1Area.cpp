@@ -544,15 +544,17 @@ void Boss1Area::EventUpdate()
 
 		gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
 		isRoar_ = true;
+		postEffect->BlurStart();
 		camera->ShakeStart();
 
 		break;
 	case Boss1Area::EventState::Roar:
 		if(!isRoar_) break;
-		postEffect->BlurStart();
+		postEffect->Blur(eventSecond, EventRoarSecond);
 
 		if(Time_OneWay(eventSecond, EventRoarSecond) < 1.0f) break;
 		
+		postEffect->BlurEnd();
 		isEventBGM_ = true;
 		isRoar_ = false;
 		eventSecond = 0.f;
@@ -585,9 +587,5 @@ void Boss1Area::EventUpdate()
 
 	camera->SetTarget(targetValue);
 	camera->SetEye(eyeValue);
-
-	if(!postEffect->Blur() && postEffect->GetIsBlurActive()){
-		//camera->ShakeStart(1);
-	}
 }
 #pragma endregion
