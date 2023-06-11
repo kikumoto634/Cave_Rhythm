@@ -236,19 +236,35 @@ void BaseBattleScene::Object2DInitialize()
 		rNotes.push_back(move(newsp_R));
 	}
 
-	unique_ptr<Sprite> sp1 = make_unique<Sprite>();
-	sp1->Initialize(resultTextLobby_tex.number);
-	sp1->SetPosition(ResultTextPos);
-	//sp1->SetSize(ResultTextSize);
-	sp1->SetAnchorpoint(ResulttextAnch);
-	resultText.push_back(move(sp1));
+	{
+		unique_ptr<BaseSprites> sp1 = make_unique<BaseSprites>();
+		sp1->Initialize(resultTextLobby_tex.number);
+		sp1->SetPosition(ResultTextPos);
+		sp1->SetSize(ResultTextSize);
+		sp1->SetAnchorPoint(ResultTextAnch);
+		resultText.push_back(move(sp1));
 
-	unique_ptr<Sprite> sp2 = make_unique<Sprite>();
-	sp2->Initialize(resultTextTitle_tex.number);
-	sp2->SetPosition({ResultTextPos.x, ResultTextPos.y+32});
-	//sp2->SetSize(ResultTextSize);
-	sp2->SetAnchorpoint(ResulttextAnch);
-	resultText.push_back(move(sp2));
+		unique_ptr<BaseSprites> sp2 = make_unique<BaseSprites>();
+		sp2->Initialize(resultTextTitle_tex.number);
+		sp2->SetPosition({ResultTextPos.x, ResultTextPos.y+ResultTextSize.y});
+		sp2->SetSize(ResultTextSize);
+		sp2->SetAnchorPoint(ResultTextAnch);
+		resultText.push_back(move(sp2));
+
+		unique_ptr<BaseSprites> sp3 = make_unique<BaseSprites>();
+		sp3->Initialize(playResult_tex.number);
+		sp3->SetPosition(PlayResultPos);
+		sp3->SetSize(PlayResultSize);
+		sp3->SetAnchorPoint(ResultTextAnch);
+		resultText.push_back(move(sp3));
+
+		backSp = make_unique<BaseSprites>();
+		backSp->Initialize(white1x1_tex.number);
+		backSp->SetSize(ResultBackSize);
+		backSp->SetColor({ResultBackColor.x,ResultBackColor.y,ResultBackColor.z,0.5f});
+
+		resultText[select]->SetColor({ResultColor.x,ResultColor.y,ResultColor.z,1.0f});
+	}
 }
 
 void BaseBattleScene::Object3DUpdate()
@@ -520,6 +536,10 @@ void BaseBattleScene::ObjectFinaize()
 	}
 	judgeLoca_->Finalize();
 
+	for(const auto& it : resultText){
+		it->Finalize();
+	}
+
 #pragma endregion _2D解放
 
 	AddObjectFinalize();
@@ -537,10 +557,33 @@ void BaseBattleScene::CommonFinalize()
 
 void BaseBattleScene::ResultUpdate()
 {
-	if(!isResult && (!isHome||!isTitle)) return;
+	if(!isResult) return;
+	if(isHome || isTitle) return;
 
-	if(input->Trigger(DIK_1))		isHome = true;
-	else if(input->Trigger(DIK_2))	isTitle = true;
+	//入力
+	if(input->Trigger(DIK_W)||input->Trigger(DIK_UP)) {
+		resultText[select]->SetColor({1.f,1.f,1.f,1.0f});
+		select--;
+		select = max(select,0);
+		resultText[select]->SetColor({ResultColor.x,ResultColor.y,ResultColor.z,1.0f});
+	}
+	else if(input->Trigger(DIK_S)||input->Trigger(DIK_DOWN)) {
+		resultText[select]->SetColor({1.f,1.f,1.f,1.0f});
+		select++;
+		select = min(select,1);
+		resultText[select]->SetColor({ResultColor.x,ResultColor.y,ResultColor.z,1.0f});
+	}
+
+	//決定
+	if(input->Trigger(DIK_Z) || input->Trigger(DIK_SPACE) || input->Trigger(DIK_RETURN)){
+		if(select == 0)		 isHome = true;
+		else if(select == 1) isTitle = true;
+	}
+
+	backSp->Update();
+	for(const auto& it : resultText){
+		it->Update();
+	}
 
 	if(!isHome && !isTitle) return;
 
@@ -550,8 +593,9 @@ void BaseBattleScene::ResultUpdate()
 
 void BaseBattleScene::ResultDraw2D()
 {
-	//if(!isResult) return;
+	if(!isResult) return;
 
+	backSp->Draw();
 	for(const auto& it : resultText){
 		it->Draw();
 	}

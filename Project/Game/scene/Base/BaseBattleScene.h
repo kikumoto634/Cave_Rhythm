@@ -38,6 +38,16 @@ private:
 	//出口のスプライト出現位置
 	const Vector3 ExitSpLocalPos = {-1,2,0};
 
+	//リザルト
+	const Vector2 ResultTextPos = {640, 360};
+	const Vector2 PlayResultPos = {640, 180};
+	const Vector2 ResultTextAnch = {0.5f,0.5f};
+	const Vector2 ResultTextSize = {256,64};
+	const Vector2 PlayResultSize = {448,96};
+	const Vector2 ResultBackSize = {1280,720};
+	const Vector3 ResultColor = {0.f,0.25f,1.0f};
+	const Vector3 ResultBackColor = {0.f,0.f,0.0f};
+
 protected:
 	//シーン遷移
 	const float GameStartFadeSecond = 1.f;
@@ -205,9 +215,7 @@ protected:
 	//行先
 	bool isTitle = false;
 	bool isHome = false;
-	//画像、座標
-	list<unique_ptr<Sprite>> resultText;
-	const Vector2 ResultTextPos = {640, 360};
-	const Vector2 ResulttextAnch = {0.5f,0.5f};
-	//const Vector2 ResultTextSize = {400, 32};
+	vector<unique_ptr<BaseSprites>> resultText;
+	int select = 0;
+	unique_ptr<BaseSprites> backSp;
 };

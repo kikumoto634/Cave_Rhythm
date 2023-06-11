@@ -102,6 +102,7 @@ void Application::Initialize()
 	TextureManager::Load(rhythmHeart2_tex.number	,rhythmHeart2_tex.path);
 	TextureManager::Load(resultTextTitle_tex.number	,resultTextTitle_tex.path);
 	TextureManager::Load(resultTextLobby_tex.number	,resultTextLobby_tex.path);
+	TextureManager::Load(playResult_tex.number		,playResult_tex.path);
 
 	//音声
 	Audio::GetInstance()->Initialize();
