@@ -44,6 +44,9 @@ void Application::Run()
 	MSG msg{};//メッセージ
 	while (true)
 	{
+		Update();
+		Draw();
+		if(Input::GetInstance()->Trigger(DIK_ESCAPE)) break;
 		if(PeekMessage(&msg, nullptr,0, 0,PM_REMOVE)){
 			TranslateMessage(&msg);	//キー入力メッセージの処理
 			DispatchMessage(&msg);	//プロシージャにメッセージを送る
@@ -51,9 +54,6 @@ void Application::Run()
 		if(msg.message == WM_QUIT) {
 			break;
 		}
-
-		Update();
-		Draw();
 	}
 }
 
@@ -147,7 +147,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new Boss1Area(dxCommon, window);
+	BaseScene* scene = new HomeScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);
@@ -166,7 +166,6 @@ void Application::Update()
 #ifdef _DEBUG
 	imgui->Begin();
 #endif // _DEBUG
-
 	sceneManager->Update();
 	postEffect_->Update();
 
@@ -217,6 +216,12 @@ void Application::Finalize()
 	Sprite::StaticFinalize();
 
 	SceneManager::Delete();
-	
+	sceneManager = nullptr;
+
+	DirectXCommon::Delete();
+	dxCommon = nullptr;
+
 	window->Finalize();
+	Window::Delete();
+	window = nullptr;
 }

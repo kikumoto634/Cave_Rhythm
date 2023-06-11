@@ -13,7 +13,7 @@ protected:
 	//ノーツ削除位置
 	const Vector2 Delete_Pos = {640,600};
 
-	const Vector2 Notes_Size = {32,80};
+	const Vector2 Notes_Size = {16,80};
 	const Vector2 Notes_Anc = {0.5,0.5};
 
 	//透過率変化時間

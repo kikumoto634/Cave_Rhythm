@@ -7,11 +7,15 @@
 /// </summary>
 class Window
 {
+private:
+	static Window* instance;
+
 public:
 	Window();
 	~Window();
 
 	static Window* GetInstance();
+	static void Delete();
 
 	void Create(const std::string& name = "DirectXGame", const int width = 1280, const int height = 720);
 	void Finalize();

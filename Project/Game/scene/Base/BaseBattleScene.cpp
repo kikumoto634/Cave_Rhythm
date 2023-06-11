@@ -148,12 +148,14 @@ void BaseBattleScene::DrawNear()
 
 	debugText->Printf(0,560,1.f,"Player Pos X:%f, Y:%f, Z:%f", player_->GetPosition().x, player_->GetPosition().y,player_->GetPosition().z);
 
-	debugText->Printf(0,580, 1.f,  "Time				: %lf[ms]", rhythmManager_->GetCalTime());
-	debugText->Printf(0, 600, 1.f, "JudgeTimeBase		: %lf[ms]", rhythmManager_->GetInputTimeTarget());
-	debugText->Printf(0, 620, 1.f, "InputJudgeTimeBase	: %lf[ms]", rhythmManager_->GetInputTimet());
+	debugText->Printf(0,580, 1.f,     "Time					: %lf[ms]", rhythmManager_->GetCalTime());
+	debugText->Printf(0, 600, 1.f,    "JudgeTimeBase		: %lf[ms]", rhythmManager_->GetInputTimeTarget());
+	debugText->Printf(0, 620, 1.f,	  "InputJudgeTimeBase	: %lf[ms]", rhythmManager_->GetInputTimet());
 	
-	debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager_->GetComboNum());
-	debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager_->GetCoinNum());
+	debugText->Printf(000, 640, 1.f, "RhytjmSUB			: %lf[ms]", rhythmManager_->GetCalTime() - rhythmManager_->GetInputTimet());
+
+	//debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager_->GetComboNum());
+	//debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager_->GetCoinNum());
 
 
 	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
@@ -300,12 +302,12 @@ void BaseBattleScene::Object2DUpdate()
 
 	for(auto it = lNotes.begin(); it != lNotes.end();it++){
 		if((*it)->GetIsNoteAlive()){
-			(*it)->Update((float)rhythmManager_->GetBPMTime());
+			(*it)->Update((float)rhythmManager_->GetBPMTime() + rhythmManager_->GetNoteSpeedAdjustment());
 		}
 	}
 	for(auto it = rNotes.begin(); it != rNotes.end();it++){
 		if((*it)->GetIsNoteAlive()){
-			(*it)->Update((float)rhythmManager_->GetBPMTime());
+			(*it)->Update((float)rhythmManager_->GetBPMTime() + rhythmManager_->GetNoteSpeedAdjustment());
 		}
 	}
 
@@ -437,14 +439,15 @@ void BaseBattleScene::UIDraw()
 
 	//出口
 	exit_->Draw2D();
-
+	
+	judgeLoca_->Draw();
 	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 		(*it)->Draw();
 	}
 	for(auto it = rNotes.begin(); it != rNotes.end(); it++){
 		(*it)->Draw();
 	}
-	judgeLoca_->Draw();
+	
 
 	gameManager_->SpriteDraw();
 

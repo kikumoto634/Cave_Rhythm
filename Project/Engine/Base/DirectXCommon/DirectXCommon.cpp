@@ -1,14 +1,26 @@
-﻿#include "DirectXCommon.h"
+#include "DirectXCommon.h"
 #include <cassert>
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "dxguid.lib")
 
+DirectXCommon* DirectXCommon::instance = nullptr;
+
 DirectXCommon *DirectXCommon::GetInstance()
 {
-	static DirectXCommon dxcommon;
-	return &dxcommon;
+	if(!instance){
+		instance = new DirectXCommon();
+	}
+	return instance;
+}
+
+void DirectXCommon::Delete()
+{
+	//if(instance){
+	//	//delete instance;
+	//	//instance = nullptr;
+	//}
 }
 
 void DirectXCommon::Initialize(Window *window)

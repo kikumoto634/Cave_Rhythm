@@ -8,6 +8,10 @@ public:
 	template <class T> using Duration = std::chrono::duration<T>;
 	using Time = std::chrono::system_clock::time_point;
 
+private:
+	//ノーツの速度調整用
+	const float NoteSpeedAdjustment = 0.025f;
+
 public:
 	//初期化
 	void Initialize();
@@ -32,8 +36,10 @@ public:
 	inline double GetCalTime()	{return calTime_.count();}
 	inline double GetInputTimeTarget()	{return inputTimeTarget_;}
 	inline double GetInputTimet()	{return inputTime_.count();}
-	inline double GetBPMTime()	{return beatTime_;                              }
+	inline double GetBPMTime()	{return beatTime_;}
 	inline bool GetIsMeasureUp()	{return isMeasureUp_;}
+
+	inline float GetNoteSpeedAdjustment()	{return NoteSpeedAdjustment;}
 
 	//Setter
 	void SetBPM(double bpm, double sub = 5.0);

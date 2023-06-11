@@ -4,6 +4,7 @@
 #pragma comment(lib, "winmm.lib")
 
 wchar_t Window::kWindowClassName[] = L"DirectXGame";
+Window* Window::instance = nullptr;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -17,8 +18,18 @@ Window::~Window()
 
 Window *Window::GetInstance()
 {
-	static Window instance;
-	return &instance;
+	if(!instance){
+		instance = new Window();
+	}
+	return instance;
+}
+
+void Window::Delete()
+{
+	if(instance){
+		delete instance;
+		instance = nullptr;
+	}
 }
 
 void Window::Create(const std::string& name, const int width, const int height)

@@ -7,6 +7,7 @@ struct AudioState{
 	std::string path;
 };
 
+
 //ワールド定義
 inline AudioState rhythm_audio		= {0,  0.25f, "rhythm.wav"};
 inline AudioState miss_audio		= {1,  0.7f,  "miss.wav"};

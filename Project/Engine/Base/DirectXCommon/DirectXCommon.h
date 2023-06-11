@@ -19,8 +19,12 @@ class DirectXCommon
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
+private:
+	static DirectXCommon* instance;
+
 public:
 	static DirectXCommon* GetInstance();
+	static void Delete();
 
 	void Initialize(Window* window);
 	void BeginDraw();

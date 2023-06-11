@@ -67,4 +67,6 @@ private:
 
 	//ポストエフェクト
 	PostEffect* postEffect_ = nullptr;
+
+	bool isEnd = false;
 };
