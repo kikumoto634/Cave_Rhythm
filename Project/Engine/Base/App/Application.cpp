@@ -100,6 +100,8 @@ void Application::Initialize()
 	TextureManager::Load(cutInParts1_tex.number		,cutInParts1_tex.path);
 	TextureManager::Load(cutInParts2_tex.number		,cutInParts2_tex.path);
 	TextureManager::Load(rhythmHeart2_tex.number	,rhythmHeart2_tex.path);
+	TextureManager::Load(resultTextTitle_tex.number	,resultTextTitle_tex.path);
+	TextureManager::Load(resultTextLobby_tex.number	,resultTextLobby_tex.path);
 
 	//音声
 	Audio::GetInstance()->Initialize();

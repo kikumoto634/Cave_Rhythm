@@ -47,7 +47,6 @@ public:
 private:
 //シーン遷移
 	void NextSceneChange() override;
-	void SceneGameEnd() override;
 
 	//初期化
 	void AddCommonInitialize() override;

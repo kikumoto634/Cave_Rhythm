@@ -67,6 +67,9 @@ public:
 	inline bool GetIsBlurActive()	{return isBlurActive_;}
 	inline bool GetIsFadeActive()	{return isFadeActive;}
 
+	//Setter
+	inline void SetFadeWall(Vector3 color)	{fadeColor = color;}
+
 private:
 	//スプライト共通初期化
 	void SpriteInitialize();

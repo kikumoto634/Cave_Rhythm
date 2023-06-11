@@ -17,11 +17,6 @@ Boss1Area::Boss1Area(DirectXCommon *dxCommon, Window *window, int saveHP)
 {
 }
 
-void Boss1Area::SceneGameEnd()
-{
-	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
-}
-
 void Boss1Area::NextSceneChange()
 {
 	sceneManager->SetNextScene(new HomeScene(dxCommon,window));

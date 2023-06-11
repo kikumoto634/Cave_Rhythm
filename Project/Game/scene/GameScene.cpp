@@ -33,12 +33,6 @@ void GameScene::NextSceneChange()
 	}
 }
 
-void GameScene::SceneGameEnd()
-{
-	sceneManager->SetNextScene(new HomeScene(dxCommon,window));
-}
-
-
 void GameScene::AddCommonInitialize()
 {
 	srand( (unsigned int)time(NULL) );

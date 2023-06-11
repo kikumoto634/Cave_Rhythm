@@ -69,7 +69,6 @@ private:
 
 private:
 //シーン遷移
-	void SceneGameEnd()override;
 	void NextSceneChange() override;
 	void SceneChange() override;
 

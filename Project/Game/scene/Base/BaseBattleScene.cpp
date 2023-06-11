@@ -7,6 +7,7 @@
 
 #include "SceneManager.h"
 #include "TitleScene.h"
+#include "HomeScene.h"
 
 #include <thread>
 
@@ -234,6 +235,20 @@ void BaseBattleScene::Object2DInitialize()
 		newsp_R->Initialize(1);
 		rNotes.push_back(move(newsp_R));
 	}
+
+	unique_ptr<Sprite> sp1 = make_unique<Sprite>();
+	sp1->Initialize(resultTextLobby_tex.number);
+	sp1->SetPosition(ResultTextPos);
+	//sp1->SetSize(ResultTextSize);
+	sp1->SetAnchorpoint(ResulttextAnch);
+	resultText.push_back(move(sp1));
+
+	unique_ptr<Sprite> sp2 = make_unique<Sprite>();
+	sp2->Initialize(resultTextTitle_tex.number);
+	sp2->SetPosition({ResultTextPos.x, ResultTextPos.y+32});
+	//sp2->SetSize(ResultTextSize);
+	sp2->SetAnchorpoint(ResulttextAnch);
+	resultText.push_back(move(sp2));
 }
 
 void BaseBattleScene::Object3DUpdate()
@@ -254,8 +269,8 @@ void BaseBattleScene::Object3DUpdate()
 	}
 	if(player_->GetIsDead())	{
 		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);
-		isGameEnd_ = true;
-		postEffect->FadeStart();
+		camera->ShakeStart(5);
+		isResult = true;
 	}
 	player_->Update(camera);
 	//出口
@@ -270,6 +285,8 @@ void BaseBattleScene::Object3DUpdate()
 void BaseBattleScene::Object2DUpdate()
 {
 	gameManager_->SpriteUpdate();
+
+	ResultUpdate();
 
 	judgeLoca_->Update(isNoteInput_);
 
@@ -439,6 +456,9 @@ void BaseBattleScene::UIDraw()
 
 	//出口
 	exit_->Draw2D();
+
+	//リザルト
+	ResultDraw2D();
 	
 	judgeLoca_->Draw();
 	for(auto it = lNotes.begin(); it != lNotes.end(); it++){
@@ -456,7 +476,9 @@ void BaseBattleScene::UIDraw()
 
 void BaseBattleScene::SceneGameEnd()
 {
-	sceneManager->SetNextScene(new TitleScene(dxCommon,window));
+	if(isHome)		sceneManager->SetNextScene(new HomeScene(dxCommon,window));
+	else if(isTitle)sceneManager->SetNextScene(new TitleScene(dxCommon,window));
+	else			sceneManager->SetNextScene(new HomeScene(dxCommon,window));
 }
 
 void BaseBattleScene::SceneChange()
@@ -497,6 +519,7 @@ void BaseBattleScene::ObjectFinaize()
 		(*it)->Finalize();
 	}
 	judgeLoca_->Finalize();
+
 #pragma endregion _2D解放
 
 	AddObjectFinalize();
@@ -509,5 +532,28 @@ void BaseBattleScene::CommonFinalize()
 	rhythmManager_ = nullptr;
 
 	AddCommonFinalize();
+}
+
+
+void BaseBattleScene::ResultUpdate()
+{
+	if(!isResult && (!isHome||!isTitle)) return;
+
+	if(input->Trigger(DIK_1))		isHome = true;
+	else if(input->Trigger(DIK_2))	isTitle = true;
+
+	if(!isHome && !isTitle) return;
+
+	isGameEnd_ = true;
+	postEffect->FadeStart();
+}
+
+void BaseBattleScene::ResultDraw2D()
+{
+	//if(!isResult) return;
+
+	for(const auto& it : resultText){
+		it->Draw();
+	}
 }
 

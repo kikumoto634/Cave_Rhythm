@@ -78,6 +78,7 @@ void DigPlayerState::Update()
 
 void DeadPlayerState::UpdateTrigger()
 {
+	player_->ColliderRemove();
 }
 
 void DeadPlayerState::Update()

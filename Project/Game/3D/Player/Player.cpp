@@ -53,14 +53,14 @@ void Player::Update(Camera *camera)
 	//ダメージ
 	DamageUpdate();
 
-#ifdef _DEBUG
+
 	if(input_->Trigger(DIK_SPACE)){
 		//state_->SetNextState(new DeadPlayerState);
 
 		isDamage_ = true;
 		//hp_ = 0;
 	}
-
+#ifdef _DEBUG
 	if(input_->Trigger(DIK_Z)){
 		state_->SetNextState(new AttackPlayerState);
 	}
@@ -134,6 +134,12 @@ void Player::SphereColliderSet()
 	//球コライダー取得
 	sphereCollider_ = dynamic_cast<SphereCollider*>(baseCollider_);
 	assert(sphereCollider_);
+}
+
+void Player::ColliderRemove()
+{
+	//コリジョンマネージャーから登録を解除する
+	CollisionManager::GetInstance()->RemoveCollider(baseCollider_);
 }
 
 void Player::InputUpdate()

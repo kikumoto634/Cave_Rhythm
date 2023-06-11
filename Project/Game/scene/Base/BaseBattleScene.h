@@ -49,6 +49,7 @@ protected:
 protected:
 	template <class T> using unique_ptr = std::unique_ptr<T>;
 	template <class T> using list = std::list<T>;
+	template <class T> using vector = std::vector<T>;
 	template <class T> using queue = std::queue<T>;
 
 public:
@@ -117,6 +118,10 @@ private:
 	//後処理
 	void ObjectFinaize();
 	void CommonFinalize();
+
+	//リザルト
+	void ResultUpdate();
+	void ResultDraw2D();
 
 protected:
 
@@ -190,8 +195,19 @@ protected:
 
 	//ノーツ数
 	const int notesNum= 5;
-	std::vector<std::unique_ptr<Notes>> lNotes;
-	std::vector<std::unique_ptr<Notes>> rNotes;
-
+	vector<unique_ptr<Notes>> lNotes;
+	vector<unique_ptr<Notes>> rNotes;
 	bool isNoteInput_ = false;
+
+
+	//リザルト
+	bool isResult = false;
+	//行先
+	bool isTitle = false;
+	bool isHome = false;
+	//画像、座標
+	list<unique_ptr<Sprite>> resultText;
+	const Vector2 ResultTextPos = {640, 360};
+	const Vector2 ResulttextAnch = {0.5f,0.5f};
+	//const Vector2 ResultTextSize = {400, 32};
 };

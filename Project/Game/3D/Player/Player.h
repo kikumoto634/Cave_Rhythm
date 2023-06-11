@@ -137,6 +137,8 @@ private:
 	//コライダー
 	void SphereColliderSet();
 
+	void ColliderRemove();
+
 	//入力
 	//更新
 	void InputUpdate();
