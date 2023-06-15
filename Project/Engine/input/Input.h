@@ -9,11 +9,14 @@ const int KeyNum = 256;
 //マウス
 #define MOUSE_ON_VALUE 0x80
 
+//パッド
+#include <Xinput.h>
+
 class Input
 {
 public:
 	Input();
-	~Input() = default;
+	~Input();
 
 	static Input* GetInstance();
 
@@ -39,7 +42,23 @@ public:
 	const Vector2 GetMousePos();
 	//マウスの移動量
 	const Vector2 GetMouseVelocity();
+#pragma endregion
 
+#pragma region パッド
+	//ボタン
+	bool PadButtonPush(int keyNumber);
+	bool PadButtonTrigger(int keyNumber);
+
+	//LT、RT
+	bool PadLeftTrigger(int Value = 30);
+	bool PadRightTrigger(int Value = 30);
+
+	//Stick
+	Vector2 PadLStick();
+	Vector2 PadRStick();
+
+	//Vibration
+	void PadVibration();
 #pragma endregion
 
 private:
@@ -65,6 +84,16 @@ private:
 
 	//座標
 	Vector2 mousePos_;
+#pragma endregion
+
+#pragma region パッド
+	void PadUpdate();
+
+	//Xbox 360基準
+	XINPUT_STATE padState_;
+	XINPUT_STATE padPreState_;
+
+	XINPUT_VIBRATION vibration;
 #pragma endregion
 };
 

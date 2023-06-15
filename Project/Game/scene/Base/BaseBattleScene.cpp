@@ -99,6 +99,10 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
+	if(input->PadButtonPush(XINPUT_GAMEPAD_A)){
+		input->PadVibration();
+	}
+
 	//Scene
 	{
 		//座標
@@ -160,7 +164,7 @@ void BaseBattleScene::DrawNear()
 
 
 	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
-
+	debugText->Printf(300, 300, 1.f, "Stick : %f,%f", input->PadLStick().x, input->PadLStick().y);
 
 #endif // _DEBUG
 }

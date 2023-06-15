@@ -3,8 +3,17 @@
 
 #pragma comment(lib, "dinput8.lib")
 
+#pragma comment(lib, "xinput.lib")
+
 Input::Input()
 {
+}
+
+Input::~Input()
+{
+	vibration.wLeftMotorSpeed = 0;
+	vibration.wRightMotorSpeed = 0;
+	XInputSetState(0, &vibration);
 }
 
 Input *Input::GetInstance()
@@ -71,6 +80,11 @@ void Input::Initialize(HWND hwnd)
 		DISCL_NONEXCLUSIVE | DISCL_FOREGROUND
 	);
 	assert(SUCCEEDED(result));
+
+
+	//パッド
+	ZeroMemory(&padState_, sizeof(XINPUT_STATE));
+	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
 }
 
 void Input::Update()
@@ -94,6 +108,37 @@ void Input::Update()
 	result = keyboard_->GetDeviceState(sizeof(key_), key_); 
 	//assert(SUCCEEDED(result));
 	result = mouse_->GetDeviceState(sizeof(mouseKey_), &mouseKey_);
+
+	//パッド
+	PadUpdate();
+}
+
+void Input::PadUpdate()
+{
+	HRESULT result;
+	padPreState_ = padState_;
+	result = XInputGetState(0, &padState_);
+	assert(SUCCEEDED(result));
+
+	//Vibration
+	vibration.wLeftMotorSpeed = 0;
+	vibration.wRightMotorSpeed = 0;
+	XInputSetState(0, &vibration);
+
+	//デッドゾーン
+	if(padState_.Gamepad.sThumbRX<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbRX>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
+		padState_.Gamepad.sThumbRX = 0;
+	}
+	if(padState_.Gamepad.sThumbRY<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbRY>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
+		padState_.Gamepad.sThumbRY = 0;
+	}
+
+	if(padState_.Gamepad.sThumbLX<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbLX>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
+		padState_.Gamepad.sThumbLX = 0;
+	}
+	if(padState_.Gamepad.sThumbLY<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbLY>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
+		padState_.Gamepad.sThumbLY = 0;
+	}
 }
 
 
@@ -151,3 +196,54 @@ const Vector2 Input::GetMouseVelocity()
 {
 	return Vector2((float)mouseKey_.lX, (float)mouseKey_.lY);
 }
+
+bool Input::PadButtonPush(int keyNumber)
+{
+	if(padState_.Gamepad.wButtons & keyNumber){
+		return true;
+	}
+	return false;
+}
+
+bool Input::PadButtonTrigger(int keyNumber)
+{
+	if(padState_.Gamepad.wButtons & keyNumber && !(padPreState_.Gamepad.wButtons & keyNumber)){
+		return true;
+	}
+	return false;
+}
+
+bool Input::PadLeftTrigger(int Value)
+{
+	if(padState_.Gamepad.bLeftTrigger > Value){
+		return true;
+	}
+	return false;
+}
+
+bool Input::PadRightTrigger(int Value)
+{
+	if(padState_.Gamepad.bRightTrigger > Value){
+		return true;
+	}
+	return false;
+}
+
+Vector2 Input::PadLStick()
+{
+	return Vector2((float)padState_.Gamepad.sThumbLX, (float)padState_.Gamepad.sThumbLY);
+}
+
+
+Vector2 Input::PadRStick()
+{
+	return Vector2((float)padState_.Gamepad.sThumbRX, (float)padState_.Gamepad.sThumbRY);
+}
+
+void Input::PadVibration()
+{
+	vibration.wLeftMotorSpeed = 65535;
+	vibration.wRightMotorSpeed = 65535;
+	XInputSetState(0, &vibration);
+}
+
