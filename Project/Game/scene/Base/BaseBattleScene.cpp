@@ -99,10 +99,6 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
-	if(input->PadButtonPush(XINPUT_GAMEPAD_DPAD_UP)){
-		input->PadVibration();
-	}
-
 	//Scene
 	{
 		//座標
@@ -564,14 +560,19 @@ void BaseBattleScene::ResultUpdate()
 	if(!isResult) return;
 	if(isHome || isTitle) return;
 
+	bool isUp = (input->Trigger(DIK_W)||input->Trigger(DIK_UP) ||
+		input->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_UP));
+	bool isDown = (input->Trigger(DIK_S)||input->Trigger(DIK_DOWN) ||
+		input->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_DOWN));
+
 	//入力
-	if(input->Trigger(DIK_W)||input->Trigger(DIK_UP)) {
+	if(isUp) {
 		resultText[select]->SetColor({1.f,1.f,1.f,1.0f});
 		select--;
 		select = max(select,0);
 		resultText[select]->SetColor({ResultColor.x,ResultColor.y,ResultColor.z,1.0f});
 	}
-	else if(input->Trigger(DIK_S)||input->Trigger(DIK_DOWN)) {
+	else if(isDown) {
 		resultText[select]->SetColor({1.f,1.f,1.f,1.0f});
 		select++;
 		select = min(select,1);
@@ -579,7 +580,10 @@ void BaseBattleScene::ResultUpdate()
 	}
 
 	//決定
-	if(input->Trigger(DIK_Z) || input->Trigger(DIK_SPACE) || input->Trigger(DIK_RETURN)){
+	bool isEnter = (input->Trigger(DIK_Z) || input->Trigger(DIK_SPACE) || input->Trigger(DIK_RETURN) || 
+		input->PadButtonTrigger(XINPUT_GAMEPAD_A));
+
+	if(isEnter){
 		if(select == 0)		 isHome = true;
 		else if(select == 1) isTitle = true;
 	}

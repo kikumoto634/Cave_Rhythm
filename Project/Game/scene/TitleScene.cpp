@@ -53,7 +53,10 @@ void TitleScene::Update()
 {
 	BaseScene::Update();
 
-	if(input->Trigger(DIK_Z) && !isNextSceneChange_){
+	bool isEnter = (input->Trigger(DIK_Z) || input->Trigger(DIK_SPACE) || 
+		input->PadButtonTrigger(XINPUT_GAMEPAD_A));
+
+	if(isEnter && !isNextSceneChange_){
 		isNextSceneChange_ = true;
 		postEffect->FadeStart();
 		audio_->PlayWave(coinGet_audio.number,coinGet_audio.volume);

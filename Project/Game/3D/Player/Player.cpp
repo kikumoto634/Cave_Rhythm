@@ -54,13 +54,14 @@ void Player::Update(Camera *camera)
 	DamageUpdate();
 
 
+#ifdef _DEBUG
 	if(input_->Trigger(DIK_SPACE)){
 		//state_->SetNextState(new DeadPlayerState);
 
 		isDamage_ = true;
 		//hp_ = 0;
 	}
-#ifdef _DEBUG
+
 	if(input_->Trigger(DIK_Z)){
 		state_->SetNextState(new AttackPlayerState);
 	}
@@ -169,10 +170,17 @@ void Player::ContactUpdate()
 void Player::InputMovement()
 {
 	//入力
-	bool isLEFT  = (input_->Trigger(DIK_LEFT)  /*|| input_->Trigger(DIK_A)*/);
-	bool isRIGHT = (input_->Trigger(DIK_RIGHT) /*|| input_->Trigger(DIK_D)*/);
-	bool isUP    = (input_->Trigger(DIK_UP)    /*|| input_->Trigger(DIK_W)*/);
-	bool isDOWN  = (input_->Trigger(DIK_DOWN)  /*|| input_->Trigger(DIK_S)*/);
+	bool isLEFT  = (input_->Trigger(DIK_LEFT)  || input_->Trigger(DIK_A) || 
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_LEFT));
+
+	bool isRIGHT = (input_->Trigger(DIK_RIGHT) || input_->Trigger(DIK_D) ||
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_RIGHT));
+	
+	bool isUP    = (input_->Trigger(DIK_UP)    || input_->Trigger(DIK_W) ||
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_UP));
+	
+	bool isDOWN  = (input_->Trigger(DIK_DOWN)  || input_->Trigger(DIK_S) ||
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_DOWN));
 
 	if(!isLEFT && !isRIGHT && !isUP && !isDOWN) return;
 
@@ -203,7 +211,8 @@ void Player::InputMovement()
 
 void Player::InputDecision()
 {
-	bool isZ = input_->Trigger(DIK_Z);
+	bool isZ = (input_->Trigger(DIK_Z) || input_->Trigger(DIK_SPACE) || 
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_A));
 
 	if(!isZ) return;
 	if(!isExitOpen_) return;
