@@ -99,7 +99,7 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
-	if(input->PadButtonPush(XINPUT_GAMEPAD_A)){
+	if(input->PadButtonPush(XINPUT_GAMEPAD_DPAD_UP)){
 		input->PadVibration();
 	}
 

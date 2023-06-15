@@ -53,7 +53,7 @@ public:
 	bool PadLeftTrigger(int Value = 30);
 	bool PadRightTrigger(int Value = 30);
 
-	//Stick
+	//Stick Max32767
 	Vector2 PadLStick();
 	Vector2 PadRStick();
 
