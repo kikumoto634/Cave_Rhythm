@@ -193,10 +193,16 @@ void Boss1Area::CutInInitialize()
 void Boss1Area::cutInInput()
 {
 	if(!isCutInAlive_) return;
+	
+	bool isDirKey = !input->Trigger(DIK_UP) && !input->Trigger(DIK_LEFT) && !input->Trigger(DIK_DOWN) && !input->Trigger(DIK_RIGHT);
+	bool isWASD = !input->Trigger(DIK_W) && !input->Trigger(DIK_A) && !input->Trigger(DIK_S) && !input->Trigger(DIK_D);
+	bool isEnter = !input->Trigger(DIK_Z) && !input->Trigger(DIK_SPACE) && !input->Trigger(DIK_RETURN);
+	bool isPadDir = !input->PadButtonPush(XINPUT_GAMEPAD_DPAD_UP) && !input->PadButtonPush(XINPUT_GAMEPAD_DPAD_DOWN) && 
+		!input->PadButtonPush(XINPUT_GAMEPAD_DPAD_RIGHT) && !input->PadButtonPush(XINPUT_GAMEPAD_DPAD_LEFT);
+	bool isPadEnter = !input->PadButtonPush(XINPUT_GAMEPAD_A) && !input->PadButtonPush(XINPUT_GAMEPAD_B) && 
+		!input->PadButtonPush(XINPUT_GAMEPAD_X) && !input->PadButtonPush(XINPUT_GAMEPAD_Y);
 
-	if(!input->Trigger(DIK_UP) && !input->Trigger(DIK_LEFT) && !input->Trigger(DIK_DOWN) && !input->Trigger(DIK_RIGHT) &&
-		!input->Trigger(DIK_W) && !input->Trigger(DIK_A) && !input->Trigger(DIK_S) && !input->Trigger(DIK_D) &&
-		!input->Trigger(DIK_Z) && !input->Trigger(DIK_SPACE) && !input->Trigger(DIK_RETURN)) return;
+	if(isDirKey && isWASD && isEnter && isPadDir && isPadEnter) return;
 		
 
 	isBossAppUIFlag_ = false;
@@ -541,6 +547,7 @@ void Boss1Area::EventUpdate()
 		isRoar_ = true;
 		postEffect->BlurStart();
 		camera->ShakeStart();
+		input->PadVibrationStart();
 
 		break;
 	case Boss1Area::EventState::Roar:
@@ -549,6 +556,7 @@ void Boss1Area::EventUpdate()
 
 		if(Time_OneWay(eventSecond, EventRoarSecond) < 1.0f) break;
 		
+		input->PadVibrationStop();
 		postEffect->BlurEnd();
 		isEventBGM_ = true;
 		isRoar_ = false;
@@ -558,6 +566,7 @@ void Boss1Area::EventUpdate()
 		break;
 	case Boss1Area::EventState::Return:
 	default:
+
 		//Target
 		targetValue = Easing_Point2_EaseInCubic<Vector3>(
 			TargetEnd,targetSaveValue,

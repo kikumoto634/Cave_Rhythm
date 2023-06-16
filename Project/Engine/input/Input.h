@@ -58,7 +58,8 @@ public:
 	Vector2 PadRStick();
 
 	//Vibration
-	void PadVibration();
+	void PadVibrationStart();
+	void PadVibrationStop();
 #pragma endregion
 
 private:

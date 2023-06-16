@@ -11,9 +11,7 @@ Input::Input()
 
 Input::~Input()
 {
-	vibration.wLeftMotorSpeed = 0;
-	vibration.wRightMotorSpeed = 0;
-	XInputSetState(0, &vibration);
+	PadVibrationStop();
 }
 
 Input *Input::GetInstance()
@@ -120,10 +118,6 @@ void Input::PadUpdate()
 	result = XInputGetState(0, &padState_);
 	assert(SUCCEEDED(result));
 
-	//Vibration
-	vibration.wLeftMotorSpeed = 0;
-	vibration.wRightMotorSpeed = 0;
-	XInputSetState(0, &vibration);
 
 	//デッドゾーン
 	if(padState_.Gamepad.sThumbRX<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbRX>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
@@ -240,10 +234,18 @@ Vector2 Input::PadRStick()
 	return Vector2((float)padState_.Gamepad.sThumbRX, (float)padState_.Gamepad.sThumbRY);
 }
 
-void Input::PadVibration()
+void Input::PadVibrationStart()
 {
 	vibration.wLeftMotorSpeed = 65535;
 	vibration.wRightMotorSpeed = 65535;
+	XInputSetState(0, &vibration);
+}
+
+void Input::PadVibrationStop()
+{
+	vibration.wLeftMotorSpeed = 0;
+	vibration.wRightMotorSpeed = 0;
+
 	XInputSetState(0, &vibration);
 }
 
