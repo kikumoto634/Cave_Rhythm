@@ -6,6 +6,7 @@
 #include "PlayerState.h"
 
 using namespace DirectX;
+using namespace std;
 
 void Player::Initialize(std::string filePath, bool IsSmoothing)
 {
@@ -37,6 +38,9 @@ void Player::Initialize(std::string filePath, bool IsSmoothing)
 
 	//コライダー
 	SphereColliderSet();
+
+	recoverParticle_ = make_unique<ParticleObject>();
+	recoverParticle_->Initialize();
 }
 
 void Player::Update(Camera *camera)
@@ -53,6 +57,11 @@ void Player::Update(Camera *camera)
 	//ダメージ
 	DamageUpdate();
 
+	if(coinNum_ > CoinNumRecover){
+		coinNum_ = 0;
+		RecoverParticleApp();
+	}
+
 
 #ifdef _DEBUG
 	if(input_->Trigger(DIK_SPACE)){
@@ -66,6 +75,10 @@ void Player::Update(Camera *camera)
 		state_->SetNextState(new AttackPlayerState);
 	}
 
+	if(input_->Trigger(DIK_R)){
+		RecoverParticleApp();
+	}
+
 #endif // _DEBUG
 
 
@@ -73,6 +86,8 @@ void Player::Update(Camera *camera)
 	weapon_->Pop(world_.translation + weaponOffset_);
 	weapon_->SetRotation(GetRotation());
 	weapon_->Update(this->camera_);
+
+	recoverParticle_->Update(this->camera_);
 
 	//ベース更新
 	BaseObjObject::Update(this->camera_);
@@ -85,8 +100,15 @@ void Player::Draw()
 	BaseObjObject::Draw();
 }
 
+void Player::ParticleDraw()
+{
+	recoverParticle_->Draw();
+}
+
 void Player::Finalize()
 {
+	recoverParticle_->Finalize();
+
 	delete attackModel_;
 	attackModel_ = nullptr;
 	delete deadModel_;
@@ -104,6 +126,9 @@ void Player::OnCollision(const CollisionInfo &info)
 	if(info.collider->GetAttribute() == COLLISION_ATTR_ENEMYS){
 		ContactUpdate();
 	}
+	else if(info.collider->GetAttribute() == COLLISION_ATTR_ITEMS){
+		coinNum_++;
+	}
 }
 
 
@@ -112,6 +137,7 @@ bool Player::GetIsDamage()
 	if(!isAlive_) return false;
 	//(サウンド管理をするのでトリガー)
 	if(damageFrame_ == 0 && isDamage_){
+		input_->PadVibrationLeap(0.5f);
 		return true;
 	}
 	return false;
@@ -121,6 +147,17 @@ bool Player::GetIsDead()
 {
 	//(サウンド管理をするのでトリガー)
 	if(damageFrame_ == 0 && !isAlive_){
+		input_->PadVibrationLeap(0.5f);
+		return true;
+	}
+	return false;
+}
+
+bool Player::GetIsRecover()
+{
+	if(!isAlive_) return false;
+	if(isRecover){
+		isRecover = false;
 		return true;
 	}
 	return false;
@@ -287,4 +324,37 @@ void Player::DamageUpdate()
 	damageFrame_ = 0;
 	object_->SetColor(NormalColor);
 	isDamage_ = false;
+}
+
+
+void Player::RecoverParticleApp()
+{
+	if(hp_ >= 5) return;
+	isRecover = true;
+	hp_++;
+
+	for(int i = 0; i < CreateNum; i++){
+		//速度
+		vel_.x = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel_Half;
+		vel_.y = VelY;
+		vel_.z = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel_Half;
+
+		//加速度
+		acc_.y = AccY;
+
+		//サイズ
+		size_ = (float)rand() / RAND_MAX * ScaleMax - ScaleMin;
+
+		recoverParticle_->ParticleSet(
+			ParticleAliveFrameMax,
+			GetPosition(),
+			vel_,
+			acc_,
+			size_,
+			ScaleMax,
+			TextureNumber,
+			Color
+		);
+		recoverParticle_->ParticleAppearance();
+	}
 }

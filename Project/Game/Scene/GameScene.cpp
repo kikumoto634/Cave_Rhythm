@@ -46,27 +46,27 @@ void GameScene::AddCommonInitialize()
 	case 1:
 		needCoin_= one.needCoin;
 		slimePopNumMax_ = one.slimne;
-		skeltonPopNumMax_ = one.skelton;
+		skeletonPopNumMax_ = one.skelton;
 		break;
 	case 2:
 		needCoin_= two.needCoin;
 		slimePopNumMax_ = two.slimne;
-		skeltonPopNumMax_ = two.skelton;
+		skeletonPopNumMax_ = two.skelton;
 		break;
 	case 3:
 		needCoin_= three.needCoin;
 		slimePopNumMax_ = three.slimne;
-		skeltonPopNumMax_ = three.skelton;
+		skeletonPopNumMax_ = three.skelton;
 		break;
 	case 4:
 		needCoin_= four.needCoin;
 		slimePopNumMax_ = four.slimne;
-		skeltonPopNumMax_ = four.skelton;
+		skeletonPopNumMax_ = four.skelton;
 		break;
 	default:
 		needCoin_= four.needCoin;
 		slimePopNumMax_ = four.slimne;
-		skeltonPopNumMax_ = four.skelton;
+		skeletonPopNumMax_ = four.skelton;
 		break;
 	}
 }
@@ -229,7 +229,7 @@ void GameScene::ActorCreateInitialize()
 		newObj->Initialize("slime");
 		enemys_.push_back(move(newObj));
 	}
-	for(int i = 0; i < skeltonPopNumMax_; i++){
+	for(int i = 0; i < skeletonPopNumMax_; i++){
 		unique_ptr<Skelton> newObj = make_unique<Skelton>();
 		newObj->Initialize("Skeleton");
 		enemys_.push_back(move(newObj));

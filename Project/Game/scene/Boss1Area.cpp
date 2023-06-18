@@ -60,6 +60,12 @@ void Boss1Area::AddObject3DInitialize()
 
 	BossInitialize();
 	SkeltonInitialize();
+
+	for(int i = 0; i < coinPopNumMax_; i++){
+		unique_ptr<Coins> newObj = make_unique<Coins>();
+		newObj->Initialize("Coins");
+		obj_.push_back(move(newObj));
+	}
 }
 
 void Boss1Area::AddObject2DInitialize()
@@ -91,6 +97,20 @@ void Boss1Area::AddObject3DUpdate()
 
 	BossUpdate();
 	SkeltonUpdate();
+
+	for(auto it = obj_.begin(); it != obj_.end(); it++){
+		if((*it)->GetIsContactTrigger()){
+			gameManager_->CoinIncrement();
+			gameManager_->AudioPlay(coinGet_audio.number,coinGet_audio.volume);
+		}
+
+		if(!coinDropPos_.empty() && (*it)->GetIsPopsPmposibble_()){
+			(*it)->Pop(coinDropPos_.front());
+			coinDropPos_.pop();
+		}
+
+		(*it)->Update(this->camera);
+	}
 }
 
 void Boss1Area::AddObject2DUpdate()
@@ -107,6 +127,11 @@ void Boss1Area::AddBeatEndUpdate()
 		gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
 		isEventBGM_ = false;
 	}
+
+	for(auto it = obj_.begin(); it != obj_.end(); ++it){
+		if(!(*it)->GetIsAlive()) continue;
+		(*it)->IsBeatEndOn();
+	}
 }
 
 void Boss1Area::AddObject3DDraw()
@@ -118,6 +143,10 @@ void Boss1Area::AddObject3DDraw()
 
 	BossDraw();
 	SkeltonDraw();
+
+	for(auto it = obj_.begin(); it != obj_.end(); ++it){
+		(*it)->Draw();
+	}
 }
 
 void Boss1Area::AddParticleDraw()
@@ -137,6 +166,10 @@ void Boss1Area::AddBackUIDraw()
 
 void Boss1Area::AddObjectFinalize()
 {
+	for(auto it = obj_.begin(); it != obj_.end(); ++it){
+		(*it)->Finalize();
+	}
+
 	CutInFinalize();
 	EnterFinalize();
 	ExitFinalize();
@@ -218,16 +251,16 @@ void Boss1Area::CutInUpdate()
 	//開始時
 	if(isBossAppUIFlag_ && !isCutInUIMove_){
 		//時間
-		cutInMoveframe_ = Time_OneWay(cutInMoveframe_, CutInMoveSecondMax);
+		cutInMoveFrame_ = Time_OneWay(cutInMoveFrame_, CutInMoveSecondMax);
 
 		//移動
-		cutInSpPos_[CutInSpCenterNumber] = Easing_Point2_Linear<Vector2>(CutInSpCenterBeginPos, CutInSpCenterEndPos, cutInMoveframe_);
-		cutInSpPos_[CutInSpUpNumber]     = Easing_Point2_Linear<Vector2>(CutInSpUpBeginPos, CutInSpUpEndPos, cutInMoveframe_);
-		cutInSpPos_[CutInSpDownNumber]   = Easing_Point2_Linear<Vector2>(CutInSpDownBeginPos, CutInSpDownEndPos, cutInMoveframe_);
-		cutInSpPos_[CutInSpNameNumber]   = Easing_Point2_Linear<Vector2>(CutInSpNameBeginPos, CutInSpNameEndPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpCenterNumber] = Easing_Point2_Linear<Vector2>(CutInSpCenterBeginPos, CutInSpCenterEndPos, cutInMoveFrame_);
+		cutInSpPos_[CutInSpUpNumber]     = Easing_Point2_Linear<Vector2>(CutInSpUpBeginPos, CutInSpUpEndPos, cutInMoveFrame_);
+		cutInSpPos_[CutInSpDownNumber]   = Easing_Point2_Linear<Vector2>(CutInSpDownBeginPos, CutInSpDownEndPos, cutInMoveFrame_);
+		cutInSpPos_[CutInSpNameNumber]   = Easing_Point2_Linear<Vector2>(CutInSpNameBeginPos, CutInSpNameEndPos, cutInMoveFrame_);
 
 		//目標値
-		if(cutInMoveframe_ >= 1.0){
+		if(cutInMoveFrame_ >= 1.0){
 			//音声
 			gameManager_->AudioPlay(cutIn_audio.number, cutIn_audio.volume);
 
@@ -235,7 +268,7 @@ void Boss1Area::CutInUpdate()
 			cutInSpPos_[CutInSpUpNumber]     = CutInSpUpEndPos;
 			cutInSpPos_[CutInSpDownNumber]   = CutInSpDownEndPos;
 			cutInSpPos_[CutInSpNameNumber]   = CutInSpNameEndPos;
-			cutInMoveframe_ = 0.f;
+			cutInMoveFrame_ = 0.f;
 
 			//移動完了
 			isCutInUIMove_ = true;
@@ -244,16 +277,16 @@ void Boss1Area::CutInUpdate()
 	//UI引き
 	else if(!isBossAppUIFlag_ && isCutInUIMove_){
 		//時間
-		cutInMoveframe_ = Time_OneWay(cutInMoveframe_, CutInMoveSecondMax);
+		cutInMoveFrame_ = Time_OneWay(cutInMoveFrame_, CutInMoveSecondMax);
 
 		//移動
-		cutInSpPos_[CutInSpCenterNumber] = Easing_Point2_Linear<Vector2>(CutInSpCenterEndPos, CutInSpCenterBeginPos, cutInMoveframe_);
-		cutInSpPos_[CutInSpUpNumber]     = Easing_Point2_Linear<Vector2>(CutInSpUpEndPos, CutInSpUpBeginPos, cutInMoveframe_);
-		cutInSpPos_[CutInSpDownNumber]   = Easing_Point2_Linear<Vector2>(CutInSpDownEndPos, CutInSpDownBeginPos, cutInMoveframe_);
-		cutInSpPos_[CutInSpNameNumber]   = Easing_Point2_Linear<Vector2>(CutInSpNameEndPos, CutInSpNameBeginPos, cutInMoveframe_);
+		cutInSpPos_[CutInSpCenterNumber] = Easing_Point2_Linear<Vector2>(CutInSpCenterEndPos, CutInSpCenterBeginPos, cutInMoveFrame_);
+		cutInSpPos_[CutInSpUpNumber]     = Easing_Point2_Linear<Vector2>(CutInSpUpEndPos, CutInSpUpBeginPos, cutInMoveFrame_);
+		cutInSpPos_[CutInSpDownNumber]   = Easing_Point2_Linear<Vector2>(CutInSpDownEndPos, CutInSpDownBeginPos, cutInMoveFrame_);
+		cutInSpPos_[CutInSpNameNumber]   = Easing_Point2_Linear<Vector2>(CutInSpNameEndPos, CutInSpNameBeginPos, cutInMoveFrame_);
 
 		//目標値
-		if(cutInMoveframe_ >= 1.0){
+		if(cutInMoveFrame_ >= 1.0){
 			cutInSpPos_[CutInSpCenterNumber] = CutInSpCenterBeginPos;
 			cutInSpPos_[CutInSpUpNumber]     = CutInSpUpBeginPos;
 			cutInSpPos_[CutInSpDownNumber]   = CutInSpDownBeginPos;
@@ -472,6 +505,7 @@ void Boss1Area::SkeltonUpdate()
 
 		if(it->GetIsContactTrigger()){
 			gameManager_->AudioPlay(damage_audio.number, damage_audio.volume);
+			coinDropPos_.push(it->GetPopPosition());
 		}
 		it->SetMapInfo(areaManager_->GetMapInfo());
 		it->Update(camera,player_->GetPosition());

@@ -137,6 +137,7 @@ private:
 	void EventStart();
 	void EventUpdate();
 
+
 private:
 	//CutInUIフラグ
 	//生存
@@ -149,7 +150,7 @@ private:
 	vector<unique_ptr<BaseSprites>> cutInSp_;
 	vector<Vector2> cutInSpPos_;
 	//時間
-	float cutInMoveframe_ = 0.f;
+	float cutInMoveFrame_ = 0.f;
 
 	//壁
 	//モデル
@@ -192,4 +193,10 @@ private:
 	//BGM再生
 	bool isEventBGM_ = false;
 	float changeTime = 0.f;
+
+	//コイン
+	int coinPopNumMax_ = 10;
+	queue<Vector3> coinDropPos_ = {};
+	//オブジェクト
+	list<unique_ptr<BaseObjObject>> obj_;
 };

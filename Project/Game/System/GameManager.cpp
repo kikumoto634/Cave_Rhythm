@@ -85,6 +85,15 @@ void GameManager::HpDecrement()
 	damageHpSpriteIndex_--;
 }
 
+void GameManager::HpIncrement()
+{
+	if(damageHpSpriteIndex_ >= 5)	return;
+
+	hpSp_[damageHpSpriteIndex_]->SetSize({75,75});
+	damageHpSpriteIndex_++;
+	hpSp_[damageHpSpriteIndex_]->SetTexNumber(14);
+}
+
 void GameManager::AudioPlay(int number, float volume, bool loop)
 {
 	audio_->PlayWave(number, volume, loop);

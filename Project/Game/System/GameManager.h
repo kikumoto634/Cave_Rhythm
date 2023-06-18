@@ -65,6 +65,8 @@ public:
 	void IsBeatEndOn()	{isHpScaleChange_ = true;}
 	//体力減少
 	void HpDecrement();
+	//体力増加
+	void HpIncrement();
 
 	//オーディオ再生
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);

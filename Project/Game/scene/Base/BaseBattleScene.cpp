@@ -135,6 +135,7 @@ void BaseBattleScene::Draw()
 	Object3DDraw();
 
 	ParticleDraw();
+	player_->ParticleDraw();
 }
 
 void BaseBattleScene::DrawBack()
@@ -160,7 +161,7 @@ void BaseBattleScene::DrawNear()
 	debugText->Printf(000, 640, 1.f, "RhytjmSUB			: %lf[ms]", rhythmManager_->GetCalTime() - rhythmManager_->GetInputTimet());
 
 	//debugText->Printf(200, 640, 1.f, "COMBO	: %d", gameManager_->GetComboNum());
-	//debugText->Printf(200, 660, 1.f, "COIN	: %d", gameManager_->GetCoinNum());
+	debugText->Printf(200, 660, 1.f, "COIN	: %d",player_->GetCoinNum());
 
 
 	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
@@ -286,6 +287,9 @@ void BaseBattleScene::Object3DUpdate()
 	if(player_->GetIsDamage())	{
 		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);
 		gameManager_->HpDecrement();
+	}
+	if(player_->GetIsRecover()){
+		gameManager_->HpIncrement();
 	}
 	if(player_->GetIsDead())	{
 		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);

@@ -5,6 +5,8 @@
 #include "PlayerWeapon.h"
 
 #include "AreaManager.h"
+#include "ParticleObject.h"
+#include "TextureUtility.h"
 
 //前方宣言
 class PlayerStateManager;
@@ -12,12 +14,12 @@ class PlayerStateManager;
 class Player : public BaseObjObject
 {
 public:
-//フレンド関数
-friend class IdelPlayerState;
-friend class MovePlayerState;
-friend class AttackPlayerState;
-friend class DigPlayerState;
-friend class DeadPlayerState;
+	//フレンド関数
+	friend class IdelPlayerState;
+	friend class MovePlayerState;
+	friend class AttackPlayerState;
+	friend class DigPlayerState;
+	friend class DeadPlayerState;
 
 private:
 	struct MoveInfo{
@@ -62,6 +64,21 @@ private:
 	//半径
 	const float SphereColliderRadius = 0.6f;
 
+	//獲得コイン
+	const int CoinNumRecover = 5;
+
+	//パーティクル
+	const int ParticleAliveFrameMax = 50;
+	const size_t CreateNum = 8;
+	const float Rand_Vel = 0.05f;
+	const float Rand_Vel_Half = 0.025f;
+	const float VelY = 0.00f;
+	const float AccY = 0.0025f;
+	const float ScaleMin = 0.1f;
+	const float ScaleMax = 0.6f;
+	const int TextureNumber = heart_tex.number;
+	const Vector4 Color = {1.f,1.f,1.f,1.f};
+
 //メンバ関数
 public:
 	/// <summary>
@@ -75,9 +92,9 @@ public:
 	void Update(Camera* camera) override;
 
 	/// <summary>
-	/// 3D描画
 	/// </summary>
 	void Draw() override;
+	void ParticleDraw();
 
 	/// <summary>
 	/// 後処理
@@ -110,10 +127,14 @@ public:
 	bool GetIsDamage();
 	//死亡
 	bool GetIsDead();
+	//回復
+	bool GetIsRecover();
 	//破壊ブロック位置
 	Vector2 GetBlockBreakPos()	{return blockBreakPos_;}
 	//体力
 	inline int GetHp()	{return hp_;}
+	//コイン数
+	inline int GetCoinNum()	{return coinNum_;}
 	//入力確認
 	inline bool GetIsInput()	{return isInput_;}
 	//次のシーン
@@ -156,6 +177,9 @@ private:
 	//ダメージ
 	void DamageUpdate();
 
+	//パーティクル
+	void RecoverParticleApp();
+
 private:
 	//ポインタ
 	//入力
@@ -176,6 +200,9 @@ private:
 
 	//体力
 	int hp_ = 0;
+
+	//回復
+	bool isRecover = false;
 
 	//ダメージ
 	bool isDamage_ = false;
@@ -209,5 +236,15 @@ private:
 
 	//イベント発生
 	bool isEvent_ = false;
+
+
+	//獲得コイン
+	int coinNum_ = 0;
+
+	//パーティクル
+	Vector3 vel_{};
+	Vector3 acc_{};
+	float size_ = 0.f;
+	std::unique_ptr<ParticleObject> recoverParticle_;
 };
 

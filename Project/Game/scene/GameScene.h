@@ -76,13 +76,12 @@ private:
 private:
 	//エネミー
 	int slimePopNumMax_ = 5;
-	int skeltonPopNumMax_ = 5;
+	int skeletonPopNumMax_ = 5;
 	list<unique_ptr<BaseEnemy>> enemys_;
 
 	//コイン
 	int coinPopNumMax_ = 10;
 	queue<Vector3> coinDropPos_ = {};
-
 	//オブジェクト
 	list<unique_ptr<BaseObjObject>> obj_;
 

@@ -72,8 +72,10 @@ void Coins::ColliderSet()
 
 void Coins::ContactUpdate()
 {
-	isAlive_ = false;
 	isContactTrigger_ = true;
 	isPopsPosibble_ = true;
 	SetPosition(DeadPos);
+	world_.UpdateMatrix();
+	baseCollider_->Update();
+	isAlive_ = false;
 }
