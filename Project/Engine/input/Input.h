@@ -56,7 +56,30 @@ public:
 	//Stick Max32767
 	Vector2 PadLStick();
 	Vector2 PadRStick();
+	Vector2 PadLStickPre();
+	Vector2 PadRStickPre();
 
+	bool PadLStickRightPush()	{return (PadLStick().x == +1);}
+	bool PadLStickLeftPush()	{return (PadLStick().x == -1);}
+	bool PadLStickUpPush()		{return (PadLStick().y == +1);}
+	bool PadLStickDownPush()	{return (PadLStick().y == -1);}
+
+	bool PadLStickRightTrigger(){return (PadLStickRightPush() && !(PadLStickPre().x == +1));}
+	bool PadLStickLeftTrigger()	{return (PadLStickLeftPush()  && !(PadLStickPre().x == -1));}
+	bool PadLStickUpTrigger()	{return (PadLStickUpPush()    && !(PadLStickPre().y == +1));}
+	bool PadLStickDownTrigger()	{return (PadLStickDownPush()  && !(PadLStickPre().y == -1));}
+	
+	bool PadRStickRightPush()	{return (PadRStick().x == +1);}
+	bool PadRStickLeftPush()	{return (PadRStick().x == -1);}
+	bool PadRStickUpPush()		{return (PadRStick().y == +1);}
+	bool PadRStickDownPush()	{return (PadRStick().y == -1);}
+
+	bool PadRStickRightTrigger(){return (PadRStickRightPush() && !(PadRStickPre().x == +1));}
+	bool PadRStickLeftTrigger()	{return (PadRStickLeftPush()  && !(PadRStickPre().x == -1));}
+	bool PadRStickUpTrigger()	{return (PadRStickUpPush()    && !(PadRStickPre().y == +1));}
+	bool PadRStickDownTrigger()	{return (PadRStickDownPush()  && !(PadRStickPre().y == -1));}
+
+	
 	//Vibration
 	void PadVibrationStart();
 	void PadVibrationStop();

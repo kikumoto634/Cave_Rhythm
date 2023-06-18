@@ -99,6 +99,10 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
+	if(input->PadRStickDownTrigger()){
+		camera->ShakeStart();
+	}
+
 	//Scene
 	{
 		//座標
@@ -160,7 +164,7 @@ void BaseBattleScene::DrawNear()
 
 
 	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
-	debugText->Printf(300, 300, 1.f, "Stick : %f,%f", input->PadRStick().x, input->PadRStick().y);
+	debugText->Printf(300, 300, 1.f, "Stick : %f,%f", input->PadLStickPre().x, input->PadLStickPre().y);
 
 #endif // _DEBUG
 }
@@ -561,9 +565,9 @@ void BaseBattleScene::ResultUpdate()
 	if(isHome || isTitle) return;
 
 	bool isUp = (input->Trigger(DIK_W)||input->Trigger(DIK_UP) ||
-		input->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_UP));
+		input->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_UP) || input->PadLStickUpTrigger());
 	bool isDown = (input->Trigger(DIK_S)||input->Trigger(DIK_DOWN) ||
-		input->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_DOWN));
+		input->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_DOWN) || input->PadLStickDownTrigger());
 
 	//入力
 	if(isUp) {

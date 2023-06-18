@@ -128,7 +128,6 @@ void Input::PadUpdate()
 	if(padState_.Gamepad.sThumbRY<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbRY>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
 		padState_.Gamepad.sThumbRY = 0;
 	}
-
 	if(padState_.Gamepad.sThumbLX<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbLX>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
 		padState_.Gamepad.sThumbLX = 0;
 	}
@@ -290,6 +289,62 @@ Vector2 Input::PadRStick()
 		Y /= StickMaxValue;
 	}
 	else if(padState_.Gamepad.sThumbRY < 0){
+		Y += XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+		Y /= StickMaxValue;
+	}
+
+	return Vector2(X, Y);
+}
+
+Vector2 Input::PadLStickPre()
+{
+	float X = padPreState_.Gamepad.sThumbLX;
+	float Y = padPreState_.Gamepad.sThumbLY;
+
+	//X
+	if(padPreState_.Gamepad.sThumbLX > 0){
+		X -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE - 1;
+		X /= StickMaxValue;
+	}
+	else if(padPreState_.Gamepad.sThumbLX < 0){
+		X += XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+		X /= StickMaxValue;
+	}
+
+	//Y
+	if(padPreState_.Gamepad.sThumbLY > 0){
+		Y -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE - 1;
+		Y /= StickMaxValue;
+	}
+	else if(padPreState_.Gamepad.sThumbLY < 0){
+		Y += XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+		Y /= StickMaxValue;
+	}
+
+	return Vector2(X, Y);
+}
+
+Vector2 Input::PadRStickPre()
+{
+	float X = padPreState_.Gamepad.sThumbRX;
+	float Y = padPreState_.Gamepad.sThumbRY;
+
+	//X
+	if(padPreState_.Gamepad.sThumbRX > 0){
+		X -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE - 1;
+		X /= StickMaxValue;
+	}
+	else if(padPreState_.Gamepad.sThumbRX < 0){
+		X += XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+		X /= StickMaxValue;
+	}
+
+	//Y
+	if(padPreState_.Gamepad.sThumbRY > 0){
+		Y -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE - 1;
+		Y /= StickMaxValue;
+	}
+	else if(padPreState_.Gamepad.sThumbRY < 0){
 		Y += XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 		Y /= StickMaxValue;
 	}

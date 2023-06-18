@@ -171,16 +171,16 @@ void Player::InputMovement()
 {
 	//入力
 	bool isLEFT  = (input_->Trigger(DIK_LEFT)  || input_->Trigger(DIK_A) || 
-		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_LEFT));
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_LEFT) || input_->PadLStickLeftTrigger());
 
 	bool isRIGHT = (input_->Trigger(DIK_RIGHT) || input_->Trigger(DIK_D) ||
-		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_RIGHT));
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_RIGHT) || input_->PadLStickRightTrigger());
 	
 	bool isUP    = (input_->Trigger(DIK_UP)    || input_->Trigger(DIK_W) ||
-		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_UP));
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_UP) || input_->PadLStickUpTrigger());
 	
 	bool isDOWN  = (input_->Trigger(DIK_DOWN)  || input_->Trigger(DIK_S) ||
-		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_DOWN));
+		input_->PadButtonTrigger(XINPUT_GAMEPAD_DPAD_DOWN) || input_->PadLStickDownTrigger());
 
 	if(!isLEFT && !isRIGHT && !isUP && !isDOWN) return;
 
