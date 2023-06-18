@@ -53,6 +53,7 @@ public:
 	//ポストエフェクト開始
 	inline void BlurStart()	{isBlurActive_ = true;}
 	inline void BlurEnd()	{isBlurActive_ = false;}
+
 	inline void FadeStart()	{isFadeActive = true;}
 
 	//ブラー

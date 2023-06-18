@@ -160,7 +160,7 @@ void BaseBattleScene::DrawNear()
 
 
 	//debugText->Printf(0, 640, 1.f, "IsBeat : %d", rhythmManager->GetIsRhythmEnd());
-	debugText->Printf(300, 300, 1.f, "Stick : %f,%f", input->PadLStick().x, input->PadLStick().y);
+	debugText->Printf(300, 300, 1.f, "Stick : %f,%f", input->PadRStick().x, input->PadRStick().y);
 
 #endif // _DEBUG
 }

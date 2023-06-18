@@ -60,6 +60,7 @@ public:
 	//Vibration
 	void PadVibrationStart();
 	void PadVibrationStop();
+	void PadVibrationLeap(const float Second);
 #pragma endregion
 
 private:
@@ -88,6 +89,10 @@ private:
 #pragma endregion
 
 #pragma region パッド
+	const float StickMaxValue = 24079;
+
+	const int VibrationMaxValue = 65535;
+
 	void PadUpdate();
 
 	//Xbox 360基準
@@ -95,6 +100,10 @@ private:
 	XINPUT_STATE padPreState_;
 
 	XINPUT_VIBRATION vibration;
+	bool isVibrationLeap = false;
+	Vector2 vibrationValue = {};
+	float vibrationTime = 0;
+	float vibrationTimeMax = 0;
 #pragma endregion
 };
 

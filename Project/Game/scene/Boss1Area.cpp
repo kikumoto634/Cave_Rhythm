@@ -547,7 +547,7 @@ void Boss1Area::EventUpdate()
 		isRoar_ = true;
 		postEffect->BlurStart();
 		camera->ShakeStart();
-		input->PadVibrationStart();
+		input->PadVibrationLeap(2.0f);
 
 		break;
 	case Boss1Area::EventState::Roar:
@@ -555,8 +555,7 @@ void Boss1Area::EventUpdate()
 		postEffect->Blur(eventSecond, EventRoarSecond);
 
 		if(Time_OneWay(eventSecond, EventRoarSecond) < 1.0f) break;
-		
-		input->PadVibrationStop();
+
 		postEffect->BlurEnd();
 		isEventBGM_ = true;
 		isRoar_ = false;
