@@ -231,7 +231,7 @@ void TitleScene::SpriteInitialize()
 	sp_.push_back(move(pushText_));
 
 	unique_ptr<BaseSprites> button_ = make_unique<BaseSprites>();
-	button_->Initialize(buttonZ_tex.number);
+	button_->Initialize(PadA_tex.number);
 	button_->SetPosition(ButtonPos);
 	button_->SetSize(ButtonSize);
 	button_->SetAnchorPoint(ButtonAnc);

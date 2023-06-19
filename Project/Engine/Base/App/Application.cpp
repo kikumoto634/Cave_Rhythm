@@ -103,6 +103,7 @@ void Application::Initialize()
 	TextureManager::Load(resultTextTitle_tex.number	,resultTextTitle_tex.path);
 	TextureManager::Load(resultTextLobby_tex.number	,resultTextLobby_tex.path);
 	TextureManager::Load(playResult_tex.number		,playResult_tex.path);
+	TextureManager::Load(PadA_tex.number			,PadA_tex.path);
 
 	//音声
 	Audio::GetInstance()->Initialize();
@@ -150,7 +151,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new HomeScene(dxCommon, window);
+	BaseScene* scene = new TitleScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);

@@ -115,10 +115,14 @@ void Input::Update()
 
 void Input::PadUpdate()
 {
-	HRESULT result;
 	padPreState_ = padState_;
-	result = XInputGetState(0, &padState_);
-	assert(SUCCEEDED(result));
+	DWORD result = XInputGetState(0, &padState_);
+	if(result == ERROR_SUCCESS){
+		isPadConnect = true;
+	}
+	else{
+		isPadConnect = false;
+	}
 
 
 	//デッドゾーン

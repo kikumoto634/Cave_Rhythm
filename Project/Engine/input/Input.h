@@ -45,6 +45,8 @@ public:
 #pragma endregion
 
 #pragma region パッド
+	bool GetIsPadConnect()	{return isPadConnect;}
+
 	//ボタン
 	bool PadButtonPush(int keyNumber);
 	bool PadButtonTrigger(int keyNumber);
@@ -121,6 +123,8 @@ private:
 	//Xbox 360基準
 	XINPUT_STATE padState_;
 	XINPUT_STATE padPreState_;
+
+	bool isPadConnect = false;
 
 	XINPUT_VIBRATION vibration;
 	bool isVibrationLeap = false;
