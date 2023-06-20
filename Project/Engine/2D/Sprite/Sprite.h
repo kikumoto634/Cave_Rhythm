@@ -149,6 +149,7 @@ public://メンバ関数
 	/// <summary>
 	/// テクスチャ番号
 	/// </summary>
+	UINT GetTexNumber()	{return texNumber;}
 	void SetTexNumber(UINT texNumber);
 
 protected://メンバ変数

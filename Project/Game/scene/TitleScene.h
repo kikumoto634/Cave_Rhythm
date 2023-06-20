@@ -9,14 +9,19 @@
 #include "GameManager.h"
 
 #include <list>
+#include <vector>
 
 class TitleScene : public BaseScene
 {
 private:
 	template <class T> using unique_ptr = std::unique_ptr<T>;
 	template <class T> using list = std::list<T>;
+	template <class T> using vector = std::vector<T>;
 
 private:
+	//ボタン
+	const int buttonSpIndex = 2;
+
 	//シーン遷移
 	const float FadeSecond = 1.f;
 
@@ -107,7 +112,9 @@ private:
 	list<unique_ptr<BaseObjObject>> objs_;
 
 	//スプライト
-	list<unique_ptr<BaseSprites>> sp_;
+	vector<unique_ptr<BaseSprites>> sp_;
+	int buttonSpNumber = 0;
+
 
 	//音声
 	Audio* audio_ = nullptr;

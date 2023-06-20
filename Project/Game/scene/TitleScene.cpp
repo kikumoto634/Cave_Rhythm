@@ -70,6 +70,9 @@ void TitleScene::Update()
 #pragma region _2DObj Update
 	SceneChange();
 
+	//コントローラ接続確認
+	buttonSpNumber = input->GetIsPadConnect()==true ? PadA_tex.number : buttonZ_tex.number;
+	sp_[buttonSpIndex]->SetTexNumber(buttonSpNumber);
 	for(auto it = sp_.begin(); it != sp_.end(); it++){
 		(*it)->Update();
 	}
@@ -230,8 +233,9 @@ void TitleScene::SpriteInitialize()
 	pushText_->SetAnchorPoint(PushtextAnc);
 	sp_.push_back(move(pushText_));
 
+	buttonSpNumber = buttonZ_tex.number;
 	unique_ptr<BaseSprites> button_ = make_unique<BaseSprites>();
-	button_->Initialize(PadA_tex.number);
+	button_->Initialize(buttonSpNumber);
 	button_->SetPosition(ButtonPos);
 	button_->SetSize(ButtonSize);
 	button_->SetAnchorPoint(ButtonAnc);

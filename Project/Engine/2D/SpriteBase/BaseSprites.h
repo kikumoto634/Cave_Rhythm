@@ -30,6 +30,7 @@ public:
 	const Vector2& GetPosition()	{return position;}
 	const Vector2& GetSize()	{return size;}
 	const Vector3& GetColor()	{return {color.x,color.y,color.z};}
+	const UINT GetTextureNumber()	{return sprite->GetTexNumber();}
 
 	//Setter
 	void SetPosition(const Vector2& position)	{this->position = position;}

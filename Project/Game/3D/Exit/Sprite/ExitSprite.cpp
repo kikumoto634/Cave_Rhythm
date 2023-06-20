@@ -1,4 +1,5 @@
 #include "ExitSprite.h"
+#include "Input.h"
 #include "TextureUtility.h"
 
 using namespace std;
@@ -19,7 +20,8 @@ void ExitSprite::Initialize()
 	NeedCoinSpriteUpdate();
 
 	exitOpenSp_ = make_unique<BaseSprites>();
-	exitOpenSp_->Initialize(buttonZ_tex.number);
+	buttonSpNumber = buttonZ_tex.number;
+	exitOpenSp_->Initialize(buttonSpNumber);
 	exitOpenSp_->SetSize({30,30});
 	exitOpenSp_->SetAnchorPoint({0.5f,0.5f});
 }
@@ -36,6 +38,10 @@ void ExitSprite::Update(bool isOpen, bool isPlayerContact)
 		coinSpNum_[i]->Update();
 	}
 	{
+		//コントローラ接続確認
+		buttonSpNumber = Input::GetInstance()->GetIsPadConnect()==true ? PadA_tex.number : buttonZ_tex.number;
+		exitOpenSp_->SetTexNumber(buttonSpNumber);
+
 		Vector2 pos = coinSp_->GetPosition() + Vector2{-40,20};
 		exitOpenSp_->SetPosition(pos);
 		exitOpenSp_->Update();

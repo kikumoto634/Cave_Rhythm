@@ -31,7 +31,9 @@ private:
 	//画像
 	unique_ptr<BaseSprites> coinSp_;
 	unique_ptr<BaseSprites> coinSpNum_[3];
+
 	unique_ptr<BaseSprites> exitOpenSp_;
+	int buttonSpNumber = 0;
 
 	//必要コイン数
 	int exitNeedCoinsNum_ = 1;
