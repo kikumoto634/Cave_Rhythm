@@ -42,3 +42,5 @@ inline TextureState resultTextTitle_tex  =	{32, "2DText/ResultText_Title.png"};
 inline TextureState resultTextLobby_tex  =	{33, "2DText/ResultText_Lobby.png"};
 inline TextureState playResult_tex		 =	{34, "2DText/PlayResult.png"};
 inline TextureState PadA_tex		     =	{35, "2DText/PadA.png"};
+inline TextureState buttonCross_tex		 =	{36, "2DText/buttonCross.png"};
+inline TextureState PadLStick_tex		 =	{37, "2DText/LStick.png"};

@@ -13,8 +13,10 @@ private:
 
 private:
 	//テキストの情報
-	const Vector2 TextSize = {384,64};
-	const Vector2 TextAnc = {0.5f,0.5f};
+	const Vector3 MoveSpPos_ = {-25,-3,30};
+	const Vector2 MoveSpSize = {384,64};
+	const Vector3 ButtonSpPos = {-29.5,-3,29};
+	const Vector2 SpAnc = {0.5f,0.5f};
 
 	//生成数
 	int SlimePopNumMax_ = 2;
@@ -62,6 +64,8 @@ private:
 
 	//スプライト
 	unique_ptr<TutorialSp> moveSp_;
-	const Vector3 moveSpPos_ = {-25,-3,30};
+	//ボタン
+	unique_ptr<TutorialSp> buttonSp_;
+	int buttonSpNumber;
 };
 

@@ -4,6 +4,7 @@
 #include "HomeScene.h"
 #include "GameScene.h"
 #include "Boss1Area.h"
+#include "TutorialScene.h"
 
 #include "AudioUtility.h"
 #include "TextureUtility.h"
@@ -104,6 +105,8 @@ void Application::Initialize()
 	TextureManager::Load(resultTextLobby_tex.number	,resultTextLobby_tex.path);
 	TextureManager::Load(playResult_tex.number		,playResult_tex.path);
 	TextureManager::Load(PadA_tex.number			,PadA_tex.path);
+	TextureManager::Load(buttonCross_tex.number		,buttonCross_tex.path);
+	TextureManager::Load(PadLStick_tex.number		,PadLStick_tex.path);
 
 	//音声
 	Audio::GetInstance()->Initialize();
@@ -122,6 +125,7 @@ void Application::Initialize()
 	Audio::Load(cutIn_audio.number		,cutIn_audio.path);
 	Audio::Load(reflected_audio.number	,reflected_audio.path);
 	Audio::Load(roar_audio.number		,roar_audio.path);
+	Audio::Load(recover_audio.number	,recover_audio.path);
 
 #pragma endregion
 
@@ -151,7 +155,7 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	sceneManager = SceneManager::GetInstance();
-	BaseScene* scene = new TitleScene(dxCommon, window);
+	BaseScene* scene = new TutorialScene(dxCommon, window);
 
 #ifdef _DEBUG
 	scene->SetDebugText(debugText);

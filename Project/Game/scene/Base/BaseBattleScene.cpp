@@ -289,6 +289,7 @@ void BaseBattleScene::Object3DUpdate()
 		gameManager_->HpDecrement();
 	}
 	if(player_->GetIsRecover()){
+		gameManager_->AudioPlay(recover_audio.number,recover_audio.volume);
 		gameManager_->HpIncrement();
 	}
 	if(player_->GetIsDead())	{
