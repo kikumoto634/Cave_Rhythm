@@ -10,7 +10,7 @@ public:
 
 private:
 	//ノーツの速度調整用//BPM120 60 = 0.02 && BPM 150 = 0.015
-	const float NoteSpeedAdjustment = 0.025f;
+	const float NoteSpeedAdjustment = 0.02f;
 
 public:
 	//初期化
@@ -46,7 +46,7 @@ public:
 
 private:
 	//BPM
-	double BPM = 160;
+	double BPM = 120;
 	//入力判定時の増減差分(1小節の何分割分の時間)
 	double SUB = 5;
 
