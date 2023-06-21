@@ -9,7 +9,7 @@ public:
 	using Time = std::chrono::system_clock::time_point;
 
 private:
-	//ノーツの速度調整用
+	//ノーツの速度調整用//BPM120 60 = 0.02 && BPM 150 = 0.015
 	const float NoteSpeedAdjustment = 0.025f;
 
 public:
@@ -46,7 +46,7 @@ public:
 
 private:
 	//BPM
-	double BPM = 120;
+	double BPM = 160;
 	//入力判定時の増減差分(1小節の何分割分の時間)
 	double SUB = 5;
 
