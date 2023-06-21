@@ -287,6 +287,7 @@ void BaseBattleScene::Object3DUpdate()
 	if(player_->GetIsDamage())	{
 		gameManager_->AudioPlay(damage_audio.number,damage_audio.volume);
 		gameManager_->HpDecrement();
+		input->PadVibrationLeap(1.0f);
 	}
 	if(player_->GetIsRecover()){
 		gameManager_->AudioPlay(recover_audio.number,recover_audio.volume);

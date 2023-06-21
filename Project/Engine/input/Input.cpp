@@ -124,7 +124,7 @@ void Input::PadUpdate()
 		isPadConnect = false;
 	}
 
-
+	if(!isPadConnect) return;
 	//デッドゾーン
 	if(padState_.Gamepad.sThumbRX<XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && padState_.Gamepad.sThumbRX>-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
 		padState_.Gamepad.sThumbRX = 0;
@@ -214,6 +214,7 @@ const Vector2 Input::GetMouseVelocity()
 
 bool Input::PadButtonPush(int keyNumber)
 {
+	if(!isPadConnect) return false;
 	if(padState_.Gamepad.wButtons & keyNumber){
 		return true;
 	}
@@ -222,6 +223,7 @@ bool Input::PadButtonPush(int keyNumber)
 
 bool Input::PadButtonTrigger(int keyNumber)
 {
+	if(!isPadConnect) return false;
 	if(padState_.Gamepad.wButtons & keyNumber && !(padPreState_.Gamepad.wButtons & keyNumber)){
 		return true;
 	}
@@ -230,6 +232,7 @@ bool Input::PadButtonTrigger(int keyNumber)
 
 bool Input::PadLeftTrigger(int Value)
 {
+	if(!isPadConnect) return false;
 	if(padState_.Gamepad.bLeftTrigger > Value){
 		return true;
 	}
@@ -238,6 +241,7 @@ bool Input::PadLeftTrigger(int Value)
 
 bool Input::PadRightTrigger(int Value)
 {
+	if(!isPadConnect) return false;
 	if(padState_.Gamepad.bRightTrigger > Value){
 		return true;
 	}
@@ -246,6 +250,7 @@ bool Input::PadRightTrigger(int Value)
 
 Vector2 Input::PadLStick()
 {
+	if(!isPadConnect) return Vector2();
 	float X = padState_.Gamepad.sThumbLX;
 	float Y = padState_.Gamepad.sThumbLY;
 
@@ -274,6 +279,7 @@ Vector2 Input::PadLStick()
 
 Vector2 Input::PadRStick()
 {
+	if(!isPadConnect) return Vector2();
 	float X = padState_.Gamepad.sThumbRX;
 	float Y = padState_.Gamepad.sThumbRY;
 
@@ -302,6 +308,7 @@ Vector2 Input::PadRStick()
 
 Vector2 Input::PadLStickPre()
 {
+	if(!isPadConnect) return Vector2();
 	float X = padPreState_.Gamepad.sThumbLX;
 	float Y = padPreState_.Gamepad.sThumbLY;
 
@@ -330,6 +337,7 @@ Vector2 Input::PadLStickPre()
 
 Vector2 Input::PadRStickPre()
 {
+	if(!isPadConnect) return Vector2();
 	float X = padPreState_.Gamepad.sThumbRX;
 	float Y = padPreState_.Gamepad.sThumbRY;
 
@@ -358,6 +366,7 @@ Vector2 Input::PadRStickPre()
 
 void Input::PadVibrationStart()
 {
+	if(!isPadConnect) return;
 	vibration.wLeftMotorSpeed = VibrationMaxValue;
 	vibration.wRightMotorSpeed = VibrationMaxValue;
 	XInputSetState(0, &vibration);
@@ -365,6 +374,7 @@ void Input::PadVibrationStart()
 
 void Input::PadVibrationStop()
 {
+	if(!isPadConnect) return;
 	vibration.wLeftMotorSpeed = 0;
 	vibration.wRightMotorSpeed = 0;
 
@@ -373,6 +383,7 @@ void Input::PadVibrationStop()
 
 void Input::PadVibrationLeap(const float Second)
 {
+	if(!isPadConnect) return;
 	vibrationTimeMax = Second;
 	isVibrationLeap = true;
 }
