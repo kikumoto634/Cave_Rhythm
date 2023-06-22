@@ -8,9 +8,19 @@ public:
 	template <class T> using Duration = std::chrono::duration<T>;
 	using Time = std::chrono::system_clock::time_point;
 
+	struct RhythmDetail{
+		double BPM;
+		double SUB;
+		float NoteAdjustmentSp;
+	};
+
 private:
-	//ノーツの速度調整用//BPM120 60 = 0.02 && BPM 150 = 0.015
+	//ノーツの速度調整用//BPM120 90 = 0.02 && BPM 150 = 0.015
 	const float NoteSpeedAdjustment = 0.02f;
+
+	const RhythmDetail Low	 {  90, 5, 0.02f};
+	const RhythmDetail Normal{ 120, 5, 0.02f};
+	const RhythmDetail High  { 150, 5, 0.015f};
 
 public:
 	//初期化
