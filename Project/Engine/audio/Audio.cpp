@@ -167,6 +167,9 @@ void Audio::PlayWave(int number, float volume, bool IsLoop)
 void Audio::StopWave(int number)
 {
 	IXAudio2SourceVoice* pSourceVoice= nullptr;
+	if(LoopSound.find(number)==LoopSound.end()) {
+		return;
+	}
 	pSourceVoice = LoopSound.at(number);
 
 	pSourceVoice->Stop();

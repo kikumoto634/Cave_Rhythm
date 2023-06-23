@@ -99,15 +99,29 @@ void BaseBattleScene::Update()
 		ImGui::End();
 	}
 
-	if(input->PadRStickDownTrigger()){
-		camera->ShakeStart();
-	}
-
-	if(input->Trigger(DIK_T)){
-		gameManager_->AudioStop(bpm120Game_audio.number);
-	}
-	else if(input->Trigger(DIK_R)){
-		gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+	{
+		ImGui::SetNextWindowPos(ImVec2{0,225});
+		ImGui::SetNextWindowSize(ImVec2{300,125});
+		ImGui::Begin("Rhythm");
+		if(ImGui::Button("Low BPM90")){
+			gameManager_->AudioStop(bpm120Game_audio.number);
+			gameManager_->AudioStop(bpm150Game_audio.number);
+			rhythmManager_->BPMLowSet();
+			gameManager_->AudioPlay(bpm90Game_audio.number, bpm90Game_audio.volume, true);
+		}
+		if(ImGui::Button("Normal BPM120")){
+			gameManager_->AudioStop(bpm90Game_audio.number);
+			gameManager_->AudioStop(bpm150Game_audio.number);
+			rhythmManager_->BPMNormalSet();
+			gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+		}
+		if(ImGui::Button("High BPM150")){
+			gameManager_->AudioStop(bpm90Game_audio.number);
+			gameManager_->AudioStop(bpm120Game_audio.number);
+			rhythmManager_->BPMHighSet();
+			gameManager_->AudioPlay(bpm150Game_audio.number, bpm150Game_audio.volume, true);
+		}
+		ImGui::End();
 	}
 
 	//Scene

@@ -17,7 +17,7 @@ public:
 private:
 	const RhythmDetail Low	 {  90, 5, 0.02f};
 	const RhythmDetail Normal{ 120, 5, 0.02f};
-	const RhythmDetail High  { 150, 5, 0.015f};
+	const RhythmDetail High  { 150, 5, 0.0125f};
 
 public:
 	//初期化
@@ -41,12 +41,15 @@ public:
 	//BPM変更
 	inline void BPMLowSet()	{
 		BPM=Low.BPM,	 SUB=Low.SUB,	 NoteSpeedAdjustment=Low.NoteAdjustmentSp;
+		Initialize();
 	}
 	void BPMNormalSet()		{
 		BPM=Normal.BPM, SUB=Normal.SUB, NoteSpeedAdjustment=Normal.NoteAdjustmentSp;
+		Initialize();
 	}
 	void BPMHighSet()		{
 		BPM=High.BPM,	 SUB=High.SUB,	 NoteSpeedAdjustment=High.NoteAdjustmentSp;
+		Initialize();
 	}
 
 

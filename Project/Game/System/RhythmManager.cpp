@@ -8,6 +8,10 @@ void RhythmManager::Initialize()
 	beatTime_ = 60.0 / BPM;
 	//差分時間
 	beatSub_ = beatTime_/SUB;
+
+	//初期化
+	Duration<double> calTime(0);
+	calTime_ = calTime;
 }
 
 void RhythmManager::PreUpdate()
