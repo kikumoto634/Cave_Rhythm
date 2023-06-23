@@ -103,6 +103,13 @@ void BaseBattleScene::Update()
 		camera->ShakeStart();
 	}
 
+	if(input->Trigger(DIK_T)){
+		gameManager_->AudioStop(bpm120Game_audio.number);
+	}
+	else if(input->Trigger(DIK_R)){
+		gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+	}
+
 	//Scene
 	{
 		//座標

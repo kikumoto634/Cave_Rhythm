@@ -1,9 +1,10 @@
-﻿#include "Audio.h"
+#include "Audio.h"
 #include <assert.h>
 //ファイル読み込み
 #include <fstream>
 
 #pragma comment(lib, "xaudio2.lib")
+using namespace std;
 
 void Audio::Load(UINT number, std::string filename)
 {
@@ -147,14 +148,28 @@ void Audio::PlayWave(int number, float volume, bool IsLoop)
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 	buf.AudioBytes = soundData.dataSize;
 
+	if(LoopSound.find(number)!=LoopSound.end()){
+		return;
+	}
+
 	//ループ
 	if(IsLoop){
 		buf.LoopCount = XAUDIO2_LOOP_INFINITE;
+		LoopSound.insert(make_pair(number, pSourceVoice));
 	}
 
 	//波形データの再生
 	result = pSourceVoice->SubmitSourceBuffer(&buf);
 	result = pSourceVoice->SetVolume(volume);
 	result = pSourceVoice->Start();
+}
+
+void Audio::StopWave(int number)
+{
+	IXAudio2SourceVoice* pSourceVoice= nullptr;
+	pSourceVoice = LoopSound.at(number);
+
+	pSourceVoice->Stop();
+	LoopSound.erase(number);
 }
 

@@ -15,9 +15,6 @@ public:
 	};
 
 private:
-	//ノーツの速度調整用//BPM120 90 = 0.02 && BPM 150 = 0.015
-	const float NoteSpeedAdjustment = 0.02f;
-
 	const RhythmDetail Low	 {  90, 5, 0.02f};
 	const RhythmDetail Normal{ 120, 5, 0.02f};
 	const RhythmDetail High  { 150, 5, 0.015f};
@@ -41,6 +38,18 @@ public:
 	//入力判定
 	bool IsInputRhythmJudge();
 
+	//BPM変更
+	inline void BPMLowSet()	{
+		BPM=Low.BPM,	 SUB=Low.SUB,	 NoteSpeedAdjustment=Low.NoteAdjustmentSp;
+	}
+	void BPMNormalSet()		{
+		BPM=Normal.BPM, SUB=Normal.SUB, NoteSpeedAdjustment=Normal.NoteAdjustmentSp;
+	}
+	void BPMHighSet()		{
+		BPM=High.BPM,	 SUB=High.SUB,	 NoteSpeedAdjustment=High.NoteAdjustmentSp;
+	}
+
+
 	//Getter
 	inline bool GetIsJustRhythm()	{return isJustRhythm_;}
 	inline double GetCalTime()	{return calTime_.count();}
@@ -59,6 +68,8 @@ private:
 	double BPM = 120;
 	//入力判定時の増減差分(1小節の何分割分の時間)
 	double SUB = 5;
+	//ノーツの速度調整用//BPM120 90 = 0.02 && BPM 150 = 0.015
+	float NoteSpeedAdjustment = 0.02f;
 
 	//計測時間
 	Duration<double> calTime_;

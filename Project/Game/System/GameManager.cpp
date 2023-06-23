@@ -99,6 +99,11 @@ void GameManager::AudioPlay(int number, float volume, bool loop)
 	audio_->PlayWave(number, volume, loop);
 }
 
+void GameManager::AudioStop(int number)
+{
+	audio_->StopWave(number);
+}
+
 void GameManager::LightUpdate(bool IsPlayerShadowDead)
 {
 	if(!isPlayerShadowAlive_ && !IsPlayerShadowDead){	

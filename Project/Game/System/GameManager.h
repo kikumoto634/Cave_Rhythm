@@ -70,6 +70,8 @@ public:
 
 	//オーディオ再生
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);
+	//オーディオ停止
+	void AudioStop(int number);
 
 	//ライト更新
 	void LightUpdate(bool IsPlayerShadowDead = false);

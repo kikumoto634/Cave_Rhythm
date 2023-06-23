@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <xaudio2.h>
 #include <wrl.h>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 /// <summary>
@@ -11,7 +11,7 @@ class Audio
 {
 public://1エイリアス
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	template<class T1, class T2> using map = std::map<T1,T2>;
+	template<class T1, class T2> using unordered_map = std::unordered_map<T1,T2>;
 
 public://インナークラス
 	//チャンクヘッダー
@@ -72,12 +72,16 @@ public://メンバ関数
 	//サウンド再生
 	void PlayWave(int number, float volume = 1.0f, bool IsLoop = false);
 
+	void StopWave(int number);
+
 private://メンバ変数
 	//XAudio2のインスタンス
 	IXAudio2* xAudio2 = nullptr;
 	//マスターボイス
 	IXAudio2MasteringVoice* masterVoice = nullptr;
 	//波形データの連想配列
-	map<int, SoundData> soundDatas;
+	unordered_map<int, SoundData> soundDatas;
+
+	unordered_map<int, IXAudio2SourceVoice*> LoopSound;
 };
 
