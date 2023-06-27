@@ -17,7 +17,7 @@ public:
 private:
 	const RhythmDetail Low	 {  90, 5, 0.02f};
 	const RhythmDetail Normal{ 120, 5, 0.02f};
-	const RhythmDetail High  { 150, 5, 0.0125f};
+	const RhythmDetail High  { 150, 5, 0.0f};
 
 public:
 	//初期化
