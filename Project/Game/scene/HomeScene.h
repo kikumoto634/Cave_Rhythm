@@ -4,6 +4,7 @@
 #include "BlueSlime.h"
 #include "Skelton.h"
 #include "Coins.h"
+#include "Botton.h"
 
 #include "TutorialSp.h"
 
@@ -64,6 +65,9 @@ private:
 
 	unique_ptr<TutorialSp> trainingText_;
 
-	list<std::unique_ptr<BaseEnemy>> slime_;
+	list<unique_ptr<BaseEnemy>> slime_;
+
+	unique_ptr<Botton> bottonHigh_;
+	unique_ptr<Botton> bottonLow_;
 };
 

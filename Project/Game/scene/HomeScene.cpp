@@ -3,6 +3,10 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include "SceneManager.h"
+
+#include "BottonHigh.h"
+#include "BottonLow.h"
+
 using namespace std;
 
 HomeScene::~HomeScene()
@@ -75,6 +79,9 @@ void HomeScene::AddObject3DUpdate()
 		}
 		(*it)->Update(camera,player_->GetPosition());
 	}
+
+	bottonHigh_->Update(camera);
+	bottonLow_->Update(camera);
 }
 
 void HomeScene::AddObject2DUpdate()
@@ -120,6 +127,8 @@ void HomeScene::AddObject3DDraw()
 		(*it)->Draw();
 	}
 
+	bottonHigh_->Draw();
+	bottonLow_->Draw();
 }
 
 void HomeScene::AddParticleDraw()
@@ -149,6 +158,9 @@ void HomeScene::AddObjectFinalize()
 	for(auto it = slime_.begin(); it != slime_.end(); it++){
 		(*it)->Finalize();
 	}
+
+	bottonHigh_->Finalize();
+	bottonLow_->Finalize();
 }
 
 void HomeScene::AddCommonFinalize()
@@ -163,4 +175,14 @@ void HomeScene::ActorCreateInitialize()
 		newObj->Initialize("Slime");
 		slime_.push_back(move(newObj));
 	}
+
+	bottonHigh_ =make_unique<BottonHigh>();
+	bottonHigh_->Initialize("BottonHigh", true);
+	bottonHigh_->SetPosition({-2.f,0,0});
+	bottonHigh_->SetRhythmManager(rhythmManager_.get());
+
+	bottonLow_ =make_unique<BottonLow>();
+	bottonLow_->Initialize("BottonLow", true);
+	bottonLow_->SetPosition({+2.f,0,0});
+	bottonLow_->SetRhythmManager(rhythmManager_.get());
 }

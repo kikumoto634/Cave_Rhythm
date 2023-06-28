@@ -27,3 +27,4 @@ inline AudioState roar_audio	    = {14, 0.75f, "Roar.wav"};
 inline AudioState recover_audio	    = {15, 0.75f, "Recover.wav"};
 inline AudioState bpm90Game_audio	= {16, 0.5f,  "BPM90_Game.wav"};
 inline AudioState bpm150Game_audio	= {17, 0.5f,  "BPM150_Game.wav"};
+inline AudioState push_audio		= {18, 1.0f,  "push.wav"};

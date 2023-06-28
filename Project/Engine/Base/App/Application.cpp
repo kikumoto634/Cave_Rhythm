@@ -128,6 +128,7 @@ void Application::Initialize()
 	Audio::Load(recover_audio.number	,recover_audio.path);
 	Audio::Load(bpm90Game_audio.number	,bpm90Game_audio.path);
 	Audio::Load(bpm150Game_audio.number	,bpm150Game_audio.path);
+	Audio::Load(push_audio.number		,push_audio.path);
 
 #pragma endregion
 

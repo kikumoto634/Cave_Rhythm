@@ -409,6 +409,12 @@
     <Filter Include="リソース ファイル\PostEffect">
       <UniqueIdentifier>{864dc63d-fd30-4a3a-b0d6-de1f2bc32c89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Game\3D\Botton">
+      <UniqueIdentifier>{457abeb1-d2bd-431e-8b23-a7c6bc7f6c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game\3D\Botton">
+      <UniqueIdentifier>{a8902612-cddc-450f-ade9-81ba785bc463}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\input\Input.cpp">
@@ -629,6 +635,15 @@
     </ClCompile>
     <ClCompile Include="Engine\PostEffect\PostEffect.cpp">
       <Filter>ソース ファイル\Engine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Botton\Botton.cpp">
+      <Filter>ソース ファイル\Game\3D\Botton</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Botton\BottonLow.cpp">
+      <Filter>ソース ファイル\Game\3D\Botton</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\3D\Botton\BottonHigh.cpp">
+      <Filter>ソース ファイル\Game\3D\Botton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -883,6 +898,15 @@
     </ClInclude>
     <ClInclude Include="Engine\PostEffect\PostEffect.h">
       <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Botton\Botton.h">
+      <Filter>ヘッダー ファイル\Game\3D\Botton</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Botton\BottonLow.h">
+      <Filter>ヘッダー ファイル\Game\3D\Botton</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\3D\Botton\BottonHigh.h">
+      <Filter>ヘッダー ファイル\Game\3D\Botton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
