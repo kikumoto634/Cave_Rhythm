@@ -1,7 +1,7 @@
 # Cave_Rhythm
 3Dリズムアクションゲーム
 
-「[Crypt Of The necroDancer](https://store.steampowered.com/app/247080/Crypt_of_the_NecroDancer/?l=japanese)」を参考に作成
+「[Crypt Of The NecroDancer](https://store.steampowered.com/app/247080/Crypt_of_the_NecroDancer/?l=japanese)」を参考に作成
 
 流れる音楽、リズムに合わせて移動、攻撃！  
 最下層のボス討伐を目指す！！
