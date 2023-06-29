@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <cassert>
+#include <algorithm>
 
 #include "AudioUtility.h"
 
@@ -687,20 +688,40 @@ void AreaManager::ObjectRandomPop()
 	float start = -DIV_NUM_HALF_FLOAT;
 
 	//exit
-	int exitRoomsNum = rand()%roomSize;
-	areaPos = {(start+rooms_[exitRoomsNum].X), (start+rooms_[exitRoomsNum].Y)};
-	areaWH = {float(rand()%(rooms_[exitRoomsNum].Width-1)),float(rand()%(rooms_[exitRoomsNum].Height-1))};
+	int exitRoomsNumber = rand()%roomSize;
+	areaPos = {(start+rooms_[exitRoomsNumber].X), (start+rooms_[exitRoomsNumber].Y)};
+	areaWH = {float(rand()%(rooms_[exitRoomsNumber].Width-1)),float(rand()%(rooms_[exitRoomsNumber].Height-1))};
 	areaPos*= Block_Size;
 	areaWH *= Block_Size;
 	exitPosition_ = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
 
 	//player
-	int playerRoomsNum = rand()%roomSize;
-	areaPos = {(start+rooms_[playerRoomsNum].X),(start+rooms_[playerRoomsNum].Y)};
-	areaWH = {float(rand()%(rooms_[playerRoomsNum].Width-1)),float(rand()%(rooms_[playerRoomsNum].Height-1))};
+	int playerRoomsNumber = rand()%roomSize;
+	areaPos = {(start+rooms_[playerRoomsNumber].X),(start+rooms_[playerRoomsNumber].Y)};
+	areaWH = {float(rand()%(rooms_[playerRoomsNumber].Width-1)),float(rand()%(rooms_[playerRoomsNumber].Height-1))};
 	areaPos*= Block_Size;
 	areaWH *= Block_Size;
 	playerPopPosition_ = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
+
+	//Trap
+	trapPopPosition_.resize(TrapNum);
+	int trapRoomsNumber = 0;
+	for(size_t i = 0; i < trapPopPosition_.size(); ++i){
+		trapRoomsNumber = rand()%roomSize;
+		areaPos = {(start+rooms_[playerRoomsNumber].X),(start+rooms_[playerRoomsNumber].Y)};
+		areaWH = {float(rand()%(rooms_[playerRoomsNumber].Width-1)),float(rand()%(rooms_[playerRoomsNumber].Height-1))};
+		areaPos*= Block_Size;
+		areaWH *= Block_Size;
+
+		Vector3 lpos = {areaPos.x+areaWH.x,0,-(areaPos.y+areaWH.y)};
+		auto j = find(trapPopPosition_.begin(), trapPopPosition_.end(), lpos);
+		if(j == trapPopPosition_.end()){
+			trapPopPosition_[i] = lpos;
+		}
+		else{
+			i--;
+		}
+	}
 }
 
 Vector3 AreaManager::GetObjectPopPosition()

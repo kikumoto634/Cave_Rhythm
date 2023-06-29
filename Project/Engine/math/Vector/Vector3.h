@@ -22,6 +22,13 @@ public:
 	Vector3& operator-=(const Vector3& v);
 	Vector3& operator*=(float s);
 	Vector3& operator/=(float s);
+
+	bool operator==(const Vector3 v)
+	{
+		bool is_hit = false;
+		is_hit = (x==v.x&&y==v.y&&z==v.z);
+		return is_hit;
+	}
 };
 
 const Vector3 operator+(const Vector3& v1, const Vector3& v2);

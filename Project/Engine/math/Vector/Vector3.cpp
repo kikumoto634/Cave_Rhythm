@@ -83,7 +83,6 @@ Vector3 &Vector3::operator/=(float s)
 	return *this;
 }
 
-
 const Vector3 operator+(const Vector3 &v1, const Vector3 &v2)
 {
 	Vector3 temp(v1);

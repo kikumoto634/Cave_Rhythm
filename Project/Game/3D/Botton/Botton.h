@@ -15,6 +15,10 @@ private:
 	//描画範囲(暗めの表示)
 	const int DrawingRange_Half = 7;
 
+	const float PushDownPosY = -0.4f;
+
+	const float IntervalTime = 12.f;
+
 public:
 	~Botton();
 
@@ -48,6 +52,10 @@ public:
 	void SetRhythmManager(RhythmManager* rhythm)	{rhythm_ = rhythm;}
 
 private:
+	void ReturnButton();
+
+	void RhythmNormalChange();
+
 	void ColliderInitialize();
 	void ColliderSet();
 	void ColliderRemove();
@@ -69,6 +77,8 @@ private:
 	MeshCollider* collider_ = nullptr;
 
 	bool isPush_ = false;
+
+	float intervalFrame = 0.f;
 
 protected:
 	Audio* audio_ = nullptr;

@@ -179,5 +179,9 @@ private:
 
 	//生成オブジェクト
 	Vector3 objectPopPosition_ = {0,0,0};
+
+	//トラップ
+	int TrapNum = 10;
+	vector<Vector3> trapPopPosition_ = {};
 };
 

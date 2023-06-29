@@ -2,6 +2,8 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
+#include "Easing.h"
+
 Botton::~Botton()
 {
 	audio_->Finalize();
@@ -54,6 +56,7 @@ void Botton::Update(Camera *camera)
 		}
 	}
 	
+	ReturnButton();
 
 	if(!isHide_) return;
 	BaseObjObject::Update(this->camera_);
@@ -83,10 +86,36 @@ void Botton::ContactUpdate()
 	isPush_ = true;
 
 	Vector3 lpos = GetPosition();
-	lpos.y -= 0.4f;
+	lpos.y += PushDownPosY;
 	SetPosition(lpos);
 
 	RhythmChange();
+}
+
+void Botton::ReturnButton()
+{
+	if(!isPush_)return;
+	Time_OneWay(intervalFrame, IntervalTime);
+
+	if(intervalFrame >= 1.0f){
+		intervalFrame = 0;
+		audio_->PlayWave(push_audio.number, push_audio.volume);
+		isPush_ = false;
+
+		Vector3 lpos = GetPosition();
+		lpos.y -= PushDownPosY;
+		SetPosition(lpos);
+
+		RhythmNormalChange();
+	}
+}
+
+void Botton::RhythmNormalChange()
+{
+	audio_->StopWave(bpm90Game_audio.number);
+	audio_->StopWave(bpm150Game_audio.number);
+	rhythm_->BPMNormalSet();
+	audio_->PlayWave(bpm120Game_audio.number, bpm120Game_audio.volume, true);
 }
 
 void Botton::ColliderInitialize()
