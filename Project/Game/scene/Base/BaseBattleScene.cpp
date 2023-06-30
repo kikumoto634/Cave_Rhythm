@@ -457,7 +457,7 @@ void BaseBattleScene::BeatEndUpdate()
 
 		exit_->IsBeatEndOn();
 		gameManager_->IsBeatEndOn();
-		
+
 		//ビート目視用
 		for(auto it = lNotes.begin(); it != lNotes.end(); it++){
 			if(!(*it)->GetIsNoteAlive()){
@@ -482,7 +482,7 @@ void BaseBattleScene::Object3DDraw()
 
 	player_->Draw();
 	exit_->Draw();
-
+	
 	AddObject3DDraw();
 }
 
@@ -544,6 +544,10 @@ void BaseBattleScene::SceneChange()
 		if(!postEffect->FadeOut()) return;
 
 		isDrawStop = true;
+
+		gameManager_->AudioStop(bpm90Game_audio.number);
+		gameManager_->AudioStop(bpm120Game_audio.number);
+		gameManager_->AudioStop(bpm150Game_audio.number);
 		
 		camera->Reset();
 		if(isNextSceneChange_)NextSceneChange();

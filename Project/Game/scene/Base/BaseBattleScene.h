@@ -5,6 +5,7 @@
 
 #include "Player.h"
 #include "Exit.h"
+#include "Botton.h"
 
 #include "JudgeLocation.h"
 #include "RNotes.h"

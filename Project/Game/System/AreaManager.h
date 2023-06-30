@@ -74,6 +74,7 @@ public:
 	Vector3 GetExitPosition()	{return exitPosition_;}
 	Vector3 GetPlayerPosition()	{return playerPopPosition_;}
 	Vector3 GetObjectPopPosition();
+	vector<Vector3> GetTrapPopPosition()	{return trapPopPosition_;}
 	
 	//CSV用
 	Vector3 GetCSVObjectPopPosition(int index);
@@ -82,6 +83,9 @@ public:
 
 	//Getter
 	inline std::vector<std::vector<int>> GetMapInfo()	{return mapInfo_;}
+
+	//Setter
+	inline void SetTrapNum(int num)	{TrapNum = num;}
 
 private:
 	//地面

@@ -91,5 +91,9 @@ private:
 	
 	//画像
 	list<unique_ptr<BaseSprites>> sp_;
+
+	//トラップ
+	/*int trapNum = 10;
+	vector<unique_ptr<Botton>> button;*/
 };
 

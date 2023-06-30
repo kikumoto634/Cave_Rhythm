@@ -705,7 +705,7 @@ void AreaManager::ObjectRandomPop()
 
 	//Trap
 	trapPopPosition_.resize(TrapNum);
-	int trapRoomsNumber = 0;
+	/*int trapRoomsNumber = 0;
 	for(size_t i = 0; i < trapPopPosition_.size(); ++i){
 		trapRoomsNumber = rand()%roomSize;
 		areaPos = {(start+rooms_[playerRoomsNumber].X),(start+rooms_[playerRoomsNumber].Y)};
@@ -721,7 +721,7 @@ void AreaManager::ObjectRandomPop()
 		else{
 			i--;
 		}
-	}
+	}*/
 }
 
 Vector3 AreaManager::GetObjectPopPosition()
