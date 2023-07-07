@@ -37,6 +37,11 @@ void BaseEnemy::Update(Camera *camera, const Vector3 &playerPos)
 	//ビート更新
 	BeatUpdate();
 
+	//高さ
+	if(world_.translation.y != PositionY){
+		world_.translation.y = PositionY;
+	}
+
 	BaseObjObject::Update(camera);
 }
 

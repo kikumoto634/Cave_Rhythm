@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 
 #include "BottonHigh.h"
+#include "BottonLow.h"
 
 using namespace std;
 
@@ -87,10 +88,15 @@ void GameScene::AddObject3DInitialize()
 	//トラップ
 	button.resize(trapNum);
 	for(int i = 0; i < trapNum; i++){
-		button[i] = make_unique<BottonHigh>();
-		button[i]->Initialize("BottonHigh", true);
+		if(i % 2 == 0){
+			button[i] = make_unique<BottonHigh>();
+			button[i]->Initialize("BottonHigh", true);
+		}
+		else{
+			button[i] = make_unique<BottonLow>();
+			button[i]->Initialize("BottonLow", true);
+		}
 		button[i]->SetPosition(areaManager_->GetTrapPopPosition()[i]);
-		//button[i]->SetPosition({0,0,0});
 		button[i]->SetRhythmManager(rhythmManager_.get());
 	}
 }
