@@ -74,6 +74,8 @@ public://メンバ関数
 
 	void StopWave(int number);
 
+	void SetRation(int number, float ratio);
+
 private://メンバ変数
 	//XAudio2のインスタンス
 	IXAudio2* xAudio2 = nullptr;

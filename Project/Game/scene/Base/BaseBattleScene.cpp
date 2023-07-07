@@ -104,22 +104,16 @@ void BaseBattleScene::Update()
 		ImGui::SetNextWindowSize(ImVec2{300,125});
 		ImGui::Begin("Rhythm");
 		if(ImGui::Button("Low BPM90")){
-			gameManager_->AudioStop(bpm120Game_audio.number);
-			gameManager_->AudioStop(bpm150Game_audio.number);
 			rhythmManager_->BPMLowSet();
-			gameManager_->AudioPlay(bpm90Game_audio.number, bpm90Game_audio.volume, true);
+			gameManager_->AudioRatio(bpm120Game_audio.number, 0.75f);
 		}
 		if(ImGui::Button("Normal BPM120")){
-			gameManager_->AudioStop(bpm90Game_audio.number);
-			gameManager_->AudioStop(bpm150Game_audio.number);
 			rhythmManager_->BPMNormalSet();
-			gameManager_->AudioPlay(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+			gameManager_->AudioRatio(bpm120Game_audio.number, 1.f);
 		}
 		if(ImGui::Button("High BPM150")){
-			gameManager_->AudioStop(bpm90Game_audio.number);
-			gameManager_->AudioStop(bpm120Game_audio.number);
 			rhythmManager_->BPMHighSet();
-			gameManager_->AudioPlay(bpm150Game_audio.number, bpm150Game_audio.volume, true);
+			gameManager_->AudioRatio(bpm120Game_audio.number, 1.25f);
 		}
 		ImGui::End();
 	}
@@ -545,9 +539,7 @@ void BaseBattleScene::SceneChange()
 
 		isDrawStop = true;
 
-		gameManager_->AudioStop(bpm90Game_audio.number);
 		gameManager_->AudioStop(bpm120Game_audio.number);
-		gameManager_->AudioStop(bpm150Game_audio.number);
 		
 		camera->Reset();
 		if(isNextSceneChange_)NextSceneChange();

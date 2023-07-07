@@ -104,6 +104,11 @@ void GameManager::AudioStop(int number)
 	audio_->StopWave(number);
 }
 
+void GameManager::AudioRatio(int number, float ratio)
+{
+	audio_->SetRation(number, ratio);
+}
+
 void GameManager::LightUpdate(bool IsPlayerShadowDead)
 {
 	if(!isPlayerShadowAlive_ && !IsPlayerShadowDead){	

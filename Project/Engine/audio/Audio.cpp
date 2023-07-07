@@ -176,3 +176,14 @@ void Audio::StopWave(int number)
 	LoopSound.erase(number);
 }
 
+void Audio::SetRation(int number, float ratio)
+{
+	IXAudio2SourceVoice* pSourceVoice= nullptr;
+	if(LoopSound.find(number)==LoopSound.end()) {
+		return;
+	}
+	pSourceVoice = LoopSound.at(number);
+
+	pSourceVoice->SetFrequencyRatio(ratio);
+}
+

@@ -112,10 +112,8 @@ void Botton::ReturnButton()
 
 void Botton::RhythmNormalChange()
 {
-	audio_->StopWave(bpm90Game_audio.number);
-	audio_->StopWave(bpm150Game_audio.number);
 	rhythm_->BPMNormalSet();
-	audio_->PlayWave(bpm120Game_audio.number, bpm120Game_audio.volume, true);
+	audio_->SetRation(bpm120Game_audio.number, 1.0f);
 }
 
 void Botton::ColliderInitialize()

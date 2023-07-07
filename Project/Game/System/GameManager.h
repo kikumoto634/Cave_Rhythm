@@ -72,6 +72,8 @@ public:
 	void AudioPlay(int number, float volume = 1.f, bool loop = false);
 	//オーディオ停止
 	void AudioStop(int number);
+	//比率変更
+	void AudioRatio(int number, float ratio);
 
 	//ライト更新
 	void LightUpdate(bool IsPlayerShadowDead = false);
