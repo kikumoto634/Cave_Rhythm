@@ -116,6 +116,9 @@ void HomeScene::AddBeatEndUpdate()
 			index++;
 		}
 	}
+
+	bottonHigh_->IsBeatEndOn();
+	bottonLow_->IsBeatEndOn();
 }
 
 

@@ -17,8 +17,6 @@ private:
 
 	const float PushDownPosY = -0.4f;
 
-	const float IntervalTime = 12.f;
-
 public:
 	~Botton();
 
@@ -61,6 +59,7 @@ private:
 	void ColliderRemove();
 
 protected:
+	virtual void IntervalNumSet();
 	virtual void RhythmChange();
 
 private:
@@ -78,9 +77,10 @@ private:
 
 	bool isPush_ = false;
 
-	float intervalFrame = 0.f;
-
 protected:
+	int intervalBeatCountMax = 12;
+	int intervalBeatCount = 0;
+
 	Audio* audio_ = nullptr;
 	RhythmManager* rhythm_ = nullptr;
 };

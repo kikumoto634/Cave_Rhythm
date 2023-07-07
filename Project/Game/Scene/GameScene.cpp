@@ -40,7 +40,7 @@ void GameScene::AddCommonInitialize()
 	srand( (unsigned int)time(NULL) );
 
 	//ダンジョン
-	//areaManager_->SetTrapNum(trapNum);
+	areaManager_->SetTrapNum(trapNum);
 	areaManager_->RandamAreaInitialize();
 
 
@@ -85,12 +85,14 @@ void GameScene::AddObject3DInitialize()
 	exit_->NeedCoinSpriteUpdate();
 
 	//トラップ
-	/*button.resize(trapNum);
+	button.resize(trapNum);
 	for(int i = 0; i < trapNum; i++){
 		button[i] = make_unique<BottonHigh>();
 		button[i]->Initialize("BottonHigh", true);
-		button[i]->SetPosition(areaManager_->GetTrapPopPosition()[i]);
-	}*/
+		//button[i]->SetPosition(areaManager_->GetTrapPopPosition()[i]);
+		button[i]->SetPosition({0,0,0});
+		button[i]->SetRhythmManager(rhythmManager_.get());
+	}
 }
 
 void GameScene::AddObject2DInitialize()
@@ -151,9 +153,9 @@ void GameScene::AddObject3DUpdate()
 		(*it)->Update(this->camera);
 	}
 
-	/*for(int i = 0; i < trapNum; i++){
+	for(int i = 0; i < trapNum; i++){
 		button[i]->Update(camera);
-	}*/
+	}
 }
 
 void GameScene::AddObject2DUpdate()
@@ -185,9 +187,9 @@ void GameScene::AddBeatEndUpdate()
 		(*it)->IsBeatEndOn();
 	}
 
-	/*for(int i = 0; i < trapNum; i++){
+	for(int i = 0; i < trapNum; i++){
 		button[i]->IsBeatEndOn();
-	}*/
+	}
 }
 
 void GameScene::AddObject3DDraw()
@@ -202,9 +204,9 @@ void GameScene::AddObject3DDraw()
 		(*it)->Draw();
 	}
 
-	/*for(int i = 0; i < trapNum; i++){
+	for(int i = 0; i < trapNum; i++){
 		button[i]->Draw();
-	}*/
+	}
 }
 
 void GameScene::AddParticleDraw()
@@ -239,9 +241,9 @@ void GameScene::AddObjectFinalize()
 		(*it)->Finalize();
 	}
 
-	/*for(int i = 0; i < trapNum; i++){
+	for(int i = 0; i < trapNum; i++){
 		button[i]->Finalize();
-	}*/
+	}
 }
 
 void GameScene::AddCommonFinalize()

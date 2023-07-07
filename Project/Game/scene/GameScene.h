@@ -93,7 +93,7 @@ private:
 	list<unique_ptr<BaseSprites>> sp_;
 
 	//トラップ
-	/*int trapNum = 10;
-	vector<unique_ptr<Botton>> button;*/
+	int trapNum = 1;
+	vector<unique_ptr<Botton>> button;
 };
 

@@ -2,7 +2,6 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
-#include "Easing.h"
 
 Botton::~Botton()
 {
@@ -15,6 +14,7 @@ void Botton::Initialize(std::string filePath, bool IsSmoothing)
 	isAlive_ = true;
 
 	ColliderInitialize();
+	IntervalNumSet();
 
 	audio_ = Audio::GetInstance();
 }
@@ -89,16 +89,22 @@ void Botton::ContactUpdate()
 	lpos.y += PushDownPosY;
 	SetPosition(lpos);
 
-	RhythmChange();
+	if(isBeatEnd_){
+		RhythmChange();
+	}
 }
 
 void Botton::ReturnButton()
 {
 	if(!isPush_)return;
-	Time_OneWay(intervalFrame, IntervalTime);
 
-	if(intervalFrame >= 1.0f){
-		intervalFrame = 0;
+	if(isBeatEnd_) {
+		intervalBeatCount++;
+		isBeatEnd_ = false;
+	};
+
+	if(intervalBeatCount >= intervalBeatCountMax){
+		intervalBeatCount = 0;
 		audio_->PlayWave(push_audio.number, push_audio.volume);
 		isPush_ = false;
 
@@ -135,6 +141,10 @@ void Botton::ColliderRemove()
 	if(!collider_) return;
 	//コリジョンマネージャーから登録を解除する
 	CollisionManager::GetInstance()->RemoveCollider(collider_);
+}
+
+void Botton::IntervalNumSet()
+{
 }
 
 void Botton::RhythmChange()	{}

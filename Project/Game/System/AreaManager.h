@@ -185,7 +185,7 @@ private:
 	Vector3 objectPopPosition_ = {0,0,0};
 
 	//トラップ
-	int TrapNum = 10;
+	int TrapNum = 5;
 	vector<Vector3> trapPopPosition_ = {};
 };
 
