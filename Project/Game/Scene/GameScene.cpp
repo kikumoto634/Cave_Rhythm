@@ -89,8 +89,8 @@ void GameScene::AddObject3DInitialize()
 	for(int i = 0; i < trapNum; i++){
 		button[i] = make_unique<BottonHigh>();
 		button[i]->Initialize("BottonHigh", true);
-		//button[i]->SetPosition(areaManager_->GetTrapPopPosition()[i]);
-		button[i]->SetPosition({0,0,0});
+		button[i]->SetPosition(areaManager_->GetTrapPopPosition()[i]);
+		//button[i]->SetPosition({0,0,0});
 		button[i]->SetRhythmManager(rhythmManager_.get());
 	}
 }

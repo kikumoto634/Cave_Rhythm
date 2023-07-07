@@ -706,8 +706,8 @@ void AreaManager::ObjectRandomPop()
 	//Trap
 	trapPopPosition_.resize(TrapNum);
 	int trapRoomsNumber = 0;
-	for(size_t i = 0; i < trapPopPosition_.size(); ++i){
-		trapRoomsNumber = (int)i;
+	for(int i = 0; i < trapPopPosition_.size(); ++i){
+		trapRoomsNumber = i;
 		if(trapRoomsNumber > roomSize) trapRoomsNumber = 0;
 		areaPos = {(start+rooms_[trapRoomsNumber].X),(start+rooms_[trapRoomsNumber].Y)};
 		areaWH = {float(rand()%(rooms_[trapRoomsNumber].Width-1)),float(rand()%(rooms_[trapRoomsNumber].Height-1))};
@@ -715,13 +715,13 @@ void AreaManager::ObjectRandomPop()
 		areaWH *= Block_Size;
 
 		Vector3 lpos = {areaPos.x+areaWH.x,0,-(areaPos.y+areaWH.y)};
-		auto j = find(trapPopPosition_.begin(), trapPopPosition_.end(), lpos);
-		if(j == trapPopPosition_.end()){
+		//auto j = find(trapPopPosition_.begin(), trapPopPosition_.end(), lpos);
+		//if(j == trapPopPosition_.end()){
 			trapPopPosition_[i] = lpos;
-		}
-		else{
-			i--;
-		}
+		//}
+		//else{
+			//i--;
+		//}
 	}
 }
 
