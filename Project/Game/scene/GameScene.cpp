@@ -41,7 +41,6 @@ void GameScene::AddCommonInitialize()
 	srand( (unsigned int)time(NULL) );
 
 	//ダンジョン
-	areaManager_->SetTrapNum(trapNum);
 	areaManager_->RandamAreaInitialize();
 
 
@@ -86,18 +85,24 @@ void GameScene::AddObject3DInitialize()
 	exit_->NeedCoinSpriteUpdate();
 
 	//トラップ
-	button.resize(trapNum);
-	for(int i = 0; i < trapNum; i++){
+	for(int i = 0; i < 10; i++){
+		/*if(areaManager_->GetTrapPopPosition().size() <= i){
+			break;
+		}*/
+		unique_ptr<Botton> obj = nullptr;
+
 		if(i % 2 == 0){
-			button[i] = make_unique<BottonHigh>();
-			button[i]->Initialize("BottonHigh", true);
+			obj = make_unique<BottonHigh>();
+			obj->Initialize("BottonHigh", true);
 		}
 		else{
-			button[i] = make_unique<BottonLow>();
-			button[i]->Initialize("BottonLow", true);
+			obj = make_unique<BottonLow>();
+			obj->Initialize("BottonLow", true);
 		}
-		button[i]->SetPosition(areaManager_->GetTrapPopPosition()[i]);
-		button[i]->SetRhythmManager(rhythmManager_.get());
+		obj->SetPosition(areaManager_->GetTrapPopPosition()[i]);
+		obj->SetRhythmManager(rhythmManager_.get());
+
+		button.push_back(std::move(obj));
 	}
 }
 
@@ -159,8 +164,8 @@ void GameScene::AddObject3DUpdate()
 		(*it)->Update(this->camera);
 	}
 
-	for(int i = 0; i < trapNum; i++){
-		button[i]->Update(camera);
+	for(auto it = button.begin(); it != button.end(); ++it){
+		(*it)->Update(camera, player_->GetPosition());
 	}
 }
 
@@ -193,8 +198,8 @@ void GameScene::AddBeatEndUpdate()
 		(*it)->IsBeatEndOn();
 	}
 
-	for(int i = 0; i < trapNum; i++){
-		button[i]->IsBeatEndOn();
+	for(auto it = button.begin(); it != button.end(); it++){
+		(*it)->IsBeatEndOn();
 	}
 }
 
@@ -210,8 +215,8 @@ void GameScene::AddObject3DDraw()
 		(*it)->Draw();
 	}
 
-	for(int i = 0; i < trapNum; i++){
-		button[i]->Draw();
+	for(auto it = button.begin(); it != button.end(); ++it){
+		(*it)->Draw();
 	}
 }
 
@@ -247,8 +252,8 @@ void GameScene::AddObjectFinalize()
 		(*it)->Finalize();
 	}
 
-	for(int i = 0; i < trapNum; i++){
-		button[i]->Finalize();
+	for(auto it = button.begin(); it != button.end(); it++){
+		(*it)->Finalize();
 	}
 }
 
