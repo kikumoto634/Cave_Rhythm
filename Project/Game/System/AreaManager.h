@@ -84,9 +84,6 @@ public:
 	//Getter
 	inline std::vector<std::vector<int>> GetMapInfo()	{return mapInfo_;}
 
-	//Setter
-	inline void SetTrapNum(int num)	{TrapNum = num;}
-
 private:
 	//地面
 	void AreaPlaneInitialize(bool IsLighting = false);
@@ -123,6 +120,11 @@ private:
 
 	//壁破壊パーティクル発生
 	void DigParticlePop();
+
+	//オブジェクト発生
+	void PlayerPop();
+	void ExitPop();
+	void TrapPop();
 	
 
 private:
@@ -185,7 +187,6 @@ private:
 	Vector3 objectPopPosition_ = {0,0,0};
 
 	//トラップ
-	int TrapNum = 0;
 	vector<Vector3> trapPopPosition_ = {};
 };
 

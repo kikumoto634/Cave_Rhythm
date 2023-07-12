@@ -18,8 +18,8 @@ public:
 
 //定数
 private:
-	//エリアごとの数(スライム/スケルトン/必要コイン)
-	FloorInfo one	= {3,  11,4};
+	//エリアごとの数(コイン/スライム/スケルトン)
+	FloorInfo one	= {0,  0,0};
 	FloorInfo two	= {5,  8, 7};
 	FloorInfo three = {7,  5,10};
 	FloorInfo four	= {10, 2,13};

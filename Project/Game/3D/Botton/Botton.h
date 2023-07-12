@@ -29,7 +29,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(Camera* camera) override;
+	void Update(Camera* camera, Vector3 playerPos);
 
 	/// <summary>
 	/// 3D描画

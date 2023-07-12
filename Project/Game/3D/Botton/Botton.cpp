@@ -19,9 +19,10 @@ void Botton::Initialize(std::string filePath, bool IsSmoothing)
 	audio_ = Audio::GetInstance();
 }
 
-void Botton::Update(Camera *camera)
+void Botton::Update(Camera *camera, Vector3 playerPos)
 {
 	this->camera_ = camera;
+	this->playerPos_ = playerPos;
 
 	if(!isAlive_) return;
 	Vector3 pos = playerPos_ - world_.translation;

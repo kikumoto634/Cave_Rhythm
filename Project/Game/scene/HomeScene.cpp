@@ -80,8 +80,8 @@ void HomeScene::AddObject3DUpdate()
 		(*it)->Update(camera,player_->GetPosition());
 	}
 
-	bottonHigh_->Update(camera);
-	bottonLow_->Update(camera);
+	bottonHigh_->Update(camera, player_->GetPosition());
+	bottonLow_->Update(camera, player_->GetPosition());
 }
 
 void HomeScene::AddObject2DUpdate()

@@ -681,48 +681,9 @@ bool AreaManager::GetCSVObjectPopActive(int index, bool IsFlag)
 #pragma region ランダム生成
 void AreaManager::ObjectRandomPop()
 {
-	int roomSize = (int)rooms_.size();
-	Vector2 areaPos;
-	Vector2 areaWH;
-
-	float start = -DIV_NUM_HALF_FLOAT;
-
-	//exit
-	int exitRoomsNumber = rand()%roomSize;
-	areaPos = {(start+rooms_[exitRoomsNumber].X), (start+rooms_[exitRoomsNumber].Y)};
-	areaWH = {float(rand()%(rooms_[exitRoomsNumber].Width-1)),float(rand()%(rooms_[exitRoomsNumber].Height-1))};
-	areaPos*= Block_Size;
-	areaWH *= Block_Size;
-	exitPosition_ = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
-
-	//player
-	int playerRoomsNumber = rand()%roomSize;
-	areaPos = {(start+rooms_[playerRoomsNumber].X),(start+rooms_[playerRoomsNumber].Y)};
-	areaWH = {float(rand()%(rooms_[playerRoomsNumber].Width-1)),float(rand()%(rooms_[playerRoomsNumber].Height-1))};
-	areaPos*= Block_Size;
-	areaWH *= Block_Size;
-	playerPopPosition_ = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
-
-	//Trap
-	trapPopPosition_.resize(TrapNum);
-	int trapRoomsNumber = 0;
-	for(int i = 0; i < trapPopPosition_.size(); ++i){
-		trapRoomsNumber = i;
-		if(trapRoomsNumber > roomSize) trapRoomsNumber = 0;
-		areaPos = {(start+rooms_[trapRoomsNumber].X),(start+rooms_[trapRoomsNumber].Y)};
-		areaWH = {float(rand()%(rooms_[trapRoomsNumber].Width-1)),float(rand()%(rooms_[trapRoomsNumber].Height-1))};
-		areaPos*= Block_Size;
-		areaWH *= Block_Size;
-
-		Vector3 lpos = {areaPos.x+areaWH.x,0,-(areaPos.y+areaWH.y)};
-		//auto j = find(trapPopPosition_.begin(), trapPopPosition_.end(), lpos);
-		//if(j == trapPopPosition_.end()){
-			trapPopPosition_[i] = lpos;
-		//}
-		//else{
-			//i--;
-		//}
-	}
+	PlayerPop();
+	ExitPop();
+	TrapPop();
 }
 
 Vector3 AreaManager::GetObjectPopPosition()
@@ -759,5 +720,61 @@ void AreaManager::DigParticlePop()
 
 		digParticle_->ParticleSet(DigAppearanceFrame,digParticlePos_,vel,acc,0.4f,0.0f,1,{0.5f,0.3f,0.2f,1.f});
 		digParticle_->ParticleAppearance();
+	}
+}
+
+
+void AreaManager::PlayerPop()
+{
+	int roomSize = (int)rooms_.size();
+	Vector2 areaPos;
+	Vector2 areaWH;
+
+	float start = -DIV_NUM_HALF_FLOAT;
+
+	int playerRoomsNumber = rand()%roomSize;
+	areaPos = {float(start+rooms_[playerRoomsNumber].X),float(start+rooms_[playerRoomsNumber].Y)};
+	areaWH = {float(rand()%(rooms_[playerRoomsNumber].Width-1)),float(rand()%(rooms_[playerRoomsNumber].Height-1))};
+	areaPos*= Block_Size;
+	areaWH *= Block_Size;
+	playerPopPosition_ = {areaPos.x+areaWH.x,-3.f,-(areaPos.y+areaWH.y)};
+}
+
+void AreaManager::ExitPop()
+{
+	int roomSize = (int)rooms_.size();
+	Vector2 areaPos;
+	Vector2 areaWH;
+
+	float start = -DIV_NUM_HALF_FLOAT;
+
+	//exit
+	int exitRoomsNumber = rand()%roomSize;
+	areaPos = {float(start+rooms_[exitRoomsNumber].X), float(start+rooms_[exitRoomsNumber].Y)};
+	areaWH = {float(rand()%(rooms_[exitRoomsNumber].Width-1)),float(rand()%(rooms_[exitRoomsNumber].Height-1))};
+	areaPos*= Block_Size;
+	areaWH *= Block_Size;
+	exitPosition_ = {areaPos.x+areaWH.x,-5.f,-(areaPos.y+areaWH.y)};
+}
+
+void AreaManager::TrapPop()
+{
+	int roomSize = (int)rooms_.size();
+	Vector2 areaPos;
+	Vector2 areaWH;
+
+	float start = -DIV_NUM_HALF_FLOAT;
+
+	for(int i = 0; i < 10; i++){
+		int trapRoomsNumber = i;
+		if(trapRoomsNumber > roomSize) trapRoomsNumber = 0;
+
+		areaPos = {float(start+rooms_[trapRoomsNumber].X),float(start+rooms_[trapRoomsNumber].Y)};
+		areaWH = {float(rand()%(rooms_[trapRoomsNumber].Width-1)),float(rand()%(rooms_[trapRoomsNumber].Height-1))};
+		areaPos*= Block_Size;
+		areaWH *= Block_Size;
+
+		Vector3 lpos = {(areaPos.x+areaWH.x), 0 ,-(areaPos.y+areaWH.y)};
+		trapPopPosition_.push_back(lpos);
 	}
 }
