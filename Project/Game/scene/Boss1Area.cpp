@@ -75,12 +75,6 @@ void Boss1Area::AddObject2DInitialize()
 
 void Boss1Area::AddCommonUpdate()
 {
-	if(boss_->GetIsBpmChange()&&Time_OneWay(changeTime, ChangeTime)){
-		changeTime = 0;
-		rhythmManager_->SetBPM(boss_->GetBPMValue().BPM, boss_->GetBPMValue().SUB);
-		gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
-	}
-
 	areaManager_->CSVAreaUpdate(camera, player_->GetPosition());
 
 	cutInInput();
@@ -453,6 +447,24 @@ void Boss1Area::BossBeatEnd()
 
 	if(boss_->GetIsEvent()) return;
 	SkeltonCreate();
+
+	if(boss_->GetIsBpmChange()&&Time_OneWay(changeTime, ChangeTime)){
+		changeTime = 0;
+		gameManager_->AudioPlay(roar_audio.number, roar_audio.volume);
+
+		if(boss_->GetBPMValue().BPM == 90){
+			rhythmManager_->BPMLowSet();
+			gameManager_->AudioRatio(bpm120Game_audio.number, 0.75f);
+		}
+		else if(boss_->GetBPMValue().BPM == 120){
+			rhythmManager_->BPMNormalSet();
+			gameManager_->AudioRatio(bpm120Game_audio.number, 1.f);
+		}
+		else if(boss_->GetBPMValue().BPM == 150){
+			rhythmManager_->BPMHighSet();
+			gameManager_->AudioRatio(bpm120Game_audio.number, 1.25f);
+		}
+	}
 }
 
 void Boss1Area::BossDraw()

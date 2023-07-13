@@ -112,7 +112,7 @@ void BaseBattleScene::Update()
 			gameManager_->AudioRatio(bpm120Game_audio.number, 1.f);
 		}
 		if(ImGui::Button("High BPM150")){
-			rhythmManager_->BPMHighSet();
+			5rhythmManager_->BPMHighSet();
 			gameManager_->AudioRatio(bpm120Game_audio.number, 1.25f);
 		}
 		ImGui::End();

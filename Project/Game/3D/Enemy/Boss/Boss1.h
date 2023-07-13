@@ -39,7 +39,7 @@ private:
 
 	//通常リズム
 	const BPMValue Normal = {120, 5};
-	const BPMValue Fast = {60, 5};
+	const BPMValue Fast = {150, 5};
 
 public:
 	void AddInitialize() override;

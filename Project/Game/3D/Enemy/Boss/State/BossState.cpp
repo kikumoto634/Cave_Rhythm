@@ -222,8 +222,8 @@ void RunAwayBossState::UpdateTrigger()
 
 void RunAwayBossState::Update()
 {
-	boss_->world_.translation = Easing_Point2_Linear(startPos,GoalPos,Time_OneWay(moveSecond, MoveSecondMax));
 	App();
+	boss_->world_.translation = Easing_Point2_Linear(startPos,GoalPos,Time_OneWay(moveSecond, MoveSecondMax));
 
 	if(moveSecond >= 1.0f){
 		boss_->SetPosition(GoalPos);
@@ -235,7 +235,6 @@ void RunAwayBossState::Update()
 			stateManager_->SetNextState(new RhythmChangeBossState);
 			return;
 		}
-		
 		
 		stateManager_->SetNextState(new SummonBossState);
 	}
@@ -298,7 +297,7 @@ void RhythmChangeBossState::App()
 		pos += boss_->GetPosition();
 
 		vel.x = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
-		//vel.y = VelY;
+		vel.y = VelY;
 		vel.z = (float)rand() / RAND_MAX * Rand_Vel - Rand_Vel / 2.0f;
 
 		acc.x = AccY;
